@@ -2,8 +2,12 @@ import { verifyIdToken, isAllowed, AuthError } from './auth.js';
 import { validatePublish, ValidationError, LIST_FILES, OBJECT_FILES } from './validate.js';
 import { commitFiles, readFile } from './github.js';
 
+// نطاقات الموقع الافتراضية، وتُضاف إليها ما في ALLOWED_ORIGIN
+const DEFAULT_ORIGINS = ['https://hussain-al-hajji.com', 'https://hussain-al-hajji.github.io', 'http://localhost:4321'];
+const DEFAULT_PROJECT = 'my-website-983ed';
+
 function cors(env, req) {
-  const allow = String(env.ALLOWED_ORIGIN || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const allow = [...String(env.ALLOWED_ORIGIN || '').split(',').map((s) => s.trim()).filter(Boolean), ...DEFAULT_ORIGINS];
   const origin = req.headers.get('Origin') || '';
   const ok = allow.includes(origin);
   return {
@@ -20,7 +24,7 @@ const reply = (env, req, status, body) =>
 export async function authorize(req, env, deps = {}) {
   const m = /^Bearer (.+)$/.exec(req.headers.get('Authorization') || '');
   if (!m) throw new AuthError('missing');
-  const payload = await verifyIdToken(m[1], { projectId: env.FIREBASE_PROJECT_ID, ...deps });
+  const payload = await verifyIdToken(m[1], { projectId: env.FIREBASE_PROJECT_ID || DEFAULT_PROJECT, ...deps });
   if (!isAllowed(payload, env)) throw new AuthError('forbidden');
   return payload;
 }

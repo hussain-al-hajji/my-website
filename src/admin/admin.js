@@ -338,9 +338,13 @@ async function enterLive(user) {
   try {
     const r = await fetch(API + '/api/content', { headers: { Authorization: 'Bearer ' + (await user.getIdToken()) } });
     if (r.status === 403) { await auth.mod.signOut(auth.inst); loginScreen(); $('#lerr').textContent = 'هذا الحساب غير مسموح له بالدخول.'; return; }
-    if (!r.ok) throw new Error('content');
+    if (!r.ok) { const e = new Error('content'); e.status = r.status; throw e; }
     load(await r.json());
-  } catch { render(); return say('تعذّر جلب آخر نسخة من المحتوى، تُعرض النسخة المضمّنة في آخر بناء.', 'bad'); }
+  } catch (e) {
+    render();
+    const why = e.status ? `رمز الخطأ ${e.status}` : 'تعذّر الاتصال بخدمة النشر';
+    return say(`تعذّر جلب آخر نسخة من المحتوى (${why})، تُعرض النسخة المضمّنة في آخر بناء. النشر قد لا يعمل حتى تُصلح الخدمة.`, 'bad');
+  }
   render();
 }
 
