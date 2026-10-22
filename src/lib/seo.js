@@ -20,7 +20,7 @@ export function personSchema() {
     alternateName: 'Hussain Al-Hajji',
     jobTitle: site.role,
     description: site.description,
-    url: SITE_URL + '/',
+    url: abs('/'),
     image: abs('/img/photos/p29.webp'),
     email: site.contact.email,
     knowsLanguage: ['ar', 'en'],
@@ -45,7 +45,7 @@ export function breadcrumbSchema(path, title) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: SITE_URL + (it.path === '/' ? '/' : it.path) })),
+    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: abs(it.path) })),
   };
 }
 
@@ -61,7 +61,7 @@ export function coursesSchema(kits) {
         '@type': 'Course',
         name: k.title,
         description: k.summary,
-        url: SITE_URL + '/collaborate#' + k.id,
+        url: abs('/collaborate') + '#' + k.id,
         inLanguage: 'ar',
         timeRequired: k.duration,
         provider: { '@type': 'Person', '@id': SITE_URL + '/#person', name: site.name },
