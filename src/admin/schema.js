@@ -245,6 +245,17 @@ export const SECTIONS = [
     ],
   },
   {
+    id: 'experience', label: 'خبرة تراكمت من الميدان', file: 'site', kind: 'object', path: 'experience', group: 'الموقع',
+    help: 'النبذات تحت الصورة في الرئيسية. تظهر في عمودين، وفي الجوال كبطاقات تتحرك بالأسهم.',
+    fields: [
+      { k: 'title', label: 'العنوان', type: 'text' },
+      { k: 'items', label: 'النبذات', type: 'objects', fields: [
+        { k: 'icon', label: 'الأيقونة', type: 'select', options: [['user', 'شخص'], ['calendar', 'تقويم'], ['bulb', 'فكرة'], ['handshake', 'شراكة'], ['award', 'وسام'], ['book', 'كتاب'], ['spark', 'نجمة']] },
+        { k: 'text', label: 'النص', type: 'textarea', rows: 5 }] },
+      { k: 'tags', label: 'الوسوم (سطر لكل وسم)', type: 'lines' },
+    ],
+  },
+  {
     id: 'contact', label: 'التواصل', file: 'site', kind: 'object', group: 'الموقع',
     fields: [
       { k: 'contact.email', label: 'البريد الإلكتروني', type: 'text' },

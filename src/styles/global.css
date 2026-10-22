@@ -585,3 +585,30 @@ details.acc .in-acc{padding-bottom:28px}
 @media (prefers-reduced-motion:reduce){.mq{overflow-x:auto}}
 @media (max-width:820px){.mq-track li{width:132px;height:76px}.mq-track img{max-height:54px}}
 .filter-label{font-size:var(--t-small);color:var(--ink-2);margin:18px 0 8px}
+
+/* ---------- خبرة تراكمت من الميدان ---------- */
+.xp{padding-block:96px 72px}
+.xp h2{font-size:var(--t-h1);line-height:1.15;margin-bottom:44px}
+.xp-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 88px}
+.xp-cols ul{list-style:none;display:grid;gap:34px;align-content:start}
+.xp-cols li{display:grid;grid-template-columns:28px 1fr;gap:16px;align-items:start}
+.xp-ico{color:var(--action);display:block;padding-top:6px}
+.xp-ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.xp-cols p{color:var(--ink-2);line-height:2;text-align:justify;text-justify:inter-word}
+.xp-tags{list-style:none;display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
+.xp-tags li{border:1px solid #e1d3b3;background:#fbf4e7;color:var(--action);padding:10px 22px;border-radius:6px;font-size:var(--t-small)}
+.xp-nav{display:none}
+@media (max-width:820px){
+  .xp{padding-block:64px 52px}
+  .xp-cols{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px}
+  .xp-cols::-webkit-scrollbar{display:none}
+  .xp-cols ul{display:contents}
+  .xp-cols li{flex:0 0 86%;scroll-snap-align:center;background:#fff;border:1px solid var(--hair);border-radius:var(--r-tile);padding:26px 22px;grid-template-columns:1fr;gap:12px;align-content:start}
+  .xp-cols p{font-size:var(--t-small);line-height:1.95}
+  .xp-nav{display:flex;gap:12px;justify-content:center;margin-top:20px}
+  .xp-nav button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--hair);background:#fff;font-size:22px;cursor:pointer;color:var(--ink)}
+  .xp-tags{margin-top:32px}
+}
+/* نصوص الفقرات متساوية الجوانب في كل الموقع */
+.prose p,.prose li,.lede,.ccard p,.kit p,.kit .bul li,.tl p,.rec details p,.ft-title,.notice,.subscribe p,.contact-box dd,.deflist span,.field small,.sec-sub p,.award-text p,.row .sub{text-align:justify;text-justify:inter-word}
+.center p,.page-head p,.hero p,.nf p,.close p,.feature .copy p,.tip span,.result p,.rec .q{text-align:inherit}

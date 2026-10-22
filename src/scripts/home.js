@@ -223,3 +223,11 @@ $('#deckNext')?.addEventListener('click', nextCard);
 
 function onScroll() { opening(); inkFill(); }
 onScroll(); addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
+
+// بطاقات «خبرة تراكمت من الميدان» في الجوال: تحريك بالأسهم
+const xp = $('#xpTrack');
+if (xp) {
+  const stepXp = (d) => { const c = xp.querySelector('li'); xp.scrollBy({ left: d * (c.offsetWidth + 14), behavior: reduce ? 'auto' : 'smooth' }); };
+  $('#xpNext').addEventListener('click', () => stepXp(-1));
+  $('#xpPrev').addEventListener('click', () => stepXp(1));
+}
