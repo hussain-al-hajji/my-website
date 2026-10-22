@@ -6,7 +6,11 @@ import { records, href, stats, site, norm } from '../lib/site.js';
 const st = stats();
 const list = [...records].sort((a, b) => b.year - a.year || String(b.id).localeCompare(String(a.id)));
 const topics = [...new Set(records.map((r) => r.topic))];
-const years = [...st.years].reverse();
+// السنوات الأولى القليلة تُجمع في خانة واحدة
+const EARLY = 2019;
+const yearKey = (y) => (y <= EARLY ? 'early' : String(y));
+const yearLabel = (k) => (k === 'early' ? `${st.years[0]} & ${EARLY}` : k);
+const years = [...new Set(st.years.map(yearKey))].reverse();
 const remoteN = records.filter((r) => /افتراض/.test(r.kind)).length;
 ---
 <Base title="سجل الأثر" description={`سجل منشور بجميع البرامج والورش والمعسكرات والجلسات منذ ${st.years[0]}، قابل للبحث والتصفية.`} active="training-programs"
@@ -22,7 +26,7 @@ const remoteN = records.filter((r) => /افتراض/.test(r.kind)).length;
       <div class="toolbar" role="group" aria-label="السنة">
         <div class="chips-l">
           <button class="fchip" type="button" aria-pressed="true" data-f="year:">كل السنوات</button>
-          {years.map((y) => <button class="fchip" type="button" aria-pressed="false" data-f={`year:${y}`}>{y}</button>)}
+          {years.map((y) => <button class="fchip" type="button" aria-pressed="false" data-f={`year:${y}`}>{yearLabel(y)}</button>)}
         </div>
       </div>
       <div class="toolbar" role="group" aria-label="الموضوع">
@@ -34,7 +38,7 @@ const remoteN = records.filter((r) => /افتراض/.test(r.kind)).length;
       <p class="result-count" data-count-out aria-live="polite"></p>
       <ul class="rows">
         {list.map((r) => (
-          <li class="row" data-item data-year={r.year} data-topic={r.topic} data-text={norm([r.title, r.role, r.org, r.location, r.topic].join(' '))}>
+          <li class="row" data-item data-year={yearKey(r.year)} data-topic={r.topic} data-text={norm([r.title, r.role, r.org, r.location, r.topic].join(' '))}>
             <span class="y">{r.year}</span>
             <div>
               <b>{r.title}</b>
