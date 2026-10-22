@@ -55,8 +55,8 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'courses', label: 'الدورات المسجلة', file: 'courses', kind: 'list', group: 'المحتوى',
-    title: (x) => x.title, meta: (x) => [x.kind === 'upcoming' ? 'قريباً' : 'مسجلة', x.platform].filter(Boolean).join(' · '),
+    id: 'courses', label: 'محتوى مرئي', file: 'courses', kind: 'list', group: 'المحتوى',
+    title: (x) => x.title, meta: (x) => [x.kind === 'upcoming' ? 'قريباً' : 'مرئي', x.platform].filter(Boolean).join(' · '),
     blank: () => ({ id: uid('c'), title: '', platform: '', desc: '', link: '', image: '', kind: 'recorded', date: '' }),
     fields: [
       { k: 'title', label: 'العنوان', type: 'text', ...req },
@@ -64,7 +64,7 @@ export const SECTIONS = [
       { k: 'desc', label: 'وصف', type: 'textarea', rows: 3 },
       { k: 'link', label: 'رابط المشاهدة', type: 'url' },
       { k: 'image', label: 'الصورة', type: 'image' },
-      { k: 'kind', label: 'الحالة', type: 'select', options: [['recorded', 'مسجلة'], ['upcoming', 'قريباً']] },
+      { k: 'kind', label: 'الحالة', type: 'select', options: [['recorded', 'منشور'], ['upcoming', 'قريباً']] },
       { k: 'date', label: 'التاريخ', type: 'date' },
     ],
   },

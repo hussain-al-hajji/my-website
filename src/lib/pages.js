@@ -11,7 +11,7 @@ export const STATIC_PAGES = [
   { path: '/arab-youth-pioneers', title: 'رواد الشباب العربي' },
   { path: '/media', title: 'الإعلام' },
   { path: '/feedback', title: 'آراء وتوصيات' },
-  { path: '/recorded-courses', title: 'الدورات المسجلة' },
+  { path: '/recorded-courses', title: 'محتوى مرئي' },
   { path: '/partnerships', title: 'الشراكات' },
   { path: '/gallery', title: 'المعرض' },
   { path: '/blog', title: 'محتوى مضيء' },

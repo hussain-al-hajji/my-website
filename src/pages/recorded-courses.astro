@@ -5,8 +5,8 @@ import { courses, href } from '../lib/site.js';
 const recorded = courses.filter((c) => c.kind === 'recorded');
 const upcoming = courses.filter((c) => c.kind === 'upcoming');
 ---
-<Base title="الدورات المسجلة" description="دورات مسجلة وأعمال مرئية كتبتُ محتواها وقدّمتها." active="blog" local={[{ label: 'الدورات', href: '#top' }]}>
-  <PageHead title="الدورات المسجلة." lead="محتوى كُتب وسُجّل لمنصات ومعارض توظيف افتراضية، متاح للمشاهدة." />
+<Base title="محتوى مرئي" description="لقاءات وبودكاست ومحتوى مسجّل قدّمتُه أو شاركتُ فيه، متاح للمشاهدة." active="blog" local={[{ label: 'المشاهدات', href: '#top' }]}>
+  <PageHead title="محتوى مرئي." lead="لقاءات وبودكاست ومحتوى مسجّل قدّمتُه أو شاركتُ فيه، متاح للمشاهدة." />
   {upcoming.length > 0 && (
     <section class="sec alt tight flush" style="padding-top:60px">
       <div class="wide">

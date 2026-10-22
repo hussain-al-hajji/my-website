@@ -1,82 +1,82 @@
 [
- {
-  "id": "c001",
-  "title": "كيف تستفيد من العمل الحر عبر الإنترنت",
-  "platform": "باب رزق جميل، معرض التوظيف الافتراضي",
-  "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي التابع لشركة باب رزق جميل للتوظيف.",
-  "link": "https://www.youtube.com/watch?v=Rc1kQ_UGGao",
-  "image": "/img/courses/c02.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c002",
-  "title": "تسويق المهارات والخبرات الشخصية في العالم الرقمي",
-  "platform": "باب رزق جميل، معرض التوظيف الافتراضي الثاني",
-  "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي الثاني.",
-  "link": "https://www.youtube.com/watch?v=2NVxzW2RgzQ",
-  "image": "/img/courses/c03.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c003",
-  "title": "أخطاء شائعة في رحلة البحث عن عمل عبر الإنترنت",
-  "platform": "باب رزق جميل، معرض التوظيف الافتراضي الثاني",
-  "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي الثاني.",
-  "link": "https://www.youtube.com/watch?v=qB4pglGVAkE",
-  "image": "/img/courses/c04.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c004",
-  "title": "الاستخدام الاحترافي لمنصة لينكدإن",
-  "platform": "باب رزق جميل، معرض التوظيف الافتراضي",
-  "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي.",
-  "link": "https://www.youtube.com/watch?v=o81TDUiwyo4",
-  "image": "/img/courses/c05.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c005",
-  "title": "العمل الحر عبر الإنترنت",
-  "platform": "منصة أقدِم",
-  "desc": "أساسيات العمل الحر عبر الإنترنت وأفكار لتحويل المهارات والخبرات والهوايات إلى مصادر دخل، مع التعريف بممكّنات دعم العمل الحر في المملكة وطرق التسويق الشخصي لجذب العملاء. حققت الأعلى مبيعاً بين دورات المنصة.",
-  "link": "https://aqdim.sa/programs/76",
-  "image": "/img/courses/c06.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c006",
-  "title": "أساسيات التجارة الإلكترونية",
-  "platform": "منصة إي يوث (Eyouth)",
-  "desc": "أساسيات التجارة الإلكترونية وطرق التحول إلى البيع عبر الإنترنت وإطلاق المشاريع الجديدة والفرص الكامنة في هذا المجال، سواء كفرص استثمارية أو فرص عمل. حققت الأعلى مبيعاً بين دورات المنصة.",
-  "link": "https://eyouthlearning.com/details/course-v1:Business_and_Management+TBOECXMFMG2024+TBOECGTCHZ2024",
-  "image": "/img/courses/c07.webp",
-  "kind": "recorded",
-  "date": ""
- },
- {
-  "id": "c007",
-  "title": "محتوى مبادرة «تام» للأمن السيبراني",
-  "platform": "انطلاقة ومتمّ لتقنية المعلومات",
-  "desc": "تسجيل محتوى خمس ساعات تدريبية لمبادرة «تام» لنشر ثقافة الأمن السيبراني وحماية أنظمة المنشآت داخل المملكة، بالتعاون مع شركة انطلاقة وشركة متمّ. تنشر قريباً على منصة المبادرة.",
-  "link": "https://www.entlaqa.com/",
-  "image": "/img/courses/c08.webp",
-  "kind": "upcoming",
-  "date": ""
- },
- {
-  "id": "c008",
-  "title": "سلسلة «معرفة في ثواني»",
-  "platform": "هارفارد بزنس ريفيو العربية",
-  "desc": "كتابة وتسجيل محتوى عدة حلقات قصيرة من السلسلة للنشر عبر المنصة وحساباتها في وسائل التواصل. الفيديو الأول: الهيبة السطحية. الفيديو الثاني: الحقيقة الوهمية.",
-  "link": "https://www.linkedin.com/posts/%D9%87%D8%A7%D8%B1%D9%81%D8%A7%D8%B1%D8%AF-%D8%A8%D8%B2%D9%86%D8%B3-%D8%B1%D9%8A%D9%81%D9%8A%D9%88---hbr-arabia_aevaepaezaepaepaezaexabraeqaeaaeuaebabraezaeyaepaeyaew-activity-7225889193028182016-ZZ2g",
-  "image": "/img/courses/c09.webp",
-  "kind": "recorded",
-  "date": ""
- }
+  {
+    "id": "c010",
+    "title": "تطورك المهني تحت سقف واحد",
+    "platform": "بودكاست تبيان",
+    "desc": "لقاء في بودكاست تبيان عن التطور المهني: كيف تبني مسارك وتنمّي مهاراتك وتستثمر فرصك.",
+    "link": "https://www.youtube.com/watch?v=d9Jdakl8Nmo",
+    "image": "/img/courses/v01.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c011",
+    "title": "لا تنتظر الفرصة… ابنِ أرضك الرقمية",
+    "platform": "بودكاست الزبدة، مع محمد القحطاني",
+    "desc": "حلقة عن بناء حضورك الرقمي وجعله ضرورة مهنية: لماذا يهم، ومن أين تبدأ.",
+    "link": "https://www.youtube.com/watch?v=nFJ6JIEDTnM",
+    "image": "/img/courses/v02.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c001",
+    "title": "كيف تستفيد من العمل الحر عبر الإنترنت",
+    "platform": "باب رزق جميل، معرض التوظيف الافتراضي",
+    "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي التابع لشركة باب رزق جميل للتوظيف.",
+    "link": "https://www.youtube.com/watch?v=Rc1kQ_UGGao",
+    "image": "/img/courses/c02.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c002",
+    "title": "تسويق المهارات والخبرات الشخصية في العالم الرقمي",
+    "platform": "باب رزق جميل، معرض التوظيف الافتراضي الثاني",
+    "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي الثاني.",
+    "link": "https://www.youtube.com/watch?v=2NVxzW2RgzQ",
+    "image": "/img/courses/c03.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c003",
+    "title": "أخطاء شائعة في رحلة البحث عن عمل عبر الإنترنت",
+    "platform": "باب رزق جميل، معرض التوظيف الافتراضي الثاني",
+    "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي الثاني.",
+    "link": "https://www.youtube.com/watch?v=qB4pglGVAkE",
+    "image": "/img/courses/c04.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c004",
+    "title": "الاستخدام الاحترافي لمنصة لينكدإن",
+    "platform": "باب رزق جميل، معرض التوظيف الافتراضي",
+    "desc": "تمت كتابة المحتوى وتسجيله لمنصة معرض التوظيف الافتراضي.",
+    "link": "https://www.youtube.com/watch?v=o81TDUiwyo4",
+    "image": "/img/courses/c05.webp",
+    "kind": "recorded",
+    "date": ""
+  },
+  {
+    "id": "c007",
+    "title": "محتوى مبادرة «تام» للأمن السيبراني",
+    "platform": "انطلاقة ومتمّ لتقنية المعلومات",
+    "desc": "تسجيل محتوى خمس ساعات تدريبية لمبادرة «تام» لنشر ثقافة الأمن السيبراني وحماية أنظمة المنشآت داخل المملكة، بالتعاون مع شركة انطلاقة وشركة متمّ. تنشر قريباً على منصة المبادرة.",
+    "link": "https://www.entlaqa.com/",
+    "image": "/img/courses/c08.webp",
+    "kind": "upcoming",
+    "date": ""
+  },
+  {
+    "id": "c008",
+    "title": "سلسلة «معرفة في ثواني»",
+    "platform": "هارفارد بزنس ريفيو العربية",
+    "desc": "كتابة وتسجيل محتوى عدة حلقات قصيرة من السلسلة للنشر عبر المنصة وحساباتها في وسائل التواصل. الفيديو الأول: الهيبة السطحية. الفيديو الثاني: الحقيقة الوهمية.",
+    "link": "https://www.linkedin.com/posts/%D9%87%D8%A7%D8%B1%D9%81%D8%A7%D8%B1%D8%AF-%D8%A8%D8%B2%D9%86%D8%B3-%D8%B1%D9%8A%D9%81%D9%8A%D9%88---hbr-arabia_aevaepaezaepaepaezaexabraeqaeaaeuaebabraezaeyaepaeyaew-activity-7225889193028182016-ZZ2g",
+    "image": "/img/courses/c09.webp",
+    "kind": "recorded",
+    "date": ""
+  }
 ]

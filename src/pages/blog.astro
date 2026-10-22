@@ -8,7 +8,7 @@ const kinds = Object.keys(POST_KIND).filter((k) => posts.some((p) => p.kind === 
 const target = (p) => (p.body ? href('/blog/' + p.slug) : p.link || p.pdf);
 ---
 <Base title="محتوى مضيء" description="مقالات وأدلة ومنشورات عن التجارة الإلكترونية والعمل الحر والمسار المهني." active="blog"
-  local={[{ label: 'المقالات', href: '#top' }, { label: 'الدورات المسجلة', href: '/recorded-courses' }]}>
+  local={[{ label: 'المقالات', href: '#top' }, { label: 'محتوى مرئي', href: '/recorded-courses' }]}>
   <PageHead title="محتوى مضيء." lead="مقالات وأدلة عملية، بعضها منشور هنا وبعضها في منصات أخرى.">
     <div class="ctas" style="margin-top:24px"><a class="pill" href={site.contact.newsletter} rel="noopener">اشترك في النشرة</a><a class="more" href={href('/rss.xml')}>خلاصة RSS</a></div>
   </PageHead>
