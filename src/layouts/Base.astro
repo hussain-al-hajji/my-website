@@ -75,7 +75,10 @@ const crumbs = breadcrumbSchema(cleanPath, title);
 
   <nav class="gnav" aria-label="الموقع">
     <div class="wide">
-      <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية"><img src={href('/brand/icon.svg')} alt="" width="28" height="28"></a>
+      <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية">
+        <span class="mark-chip"><img src={href('/img/brand/portrait-sketch-560.webp')} alt="" width="560" height="694"></span>
+        <img class="mark-name" src={href('/brand/logo-name.svg')} alt="حسين الحاجي" width="2600" height="815">
+      </a>
       <ul>
         {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
