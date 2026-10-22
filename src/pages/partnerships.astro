@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import partners from '../data/partners.json';
+import { href, site, PARTNER_GROUP } from '../lib/site.js';
+
+const order = ['gov', 'nonprofit', 'private', 'edu', 'chambers', 'gulf', 'intl'];
+const groups = order.map((g) => ({ g, items: partners.filter((p) => p.group === g) })).filter((x) => x.items.length);
+---
+<Base title="الشراكات" description="جهات حكومية وخاصة وغير ربحية وتعليمية عمل معها حسين الحاجي." active="collaborate" local={[{ label: 'الشركاء', href: '#top' }]}>
+  <PageHead title="الشراكات." lead={`${site.stats.partners}+ جهة حكومية وخاصة وغير ربحية وتعليمية.`} />
+  <section class="sec tight flush alt" id="top" style="padding-top:20px">
+    <div class="wide">
+      {groups.map(({ g, items }) => (
+        <div>
+          <h2 class="group-h">{PARTNER_GROUP[g]}<small>{items.length}</small></h2>
+          <div class="logos">
+            {items.map((p) => (
+              <div class="logo" data-in>
+                <div class="im"><img src={href(p.logo)} alt="" loading="lazy"></div>
+                <span>{p.name}{p.country && <em>{p.country}</em>}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

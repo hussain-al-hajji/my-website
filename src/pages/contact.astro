@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getKits, AUDIENCES, TIMES, site, contactLinks } from '../lib/site.js';
+const kits = getKits();
+const c = site.contact;
+const links = contactLinks();
+---
+<Base title="تواصل" description="اطلب برنامجاً تدريبياً أو استشارة أو دعوة للمشاركة." active="contact" cta={null}>
+  <PageHead title="لنبدأ." lead="أخبره عن جهتك والفئة التي تخدمها، وسيقترح عليك البرنامج المناسب لها." />
+  <section class="sec tight flush alt" style="padding-top:60px">
+    <div class="wide cols2" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start">
+      <form class="form contact-box" id="cf" novalidate>
+        <div class="two">
+          <div class="field"><label for="f-name">الاسم</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-org">الجهة</label><input id="f-org" name="org" autocomplete="organization"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="f-aud">الجمهور</label>
+            <select id="f-aud" name="aud"><option value="">اختر</option>{Object.entries(AUDIENCES).map(([v, l]) => <option value={l}>{l}</option>)}</select></div>
+          <div class="field"><label for="f-time">الوقت المتاح</label>
+            <select id="f-time" name="time"><option value="">اختر</option>{Object.entries(TIMES).map(([v, l]) => <option value={l}>{l}</option>)}</select></div>
+        </div>
+        <div class="field"><label for="f-kit">الحقيبة</label>
+          <select id="f-kit" name="kit"><option value="">لا أعرف بعد</option>{kits.map((k) => <option value={k.id} data-title={k.short}>{k.short}</option>)}<option value="custom">برنامج حسب الطلب</option></select></div>
+        <div class="field"><label for="f-msg">رسالتك</label><textarea id="f-msg" name="msg" placeholder="الهدف من البرنامج، الموقع المتوقع، عدد المشاركين…"></textarea></div>
+        <div class="ctas" style="justify-content:flex-start">
+          <button class="pill" type="submit" style="border:0;cursor:pointer;font:inherit">أرسل عبر البريد</button>
+          <button class="more" type="button" id="send-wa" style="background:none;border:0;cursor:pointer;font:inherit">أرسل عبر واتساب</button>
+        </div>
+        <p class="notice">لا يُحفظ شيء على الموقع. يفتح الزران تطبيق البريد أو واتساب لديك برسالة جاهزة تراجعها قبل الإرسال.</p>
+      </form>
+
+      <aside class="contact-box">
+        <h3>مباشرة</h3>
+        <dl>
+          <div><dt>البريد الإلكتروني</dt><dd><a class="ltr" href={links.mail}>{c.email}</a> <button class="copy-btn" type="button" data-copy={c.email}>نسخ</button></dd></div>
+          <div><dt>واتساب</dt><dd><a class="ltr" href={links.wa} rel="noopener">{c.phone}</a></dd></div>
+          <div><dt>لينكدإن</dt><dd><a href={c.linkedin} rel="noopener">hussain-al-hajji</a></dd></div>
+          <div><dt>البودكاست</dt><dd><a href={c.podcast} rel="noopener">بودكاستي</a></dd></div>
+          <div><dt>النشرة</dt><dd><a href={c.newsletter} rel="noopener">محتوى مضيء</a></dd></div>
+          <div><dt>الموقع</dt><dd>{c.country}</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+  <script define:vars={{ email: c.email, wa: c.whatsapp }}>
+    const f = document.getElementById('cf');
+    const q = new URLSearchParams(location.search).get('kit');
+    if (q) { const s = document.getElementById('f-kit'); if ([...s.options].some((o) => o.value === q)) s.value = q; }
+    function body() {
+      const d = new FormData(f);
+      const kit = f.querySelector('#f-kit');
+      const kt = kit.selectedOptions[0]?.dataset.title || kit.selectedOptions[0]?.textContent || '';
+      const lines = ['السلام عليكم ورحمة الله،', '', d.get('msg') || '', ''];
+      if (d.get('org')) lines.push('الجهة: ' + d.get('org'));
+      if (d.get('aud')) lines.push('الجمهور: ' + d.get('aud'));
+      if (d.get('time')) lines.push('الوقت المتاح: ' + d.get('time'));
+      if (kit.value) lines.push('الحقيبة: ' + kt);
+      lines.push('', d.get('name') || '');
+      return { subject: 'طلب برنامج' + (kit.value ? ': ' + kt : ''), text: lines.join('\n') };
+    }
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!f.name.value.trim()) { f.name.focus(); return; }
+      const b = body();
+      location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(b.subject) + '&body=' + encodeURIComponent(b.text);
+    });
+    document.getElementById('send-wa').addEventListener('click', () => {
+      const b = body();
+      open('https://wa.me/' + wa + '?text=' + encodeURIComponent(b.subject + '\n\n' + b.text), '_blank', 'noopener');
+    });
+  </script>
+</Base>

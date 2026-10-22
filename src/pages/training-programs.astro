@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { records, href, stats, site, norm } from '../lib/site.js';
+
+const st = stats();
+const list = [...records].sort((a, b) => b.year - a.year || String(b.id).localeCompare(String(a.id)));
+const topics = [...new Set(records.map((r) => r.topic))];
+const years = [...st.years].reverse();
+const remoteN = records.filter((r) => /افتراض/.test(r.kind)).length;
+---
+<Base title="سجل الأثر" description={`سجل منشور بجميع البرامج والورش والمعسكرات والجلسات منذ ${st.years[0]}، قابل للبحث والتصفية.`} active="training-programs"
+  local={[{ label: 'السجل', href: '#log' }]} >
+  <PageHead title="سجل الأثر." lead={`${st.entries} مشاركة موثّقة منذ ${st.years[0]}. ابحث عن برنامج أو جهة أو مدينة.`}
+    facts={[{ value: st.entries, label: 'قيداً في السجل' }, { value: site.stats.partners + '+', label: 'جهة' }, { value: remoteN, label: 'مشاركة عن بُعد' }, { value: st.inLastYear, label: `في ${st.lastYear}` }]} />
+
+  <section class="sec tight flush" id="log">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <input class="search" type="search" data-q placeholder="ابحث في البرامج والجهات…" aria-label="ابحث في السجل">
+      </div>
+      <div class="toolbar" role="group" aria-label="السنة">
+        <div class="chips-l">
+          <button class="fchip" type="button" aria-pressed="true" data-f="year:">كل السنوات</button>
+          {years.map((y) => <button class="fchip" type="button" aria-pressed="false" data-f={`year:${y}`}>{y}</button>)}
+        </div>
+      </div>
+      <div class="toolbar" role="group" aria-label="الموضوع">
+        <div class="chips-l">
+          <button class="fchip" type="button" aria-pressed="true" data-f="topic:">كل المواضيع</button>
+          {topics.map((t) => <button class="fchip" type="button" aria-pressed="false" data-f={`topic:${t}`}>{t}</button>)}
+        </div>
+      </div>
+      <p class="result-count" data-count-out aria-live="polite"></p>
+      <ul class="rows">
+        {list.map((r) => (
+          <li class="row" data-item data-year={r.year} data-topic={r.topic} data-text={norm([r.title, r.role, r.org, r.location, r.topic].join(' '))}>
+            <span class="y">{r.year}</span>
+            <div>
+              <b>{r.title}</b>
+              <span class="sub">{[r.role, r.org].filter(Boolean).join(' · ')}</span>
+              <span class="sub">{[r.location, r.duration].filter(Boolean).join(' · ')}</span>
+            </div>
+            <span class="tag">{r.topic}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="empty" data-empty hidden>لا نتائج مطابقة.</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import award from '../data/award.json';
+import media from '../data/media.json';
+import { href, MEDIA_SECTION } from '../lib/site.js';
+
+const press = media.filter((m) => m.section.startsWith('award-'));
+---
+<Base title={award.title} description={award.lead} active="honor" image={award.hero}
+  local={[{ label: 'القصة', href: '#story' }, { label: 'عن المبادرة', href: '#about' }, { label: 'الصور', href: '#photos' }]} cta={{ label: 'الموقع الرسمي', href: award.official }}>
+  <PageHead dark title={award.title + '.'} kicker={award.edition} lead={award.lead} facts={award.facts}>
+    <p style="color:var(--on-dark-2);margin-top:20px">{award.sponsor}. {award.dates}.</p>
+  </PageHead>
+  <section class="sec dark" style="padding-top:0">
+    <div class="wide"><img src={href(award.hero)} alt="حسين الحاجي يحمل درع رواد الشباب العربي" style="border-radius:var(--r-tile);max-height:760px;width:100%;object-fit:cover;object-position:50% 25%" width="1200" height="900"></div>
+  </section>
+
+  <section class="sec" id="story">
+    <div class="measure"><div class="prose">
+      <h2>القصة</h2>
+      {award.story.map((t) => <p>{t}</p>)}
+      <blockquote>{award.quote}</blockquote>
+    </div></div>
+  </section>
+
+  <section class="sec alt" id="about">
+    <div class="wide cols2">
+      <div>
+        <h2 class="h2">عن المبادرة</h2>
+        <p style="margin-top:16px;line-height:1.95">{award.about}</p>
+        <a class="more" style="margin-top:20px" href={award.official} rel="noopener">الموقع الرسمي</a>
+      </div>
+      <div>
+        <h2 class="h2">أهداف المبادرة</h2>
+        <ul class="prose start" style="margin-top:16px;max-width:none;padding-inline-start:1.2em">{award.goals.map((g) => <li>{g}</li>)}</ul>
+      </div>
+    </div>
+    {award.agenda.length > 0 && (
+      <div class="measure" style="margin-top:64px"><div class="prose"><h2>أجندة الأسبوع</h2>{award.agenda.map((t) => <p>{t}</p>)}</div></div>
+    )}
+  </section>
+
+  <section class="sec" id="photos">
+    <div class="wide">
+      <h2 class="h2" style="margin-bottom:28px">من الأسبوع</h2>
+      <div class="masonry">
+        {[...award.gallery, ...[award.certificate, award.poster, award.track].filter(Boolean).map((image) => ({ image, caption: 'وثائق التكريم' }))].map((g) => (
+          <button class="shot" type="button" data-lightbox data-group="award" data-full={href(g.image)} data-cap={g.caption}>
+            <img src={href(g.image)} alt={g.caption} loading="lazy">
+            <span class="cap">{g.caption}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {press.length > 0 && (
+    <section class="sec alt" id="press">
+      <div class="measure">
+        <h2 class="h2" style="margin-bottom:24px">في الإعلام</h2>
+        <ul class="rows">
+          {press.map((m) => (
+            <li>
+              <a class="row" href={m.link || undefined} rel="noopener" style="grid-template-columns:1fr auto">
+                <div><b>{m.title}</b><span class="sub">{m.outlet}</span></div>
+                <span class="tag">{MEDIA_SECTION[m.section]}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>

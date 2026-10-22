@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, href, dateAr, md, site, POST_KIND, abs } from '../../lib/site.js';
+
+export function getStaticPaths() {
+  const posts = getPosts();
+  const full = posts.filter((p) => p.body);
+  return full.map((post, i) => ({
+    params: { slug: post.slug },
+    props: { post, prev: full[i + 1] || null, next: full[i - 1] || null },
+  }));
+}
+const { post, prev, next } = Astro.props;
+const words = post.body.split(/\s+/).length;
+const mins = Math.max(1, Math.round(words / 180));
+const jsonld = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: post.title, inLanguage: 'ar',
+  author: { '@type': 'Person', name: site.name }, image: abs(post.cover), description: post.summary,
+  ...(post.date ? { datePublished: post.date } : {}),
+};
+---
+<Base title={post.title} description={post.summary.slice(0, 200)} active="blog" image={post.cover} type="article" jsonld={jsonld}
+  local={[{ label: 'محتوى مضيء', href: '/blog' }]}>
+  <article class="sec" style="padding-block:72px 40px">
+    <div class="measure">
+      <p class="crumbs"><a href={href('/blog')}>محتوى مضيء</a> / {POST_KIND[post.kind]}</p>
+      <h1 style="font-size:var(--t-h1);line-height:1.2">{post.title}</h1>
+      <p class="meta" style="color:var(--ink-2);margin-top:12px">{post.date ? dateAr(post.date) + ' · ' : ''}قراءة نحو {mins} دقائق</p>
+      <img src={href(post.cover)} alt="" style="border-radius:var(--r-tile);margin:36px 0;width:100%;max-height:460px;object-fit:cover">
+      <div class="prose" set:html={md(post.body)}></div>
+      <div class="share no-print"><span>شارك:</span><button type="button" data-share>مشاركة</button></div>
+      <nav class="pn" aria-label="مقالات أخرى">
+        {prev ? <a href={href('/blog/' + prev.slug)}>‹ {prev.title}</a> : <span></span>}
+        {next ? <a href={href('/blog/' + next.slug)} style="text-align:end">{next.title} ›</a> : <span></span>}
+      </nav>
+    </div>
+  </article>
+  <section class="sec alt tight">
+    <div class="measure">
+      <div class="subscribe">
+        <h3>محتوى مضيء</h3>
+        <p>نشرة تصل إلى بريدك في لينكدإن بفرص مميزة ومحتوى مختصر.</p>
+        <a class="pill" href={site.contact.newsletter} rel="noopener">اشترك في النشرة</a>
+      </div>
+    </div>
+  </section>
+</Base>

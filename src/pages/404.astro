@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/site.js';
+---
+<Base title="الصفحة غير موجودة" noindex>
+  <div class="nf">
+    <div>
+      <b>404</b>
+      <h1 style="font-size:var(--t-h2);margin:14px 0 8px">لم نعثر على هذه الصفحة.</h1>
+      <p style="color:var(--ink-2)">ربما نُقلت أو تغيّر رابطها.</p>
+      <div class="ctas" style="margin-top:26px"><a class="pill" href={href('/')}>الصفحة الرئيسية</a><button class="more" type="button" data-search-open style="background:none;border:0;font:inherit;cursor:pointer">ابحث في الموقع</button></div>
+    </div>
+  </div>
+</Base>

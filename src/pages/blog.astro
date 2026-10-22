@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getPosts, href, dateAr, site, POST_KIND, norm } from '../lib/site.js';
+
+const posts = getPosts();
+const kinds = Object.keys(POST_KIND).filter((k) => posts.some((p) => p.kind === k));
+const target = (p) => (p.body ? href('/blog/' + p.slug) : p.link || p.pdf);
+---
+<Base title="محتوى مضيء" description="مقالات وأدلة ومنشورات عن التجارة الإلكترونية والعمل الحر والمسار المهني." active="blog"
+  local={[{ label: 'المقالات', href: '#top' }, { label: 'الدورات المسجلة', href: '/recorded-courses' }]}>
+  <PageHead title="محتوى مضيء." lead="مقالات وأدلة عملية، بعضها منشور هنا وبعضها في منصات أخرى.">
+    <div class="ctas" style="margin-top:24px"><a class="pill" href={site.contact.newsletter} rel="noopener">اشترك في النشرة</a><a class="more" href={href('/rss.xml')}>خلاصة RSS</a></div>
+  </PageHead>
+  <section class="sec tight flush" id="top">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <input class="search" type="search" data-q placeholder="ابحث في المقالات…" aria-label="ابحث في المقالات">
+        <div class="chips-l" role="group" aria-label="النوع">
+          <button class="fchip" type="button" aria-pressed="true" data-f="kind:">الكل</button>
+          {kinds.map((k) => <button class="fchip" type="button" aria-pressed="false" data-f={`kind:${k}`}>{POST_KIND[k]}</button>)}
+        </div>
+      </div>
+      <p class="result-count" data-count-out aria-live="polite"></p>
+      <div class="cards">
+        {posts.map((p) => {
+          const external = !p.body;
+          return (
+            <a class="ccard line" data-item data-kind={p.kind} data-text={norm(p.title + ' ' + p.summary)} href={target(p)} rel={external ? 'noopener' : undefined}>
+              <div class="ph"><img src={href(p.cover)} alt="" loading="lazy"></div>
+              <div class="body">
+                <span class="meta"><span class="tag">{POST_KIND[p.kind]}</span>{p.publisher && ' ' + p.publisher}{p.date && ' · ' + dateAr(p.date)}</span>
+                <h3>{p.title}</h3>
+                <p>{p.summary.length > 190 ? p.summary.slice(0, 188) + '…' : p.summary}</p>
+                <span class="go">{external ? 'اقرأ في المصدر' : 'اقرأ المقال'}</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="empty" data-empty hidden>لا نتائج مطابقة.</p>
+    </div>
+  </section>
+</Base>

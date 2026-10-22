@@ -1,0 +1,237 @@
+---
+import Base from '../layouts/Base.astro';
+import geo from '../assets/gulf-geo.html?raw';
+import ring from '../data/ring.json';
+import highlights from '../data/highlights.json';
+import award from '../data/award.json';
+import specs from '../data/specs.json';
+import testimonials from '../data/testimonials.json';
+import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, contactLinks } from '../lib/site.js';
+import { records } from '../lib/site.js';
+
+const st = stats();
+const links = contactLinks();
+const news = getNews().slice(0, 3);
+const kits = getKits();
+const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured).slice(0, 3);
+const perYear = {};
+records.forEach((r) => (perYear[r.year] = (perYear[r.year] || 0) + 1));
+const busiest = Object.entries(perYear).sort((a, b) => b[1] - a[1])[0];
+const topics = ['التجارة الإلكترونية', 'المسار المهني', 'العمل الحر', 'ريادة الأعمال'];
+const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value));
+
+const homeData = {
+  log: logForClient(),
+  years: st.years,
+  wallLabel: `مشاركة في السجل، من ${st.years[0]} إلى اليوم`,
+  ring: ring.map((r) => ({ ...r, image: href(r.image) })),
+  kits: kits.map((k) => ({
+    short: k.short,
+    duration: k.duration,
+    image: href(k.image),
+    audiences: k.audiences,
+    times: k.times,
+    points: k.axes.slice(0, 3).map((a) => a.split(':')[0].trim()),
+    page: href('/collaborate') + '#' + k.id,
+    contact: href('/contact') + '?kit=' + k.id,
+  })),
+  cities: [
+    ['الأحساء', ['الأحساء', 'الاحساء', 'الهفوف'], 25.38, 49.59], ['الرياض', ['الرياض', 'الدرعية'], 24.71, 46.68],
+    ['الدمام والخبر', ['الدمام', 'الخبر', 'الظهران', 'المنطقة الشرقية', 'الشرقية'], 26.43, 50.10], ['العلا', ['العلا'], 26.61, 37.92],
+    ['القصيم', ['القصيم', 'بريدة'], 26.33, 43.97], ['المدينة المنورة', ['المدينة'], 24.47, 39.61], ['تبوك', ['تبوك', 'نيوم'], 28.38, 36.57],
+    ['أبها', ['أبها'], 18.22, 42.51], ['مكة', ['مكة'], 21.39, 39.86], ['جدة', ['جدة'], 21.49, 39.19], ['حائل', ['حائل'], 27.52, 41.69],
+    ['نجران', ['نجران'], 17.49, 44.13], ['الجوف', ['الجوف'], 29.97, 40.21], ['الطائف', ['الطائف'], 21.27, 40.42], ['ينبع', ['ينبع'], 24.09, 38.06],
+    ['جازان', ['جازان'], 16.89, 42.55], ['عُمان', ['عمان', 'بدية', 'بديّة'], 22.45, 58.80],
+    ['الإمارات', ['الإمارات', 'أبوظبي', 'أبو ظبي', 'دبي', 'رأس الخيمة'], 24.80, 55.0], ['قطر', ['قطر'], 25.29, 51.53],
+    ['البحرين', ['البحرين'], 26.23, 50.59], ['الكويت', ['الكويت'], 29.37, 47.98],
+  ],
+};
+const jsonld = {
+  '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar',
+};
+---
+<Base
+  description={site.description}
+  active="home"
+  local={[{ label: 'نظرة عامة', href: '#top' }, { label: 'المواصفات', href: '#specs' }, { label: 'اعثر على حقيبتك', href: '#kits' }]}
+  jsonld={jsonld}
+>
+<header class="hero" id="top">
+  <div class="ringstage" id="ringStage">
+    <div class="ring" id="ring" aria-label="صور من البرامج"></div>
+    <div class="core"><div class="center">
+      <p class="name" data-in><img class="hero-logo" src={href('/brand/logo-name-gold.svg')} alt={site.name} width="294" height="92"></p>
+      <h1 data-in style="--d:1">{site.hero.headline}</h1>
+      <p class="sub" id="sub" aria-live="polite" data-in style="--d:2">{site.hero.sub}</p>
+      <div class="ctas" data-in style="--d:3"><a class="pill" href={href('/contact')}>{site.hero.cta}</a><a class="more" href="#wl">شاهد سجل الأثر</a></div>
+    </div></div>
+  </div>
+  <figure id="heroFig"><div class="win"><img src={href('/img/photos/p29.webp')} alt="حسين الحاجي في استوديو التسجيل" width="1536" height="1024" fetchpriority="high"></div></figure>
+</header>
+
+<section class="sec" aria-labelledby="hl">
+  <div class="wide sec-head"><h2 id="hl" data-in>الأبرز.</h2><a class="more" href={href('/bio')}>كل المحطات</a></div>
+  <div class="gallery" id="gal">
+    {highlights.map((h) => (
+      <a class="slide" href={href(h.link)}>
+        <img src={href(h.image)} alt="" loading="lazy" style={`object-position:${h.position}`}>
+        <p>{h.title}.<span>{h.caption}</span></p>
+      </a>
+    ))}
+  </div>
+  <div class="paddles"><button type="button" id="prev" aria-label="السابق">›</button><button type="button" id="next" aria-label="التالي">‹</button></div>
+</section>
+
+<section class="sec dark nums" aria-labelledby="nm">
+  <div class="measure">
+    <h2 id="nm" data-in>سنوات من العمل.<br>بالأرقام.</h2>
+    <p class="lead" data-in style="--d:1">كل رقم هنا مأخوذ من سجل الأنشطة المنشور، برنامجاً برنامجاً، منذ {site.stats.since}.</p>
+    <div class="grid4">
+      <div class="stat" data-in style="--d:1"><span class="n"><span data-count={site.stats.programs}>{site.stats.programs}</span>+<sup class="fn"><a href="#fn1">1</a></sup></span><span>مشاركة موثّقة في التدريب والإرشاد والتحكيم.</span></div>
+      <div class="stat" data-in style="--d:2"><span class="n"><span data-count={site.stats.partners}>{site.stats.partners}</span>+</span><span>جهة حكومية وخاصة وغير ربحية.</span></div>
+      <div class="stat" data-in style="--d:3"><span class="n"><span data-count={site.stats.beneficiaries}>{site.stats.beneficiaries.toLocaleString('en-US')}</span>+<sup class="fn"><a href="#fn2">2</a></sup></span><span>شاب وشابة استفادوا من البرامج.</span></div>
+      <div class="stat" data-in style="--d:4"><span class="n"><span data-count={busiest[1]}>{busiest[1]}</span></span><span>مشاركة في عام {busiest[0]} وحده.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark" style="padding-top:0" aria-labelledby="wl">
+  <div class="wide">
+    <div class="wall-head">
+      <h2 id="wl" data-in>كل نقطة<br>مشاركة.</h2>
+      <p class="count" aria-live="polite"><span id="wCount">{st.entries}</span><small id="wLabel">مشاركة في السجل، من {st.years[0]} إلى اليوم</small></p>
+    </div>
+    <div class="chips" role="group" aria-label="تصفية حسب الموضوع">
+      <button class="chip" type="button" aria-pressed="true" data-t="">الكل</button>
+      {topics.map((t) => <button class="chip" type="button" aria-pressed="false" data-t={t}>{t}</button>)}
+      <button class="chip" type="button" aria-pressed="false" data-k="افتراضي">عن بُعد فقط</button>
+    </div>
+    <div class="wall" id="wall" aria-label="مشاركات حسب السنة"></div>
+    <p class="wall-note">أشِر إلى أي نقطة، أو المسها، لتقرأ البرنامج والجهة والمكان. <a class="more" href={href('/training-programs')}>السجل الكامل</a></p>
+  </div>
+</section>
+
+<section class="sec dark" style="padding-top:40px" aria-labelledby="mp">
+  <div class="wide">
+    <div class="wall-head">
+      <h2 id="mp" data-in>خريطة<br>الأثر.</h2>
+      <p class="count"><span id="mCount">0</span><small>مدينة ودولة حضرها بنفسه</small></p>
+    </div>
+    <div class="map-wrap">
+      <svg class="map" id="map" viewBox="0 0 1000 600" role="img" aria-label="خريطة المدن التي قُدّمت فيها البرامج"><g class="geo" aria-hidden="true" set:html={geo}></g></svg>
+      <div class="tip" id="mCard" hidden></div>
+    </div>
+    <p class="map-note" id="mNote"></p>
+  </div>
+</section>
+
+<section class="sec alt" aria-labelledby="dd">
+  <div class="wide">
+    <div class="sec-head"><h2 id="dd" data-in>ما يقدّمه<br>لجهتك.</h2><a class="more" href={href('/collaborate')}>الحقائب التدريبية</a></div>
+    <div class="bento">
+      {site.services.map((s, i) => (
+        <article class={`tile${s.image ? ' photo' : ''}${s.big ? ' big' : ''}${s.dark ? ' ink' : ''}`} data-in style={i % 3 ? `--d:${i % 3}` : undefined}>
+          {s.image && <img src={href(s.image)} alt="" loading="lazy">}
+          <h3>{s.title}.</h3>
+          <p>{s.text}</p>
+          {s.figure && <span class="huge">{s.figure}</span>}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="sec dark feature" aria-labelledby="aw">
+  <div class="wide">
+    <div class="copy">
+      <p class="kicker" data-in>{award.title}</p>
+      <h2 id="aw" data-in style="--d:1">اعترافٌ عربي.<br>بأثرٍ سعودي.</h2>
+      <p class="ink-fill" id="inkFill" style="font-size:var(--t-h2);font-weight:600;line-height:1.4;max-width:30ch">في النسخة الرابعة، اختار مركز الشباب العربي حسين ضمن أربعين رائداً من ثلاث عشرة دولة، في مسار ريادة الأعمال، تقديراً لسنوات من تمكين الشباب.</p>
+      <a class="more" data-in style="--d:3" href={href('/arab-youth-pioneers')}>القصة الكاملة</a>
+    </div>
+    <div class="pair">
+      <img data-in src={href(award.gallery[0]?.image || '/img/photos/p20.webp')} alt="لحظة تسلّم الدرع على المسرح في أبوظبي" loading="lazy" style="aspect-ratio:auto;max-height:720px">
+      <div class="tilt" id="tilt" data-in style="--d:1"><img src={href(award.hero)} alt="حسين الحاجي يحمل الدرع" loading="lazy" style="aspect-ratio:auto;max-height:720px;border-radius:0"></div>
+    </div>
+    <div class="facts">
+      {awardFacts.map((f, i) => <div data-in style={i ? `--d:${i}` : undefined}><b>{f.value}</b><span>{f.label}</span></div>)}
+    </div>
+  </div>
+</section>
+
+{news.length > 0 && (
+  <section class="sec" aria-labelledby="nw">
+    <div class="wide">
+      <div class="sec-head"><h2 id="nw" data-in>جديد.</h2><a class="more" href={href('/news')}>كل الأخبار</a></div>
+      <div class="cards">
+        {news.map((n) => (
+          <a class="ccard line" href={href('/news/' + n.id)} data-in>
+            {n.image && <div class="ph"><img src={href(n.image)} alt="" loading="lazy"></div>}
+            <div class="body">
+              <span class="meta"><span class="tag">{n.type}</span> {dateAr(n.date)}</span>
+              <h3>{n.title}</h3>
+              <p>{n.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="sec alt" id="kits" aria-labelledby="kt">
+  <div class="wide">
+    <div class="sec-head"><h2 id="kt" data-in>اعثر على حقيبتك<br>في سؤالين.</h2><a class="more" href={href('/collaborate')}>قارن الحقائب</a></div>
+    <div class="finder">
+      <div class="qs">
+        <div class="q" data-in><h3>من جمهورك؟</h3><div class="seg" data-q="a">
+          {Object.entries(AUDIENCES).map(([v, l], i) => <button type="button" aria-pressed={String(i === 0)} data-v={v}>{l}</button>)}
+        </div></div>
+        <div class="q" data-in style="--d:1"><h3>كم لديكم من الوقت؟</h3><div class="seg" data-q="t">
+          {Object.entries(TIMES).map(([v, l], i) => <button type="button" aria-pressed={String(i === 0)} data-v={v}>{l}</button>)}
+        </div></div>
+      </div>
+      <article class="result" id="result" aria-live="polite">
+        <img id="rImg" src={href('/img/photos/p36.webp')} alt="" loading="lazy">
+        <div class="body" id="rBody"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec specs" id="specs" aria-labelledby="sp">
+  <div class="measure">
+    <h2 id="sp" data-in>المواصفات.</h2>
+    {specs.map((s) => (
+      <div class="spec" data-in><h3>{s.title}</h3><ul>
+        {s.items.map((it) => <li><b>{it.name}</b><span>{it.note}</span></li>)}
+      </ul></div>
+    ))}
+  </div>
+</section>
+
+{voices.length > 0 && (
+  <section class="sec alt" aria-labelledby="vc">
+    <div class="wide">
+      <div class="sec-head"><h2 id="vc" data-in>ماذا يقولون.</h2><a class="more" href={href('/feedback')}>كل التوصيات</a></div>
+      <div class="deck" id="deck">
+        {voices.map((v, i) => (
+          <figure class="voice" data-pos={i}><p>“{v.quote}”</p><footer><b>{v.name}</b><span>{v.role}</span></footer></figure>
+        ))}
+      </div>
+      <div class="deck-ctl"><button class="pill" type="button" id="deckNext">التوصية التالية</button><span id="deckPos">1 من {voices.length}</span></div>
+    </div>
+  </section>
+)}
+
+<section class="sec close center" id="contact" aria-labelledby="cl">
+  <div class="measure">
+    <h2 id="cl" data-in>{site.closing.title}</h2>
+    <p data-in style="--d:1">{site.closing.text}</p>
+    <div class="ctas" data-in style="--d:2"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={links.wa} rel="noopener">تحدّث عبر واتساب</a></div>
+  </div>
+</section>
+
+<script type="application/json" id="homeData" set:html={JSON.stringify(homeData)}></script>
+<script>import '../scripts/home.js';</script>
+</Base>

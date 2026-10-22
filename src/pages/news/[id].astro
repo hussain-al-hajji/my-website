@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getNews, href, dateAr, md, abs } from '../../lib/site.js';
+
+export function getStaticPaths() {
+  return getNews().map((n) => ({ params: { id: n.id }, props: { item: n } }));
+}
+const { item } = Astro.props;
+const jsonld = {
+  '@context': 'https://schema.org', '@type': 'NewsArticle', headline: item.title, inLanguage: 'ar', datePublished: item.date,
+  ...(item.image ? { image: abs(item.image) } : {}),
+};
+---
+<Base title={item.title} description={item.summary} active="news" image={item.image || undefined} type="article" jsonld={jsonld} local={[{ label: 'الأخبار', href: '/news' }]}>
+  <article class="sec" style="padding-block:72px">
+    <div class="measure">
+      <p class="crumbs"><a href={href('/news')}>الأخبار</a> / {item.type}</p>
+      <h1 style="font-size:var(--t-h1);line-height:1.2">{item.title}</h1>
+      <p class="meta" style="color:var(--ink-2);margin-top:12px">{dateAr(item.date)}</p>
+      {item.image && <img src={href(item.image)} alt="" style="border-radius:var(--r-tile);margin:36px 0;width:100%;max-height:520px;object-fit:cover">}
+      <div class="prose">
+        <p>{item.summary}</p>
+        {item.body && <Fragment set:html={md(item.body)} />}
+        {item.link && <p><a href={item.link.startsWith('http') ? item.link : href(item.link)}>التفاصيل</a></p>}
+      </div>
+      <div class="share no-print"><button type="button" data-share>مشاركة</button></div>
+    </div>
+  </article>
+</Base>

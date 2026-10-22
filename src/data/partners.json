@@ -1,0 +1,625 @@
+[
+{
+"id": "p001",
+"name": "مؤسسة الأمير محمد بن سلمان (مسك)",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l02.webp"
+},
+{
+"id": "p002",
+"name": "وزارة السياحة",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l03.webp"
+},
+{
+"id": "p003",
+"name": "الهيئة العامة للمنشآت الصغيرة والمتوسطة (منشآت)",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l04.webp"
+},
+{
+"id": "p004",
+"name": "بنك التنمية الاجتماعية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l05.webp"
+},
+{
+"id": "p005",
+"name": "برنامج تأهيل المتطوع الصحي التابع لوزارة الصحة",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l06.webp"
+},
+{
+"id": "p006",
+"name": "البرنامج الوطني لتنمية تقنية المعلومات",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l07.webp"
+},
+{
+"id": "p007",
+"name": "وزارة الثقافة",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l08.webp"
+},
+{
+"id": "p008",
+"name": "مركز ريادة الأعمال الرقمية (كود)",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l09.webp"
+},
+{
+"id": "p009",
+"name": "شركة البحر الأحمر الدولية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l10.webp"
+},
+{
+"id": "p010",
+"name": "نيوم",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l11.webp"
+},
+{
+"id": "p011",
+"name": "هيئة السوق المالية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l12.webp"
+},
+{
+"id": "p012",
+"name": "STC Bank",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l13.webp"
+},
+{
+"id": "p013",
+"name": "المعهد الملكي للفنون التقليدية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l14.webp"
+},
+{
+"id": "p014",
+"name": "هيئة تنمية الصادرات السعودية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l15.webp"
+},
+{
+"id": "p015",
+"name": "وزارة الموارد البشرية والتنمية الاجتماعية",
+"group": "gov",
+"country": "",
+"logo": "/img/partners/l16.webp"
+},
+{
+"id": "p016",
+"name": "Iron Hack",
+"group": "intl",
+"country": "",
+"logo": "/img/partners/l17.webp"
+},
+{
+"id": "p017",
+"name": "منصة مجتمع التجارة الإلكترونية التابعة لمركز التجارة الدولي ITC",
+"group": "intl",
+"country": "",
+"logo": "/img/partners/l18.webp"
+},
+{
+"id": "p018",
+"name": "برنامج قوقل للتعليم",
+"group": "intl",
+"country": "",
+"logo": "/img/partners/l19.webp"
+},
+{
+"id": "p019",
+"name": "منصة (هارفارد بزنس ريفيو) العربية",
+"group": "intl",
+"country": "",
+"logo": "/img/partners/l20.webp"
+},
+{
+"id": "p020",
+"name": "TikTok",
+"group": "intl",
+"country": "",
+"logo": "/img/partners/l21.webp"
+},
+{
+"id": "p021",
+"name": "مركز بديّة الثقافي بولاية بديّة",
+"group": "gulf",
+"country": "سلطنة عمان",
+"logo": "/img/partners/l22.webp"
+},
+{
+"id": "p022",
+"name": "دار العثمان الوقفية",
+"group": "gulf",
+"country": "الكويت",
+"logo": "/img/partners/l23.webp"
+},
+{
+"id": "p023",
+"name": "وزارة الثقافة والشباب",
+"group": "gulf",
+"country": "الإمارات العربية المتحدة",
+"logo": "/img/partners/l24.webp"
+},
+{
+"id": "p024",
+"name": "مركز الشباب العربي",
+"group": "gulf",
+"country": "الإمارات العربية المتحدة",
+"logo": "/img/partners/l25.webp"
+},
+{
+"id": "p025",
+"name": "بنك قطر للتنمية",
+"group": "gulf",
+"country": "قطر",
+"logo": "/img/partners/l26.webp"
+},
+{
+"id": "p026",
+"name": "شركة ماترز",
+"group": "gulf",
+"country": "سلطنة عمان",
+"logo": "/img/partners/l27.webp"
+},
+{
+"id": "p027",
+"name": "المكتب التنفيذي لمنظمة OWN العالمية",
+"group": "gulf",
+"country": "جمهورية موريتانيا",
+"logo": "/img/partners/l28.webp"
+},
+{
+"id": "p028",
+"name": "جامعة الإمام عبدالرحمن بن فيصل",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l29.webp"
+},
+{
+"id": "p029",
+"name": "جامعة الأمير سلطان",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l30.webp"
+},
+{
+"id": "p030",
+"name": "جامعة ميدأوشن",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l31.webp"
+},
+{
+"id": "p031",
+"name": "كلية الموسى للعلوم الصحية",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l32.webp"
+},
+{
+"id": "p032",
+"name": "جامعة طيبة بالمدينة المنورة",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l33.webp"
+},
+{
+"id": "p033",
+"name": "مركز التعلم المستمر بجامعة الملك فهد للبترول والمعادن",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l34.webp"
+},
+{
+"id": "p034",
+"name": "جامعة الإمام محمد بن سعود الإسلامية",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l35.webp"
+},
+{
+"id": "p035",
+"name": "جامعة الأمير مقرن بن عبدالعزيز",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l36.webp"
+},
+{
+"id": "p036",
+"name": "مدارس العزيزية الأهلية",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l37.webp"
+},
+{
+"id": "p037",
+"name": "جامعة اليمامة",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l38.webp"
+},
+{
+"id": "p038",
+"name": "المؤسسة العامة للتدريب التقني والمهني",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l39.webp"
+},
+{
+"id": "p039",
+"name": "كليات التميز",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l40.webp"
+},
+{
+"id": "p040",
+"name": "جامعة أم القرى",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l41.webp"
+},
+{
+"id": "p041",
+"name": "جامعة رياض العلم",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l42.webp"
+},
+{
+"id": "p042",
+"name": "كلية نياجرا العربية السعودية",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l43.webp"
+},
+{
+"id": "p043",
+"name": "مدارس الظهران الأهلية",
+"group": "edu",
+"country": "",
+"logo": "/img/partners/l44.webp"
+},
+{
+"id": "p044",
+"name": "معهد الخليج للتدريب والتعليم",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l45.webp"
+},
+{
+"id": "p045",
+"name": "شركة بلوسم",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l46.webp"
+},
+{
+"id": "p046",
+"name": "شركة وحاضنة i-be",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l47.webp"
+},
+{
+"id": "p047",
+"name": "شركة (بياك) لإدارة حاضنات ومسرعات الأعمال",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l48.webp"
+},
+{
+"id": "p048",
+"name": "شركة Redington",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l49.webp"
+},
+{
+"id": "p049",
+"name": "مركز ملتقى المبدعون للتدريب (أقدِم)",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l50.webp"
+},
+{
+"id": "p050",
+"name": "منصة إي يوث التعليمية",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l51.webp"
+},
+{
+"id": "p051",
+"name": "منصة يوداستي التعليمية",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l52.webp"
+},
+{
+"id": "p052",
+"name": "أكاديمية (Sport Talent)",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l53.webp"
+},
+{
+"id": "p053",
+"name": "مجموعة (كن الرقمية) للتدريب والاستشارات",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l54.webp"
+},
+{
+"id": "p054",
+"name": "حاضنة ومسرعة أبعاد لمساحات العمل المشتركة",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l55.webp"
+},
+{
+"id": "p055",
+"name": "برامج (أسترولابز) التدريبية",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l56.webp"
+},
+{
+"id": "p056",
+"name": "شركة نسما وشركاؤهم",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l57.webp"
+},
+{
+"id": "p057",
+"name": "شركة idealabs لإدارة الموارد البشرية",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l58.webp"
+},
+{
+"id": "p058",
+"name": "منصة مكنة",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l59.webp"
+},
+{
+"id": "p059",
+"name": "منصة (بيْن) للإرشاد المهني",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l60.webp"
+},
+{
+"id": "p060",
+"name": "منصة رائد التعليمية",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l61.webp"
+},
+{
+"id": "p061",
+"name": "منصة ملهمون",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l62.webp"
+},
+{
+"id": "p062",
+"name": "شركة Saudi Speakers",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l63.webp"
+},
+{
+"id": "p063",
+"name": "شركة ميركاي",
+"group": "private",
+"country": "",
+"logo": "/img/partners/l64.webp"
+},
+{
+"id": "p064",
+"name": "غرفة الشرقية",
+"group": "chambers",
+"country": "",
+"logo": "/img/partners/l65.webp"
+},
+{
+"id": "p065",
+"name": "غرفة الأحساء التجارية والصناعية",
+"group": "chambers",
+"country": "",
+"logo": "/img/partners/l66.webp"
+},
+{
+"id": "p066",
+"name": "غرفة نجران التجارية والصناعية",
+"group": "chambers",
+"country": "",
+"logo": "/img/partners/l67.webp"
+},
+{
+"id": "p067",
+"name": "جمعية قادر للتنمية الذاتية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l68.webp"
+},
+{
+"id": "p068",
+"name": "جمعية تواد للتنمية الأسرية بالجوف",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l69.webp"
+},
+{
+"id": "p069",
+"name": "مؤسسة سعي لتوظيف ذوي الإعاقة",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l70.webp"
+},
+{
+"id": "p070",
+"name": "جمعية رائد لتمكين القيادات الشبابية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l71.webp"
+},
+{
+"id": "p071",
+"name": "مجلس شباب المنطقة الشرقية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l72.webp"
+},
+{
+"id": "p072",
+"name": "جمعية كفاءات الأحساء",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l73.webp"
+},
+{
+"id": "p073",
+"name": "جمعية أعمال",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l74.webp"
+},
+{
+"id": "p074",
+"name": "جمعية اكتفاء لتمكين الأسر",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l75.webp"
+},
+{
+"id": "p075",
+"name": "جمعية إدخار",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l76.webp"
+},
+{
+"id": "p076",
+"name": "شركة شباب مجتمعي الوقفية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l77.webp"
+},
+{
+"id": "p077",
+"name": "مؤسسة عبداللطيف جميل لخدمة المجتمع (مجتمع جميل)",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l78.webp"
+},
+{
+"id": "p078",
+"name": "مؤسسة الأمير ماجد بن عبدالعزيز للتنمية المجتمعية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l79.webp"
+},
+{
+"id": "p079",
+"name": "جمعية مسار التنموية",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l80.webp"
+},
+{
+"id": "p080",
+"name": "جمعية كفاءات لبناء قدرات الشباب",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l81.webp"
+},
+{
+"id": "p081",
+"name": "جمعية كنوز للأسر المنتجة بالقصيم",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l83.webp"
+},
+{
+"id": "p082",
+"name": "شركة نفيسة شمس",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l84.webp"
+},
+{
+"id": "p083",
+"name": "نادي رواد الابتكار الاجتماعي",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l85.webp"
+},
+{
+"id": "p084",
+"name": "مجتمع (وثبة) لتنمية الشباب",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l86.webp"
+},
+{
+"id": "p085",
+"name": "مبادرة التعليم من أجل التوظيف (السعودية)",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l87.webp"
+},
+{
+"id": "p086",
+"name": "صندوق الأمير سلطان بن عبدالعزيز التنموي",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l88.webp"
+},
+{
+"id": "p087",
+"name": "مركز الأمير أحمد بن فهد بن سلمان لتطوير الأعمال (سنا)",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l89.webp"
+},
+{
+"id": "p088",
+"name": "فايبز العلا بمدينة العلا",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l90.webp"
+},
+{
+"id": "p089",
+"name": "جمعية الهندسة الصناعية وإدارة العمليات بجامعة الملك خالد",
+"group": "nonprofit",
+"country": "",
+"logo": "/img/partners/l91.webp"
+}
+]

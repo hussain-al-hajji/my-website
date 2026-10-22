@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getNews, href, dateAr } from '../lib/site.js';
+const news = getNews();
+const types = [...new Set(news.map((n) => n.type))];
+---
+<Base title="الأخبار" description="آخر الأخبار والإنجازات والاستضافات والبرامج الجديدة." active="news" local={[{ label: 'الأخبار', href: '#top' }]}>
+  <PageHead title="الأخبار." lead="إنجازات وبرامج جديدة واستضافات وإعلانات." />
+  <section class="sec tight flush" id="top">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <div class="chips-l" role="group" aria-label="النوع">
+          <button class="fchip" type="button" aria-pressed="true" data-f="type:">الكل</button>
+          {types.map((t) => <button class="fchip" type="button" aria-pressed="false" data-f={`type:${t}`}>{t}</button>)}
+        </div>
+      </div>
+      <div class="cards">
+        {news.map((n) => (
+          <a class="ccard line" data-item data-type={n.type} href={href('/news/' + n.id)}>
+            {n.image && <div class="ph"><img src={href(n.image)} alt="" loading="lazy"></div>}
+            <div class="body">
+              <span class="meta"><span class="tag">{n.type}</span> {dateAr(n.date)}</span>
+              <h3>{n.title}</h3>
+              <p>{n.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="empty" data-empty hidden>لا أخبار.</p>
+    </div>
+  </section>
+</Base>

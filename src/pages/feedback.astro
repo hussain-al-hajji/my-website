@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import testimonials from '../data/testimonials.json';
+import { href } from '../lib/site.js';
+
+const recs = testimonials.filter((t) => t.kind === 'recommendation');
+const docs = testimonials.filter((t) => t.kind === 'document');
+---
+<Base title="آراء وتوصيات" description="توصيات من شركاء وجهات عمل معها، وشهادات من المتدربين والجهات المنظمة." active="feedback"
+  local={[{ label: 'التوصيات', href: '#recs' }, { label: 'الشهادات', href: '#docs' }]}>
+  <PageHead title="ماذا يقولون." lead="توصيات مكتوبة وشهادات من جهات ومتدربين." />
+  <section class="sec tight flush alt" id="recs" style="padding-top:60px">
+    <div class="wide stack">
+      {recs.map((r) => (
+        <article class="rec" data-in>
+          <header><div><b>{r.name}</b><span>{r.role}</span></div></header>
+          <p class="q">“{r.quote}”</p>
+          {r.full && <details><summary>اقرأ التوصية كاملة</summary><p>{r.full}</p></details>}
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="sec tight" id="docs">
+    <div class="wide">
+      <h2 class="h2" style="margin-bottom:28px" data-in>شهادات الجهات والمتدربين.</h2>
+      <div class="masonry">
+        {docs.filter((d) => d.image).map((d) => (
+          <button class="shot" type="button" data-lightbox data-group="docs" data-full={href(d.image)} data-cap={d.full}>
+            <img src={href(d.image)} alt={d.full || 'شهادة'} loading="lazy">
+            {d.full && <span class="cap">{d.full}</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

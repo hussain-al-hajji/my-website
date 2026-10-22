@@ -1,0 +1,17 @@
+---
+interface Props { title: string; lead?: string; dark?: boolean; kicker?: string; facts?: { value: string | number; label: string }[]; }
+const { title, lead, dark = false, kicker, facts = [] } = Astro.props;
+---
+<header class={`sec page-head${dark ? ' dark' : ''}`} style="padding-bottom:52px">
+  <div class="measure">
+    {kicker && <p class="kicker" data-in>{kicker}</p>}
+    <h1 data-in>{title}</h1>
+    {lead && <p class="lead" data-in style="--d:1">{lead}</p>}
+    <slot />
+    {facts.length > 0 && (
+      <div class="facts-row" data-in style="--d:2">
+        {facts.map((f) => <div><b>{f.value}</b><span>{f.label}</span></div>)}
+      </div>
+    )}
+  </div>
+</header>

@@ -1,0 +1,26 @@
+---
+import '../../styles/global.css';
+import '../../styles/admin.css';
+import { href } from '../../lib/site.js';
+import { FILES } from '../../admin/schema.js';
+
+const files = import.meta.glob('../../data/*.json', { eager: true, import: 'default' });
+const seed = {};
+for (const f of FILES) seed[f] = files[`../../data/${f}.json`];
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>لوحة التحكم</title>
+  <link rel="icon" href={href('/brand/icon.svg')} type="image/svg+xml">
+</head>
+<body class="admin">
+  <div id="app"><p class="boot">جارٍ التحميل…</p></div>
+  <noscript><p class="boot">تحتاج لوحة التحكم إلى تفعيل JavaScript.</p></noscript>
+  <script type="application/json" id="seed" set:html={JSON.stringify(seed).replace(/</g, '\\u003c')}></script>
+  <script>import '../../admin/admin.js';</script>
+</body>
+</html>

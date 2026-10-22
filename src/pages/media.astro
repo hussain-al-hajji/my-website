@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import media from '../data/media.json';
+import { href, dateAr, MEDIA_SECTION, norm } from '../lib/site.js';
+
+const secs = ['tv', 'radio', 'press', 'event'];
+const items = media.filter((m) => secs.includes(m.section)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+---
+<Base title="الإعلام" description="استضافات تلفزيونية وإذاعية ومقالات وتغطيات صحفية." active="media" local={[{ label: 'الإعلام', href: '#top' }]}>
+  <PageHead title="الإعلام." lead="استضافات وحوارات وتغطيات صحفية، وكتابة في منصات عربية." />
+  <section class="sec tight flush" id="top">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <input class="search" type="search" data-q placeholder="ابحث…" aria-label="ابحث في الإعلام">
+        <div class="chips-l" role="group" aria-label="النوع">
+          <button class="fchip" type="button" aria-pressed="true" data-f="sec:">الكل</button>
+          {secs.map((s) => <button class="fchip" type="button" aria-pressed="false" data-f={`sec:${s}`}>{MEDIA_SECTION[s]}</button>)}
+        </div>
+      </div>
+      <p class="result-count" data-count-out aria-live="polite"></p>
+      <ul class="rows">
+        {items.map((m) => {
+          const inner = (<>
+            <span class="y">{dateAr(m.date, false) || ''}</span>
+            <div><b>{m.title}</b><span class="sub">{m.outlet}</span>{m.note && <span class="sub">{m.note}</span>}</div>
+            <span class="tag">{MEDIA_SECTION[m.section]}</span>
+          </>);
+          return (
+            <li data-item data-sec={m.section} data-text={norm([m.title, m.outlet, m.note].join(' '))}>
+              {m.link
+                ? <a class="row" href={m.link} rel="noopener" style="grid-template-columns:120px 1fr auto">{inner}</a>
+                : <div class="row" style="grid-template-columns:120px 1fr auto">{inner}</div>}
+            </li>
+          );
+        })}
+      </ul>
+      <p class="empty" data-empty hidden>لا نتائج مطابقة.</p>
+    </div>
+  </section>
+</Base>

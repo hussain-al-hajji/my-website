@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import pages from '../data/pages.json';
+import { href, md } from '../lib/site.js';
+const m = pages.methodology;
+---
+<Base title={m.title} description={m.lead} active="collaborate" local={[{ label: 'المنهج', href: '#top' }, { label: 'الحقائب', href: '/collaborate' }]}>
+  <PageHead title={m.title + '.'} lead={m.lead} />
+  <section class="sec tight flush" id="top">
+    <div class="measure"><div class="prose" set:html={md(m.body)}></div></div>
+  </section>
+  <section class="sec alt tight">
+    <div class="wide">
+      <div class="cards">
+        {m.pillars.map((p) => <article class="ccard" data-in><div class="body"><h3>{p.title}</h3><p>{p.text}</p></div></article>)}
+      </div>
+      <div class="ctas" style="margin-top:44px"><a class="pill" href={href('/collaborate')}>الحقائب التدريبية</a></div>
+    </div>
+  </section>
+</Base>

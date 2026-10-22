@@ -1,0 +1,17 @@
+{
+  "name": "hussain-al-hajji-site",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test \"worker/test/*.test.js\""
+  },
+  "dependencies": {
+    "astro": "6.4.8",
+    "marked": "18.1.1"
+  }
+}

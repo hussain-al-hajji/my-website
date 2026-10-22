@@ -1,0 +1,11 @@
+name = "hussain-site-admin"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# القيم غير السرية. الأسرار (GITHUB_TOKEN وغيره) تُضاف بـ: wrangler secret put
+[vars]
+GITHUB_REPO = "hussain-al-hajji/my-website"
+GITHUB_BRANCH = "main"
+ALLOWED_ORIGIN = "https://hussain-al-hajji.com"
+FIREBASE_PROJECT_ID = ""
+# ALLOWED_EMAILS و ALLOWED_UIDS تُضبطان كأسرار ولا تُكتبان هنا.

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import gallery from '../data/gallery.json';
+import posters from '../data/posters.json';
+import { href } from '../lib/site.js';
+
+const tags = [...new Set(gallery.map((g) => g.tag).filter(Boolean))];
+const years = [...new Set(posters.map((p) => p.year))].sort((a, b) => b - a);
+---
+<Base title="المعرض" description="صور من البرامج والفعاليات وملصقات الإعلان عنها." active="gallery"
+  local={[{ label: 'الصور', href: '#photos' }, { label: 'الملصقات', href: '#posters' }]}>
+  <PageHead title="المعرض." lead="لقطات من المسارح والقاعات والمسرّعات، وملصقات البرامج." />
+  <section class="sec tight flush" id="photos">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <div class="chips-l" role="group" aria-label="التصنيف">
+          <button class="fchip" type="button" aria-pressed="true" data-f="tag:">الكل</button>
+          {tags.map((t) => <button class="fchip" type="button" aria-pressed="false" data-f={`tag:${t}`}>{t}</button>)}
+        </div>
+      </div>
+      <div class="masonry">
+        {gallery.map((g) => (
+          <div data-item data-tag={g.tag}>
+            <button class="shot" type="button" data-lightbox data-group="gallery" data-full={href(g.image)} data-cap={g.caption}>
+              <img src={href(g.image)} alt={g.caption} loading="lazy">
+              <span class="cap">{g.caption}</span>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="sec alt tight" id="posters">
+    <div class="wide">
+      <h2 class="h2" style="margin-bottom:24px">ملصقات البرامج.</h2>
+      {years.map((y, i) => (
+        <details class="acc" open={i === 0}>
+          <summary>{y} <span class="tag" style="margin-inline-start:auto">{posters.filter((p) => p.year === y).length}</span></summary>
+          <div class="in-acc"><div class="poster-grid">
+            {posters.filter((p) => p.year === y).map((p) => (
+              <button class="shot" type="button" data-lightbox data-group={`posters-${y}`} data-full={href(p.image)} data-cap={p.caption || `ملصق برنامج ${y}`}>
+                <img src={href(p.image)} alt={p.caption || `ملصق برنامج ${y}`} loading="lazy">
+              </button>
+            ))}
+          </div></div>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>

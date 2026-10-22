@@ -1,0 +1,154 @@
+---
+import '../styles/global.css';
+import { site, href, abs, getAnnouncement, GNAV, FOOT_DIR, contactLinks, stats } from '../lib/site.js';
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  local?: { label: string; href: string }[];
+  cta?: { label: string; href: string } | null;
+  jsonld?: object | null;
+  canonical?: string;
+}
+const {
+  title, description = site.description, active = '', image = '/img/photos/p29.webp',
+  noindex = false, type = 'website', local = [], cta = { label: 'اطلب برنامجاً', href: '/contact' },
+  jsonld = null, canonical,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : site.title;
+const path = canonical ?? Astro.url.pathname;
+const ann = getAnnouncement();
+const links = contactLinks();
+const st = stats();
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'حسين الحاجي',
+  alternateName: 'Hussain Al-Hajji',
+  jobTitle: site.role,
+  url: abs('/'),
+  image: abs('/img/photos/p29.webp'),
+  sameAs: [site.contact.linkedin],
+  email: site.contact.email,
+};
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  {noindex && <meta name="robots" content="noindex">}
+  <link rel="canonical" href={abs(path)}>
+  <meta name="theme-color" content="#0b0b0a">
+  <link rel="icon" href={href('/brand/favicon.ico')} sizes="48x48">
+  <link rel="icon" href={href('/brand/icon.svg')} type="image/svg+xml">
+  <link rel="apple-touch-icon" href={href('/brand/apple-touch-icon.png')}>
+  <link rel="alternate" type="application/rss+xml" title={site.name} href={href('/rss.xml')}>
+  <meta property="og:type" content={type}>
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:site_name" content={site.name}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={abs(path)}>
+  <meta property="og:image" content={abs(image)}>
+  <meta name="twitter:card" content="summary_large_image">
+  <script is:inline>document.documentElement.classList.add('js')</script>
+  <script type="application/ld+json" set:html={JSON.stringify(person)}></script>
+  {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)}></script>}
+</head>
+<body data-search={href('/search.json')}>
+  <a class="skip" href="#main">انتقل إلى المحتوى</a>
+
+  {ann && (
+    <div class="promo" role="region" aria-label="إعلان">
+      {ann.text}
+      {ann.link && <a href={href(ann.link)}>{ann.linkText || 'اعرف المزيد'}</a>}
+    </div>
+  )}
+
+  <nav class="gnav" aria-label="الموقع">
+    <div class="wide">
+      <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية"><img src={href('/brand/icon.svg')} alt="" width="24" height="24"></a>
+      <ul>
+        {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
+      </ul>
+      <div class="tools">
+        <button class="icon-btn" type="button" data-search-open aria-label="بحث في الموقع" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" type="button" data-menu-open aria-label="القائمة" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="lnav" aria-label="هذه الصفحة">
+    <div class="wide">
+      <a class="brand brand-link" href={href('/')}><img src={href('/brand/logo-name-gold.svg')} alt="حسين الحاجي" width="102" height="32"></a>
+      {local.length > 0 && (
+        <ul class="ltools">
+          {local.map((l, i) => <li><a href={l.href.startsWith('#') ? l.href : href(l.href)} class={i === 0 ? 'on' : undefined}>{l.label}</a></li>)}
+        </ul>
+      )}
+      {cta && <a class="pill" href={href(cta.href)}>{cta.label}</a>}
+    </div>
+  </nav>
+
+  <div class="mnav" id="mnav" hidden role="dialog" aria-modal="true" aria-label="القائمة">
+    <button class="icon-btn x" type="button" data-menu-close aria-label="إغلاق">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    {GNAV.map((n) => <a href={href(n.href)}>{n.label}</a>)}
+    <a href={href('/gallery')}>المعرض</a>
+    <a href={href('/partnerships')}>الشركاء</a>
+  </div>
+
+  <main id="main"><slot /></main>
+
+  <footer class="foot">
+    <div class="wide">
+      <div class="foot-brand"><img src={href('/brand/logo-full-light.svg')} alt="حسين الحاجي، أمكّن الشباب" width="320" height="118" loading="lazy"></div>
+      <ol>
+        <li id="fn1">حسب سجل الأنشطة المنشور في الموقع، ويشمل التدريب الحضوري والافتراضي والمعسكرات والإرشاد والتحكيم والاستضافات. يضم السجل {st.entries} قيداً، وبعض القيود يجمع أكثر من دفعة أو جلسة.</li>
+        <li id="fn2">تقدير إجمالي لعدد المستفيدين من البرامج منذ {site.stats.since}، كما ورد في السيرة المنشورة.</li>
+      </ol>
+      <div class="dir">
+        {FOOT_DIR.map((g) => (
+          <div><h3>{g.h}</h3><ul>{g.l.map(([t, u]) => <li><a href={href(u)}>{t}</a></li>)}</ul></div>
+        ))}
+        <div><h3>تواصل</h3><ul>
+          <li><a href={links.mail}>البريد الإلكتروني</a></li>
+          <li><a href={links.wa} rel="noopener">واتساب</a></li>
+          <li><a href={site.contact.linkedin} rel="noopener">لينكدإن</a></li>
+          <li><a href={site.contact.podcast} rel="noopener">بودكاستي</a></li>
+        </ul></div>
+      </div>
+      <div class="legal"><span>© {new Date().getFullYear()} حسين الحاجي. جميع الحقوق محفوظة.</span><span>{site.contact.country}</span></div>
+    </div>
+  </footer>
+
+  <div class="sov" id="sov" hidden role="dialog" aria-modal="true" aria-label="بحث في الموقع">
+    <div class="spanel">
+      <input id="sq" type="search" placeholder="ابحث في البرامج والأخبار والمقالات…" autocomplete="off" aria-label="ابحث في الموقع">
+      <ul class="sres" id="sres"><li class="shint">اكتب كلمة أو أكثر. اضغط Esc للإغلاق.</li></ul>
+    </div>
+  </div>
+  <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="عارض الصور">
+    <button class="x" type="button" data-lb="close" aria-label="إغلاق">×</button>
+    <button class="nx" type="button" data-lb="next" aria-label="التالية">‹</button>
+    <button class="pv" type="button" data-lb="prev" aria-label="السابقة">›</button>
+    <img id="lbi" alt="">
+    <p class="cap" id="lbc"></p>
+  </div>
+
+  <script>import '../scripts/base.js';</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import honors from '../data/honors.json';
+import { href } from '../lib/site.js';
+---
+<Base title="التكريم والشهادات" description="شهادات الشكر والتقدير والأوسمة من الجهات التي عمل معها." active="honor"
+  local={[{ label: 'الشهادات', href: '#top' }, { label: 'رواد الشباب العربي', href: '/arab-youth-pioneers' }]}>
+  <PageHead title="التكريم." lead={`${honors.length} شهادة وتقدير من جهات عمل معها.`}>
+    <div class="ctas" style="margin-top:24px"><a class="more" href={href('/arab-youth-pioneers')}>رواد الشباب العربي 2025</a></div>
+  </PageHead>
+  <section class="sec tight flush" id="top">
+    <div class="wide">
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">
+        {honors.map((h) => (
+          <button class="ccard" type="button" data-lightbox data-group="honor" data-full={href(h.image)} data-cap={`${h.title}، ${h.org}`} style="border:0;font:inherit;text-align:start;cursor:zoom-in;padding:0">
+            <div class="ph" style="aspect-ratio:4/3"><img src={href(h.image)} alt={`${h.title} من ${h.org}`} loading="lazy"></div>
+            <div class="body"><h3 style="font-size:1.0625rem">{h.org}</h3><span class="meta">{h.title}{h.year ? ' · ' + h.year : ''}</span></div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

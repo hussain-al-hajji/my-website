@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import bio from '../data/bio.json';
+import pages from '../data/pages.json';
+import { site, BIO_SECTION } from '../lib/site.js';
+const p = pages.bio;
+const secs = ['career', 'credentials', 'achievements', 'leadership', 'committees', 'writing'];
+const c = site.contact;
+---
+<Base title="نبذة تعريفية" description={p.lead} noindex cta={null}>
+  <div class="profile-sheet">
+    <p class="no-print" style="text-align:end"><button class="pill" type="button" onclick="print()" style="border:0;cursor:pointer;font:inherit">طباعة أو حفظ PDF</button></p>
+    <h1>{site.name}</h1>
+    <p style="color:var(--ink-2)">{site.role}. {p.lead}</p>
+    <p style="margin-top:6px" class="ltr">{c.email} · {c.phone}</p>
+    {p.intro.map((t) => <p style="margin-top:14px;line-height:1.9">{t}</p>)}
+    {secs.map((s) => (
+      <section>
+        <h2>{BIO_SECTION[s]}</h2>
+        <ul>{bio.filter((x) => x.section === s).map((x) => <li><b>{x.title}</b>{x.subtitle ? '، ' + x.subtitle : ''}{x.period ? ' (' + x.period + ')' : ''}</li>)}</ul>
+      </section>
+    ))}
+  </div>
+</Base>

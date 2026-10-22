@@ -1,0 +1,8 @@
+# انسخه إلى worker/.dev.vars للتجربة المحلية. الملف الفعلي مستثنى من git.
+GITHUB_TOKEN=github_pat_xxx
+FIREBASE_PROJECT_ID=your-firebase-project
+ALLOWED_EMAILS=you@example.com
+ALLOWED_UIDS=
+ALLOWED_ORIGIN=http://localhost:4321
+GITHUB_REPO=hussain-al-hajji/my-website
+GITHUB_BRANCH=main

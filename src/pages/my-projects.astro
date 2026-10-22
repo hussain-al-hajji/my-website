@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import projects from '../data/projects.json';
+import { href } from '../lib/site.js';
+---
+<Base title="المشاريع" description="مشاريع ومبادرات أسّسها حسين الحاجي أو شارك في تأسيسها." active="bio" local={[{ label: 'المشاريع', href: '#top' }]}>
+  <PageHead title="المشاريع." lead="مبادرات تحوّلت من فكرة إلى منتج أو منصة أو برنامج." />
+  <section class="sec tight flush alt" id="top" style="padding-top:60px">
+    <div class="wide">
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(340px,1fr))">
+        {projects.map((p) => (
+          <article class="ccard" data-in>
+            <div class="ph contain"><img src={href(p.image)} alt={p.name} loading="lazy"></div>
+            <div class="body">
+              <span class="meta"><span class="tag">{p.status}</span> {p.nameEn}</span>
+              <h3>{p.name}</h3>
+              <p>{p.desc}</p>
+              {p.link && <a class="go" href={p.link} rel="noopener">زيارة المشروع</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
