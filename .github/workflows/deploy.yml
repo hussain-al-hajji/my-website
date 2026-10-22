@@ -30,6 +30,9 @@ jobs:
       - run: npm test
       - run: npm run build
         env:
+          # قبل ربط الدومين يُنشر الموقع على github.io/my-website. عند ربط الدومين اضبط المتغيّرين SITE_URL=https://hussain-al-hajji.com و SITE_BASE=/
+          SITE_URL: ${{ vars.SITE_URL || 'https://hussain-al-hajji.github.io' }}
+          SITE_BASE: ${{ vars.SITE_BASE || '/my-website' }}
           PUBLIC_FIREBASE_API_KEY: ${{ vars.PUBLIC_FIREBASE_API_KEY }}
           PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.PUBLIC_FIREBASE_AUTH_DOMAIN }}
           PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.PUBLIC_FIREBASE_PROJECT_ID }}

@@ -41,6 +41,10 @@ npm test          # اختبارات الـ Worker
 
 > الاستضافة المجانية على GitHub Pages تتطلب مستودعاً عاماً. لهذا لا تُوضع فيه أسرار ولا ملفات خاصة.
 
+### 1.5 قبل ربط الدومين وبعده
+- قبل الربط يُنشر الموقع تلقائياً على `https://hussain-al-hajji.github.io/my-website/` للمعاينة.
+- عند ربط الدومين أضف متغيّري GitHub: `SITE_URL` = `https://hussain-al-hajji.com` و`SITE_BASE` = `/`، ثم أعد تشغيل Deploy.
+
 ### 2. تسجيل الدخول (Firebase)
 1. أنشئ مشروعاً في [Firebase Console](https://console.firebase.google.com) وأضف تطبيق ويب.
 2. Authentication > Sign-in method: فعّل **Google**، وفعّل **Apple** (يحتاج حساب Apple Developer: Services ID ومفتاح، ويُضاف نطاق Firebase كـ Return URL).
