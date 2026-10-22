@@ -9,7 +9,7 @@ export function GET() {
   const add = (k, u, t, d = '', x = '') => idx.push({ k, u, t, d: d.length > 140 ? d.slice(0, 138) + '…' : d, x: x.slice(0, 900) });
   [['/bio', 'السيرة والإنجازات'], ['/training-programs', 'سجل الأثر'], ['/collaborate', 'الحقائب التدريبية'], ['/contact', 'تواصل'], ['/honor', 'التكريم والشهادات'],
     ['/arab-youth-pioneers', 'رواد الشباب العربي'], ['/media', 'الإعلام'], ['/feedback', 'آراء وتوصيات'], ['/recorded-courses', 'الدورات المسجلة'], ['/partnerships', 'الشراكات'],
-    ['/gallery', 'المعرض'], ['/blog', 'محتوى مضيء'], ['/featured', 'مشاريع ومشاركات مميزة'], ['/my-projects', 'مبادرات مبتكرة'], ['/news', 'الأخبار'], ['/methodology', pages.methodology.title]]
+    ['/gallery', 'المعرض'], ['/blog', 'محتوى مضيء'], ['/featured', 'مشاريع ومشاركات مميزة'], ['/faq', 'أسئلة شائعة'], ['/my-projects', 'مبادرات مبتكرة'], ['/news', 'الأخبار'], ['/methodology', pages.methodology.title]]
     .forEach(([u, t]) => add('page', href(u), t));
   getKits().forEach((k) => add('kit', href('/collaborate') + '#' + k.id, k.title, k.duration, [k.summary, ...k.axes].join(' ')));
   getNews().forEach((n) => add('news', href('/news/' + n.id), n.title, n.summary, n.body));

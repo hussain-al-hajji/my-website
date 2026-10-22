@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { faqItems } from '../lib/faq.js';
+import { faqSchema } from '../lib/seo.js';
+import { href } from '../lib/site.js';
+
+const items = faqItems();
+---
+<Base title="أسئلة شائعة" description="إجابات مباشرة عن برامجي وحقائبي التدريبية واعتماداتي وكيفية طلب برنامج لجهتك." active="contact"
+  jsonld={faqSchema(items)} local={[{ label: 'الأسئلة', href: '#top' }, { label: 'تواصل', href: '/contact' }]}>
+  <PageHead title="أسئلة شائعة." lead="إجابات مختصرة عمّا يسأل عنه أغلب من يتواصل معي." />
+  <section class="sec tight flush" id="top">
+    <div class="measure">
+      <div class="faq">
+        {items.map((q, i) => (
+          <details class="acc" open={i === 0}>
+            <summary>{q.q}</summary>
+            <div class="in-acc"><p>{q.a}</p></div>
+          </details>
+        ))}
+      </div>
+      <div class="ctas" style="margin-top:44px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/collaborate')}>الحقائب التدريبية</a></div>
+    </div>
+  </section>
+</Base>

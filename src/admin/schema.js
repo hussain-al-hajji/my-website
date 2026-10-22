@@ -210,6 +210,16 @@ export const SECTIONS = [
     ],
   },
   {
+    id: 'faq', label: 'أسئلة شائعة', file: 'faq', kind: 'list', group: 'المحتوى', ordered: true,
+    help: 'تظهر في صفحة «أسئلة شائعة» وتُرسل لمحركات البحث. يمكنك استخدام الرموز {programs} و{partners} و{beneficiaries} و{kits} و{since} و{inperson} و{virtual} وتُستبدل بأرقام الموقع.',
+    title: (x) => x.q, meta: (x) => (x.a || '').slice(0, 60),
+    blank: () => ({ id: uid('q'), q: '', a: '' }),
+    fields: [
+      { k: 'q', label: 'السؤال', type: 'text', ...req },
+      { k: 'a', label: 'الإجابة (مباشرة ومختصرة)', type: 'textarea', rows: 6, ...req },
+    ],
+  },
+  {
     id: 'bio', label: 'السيرة', file: 'bio', kind: 'list', group: 'المحتوى',
     title: (x) => x.title, meta: (x) => [x.section, x.period].filter(Boolean).join(' · '),
     blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', period: '', desc: '', link: '' }),
