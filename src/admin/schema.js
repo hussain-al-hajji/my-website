@@ -169,6 +169,7 @@ export const SECTIONS = [
       { k: 'group', label: 'التصنيف', type: 'select', options: [['gov', 'جهات حكومية'], ['nonprofit', 'غير ربحية'], ['private', 'قطاع خاص'], ['edu', 'تعليمية'], ['chambers', 'غرف تجارية'], ['gulf', 'خليجية'], ['intl', 'دولية']] },
       { k: 'country', label: 'الدولة (للخارجية)', type: 'text' },
       { k: 'logo', label: 'الشعار', type: 'image', ...req },
+      { k: 'marquee', label: 'يظهر في شريط الشعارات بالرئيسية', type: 'bool', help: 'يُفضّل ألا يتجاوز 20 جهة.' },
     ],
   },
   {

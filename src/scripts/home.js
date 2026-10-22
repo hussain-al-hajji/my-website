@@ -40,61 +40,6 @@ const cio = new IntersectionObserver((es) => es.forEach((e) => {
 }), { threshold: 0.6 });
 $$('[data-count]').forEach((el) => cio.observe(el));
 
-// اللحظة 2: جدار الأثر، نقطة لكل قيد في السجل
-const wall = $('#wall');
-const years = data.years;
-const cols = {};
-const tip = document.createElement('div');
-tip.className = 'tip'; tip.hidden = true; wall.appendChild(tip);
-years.forEach((y) => {
-  const c = document.createElement('div');
-  c.className = 'ycol';
-  c.innerHTML = `<span class="yc"></span><div class="dots"></div><span class="yl">${y}</span>`;
-  wall.appendChild(c); cols[y] = c;
-});
-log.forEach((r, i) => {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'dot on';
-  b.style.setProperty('--i', i);
-  b.setAttribute('aria-label', `${r.n}، ${r.o}، ${r.y}`);
-  const show = () => {
-    const w = wall.getBoundingClientRect(), d = b.getBoundingClientRect();
-    tip.innerHTML = `<b>${esc(r.n)}</b><span>${esc(r.o)}</span><span>${esc([r.l, r.d].filter(Boolean).join(' · '))}</span><span>${r.y}</span>`;
-    tip.hidden = false;
-    const x = d.left - w.left + d.width / 2, cw = tip.offsetWidth;
-    tip.style.left = Math.max(0, Math.min(w.width - cw, x - cw / 2)) + 'px';
-    tip.style.top = (d.top - w.top - tip.offsetHeight - 14) + 'px';
-  };
-  b.addEventListener('mouseenter', show); b.addEventListener('focus', show); b.addEventListener('click', show);
-  b.addEventListener('mouseleave', () => (tip.hidden = true)); b.addEventListener('blur', () => (tip.hidden = true));
-  r.el = b; cols[r.y]?.querySelector('.dots').appendChild(b);
-});
-const wCount = $('#wCount'), wLabel = $('#wLabel');
-let shown = log.length;
-function roll(to) {
-  if (reduce) { wCount.textContent = to; shown = to; return; }
-  const from = shown, t0 = performance.now();
-  (function tick(t) { const k = Math.min(1, (t - t0) / 600); wCount.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
-  shown = to;
-}
-function filter(t, k) {
-  let n = 0; const per = {};
-  log.forEach((r) => {
-    const on = (!t || r.t === t) && (!k || (r.k || '').includes(k));
-    r.el?.classList.toggle('on', on);
-    if (on) { n++; per[r.y] = (per[r.y] || 0) + 1; }
-  });
-  years.forEach((y) => { cols[y].querySelector('.yc').textContent = per[y] || ''; });
-  roll(n);
-  wLabel.textContent = t ? `مشاركة في ${t}` : k ? 'مشاركة عن بُعد' : data.wallLabel;
-}
-$$('.chip').forEach((c) => c.addEventListener('click', () => {
-  $$('.chip').forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
-  filter(c.dataset.t, c.dataset.k);
-}));
-filter('', '');
-new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { wall.classList.add('in'); o.disconnect(); } }), { threshold: 0.25 }).observe(wall);
-
 // اللحظة 3: جملة الجائزة تضيء كلمة كلمة
 const ink = $('#inkFill');
 ink.innerHTML = ink.textContent.trim().split(/\s+/).map((w) => `<span class="w">${esc(w)}</span>`).join(' ');
@@ -133,7 +78,7 @@ const subBase = sub.innerHTML;
 const frames = []; let spin = 0, paused = false, visible = true, last = performance.now();
 data.ring.forEach((f, k) => {
   const a = document.createElement('a');
-  a.className = 'frame'; a.href = '#wl'; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
+  a.className = 'frame'; a.href = data.recordsUrl; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
   const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
   const fr = { el: a, k, ar: f.ratio || 1.5 };
   const setAr = () => { if (im.naturalWidth) fr.ar = Math.min(2.2, Math.max(0.6, im.naturalWidth / im.naturalHeight)); };
