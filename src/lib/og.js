@@ -53,10 +53,11 @@ export function renderHomeOg() {
   const ph = 590, pw = Math.round(ph * 620 / 768);
   const lx = 1160 - lw, ly = (630 - lh) / 2 - 10;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#f5f5f2"/>
-<image x="64" y="30" width="${pw}" height="${ph}" xlink:href="data:image/png;base64,${portraitB64}"/>
-<g transform="translate(${lx} ${ly.toFixed(0)}) scale(${sc})" fill="#0b0b0a" fill-rule="evenodd">${fullPaths.map((d) => `<path d="${d}"/>`).join('')}</g>
-<text x="1160" y="592" font-family="OG Latin" font-size="26" font-weight="700" fill="#8a8982" text-anchor="end">hussain-al-hajji.com</text>
+<rect width="1200" height="630" fill="#0b0b0a"/>
+<rect x="40" y="30" width="${pw + 48}" height="570" rx="30" fill="#f5f5f2"/>
+<image x="64" y="30" width="${pw}" height="${ph - 20}" preserveAspectRatio="xMidYMax slice" xlink:href="data:image/png;base64,${portraitB64}"/>
+<g transform="translate(${lx} ${ly.toFixed(0)}) scale(${sc})" fill="#f5f5f2" fill-rule="evenodd">${fullPaths.map((d) => `<path d="${d}"/>`).join('')}</g>
+<text x="1160" y="592" font-family="OG Latin" font-size="26" font-weight="700" fill="#a3a29b" text-anchor="end">hussain-al-hajji.com</text>
 </svg>`;
   return new Resvg(svg, { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Latin' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
 }
