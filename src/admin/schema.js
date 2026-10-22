@@ -258,15 +258,6 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'specs', label: 'المواصفات', file: 'specs', kind: 'list', group: 'الموقع', ordered: true,
-    title: (x) => x.title, meta: (x) => (x.items || []).length + ' عناصر',
-    blank: () => ({ id: uid('s'), title: '', items: [] }),
-    fields: [
-      { k: 'title', label: 'العنوان', type: 'text', ...req },
-      { k: 'items', label: 'العناصر', type: 'objects', fields: [{ k: 'name', label: 'الاسم', type: 'text' }, { k: 'note', label: 'الوصف', type: 'text' }] },
-    ],
-  },
-  {
     id: 'award', label: 'رواد الشباب العربي', file: 'award', kind: 'object', group: 'الموقع',
     fields: [
       { k: 'title', label: 'العنوان', type: 'text' }, { k: 'edition', label: 'النسخة', type: 'text' }, { k: 'sponsor', label: 'الرعاية', type: 'text' },

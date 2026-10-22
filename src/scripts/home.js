@@ -218,9 +218,8 @@ placed.forEach((c, i) => {
   gg.addEventListener('mouseleave', () => (mCard.hidden = true)); gg.addEventListener('blur', () => (mCard.hidden = true));
   gC.appendChild(gg);
 });
-const remote = log.filter((r) => /إلكترون|افتراض|عن بعد/.test(`${r.l} ${r.k}`)).length;
 $('#mCount').textContent = placed.length;
-$('#mNote').textContent = `و${remote} مشاركة عن بُعد وصلت إلى أبعد من الخريطة. أشِر إلى أي مدينة لترى برامجها.`;
+$('#mLabel').textContent = `تم تنفيذ البرامج حضورياً في أكثر من ${Math.floor(placed.length / 10) * 10} موقعاً داخل وخارج المملكة`;
 new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { map.classList.add('in'); o.disconnect(); } }, { threshold: 0.3 }).observe(map);
 
 // اللحظة 3ب: الدرع يتبع اليد

@@ -75,7 +75,7 @@ const person = {
 
   <nav class="gnav" aria-label="الموقع">
     <div class="wide">
-      <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية"><img src={href('/brand/icon.svg')} alt="" width="24" height="24"></a>
+      <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية"><img src={href('/brand/icon.svg')} alt="" width="28" height="28"></a>
       <ul>
         {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>

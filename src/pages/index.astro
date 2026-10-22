@@ -4,7 +4,6 @@ import geo from '../assets/gulf-geo.html?raw';
 import ring from '../data/ring.json';
 import highlights from '../data/highlights.json';
 import award from '../data/award.json';
-import specs from '../data/specs.json';
 import testimonials from '../data/testimonials.json';
 import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, contactLinks } from '../lib/site.js';
 import { records } from '../lib/site.js';
@@ -53,7 +52,7 @@ const jsonld = {
 <Base
   description={site.description}
   active="home"
-  local={[{ label: 'نظرة عامة', href: '#top' }, { label: 'المواصفات', href: '#specs' }, { label: 'اعثر على حقيبتك', href: '#kits' }]}
+  local={[{ label: 'نظرة عامة', href: '#top' }, { label: 'اعثر على حقيبتك', href: '#kits' }]}
   jsonld={jsonld}
 >
 <header class="hero" id="top">
@@ -116,13 +115,13 @@ const jsonld = {
   <div class="wide">
     <div class="wall-head">
       <h2 id="mp" data-in>خريطة<br>الأثر.</h2>
-      <p class="count"><span id="mCount">0</span><small>مدينة ودولة حضرها بنفسه</small></p>
+      <p class="count"><span id="mCount">0</span><small id="mLabel"></small></p>
     </div>
     <div class="map-wrap">
       <svg class="map" id="map" viewBox="0 0 1000 600" role="img" aria-label="خريطة المدن التي قُدّمت فيها البرامج"><g class="geo" aria-hidden="true" set:html={geo}></g></svg>
       <div class="tip" id="mCard" hidden></div>
     </div>
-    <p class="map-note" id="mNote"></p>
+    <p class="map-note">اضغط على المدينة لترى التفاصيل</p>
   </div>
 </section>
 
@@ -180,7 +179,7 @@ const jsonld = {
   </section>
 )}
 
-<section class="sec alt" id="kits" aria-labelledby="kt">
+<section class="sec alt" id="kits" aria-labelledby="kt" style="padding-bottom:48px">
   <div class="wide">
     <div class="sec-head"><h2 id="kt" data-in>اعثر على حقيبتك<br>في سؤالين.</h2><a class="more" href={href('/collaborate')}>قارن الحقائب</a></div>
     <div class="finder">
@@ -197,17 +196,6 @@ const jsonld = {
         <div class="body" id="rBody"></div>
       </article>
     </div>
-  </div>
-</section>
-
-<section class="sec specs" id="specs" aria-labelledby="sp">
-  <div class="measure">
-    <h2 id="sp" data-in>المواصفات.</h2>
-    {specs.map((s) => (
-      <div class="spec" data-in><h3>{s.title}</h3><ul>
-        {s.items.map((it) => <li><b>{it.name}</b><span>{it.note}</span></li>)}
-      </ul></div>
-    ))}
   </div>
 </section>
 
