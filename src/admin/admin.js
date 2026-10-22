@@ -1,12 +1,14 @@
 import { SECTIONS, FILES } from './schema.js';
+import PUB from './public-config.json';
 
 const ENV = import.meta.env;
+// إعدادات Firebase للويب وعنوان الـ Worker عامة بطبيعتها (ليست أسراراً). المتغيّرات البيئية تتقدّم عليها إن وُجدت.
 const CFG = {
-  apiKey: ENV.PUBLIC_FIREBASE_API_KEY, authDomain: ENV.PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: ENV.PUBLIC_FIREBASE_PROJECT_ID, appId: ENV.PUBLIC_FIREBASE_APP_ID,
+  apiKey: ENV.PUBLIC_FIREBASE_API_KEY || PUB.apiKey, authDomain: ENV.PUBLIC_FIREBASE_AUTH_DOMAIN || PUB.authDomain,
+  projectId: ENV.PUBLIC_FIREBASE_PROJECT_ID || PUB.projectId, appId: ENV.PUBLIC_FIREBASE_APP_ID || PUB.appId,
 };
 const B = (ENV.BASE_URL || '/').replace(/\/$/, '');
-const API = (ENV.PUBLIC_API_URL || '').replace(/\/$/, '');
+const API = (ENV.PUBLIC_API_URL || PUB.apiUrl || '').replace(/\/$/, '');
 const CONFIGURED = !!(CFG.apiKey && CFG.projectId && API);
 const FB = 'https://www.gstatic.com/firebasejs/11.0.2/';
 const DEMO_KEY = 'admin-demo-v1';

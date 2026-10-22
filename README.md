@@ -49,7 +49,7 @@ npm test          # اختبارات الـ Worker
 1. أنشئ مشروعاً في [Firebase Console](https://console.firebase.google.com) وأضف تطبيق ويب.
 2. Authentication > Sign-in method: فعّل **Google**، وفعّل **Apple** (يحتاج حساب Apple Developer: Services ID ومفتاح، ويُضاف نطاق Firebase كـ Return URL).
 3. Authentication > Settings > Authorized domains: أضف `hussain-al-hajji.com`.
-4. انسخ إعدادات التطبيق إلى متغيّرات GitHub (Settings > Secrets and variables > Actions > **Variables**): `PUBLIC_FIREBASE_API_KEY` و`PUBLIC_FIREBASE_AUTH_DOMAIN` و`PUBLIC_FIREBASE_PROJECT_ID` و`PUBLIC_FIREBASE_APP_ID`. هذه قيم عامة بطبيعتها وليست أسراراً.
+4. القيم الحالية محفوظة في `src/admin/public-config.json` (عامة، وليست أسراراً). ولتغييرها دون تعديل الكود انسخ إعدادات التطبيق إلى متغيّرات GitHub (Settings > Secrets and variables > Actions > **Variables**): `PUBLIC_FIREBASE_API_KEY` و`PUBLIC_FIREBASE_AUTH_DOMAIN` و`PUBLIC_FIREBASE_PROJECT_ID` و`PUBLIC_FIREBASE_APP_ID`. هذه قيم عامة بطبيعتها وليست أسراراً.
 
 ### 3. الـ Worker
 1. أنشئ **fine-grained personal access token** في GitHub لمستودع `my-website` فقط، بصلاحية Contents: Read and write.
