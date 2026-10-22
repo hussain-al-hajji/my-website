@@ -148,7 +148,7 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'projects', label: 'المشاريع', file: 'projects', kind: 'list', group: 'المحتوى',
+    id: 'projects', label: 'مبادرات مبتكرة', file: 'projects', kind: 'list', group: 'المحتوى',
     title: (x) => x.name, meta: (x) => x.status,
     blank: () => ({ id: uid('j'), name: '', nameEn: '', desc: '', link: '', image: '', status: 'مستمر' }),
     fields: [
@@ -194,11 +194,24 @@ export const SECTIONS = [
     ],
   },
   {
+    id: 'featured', label: 'مشاريع ومشاركات مميزة', file: 'featured', kind: 'list', group: 'المحتوى', ordered: true,
+    help: 'تظهر في صفحة «مشاريع ومشاركات مميزة» مع شعارات الجهات. الترتيب يهم، والتجميع حسب «المجموعة».',
+    title: (x) => x.title, meta: (x) => [x.group, x.orgs].filter(Boolean).join(' · '),
+    blank: () => ({ id: uid('ft'), group: 'التدريب والتيسير والتحكيم', title: '', orgs: '', logo: '', link: '' }),
+    fields: [
+      { k: 'group', label: 'المجموعة', type: 'combo', from: 'featured.group', ...req },
+      { k: 'title', label: 'وصف المشاركة', type: 'textarea', rows: 3, ...req },
+      { k: 'orgs', label: 'أسماء الجهات (للنص البديل للشعارات)', type: 'text' },
+      { k: 'logo', label: 'شعارات الجهات (صورة واحدة)', type: 'image', help: 'يُفضّل شريط عريض بنسبة 5:2 بخلفية بيضاء.' },
+      { k: 'link', label: 'رابط (اختياري)', type: 'url' },
+    ],
+  },
+  {
     id: 'bio', label: 'السيرة', file: 'bio', kind: 'list', group: 'المحتوى',
     title: (x) => x.title, meta: (x) => [x.section, x.period].filter(Boolean).join(' · '),
     blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', period: '', desc: '', link: '' }),
     fields: [
-      { k: 'section', label: 'القسم', type: 'select', options: [['career', 'المسيرة المهنية'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['projects', 'المشاريع'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
+      { k: 'section', label: 'القسم', type: 'select', options: [['career', 'المسيرة المهنية'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
       { k: 'title', label: 'العنوان', type: 'text', ...req },
       { k: 'subtitle', label: 'الجهة', type: 'text' },
       { k: 'period', label: 'الفترة', type: 'text' },

@@ -102,7 +102,6 @@ export const BIO_SECTION = {
   mentoring: 'الإرشاد والمسرّعات',
   bootcamps: 'المعسكرات',
   learning: 'التعلّم والتطوير',
-  projects: 'المشاريع',
   writing: 'الكتابة',
   volunteer: 'العمل التطوعي',
   skills: 'المهارات',
@@ -149,7 +148,7 @@ export const GNAV = [
   { label: 'تواصل', href: '/contact', key: 'contact' },
 ];
 export const FOOT_DIR = [
-  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['المعرض', '/gallery']] },
-  { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['المشاريع', '/my-projects']] },
+  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery']] },
+  { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['مبادرات مبتكرة', '/my-projects']] },
   { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['الدورات المسجلة', '/recorded-courses'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
 ];

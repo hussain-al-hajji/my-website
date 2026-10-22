@@ -6,14 +6,14 @@ import pages from '../data/pages.json';
 import { href, BIO_SECTION, site } from '../lib/site.js';
 
 const p = pages.bio;
-const order = ['career', 'achievements', 'credentials', 'committees', 'leadership', 'mentoring', 'bootcamps', 'learning', 'projects', 'writing', 'volunteer'];
+const order = ['career', 'achievements', 'credentials', 'committees', 'leadership', 'mentoring', 'bootcamps', 'learning', 'writing', 'volunteer'];
 const chipSections = ['expertise', 'skills', 'values'];
 const by = (s) => bio.filter((x) => x.section === s);
 const local = [{ label: 'السيرة', href: '#top' }, ...order.filter((s) => by(s).length).slice(0, 4).map((s) => ({ label: BIO_SECTION[s], href: '#' + s }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
   <PageHead title={p.title} lead={p.lead}>
-    <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/profile')}>نسخة للطباعة</a></div>
+    <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/featured')}>مشاريع ومشاركات مميزة</a><a class="more" href={href('/profile')}>نسخة للطباعة</a></div>
   </PageHead>
 
   <section class="sec tight flush" id="top">

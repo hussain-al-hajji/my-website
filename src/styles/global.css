@@ -572,3 +572,7 @@ details.acc .in-acc{padding-bottom:28px}
 .dir .social svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .dir .podcast-link a{color:var(--action)}
 .dir .podcast-link a:hover{text-decoration:underline}
+.ccard .ph.logo-strip{aspect-ratio:5/2;background:#fff;display:grid;place-items:center;padding:6px 10px}
+.ccard .ph.logo-strip img{width:100%;height:100%;object-fit:contain}
+.ccard.line .ph.logo-strip{border-bottom:1px solid var(--hair)}
+.ft-title{font-size:var(--t-body);line-height:1.8;color:var(--ink)}

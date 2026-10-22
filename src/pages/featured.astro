@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import featured from '../data/featured.json';
+import { href } from '../lib/site.js';
+
+const groups = [...new Set(featured.map((f) => f.group))];
+---
+<Base title="مشاريع ومشاركات مميزة" description="مختارات من المشاريع والبرامج والمعسكرات التي شاركتُ فيها، مع شعارات الجهات الشريكة في كل منها." active="bio"
+  local={[{ label: 'المشاركات', href: '#top' }, { label: 'السجل الكامل', href: '/training-programs' }]}>
+  <PageHead title="مشاريع ومشاركات مميزة." lead="مختارات من البرامج والمعسكرات والمبادرات التي شاركتُ فيها، مع الجهات الشريكة في كل منها.">
+    <div class="ctas" style="margin-top:24px"><a class="more" href={href('/training-programs')}>سجل الأثر الكامل</a></div>
+  </PageHead>
+  <div id="top">
+    {groups.map((g, gi) => (
+      <section class={`sec tight${gi % 2 === 0 ? ' flush' : ' alt'}`}>
+        <div class="wide">
+          <h2 class="h2" style="margin-bottom:28px" data-in>{g}.</h2>
+          <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
+            {featured.filter((f) => f.group === g).map((f) => {
+              const body = (<>
+                <div class="ph logo-strip"><img src={href(f.logo)} alt={f.orgs ? `شعارات: ${f.orgs}` : ''} loading="lazy"></div>
+                <div class="body"><p class="ft-title">{f.title}</p></div>
+              </>);
+              return f.link
+                ? <a class="ccard line" href={f.link} rel="noopener" data-in>{body}</a>
+                : <article class="ccard line" data-in>{body}</article>;
+            })}
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
