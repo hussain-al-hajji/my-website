@@ -116,10 +116,6 @@ const person = {
   <footer class="foot">
     <div class="wide">
       <div class="foot-brand"><img src={href('/brand/logo-full-light.svg')} alt="حسين الحاجي، أمكّن الشباب" width="320" height="118" loading="lazy"></div>
-      <ol>
-        <li id="fn1">حسب سجل الأنشطة المنشور في الموقع، ويشمل التدريب الحضوري والافتراضي والمعسكرات والإرشاد والتحكيم والاستضافات. يضم السجل {st.entries} قيداً، وبعض القيود يجمع أكثر من دفعة أو جلسة.</li>
-        <li id="fn2">تقدير إجمالي لعدد المستفيدين من البرامج منذ {site.stats.since}، كما ورد في السيرة المنشورة.</li>
-      </ol>
       <div class="dir">
         {FOOT_DIR.map((g) => (
           <div><h3>{g.h}</h3><ul>{g.l.map(([t, u]) => <li><a href={href(u)}>{t}</a></li>)}</ul></div>

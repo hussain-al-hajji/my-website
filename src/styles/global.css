@@ -42,8 +42,6 @@ p{text-wrap:pretty}
 .dark .pill{background:var(--action-on-dark);color:var(--dark)}
 .dark .pill:hover{background:#f0c46e}
 .dark .more{color:var(--action-on-dark)}
-sup.fn{font-size:.5em;vertical-align:super;margin-inline-start:2px;font-weight:500}
-sup.fn a{color:inherit}
 .ctas{display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap}
 
 /* ---------- navigation: global + local ---------- */
@@ -163,7 +161,6 @@ sup.fn a{color:inherit}
 
 /* ---------- footer ---------- */
 .foot{background:var(--bg-alt);color:var(--ink-2);font-size:var(--t-fine);line-height:1.6;padding-block:22px 28px}
-.foot ol{padding-inline-start:16px;display:grid;gap:8px;padding-bottom:16px;border-bottom:1px solid var(--hair)}
 .dir{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-block:22px;border-bottom:1px solid var(--hair)}
 .dir h3{color:var(--ink);font-weight:600;font-size:var(--t-fine);margin-bottom:8px}
 .dir ul{list-style:none;display:grid;gap:6px}
