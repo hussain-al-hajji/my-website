@@ -239,13 +239,6 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'ring', label: 'حلقة الصور', file: 'ring', kind: 'list', group: 'الموقع', ordered: true,
-    help: 'الصور التي تدور حول العنوان في الرئيسية. الترتيب يهم.',
-    title: (x) => x.title, meta: (x) => x.caption,
-    blank: () => ({ id: uid('ring'), image: '', title: '', caption: '' }),
-    fields: [{ k: 'image', label: 'الصورة', type: 'image', ...req }, { k: 'title', label: 'العنوان', type: 'text', ...req }, { k: 'caption', label: 'سطر ثانٍ', type: 'text' }],
-  },
-  {
     id: 'highlights', label: 'الأبرز', file: 'highlights', kind: 'list', group: 'الموقع', ordered: true,
     title: (x) => x.title, meta: (x) => x.caption,
     blank: () => ({ id: uid('hl'), title: '', caption: '', image: '', position: '50% 50%', link: '/' }),

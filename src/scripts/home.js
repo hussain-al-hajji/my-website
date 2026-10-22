@@ -127,47 +127,6 @@ $$('.seg').forEach((grp) => $$('button', grp).forEach((b) => b.addEventListener(
 })));
 render();
 
-// اللحظة 0: حلقة صور البرامج
-const ring = $('#ring'), stage = $('#ringStage'), sub = $('#sub');
-const subBase = sub.innerHTML;
-const frames = []; let spin = 0, paused = false, visible = true, last = performance.now();
-data.ring.forEach((f, k) => {
-  const a = document.createElement('a');
-  a.className = 'frame'; a.href = '#wl'; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
-  const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
-  a.append(im);
-  const on = () => { paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.title)}</b>${esc(f.caption)}`; };
-  const off = () => { paused = false; ring.classList.remove('focus'); a.classList.remove('on'); sub.innerHTML = subBase; };
-  a.addEventListener('mouseenter', on); a.addEventListener('focus', on); a.addEventListener('mouseleave', off); a.addEventListener('blur', off);
-  ring.appendChild(a); frames.push({ el: a, k });
-});
-function drawRing() {
-  const W = ring.clientWidth, H = ring.clientHeight, phone = W < 760, n = phone ? 12 : frames.length;
-  const r = stage.getBoundingClientRect(), c = reduce ? 0 : Math.min(1, Math.max(0, -r.top / (H * 0.55)));
-  const cx = W / 2, cy = H / 2;
-  const rx = (phone ? W * 0.62 : Math.min(600, W * 0.42)) * (1 - c * 0.85);
-  const ry = (phone ? W * 0.62 : Math.min(330, H * 0.38)) * (1 - c * 0.85);
-  frames.forEach((f, i) => {
-    if (i >= n) { f.el.hidden = true; return; }
-    f.el.hidden = false;
-    const t = -Math.PI / 2 + (i / n) * Math.PI * 2 + spin, x = cx + rx * Math.cos(t), y = cy + ry * Math.sin(t), depth = (Math.sin(t) + 1) / 2;
-    const w = phone ? 60 + 26 * depth : 96 + 58 * depth, tall = i % 3 === 1, hgt = tall ? (w * 4) / 3 : (w * 3) / 4;
-    const ang = Math.max(-24, Math.min(24, Math.cos(t) * -18));
-    f.el.style.width = w + 'px'; f.el.style.height = hgt + 'px'; f.el.style.zIndex = depth > 0.5 ? 2 : 1;
-    const sc = (f.el.classList.contains('on') ? 1.25 : 1) * (1 - c * 0.55);
-    f.el.style.transform = `translate(${x - w / 2}px,${y - hgt / 2}px) rotate(${ang.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
-    if (!ring.classList.contains('focus')) f.el.style.opacity = (1 - c).toFixed(3);
-  });
-}
-function loop(t) {
-  const dt = Math.min(64, t - last); last = t;
-  if (!paused && !reduce && visible) spin += dt * 0.000045;
-  if (visible) drawRing();
-  requestAnimationFrame(loop);
-}
-new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(stage);
-drawRing(); requestAnimationFrame(loop);
-
 // اللحظة 2ب: خريطة الأثر من السجل نفسه
 const CITIES = data.cities;
 const counts = {}, samples = {};
