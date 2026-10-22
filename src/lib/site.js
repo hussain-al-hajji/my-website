@@ -143,6 +143,7 @@ export const GNAV = [
   { label: 'سجل الأثر', href: '/training-programs', key: 'training-programs' },
   { label: 'الحقائب التدريبية', href: '/collaborate', key: 'collaborate' },
   { label: 'الإعلام', href: '/media', key: 'media' },
+  { label: 'آراء المتدربين', href: '/feedback', key: 'feedback' },
   { label: 'محتوى مضيء', href: '/blog', key: 'blog' },
   { label: 'الأخبار', href: '/news', key: 'news' },
   { label: 'تواصل', href: '/contact', key: 'contact' },
