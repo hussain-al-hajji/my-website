@@ -6,6 +6,6 @@ compatibility_date = "2025-01-01"
 [vars]
 GITHUB_REPO = "hussain-al-hajji/my-website"
 GITHUB_BRANCH = "main"
-ALLOWED_ORIGIN = "https://hussain-al-hajji.com"
-FIREBASE_PROJECT_ID = ""
+ALLOWED_ORIGIN = "https://hussain-al-hajji.com,https://hussain-al-hajji.github.io,http://localhost:4321"
+FIREBASE_PROJECT_ID = "my-website-983ed"
 # ALLOWED_EMAILS و ALLOWED_UIDS تُضبطان كأسرار ولا تُكتبان هنا.
