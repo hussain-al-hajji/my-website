@@ -238,7 +238,7 @@ function render() {
   root.replaceChildren(
     h('div', { class: 'shell' },
       h('aside', { class: 'side', 'aria-label': 'الأقسام' },
-        h('div', { class: 'brand' }, h('img', { src: B + '/brand/icon.svg', alt: '', width: 28, height: 28 }), h('b', {}, 'لوحة التحكم')),
+        h('div', { class: 'brand' }, h('img', { src: B + '/brand/icon-192.png', alt: '', width: 28, height: 28 }), h('b', {}, 'لوحة التحكم')),
         ...groups.map((g) => h('nav', {}, h('h2', {}, g), ...SECTIONS.filter((s) => s.group === g).map((s) =>
           h('button', { class: 'nav' + (s.id === S.section ? ' on' : ''), onClick: () => { S.section = s.id; S.editing = null; S.filter = ''; render(); } },
             s.label, dirty.includes(s.file) ? h('i', { class: 'dot', title: 'تغييرات غير منشورة' }) : '')))),
