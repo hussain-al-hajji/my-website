@@ -138,11 +138,11 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'posters', label: 'ملصقات البرامج', file: 'posters', kind: 'list', group: 'المحتوى',
+    id: 'posters', label: 'إعلانات البرامج', file: 'posters', kind: 'list', group: 'المحتوى',
     title: (x) => x.caption || x.image.split('/').pop(), meta: (x) => x.year,
     blank: () => ({ id: uid('q'), year: new Date().getFullYear(), image: '', caption: '' }),
     fields: [
-      { k: 'image', label: 'الملصق', type: 'image', ...req },
+      { k: 'image', label: 'الإعلان', type: 'image', ...req },
       { k: 'year', label: 'السنة', type: 'number', ...req },
       { k: 'caption', label: 'تعليق', type: 'text' },
     ],
