@@ -42,3 +42,21 @@ ${k}${body}
   const png = new Resvg(svg, { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Arabic' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
   return png;
 }
+
+// صورة مشاركة الصفحة الرئيسية: رسم الرصاص بجانب الاسم والسلوقن بالمخطوطة السوداء
+const fullLogo = fs.readFileSync(path.join(root, 'public/brand/logo-full-light.svg'), 'utf8');
+const fullPaths = [...fullLogo.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
+const portraitB64 = fs.readFileSync(path.join(root, 'src/assets/og-portrait.png')).toString('base64');
+
+export function renderHomeOg() {
+  const lw = 590, sc = lw / 2600, lh = 961 * sc;
+  const ph = 590, pw = Math.round(ph * 620 / 768);
+  const lx = 1160 - lw, ly = (630 - lh) / 2 - 10;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#f5f5f2"/>
+<image x="64" y="30" width="${pw}" height="${ph}" xlink:href="data:image/png;base64,${portraitB64}"/>
+<g transform="translate(${lx} ${ly.toFixed(0)}) scale(${sc})" fill="#0b0b0a" fill-rule="evenodd">${fullPaths.map((d) => `<path d="${d}"/>`).join('')}</g>
+<text x="1160" y="592" font-family="OG Latin" font-size="26" font-weight="700" fill="#8a8982" text-anchor="end">hussain-al-hajji.com</text>
+</svg>`;
+  return new Resvg(svg, { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Latin' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
+}
