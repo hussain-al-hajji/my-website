@@ -28,11 +28,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # الدومين من ملف public/CNAME: إن وُجد يُبنى الموقع عليه من الجذر، وإلا يُنشر على github.io/my-website
+      - id: site
+        run: |
+          d=$(tr -d '[:space:]' < public/CNAME 2>/dev/null || true)
+          if [ -n "$d" ]; then u="https://$d"; b="/"; else u="https://hussain-al-hajji.github.io"; b="/my-website"; fi
+          echo "u=$u" >> "$GITHUB_OUTPUT"; echo "b=$b" >> "$GITHUB_OUTPUT"
       - run: npm run build
         env:
-          # قبل ربط الدومين يُنشر الموقع على github.io/my-website. عند ربط الدومين اضبط المتغيّرين SITE_URL=https://hussain-al-hajji.com و SITE_BASE=/
-          SITE_URL: ${{ vars.SITE_URL || 'https://hussain-al-hajji.github.io' }}
-          SITE_BASE: ${{ vars.SITE_BASE || '/my-website' }}
+          SITE_URL: ${{ vars.SITE_URL || steps.site.outputs.u }}
+          SITE_BASE: ${{ vars.SITE_BASE || steps.site.outputs.b }}
           PUBLIC_FIREBASE_API_KEY: ${{ vars.PUBLIC_FIREBASE_API_KEY }}
           PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.PUBLIC_FIREBASE_AUTH_DOMAIN }}
           PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.PUBLIC_FIREBASE_PROJECT_ID }}
