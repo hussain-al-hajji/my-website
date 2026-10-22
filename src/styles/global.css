@@ -633,3 +633,15 @@ body{top:0!important}
 .gnav .mark-name{height:30px;width:auto;filter:invert(1);display:block}
 .lnav .brand img{display:none}
 @media (max-width:520px){.gnav .mark-name{height:26px}.gnav .mark-chip{width:34px;height:34px}}
+
+/* الشريط العلوي ثابت دائماً، والشريط الفرعي يلتصق تحته على الشاشات الكبيرة */
+:root{--gnav-h:52px}
+html{scroll-padding-top:calc(var(--gnav-h) + 64px)}
+.gnav{position:sticky;top:0;z-index:30;background:rgba(22,22,21,.97)}
+.lnav{top:var(--gnav-h)}
+.kit .side{top:calc(var(--gnav-h) + 76px)}
+@media (max-width:820px){
+  html{scroll-padding-top:calc(var(--gnav-h) + 12px)}
+  .lnav{position:static}
+}
+@media (max-width:520px){:root{--gnav-h:48px}.gnav .wide{height:var(--gnav-h)}}
