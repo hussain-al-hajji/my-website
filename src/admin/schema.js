@@ -212,8 +212,10 @@ export const SECTIONS = [
     fields: [
       { k: 'role', label: 'الوصف المهني', type: 'text' },
       { k: 'description', label: 'وصف الموقع (لمحركات البحث)', type: 'textarea', rows: 3 },
-      { k: 'hero.headline', label: 'العنوان الرئيسي', type: 'text' },
-      { k: 'hero.sub', label: 'السطر التعريفي', type: 'textarea', rows: 3 },
+      { k: 'hero.headline', label: 'الاسم (نص بديل للمخطوطة)', type: 'text' },
+      { k: 'hero.sub', label: 'النبذة تحت الاسم', type: 'textarea', rows: 5 },
+      { k: 'hero.slogan1', label: 'السلوقن: السطر الأول', type: 'text' },
+      { k: 'hero.slogan2', label: 'السلوقن: السطر الثاني', type: 'text' },
       { k: 'hero.cta', label: 'نص الزر', type: 'text' },
       { k: 'stats.programs', label: 'عدد البرامج', type: 'number' },
       { k: 'stats.partners', label: 'عدد الجهات', type: 'number' },
@@ -237,6 +239,13 @@ export const SECTIONS = [
       { k: 'contact.newsletter', label: 'النشرة', type: 'url' },
       { k: 'contact.scribd', label: 'سكريبد', type: 'url' },
     ],
+  },
+  {
+    id: 'ring', label: 'حلقة الصور', file: 'ring', kind: 'list', group: 'الموقع', ordered: true,
+    help: 'الصور التي تدور حول العنوان في الرئيسية. الترتيب يهم.',
+    title: (x) => x.title, meta: (x) => x.caption,
+    blank: () => ({ id: uid('ring'), image: '', title: '', caption: '' }),
+    fields: [{ k: 'image', label: 'الصورة', type: 'image', ...req }, { k: 'title', label: 'العنوان', type: 'text', ...req }, { k: 'caption', label: 'سطر ثانٍ', type: 'text' }],
   },
   {
     id: 'highlights', label: 'الأبرز', file: 'highlights', kind: 'list', group: 'الموقع', ordered: true,

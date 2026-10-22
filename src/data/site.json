@@ -1,80 +1,82 @@
 {
- "name": "حسين الحاجي",
- "tagline": "أمكّن الشباب",
- "role": "مدرب ومرشد مهني معتمد",
- "title": "حسين الحاجي | أمكّن الشباب",
- "description": "حسين الحاجي، مدرب ومرشد مهني معتمد. أكثر من 200 برنامج مع 70 جهة لتمكين الشباب في التجارة الإلكترونية والعمل الحر والمسار المهني.",
- "hero": {
-  "headline": "أثرٌ يُقاس.",
-  "sub": "مدرب ومرشد مهني معتمد. صمّم وقدّم أكثر من 200 برنامج لتمكين الشباب في التجارة الإلكترونية والعمل الحر والمسار المهني.",
-  "cta": "اطلب برنامجاً"
- },
- "contact": {
-  "email": "g.hussainalhajji@gmail.com",
-  "whatsapp": "966559668969",
-  "phone": "+966 55 966 8969",
-  "country": "المملكة العربية السعودية",
-  "linkedin": "https://www.linkedin.com/in/hussain-al-hajji/",
-  "podcast": "https://linktr.ee/podcaste",
-  "newsletter": "https://www.linkedin.com/newsletters/%D9%85%D8%AD%D8%AA%D9%88%D9%89-%D9%85%D8%B6%D9%8A%D8%A1-%F0%9F%92%A1-%D9%81%D8%B1%D8%B5-%D9%85%D9%85%D9%8A%D8%B2%D8%A9-7283474865691521025/",
-  "scribd": "https://www.scribd.com/user/378761436/%D9%85%D8%AF%D9%88%D9%86%D8%A9-%D9%85%D8%AD%D8%AA%D9%88%D9%89-%D9%85%D8%B6%D9%8A%D8%A1-%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A"
- },
- "stats": {
-  "programs": 200,
-  "partners": 70,
-  "beneficiaries": 5000,
-  "since": 2018
- },
- "announcement": {
-  "enabled": true,
-  "text": "حقيبة إدارة المشاريع التنموية متاحة للتعاون: من يومين إلى ثلاثة أيام بالتعلم بالممارسة.",
-  "link": "/collaborate#project-management",
-  "linkText": "اعرف المزيد",
-  "expires": ""
- },
- "closing": {
-  "title": "لنبدأ.",
-  "text": "أخبره عن جهتك والفئة التي تخدمها، وسيقترح عليك البرنامج المناسب لها."
- },
- "services": [
-  {
-   "title": "التدريب",
-   "text": "ورش ومعسكرات حضورية وافتراضية، من ساعتين إلى 25 ساعة، في السعودية وعُمان والإمارات.",
-   "image": "/img/photos/p01.webp",
-   "big": true
+  "name": "حسين الحاجي",
+  "tagline": "أمكّن الشباب",
+  "role": "مدرب ومرشد مهني معتمد",
+  "title": "حسين الحاجي | أمكّن الشباب",
+  "description": "حسين الحاجي، مدرب ومرشد مهني معتمد. أكثر من 200 برنامج مع 70 جهة لتمكين الشباب في التجارة الإلكترونية والعمل الحر والمسار المهني.",
+  "hero": {
+    "headline": "حسين الحاجي",
+    "sub": "متخصص في إدارة مشاريع التدريب والتطوير، وبناء الكفاءات، وتصميم وقيادة المبادرات التنموية. مدرب التجارة الإلكترونية والعمل الحر عبر الإنترنت، ومرشد مهني معتمد CCSP، بخبرة تمتد منذ عام 2018 في تصميم وتنفيذ الحقائب التدريبية والاستشارات وتحكيم المشاريع.",
+    "cta": "اطلب برنامجاً",
+    "slogan1": "أمكّن الشباب ..",
+    "slogan2": "بأثرٍ يقاس.."
   },
-  {
-   "title": "الإرشاد المهني",
-   "text": "جلسات فردية لحديثي التخرج والباحثين عن عمل، بشهادة CCSP من NCDA.",
-   "image": "",
-   "big": false,
-   "figure": "CCSP"
+  "contact": {
+    "email": "g.hussainalhajji@gmail.com",
+    "whatsapp": "966559668969",
+    "phone": "+966 55 966 8969",
+    "country": "المملكة العربية السعودية",
+    "linkedin": "https://www.linkedin.com/in/hussain-al-hajji/",
+    "podcast": "https://linktr.ee/podcaste",
+    "newsletter": "https://www.linkedin.com/newsletters/%D9%85%D8%AD%D8%AA%D9%88%D9%89-%D9%85%D8%B6%D9%8A%D8%A1-%F0%9F%92%A1-%D9%81%D8%B1%D8%B5-%D9%85%D9%85%D9%8A%D8%B2%D8%A9-7283474865691521025/",
+    "scribd": "https://www.scribd.com/user/378761436/%D9%85%D8%AF%D9%88%D9%86%D8%A9-%D9%85%D8%AD%D8%AA%D9%88%D9%89-%D9%85%D8%B6%D9%8A%D8%A1-%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A"
   },
-  {
-   "title": "التحكيم",
-   "text": "تحدي نحو الأثر، وطويق، ورواد السياحة، وTech Founders.",
-   "image": "/img/photos/p34.webp",
-   "big": false
+  "stats": {
+    "programs": 200,
+    "partners": 70,
+    "beneficiaries": 5000,
+    "since": 2018
   },
-  {
-   "title": "المسرّعات",
-   "text": "مرشد في نيوم سفن سينسز، وTech Founders، وتجسير.",
-   "image": "",
-   "big": false,
-   "figure": "3 أشهر",
-   "dark": true
+  "announcement": {
+    "enabled": true,
+    "text": "حقيبة إدارة المشاريع التنموية متاحة للتعاون: من يومين إلى ثلاثة أيام بالتعلم بالممارسة.",
+    "link": "/collaborate#project-management",
+    "linkText": "اعرف المزيد",
+    "expires": ""
   },
-  {
-   "title": "الاستشارات",
-   "text": "مرخّص من وزارة الموارد البشرية في الاستشارات الإدارية وريادة الأعمال.",
-   "image": "/img/photos/p15.webp",
-   "big": false
+  "closing": {
+    "title": "لنبدأ.",
+    "text": "أخبره عن جهتك والفئة التي تخدمها، وسيقترح عليك البرنامج المناسب لها."
   },
-  {
-   "title": "المحتوى",
-   "text": "مقالات في هارفارد بزنس ريفيو العربية، ودورات مسجّلة لباب رزق جميل.",
-   "image": "/img/photos/p07.webp",
-   "big": false
-  }
- ]
+  "services": [
+    {
+      "title": "التدريب",
+      "text": "ورش ومعسكرات حضورية وافتراضية، من ساعتين إلى 25 ساعة، في السعودية وعُمان والإمارات.",
+      "image": "/img/photos/p01.webp",
+      "big": true
+    },
+    {
+      "title": "الإرشاد المهني",
+      "text": "جلسات فردية لحديثي التخرج والباحثين عن عمل، بشهادة CCSP من NCDA.",
+      "image": "",
+      "big": false,
+      "figure": "CCSP"
+    },
+    {
+      "title": "التحكيم",
+      "text": "تحدي نحو الأثر، وطويق، ورواد السياحة، وTech Founders.",
+      "image": "/img/photos/p34.webp",
+      "big": false
+    },
+    {
+      "title": "المسرّعات",
+      "text": "مرشد في نيوم سفن سينسز، وTech Founders، وتجسير.",
+      "image": "",
+      "big": false,
+      "figure": "3 أشهر",
+      "dark": true
+    },
+    {
+      "title": "الاستشارات",
+      "text": "مرخّص من وزارة الموارد البشرية في الاستشارات الإدارية وريادة الأعمال.",
+      "image": "/img/photos/p15.webp",
+      "big": false
+    },
+    {
+      "title": "المحتوى",
+      "text": "مقالات في هارفارد بزنس ريفيو العربية، ودورات مسجّلة لباب رزق جميل.",
+      "image": "/img/photos/p07.webp",
+      "big": false
+    }
+  ]
 }
