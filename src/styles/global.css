@@ -221,6 +221,7 @@ p{text-wrap:pretty}
 .deck .voice[data-pos="0"]{transform:none;z-index:3}
 .deck .voice[data-pos="1"]{transform:translateY(-22px) scale(.95);z-index:2;opacity:.85}
 .deck .voice[data-pos="2"]{transform:translateY(-42px) scale(.9);z-index:1;opacity:.6}
+.deck .voice:not([data-pos="0"]):not([data-pos="1"]):not([data-pos="2"]){transform:translateY(-42px) scale(.9);opacity:0;z-index:0;pointer-events:none}
 .deck .voice.out{transform:translateX(-120%) rotate(-8deg);opacity:0}
 .deck-ctl{display:flex;justify-content:center;gap:12px;margin-top:28px;align-items:center;color:var(--ink-2);font-size:var(--t-small)}
 

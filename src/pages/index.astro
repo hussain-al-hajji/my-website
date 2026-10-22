@@ -26,7 +26,7 @@ const ICONS = {
 const links = contactLinks();
 const news = getNews().slice(0, 3);
 const kits = getKits();
-const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured).slice(0, 3);
+const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && (t.quote || t.full));
 const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value));
 
 const homeData = {
@@ -237,7 +237,7 @@ const jsonld = {
       <div class="sec-head"><h2 id="vc" data-in>ماذا يقولون.</h2><a class="more" href={href('/feedback')}>كل التوصيات</a></div>
       <div class="deck" id="deck">
         {voices.map((v, i) => (
-          <figure class="voice" data-pos={i}><p>“{v.quote}”</p><footer><b>{v.name}</b><span>{v.role}</span></footer></figure>
+          <figure class="voice" data-pos={i}><p>“{(v.quote || v.full).replace(/^[“"]|[”"]$/g, '')}”</p>{(v.name || v.role) && <footer>{v.name && <b>{v.name}</b>}{v.role && <span>{v.role}</span>}</footer>}</figure>
         ))}
       </div>
       <div class="deck-ctl"><button class="pill" type="button" id="deckNext">التوصية التالية</button><span id="deckPos">1 من {voices.length}</span></div>
