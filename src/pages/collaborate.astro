@@ -1,30 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { getKits, href, AUDIENCES, site } from '../lib/site.js';
+import { getKits, href, AUDIENCES, GOALS, site } from '../lib/site.js';
 
 const kits = getKits();
 ---
 <Base title="الحقائب التدريبية" description="حقائب تدريبية جاهزة للتخصيص حسب جهتكم وجمهوركم: التجارة الإلكترونية، العمل الحر، إدارة المشاريع، الإرشاد المهني، القيادة وغيرها."
   active="collaborate" local={[{ label: 'الحقائب', href: '#top' }, { label: 'منهجي', href: '/methodology' }]}>
   <PageHead title="الحقائب التدريبية." lead="كل حقيبة قابلة للتعديل في المدة والمحاور والتمارين لتناسب جهتكم وجمهوركم.">
-    <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/methodology')}>منهجي في التدريب</a></div>
+    <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/methodology')}>منهجي في التدريب</a><a class="more" href="https://hussain-al-hajji.github.io/my-programs/" rel="noopener">المنصة التفاعلية للبرامج</a></div>
   </PageHead>
 
   <div id="top" data-filter-root>
     <section class="sec alt tight">
       <div class="wide">
-        <h2 class="h2" style="margin-bottom:20px" data-in>اختر جمهورك.</h2>
-        <div class="chips-l" role="group" aria-label="الجمهور">
-          <button class="fchip" type="button" aria-pressed="true" data-f="aud:">كل الحقائب</button>
+        <h2 class="h2" style="margin-bottom:20px" data-in>اختر جمهورك وما تريده.</h2>
+        <p class="filter-label">الفئة</p>
+        <div class="chips-l" role="group" aria-label="الفئة">
+          <button class="fchip" type="button" aria-pressed="true" data-f="aud:">كل الفئات</button>
           {Object.entries(AUDIENCES).map(([v, l]) => <button class="fchip" type="button" aria-pressed="false" data-f={`aud:${v}`}>{l}</button>)}
+        </div>
+        <p class="filter-label">المخرج المتوقع</p>
+        <div class="chips-l" role="group" aria-label="المخرج المتوقع">
+          <button class="fchip" type="button" aria-pressed="true" data-f="goal:">كل المخرجات</button>
+          {Object.entries(GOALS).map(([v, l]) => <button class="fchip" type="button" aria-pressed="false" data-f={`goal:${v}`}>{l}</button>)}
         </div>
         <p class="result-count" style="margin-top:16px" data-count-out aria-live="polite"></p>
       </div>
     </section>
 
     {kits.map((k) => (
-      <article class="kit wide" id={k.id} data-item data-aud={k.audiences.join('|')}>
+      <article class="kit wide" id={k.id} data-item data-aud={k.audiences.join('|')} data-goal={(k.goals || []).join('|')}>
         <div class="side">
           <img src={href(k.image)} alt="" loading="lazy" width="800" height="600">
           <a class="pill" href={href('/contact') + '?kit=' + k.id}>اطلب هذه الحقيبة</a>
@@ -42,6 +48,10 @@ const kits = getKits();
             <h3>التمارين والأنشطة</h3>
             <ul class="bul">{k.exercises.map((a) => <li>{a}</li>)}</ul>
           </>)}
+          {k.outcomes?.length > 0 && (<>
+            <h3>المخرجات</h3>
+            <ul class="bul">{k.outcomes.map((a) => <li>{a}</li>)}</ul>
+          </>)}
         </div>
       </article>
     ))}
@@ -54,4 +64,14 @@ const kits = getKits();
       <div class="ctas"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={'https://wa.me/' + site.contact.whatsapp} rel="noopener">واتساب</a></div>
     </div>
   </section>
+  <script>
+    // يمرّر باحث الرئيسية اختياره عبر ?aud=...&goal=...
+    addEventListener('load', () => {
+      const q = new URLSearchParams(location.search);
+      for (const k of ['aud', 'goal']) {
+        const v = q.get(k);
+        if (v) document.querySelector(`[data-f="${k}:${CSS.escape(v)}"]`)?.click();
+      }
+    });
+  </script>
 </Base>

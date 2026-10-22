@@ -51,19 +51,38 @@ function inkFill() {
   ws.forEach((w, i) => w.classList.toggle('lit', i < n));
 }
 
-// اللحظة 4: باحث الحقائب
-const KITS = data.kits;
-const sel = { a: 'students', t: 'short' };
-const rImg = $('#rImg'), rBody = $('#rBody'), result = $('#result');
-function pick() {
-  const m = KITS.filter((k) => k.audiences.includes(sel.a) && k.times.includes(sel.t));
-  const pool = m.length ? m : KITS.filter((k) => k.audiences.includes(sel.a));
-  return pool[0] || KITS[0];
+// اللحظة 4: باحث الحقائب، يقترح أكثر من برنامج حسب الفئة والمخرج والمدة
+const KITS = data.kits, LB = data.labels;
+const sel = { a: 'students', g: '', t: '' };
+const rMain = $('#rMain'), rMore = $('#rMore'), result = $('#result');
+function rank() {
+  const score = (k) => (k.audiences.includes(sel.a) ? 4 : 0) + (sel.g && k.goals.includes(sel.g) ? 4 : 0) + (sel.t && k.times.includes(sel.t) ? 2 : 0);
+  const fits = (k) => k.audiences.includes(sel.a) && (!sel.g || k.goals.includes(sel.g));
+  let list = KITS.filter(fits), relaxed = '';
+  if (!list.length && sel.g) { list = KITS.filter((k) => k.goals.includes(sel.g)); relaxed = 'لا برنامج لهذه الفئة بهذا المخرج تحديداً، هذه أقرب الخيارات للمخرج.'; }
+  if (!list.length) { list = KITS.filter((k) => k.audiences.includes(sel.a)); relaxed = 'هذه أقرب الخيارات لفئتك.'; }
+  if (!list.length) { list = [...KITS]; relaxed = 'أخبرني بهدفك وأقترح لك برنامجاً مناسباً.'; }
+  const by = (x, y) => y.s - x.s || KITS.indexOf(x.k) - KITS.indexOf(y.k);
+  const ranked = list.map((k) => ({ k, s: score(k) })).sort(by);
+  const related = KITS.filter((k) => !list.includes(k)).map((k) => ({ k, s: score(k) })).filter((x) => x.s > 0).sort(by);
+  return { list: ranked, related, relaxed };
 }
+const tags = (k) => {
+  const t = [];
+  if (k.audiences.includes(sel.a)) t.push(LB.aud[sel.a]);
+  if (sel.g && k.goals.includes(sel.g)) t.push(LB.goal[sel.g]);
+  if (sel.t && k.times.includes(sel.t)) t.push(LB.time[sel.t]);
+  return t.map((x) => `<span class="tg">${esc(x)}</span>`).join('');
+};
 function render() {
-  const k = pick();
-  rImg.src = k.image; rImg.alt = '';
-  rBody.innerHTML = `<span class="lbl">الحقيبة المقترحة</span><h3>${esc(k.short)}</h3><p class="meta">${esc(k.duration)}</p><ul>${k.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul><a class="pill" href="${k.contact}">اطلب هذه الحقيبة</a> <a class="more" href="${k.page}">تفاصيل الحقيبة</a>`;
+  const { list, related, relaxed } = rank();
+  const top = list[0].k, rest = list.slice(1);
+  const n = list.length;
+  const count = n === 1 ? 'برنامج واحد مناسب' : n === 2 ? 'برنامجين مناسبين' : n <= 10 ? `${n} برامج مناسبة` : `${n} برنامجاً مناسباً`;
+  rMain.innerHTML = `<img src="${top.image}" alt="" loading="lazy"><div class="body"><span class="lbl">${n > 1 ? `الأنسب لك، من بين ${count}` : 'البرنامج المناسب'}</span><h3>${esc(top.short)}</h3><p class="meta">${esc(top.duration)}</p>${top.headline ? `<p class="hl">${esc(top.headline)}</p>` : ''}<div class="tgs">${tags(top)}</div><ul>${top.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${relaxed ? `<p class="note">${esc(relaxed)}</p>` : ''}<div class="acts"><a class="pill" href="${top.contact}">اطلب هذه الحقيبة</a> <a class="more" href="${top.page}">تفاصيل الحقيبة</a></div></div>`;
+  const pool = rest.concat(relaxed ? [] : related);
+  const shown = pool.slice(0, 4);
+  rMore.innerHTML = shown.length ? `<h4>${rest.length ? 'برامج أخرى تناسبك' : 'قد تهمك أيضاً'}</h4><ul>${shown.map(({ k }) => `<li><a href="${k.page}"><img src="${k.image}" alt="" loading="lazy"><span><b>${esc(k.short)}</b><small>${esc(k.duration)}</small></span></a></li>`).join('')}</ul>${pool.length > shown.length || n > 1 ? `<a class="more" href="${data.collabUrl}?aud=${sel.a}${sel.g ? '&goal=' + sel.g : ''}">كل البرامج المناسبة (${n})</a>` : ''}` : '';
   result.classList.remove('swap'); void result.offsetWidth; result.classList.add('swap');
 }
 $$('.seg').forEach((grp) => $$('button', grp).forEach((b) => b.addEventListener('click', () => {

@@ -6,7 +6,7 @@ import highlights from '../data/highlights.json';
 import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
-import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, contactLinks } from '../lib/site.js';
+import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
@@ -19,17 +19,22 @@ const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value)
 const homeData = {
   log: logForClient(),
   recordsUrl: href('/training-programs'),
+  collabUrl: href('/collaborate'),
   ring: ring.map((r) => ({ ...r, image: href(r.image) })),
   kits: kits.map((k) => ({
     short: k.short,
     duration: k.duration,
     image: href(k.image),
+    id: k.id,
+    headline: k.headline,
     audiences: k.audiences,
+    goals: k.goals || [],
     times: k.times,
     points: k.axes.slice(0, 3).map((a) => a.split(':')[0].trim()),
     page: href('/collaborate') + '#' + k.id,
     contact: href('/contact') + '?kit=' + k.id,
   })),
+  labels: { aud: AUDIENCES, goal: GOALS, time: TIMES },
   cities: [
     ['الأحساء', ['الأحساء', 'الاحساء', 'الهفوف'], 25.38, 49.59], ['الرياض', ['الرياض', 'الدرعية'], 24.71, 46.68],
     ['الدمام والخبر', ['الدمام', 'الخبر', 'الظهران', 'المنطقة الشرقية', 'الشرقية'], 26.43, 50.10], ['العلا', ['العلا'], 26.61, 37.92],
@@ -173,14 +178,19 @@ const jsonld = {
         <div class="q" data-in><h3>من جمهورك؟</h3><div class="seg" data-q="a">
           {Object.entries(AUDIENCES).map(([v, l], i) => <button type="button" aria-pressed={String(i === 0)} data-v={v}>{l}</button>)}
         </div></div>
-        <div class="q" data-in style="--d:1"><h3>كم لديكم من الوقت؟</h3><div class="seg" data-q="t">
-          {Object.entries(TIMES).map(([v, l], i) => <button type="button" aria-pressed={String(i === 0)} data-v={v}>{l}</button>)}
+        <div class="q" data-in style="--d:1"><h3>ما المخرج الذي تريده؟</h3><div class="seg" data-q="g">
+          <button type="button" aria-pressed="true" data-v="">أي مخرج</button>
+          {Object.entries(GOALS).map(([v, l]) => <button type="button" aria-pressed="false" data-v={v}>{l}</button>)}
+        </div></div>
+        <div class="q" data-in style="--d:2"><h3>كم لديكم من الوقت؟ <small>اختياري</small></h3><div class="seg" data-q="t">
+          <button type="button" aria-pressed="true" data-v="">أي مدة</button>
+          {Object.entries(TIMES).map(([v, l]) => <button type="button" aria-pressed="false" data-v={v}>{l}</button>)}
         </div></div>
       </div>
-      <article class="result" id="result" aria-live="polite">
-        <img id="rImg" src={href('/img/photos/p36.webp')} alt="" loading="lazy">
-        <div class="body" id="rBody"></div>
-      </article>
+      <div class="result" id="result" aria-live="polite">
+        <div class="r-main" id="rMain"></div>
+        <div class="r-more" id="rMore"></div>
+      </div>
     </div>
   </div>
 </section>
