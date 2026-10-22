@@ -1,42 +1,42 @@
 [
- {
-  "id": "hl1",
-  "title": "رواد الشباب العربي 2025",
-  "caption": "ضمن 40 مكرّماً من 13 دولة عربية.",
-  "image": "/img/photos/p37.webp",
-  "position": "50% 30%",
-  "link": "/arab-youth-pioneers"
- },
- {
-  "id": "hl2",
-  "title": "هاكاثون تيك توك للذكاء الاصطناعي",
-  "caption": "ورشة العروض الاستثمارية، الرياض 2026.",
-  "image": "/img/photos/p33.webp",
-  "position": "50% 50%",
-  "link": "/training-programs"
- },
- {
-  "id": "hl3",
-  "title": "مسرّعة نيوم سفن سينسز",
-  "caption": "ثلاثة أشهر من التدريب والإرشاد في تبوك.",
-  "image": "/img/photos/p27.webp",
-  "position": "50% 50%",
-  "link": "/training-programs"
- },
- {
-  "id": "hl4",
-  "title": "قيادات واعدة 10X",
-  "caption": "خريج الدفعة الثانية، مسك وأكاديمية PwC.",
-  "image": "/img/photos/p14.webp",
-  "position": "50% 35%",
-  "link": "/bio"
- },
- {
-  "id": "hl5",
-  "title": "صنّاع المستقبل",
-  "caption": "ضيف حوار في حفل الختام، مقر مسك 2022.",
-  "image": "/img/photos/p04.webp",
-  "position": "50% 50%",
-  "link": "/media"
- }
+  {
+    "id": "hl1",
+    "title": "رواد الشباب العربي 2025",
+    "caption": "ضمن 40 مكرّماً من 13 دولة عربية.",
+    "image": "/img/photos/p37.webp",
+    "position": "50% 30%",
+    "link": "/arab-youth-pioneers"
+  },
+  {
+    "id": "hl2",
+    "title": "هاكاثون تيك توك للذكاء الاصطناعي",
+    "caption": "ورشة العروض الاستثمارية، الرياض 2026.",
+    "image": "/img/photos/p33.webp",
+    "position": "50% 50%",
+    "link": "/training-programs"
+  },
+  {
+    "id": "hl3",
+    "title": "مسرّعة نيوم سفن سينسز",
+    "caption": "ثلاثة أشهر من التدريب والإرشاد في تبوك.",
+    "image": "/img/photos/p27.webp",
+    "position": "50% 50%",
+    "link": "/training-programs"
+  },
+  {
+    "id": "hl4",
+    "title": "قيادات واعدة 10X",
+    "caption": "تخرّجتُ في الدفعة الثانية، مسك وأكاديمية PwC.",
+    "image": "/img/photos/p14.webp",
+    "position": "50% 35%",
+    "link": "/bio"
+  },
+  {
+    "id": "hl5",
+    "title": "صنّاع المستقبل",
+    "caption": "كنتُ ضيف حوار في حفل الختام، مقر مسك 2022.",
+    "image": "/img/photos/p04.webp",
+    "position": "50% 50%",
+    "link": "/media"
+  }
 ]

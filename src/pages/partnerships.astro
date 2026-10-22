@@ -7,7 +7,7 @@ import { href, site, PARTNER_GROUP } from '../lib/site.js';
 const order = ['gov', 'nonprofit', 'private', 'edu', 'chambers', 'gulf', 'intl'];
 const groups = order.map((g) => ({ g, items: partners.filter((p) => p.group === g) })).filter((x) => x.items.length);
 ---
-<Base title="الشراكات" description="جهات حكومية وخاصة وغير ربحية وتعليمية عمل معها حسين الحاجي." active="collaborate" local={[{ label: 'الشركاء', href: '#top' }]}>
+<Base title="الشراكات" description="جهات حكومية وخاصة وغير ربحية وتعليمية عملتُ معها." active="collaborate" local={[{ label: 'الشركاء', href: '#top' }]}>
   <PageHead title="الشراكات." lead={`${site.stats.partners}+ جهة حكومية وخاصة وغير ربحية وتعليمية.`} />
   <section class="sec tight flush alt" id="top" style="padding-top:20px">
     <div class="wide">

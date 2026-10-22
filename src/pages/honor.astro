@@ -4,9 +4,9 @@ import PageHead from '../components/PageHead.astro';
 import honors from '../data/honors.json';
 import { href } from '../lib/site.js';
 ---
-<Base title="التكريم والشهادات" description="شهادات الشكر والتقدير والأوسمة من الجهات التي عمل معها." active="honor"
+<Base title="التكريم والشهادات" description="شهادات الشكر والتقدير والأوسمة من الجهات التي عملتُ معها." active="honor"
   local={[{ label: 'الشهادات', href: '#top' }, { label: 'رواد الشباب العربي', href: '/arab-youth-pioneers' }]}>
-  <PageHead title="التكريم." lead={`${honors.length} شهادة وتقدير من جهات عمل معها.`}>
+  <PageHead title="التكريم." lead={`${honors.length} شهادة وتقدير من جهات عملتُ معها.`}>
     <div class="ctas" style="margin-top:24px"><a class="more" href={href('/arab-youth-pioneers')}>رواد الشباب العربي 2025</a></div>
   </PageHead>
   <section class="sec tight flush" id="top">
