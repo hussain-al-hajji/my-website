@@ -149,6 +149,7 @@ export const GNAV = [
   { label: 'عنّي', href: '/bio', key: 'bio' },
   { label: 'سجل الأثر', href: '/training-programs', key: 'training-programs' },
   { label: 'الحقائب التدريبية', href: '/collaborate', key: 'collaborate' },
+  { label: 'الأكاديمية', href: 'https://academy.hussain-al-hajji.com/', key: 'academy' },
   { label: 'الإعلام', href: '/media', key: 'media' },
   { label: 'آراء المتدربين', href: '/feedback', key: 'feedback' },
   { label: 'محتوى مضيء', href: '/blog', key: 'blog' },
