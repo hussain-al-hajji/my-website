@@ -575,3 +575,10 @@ details.acc .in-acc{padding-bottom:28px}
 .ccard .ph.contain{aspect-ratio:auto;height:220px}
 .ccard .ph.contain img{max-height:176px}
 .ccard .ph.contain{background:#fff}
+
+.dir .social{display:flex;gap:10px;margin-bottom:14px}
+.dir .social a{width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);display:grid;place-items:center;color:var(--ink-2);transition:color .2s,border-color .2s,background-color .2s}
+.dir .social a:hover{color:var(--action);border-color:var(--action);background:#fff}
+.dir .social svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.dir .podcast-link a{color:var(--action)}
+.dir .podcast-link a:hover{text-decoration:underline}
