@@ -7,7 +7,6 @@ import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
 import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, contactLinks } from '../lib/site.js';
-import { records } from '../lib/site.js';
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
@@ -15,9 +14,6 @@ const links = contactLinks();
 const news = getNews().slice(0, 3);
 const kits = getKits();
 const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured).slice(0, 3);
-const perYear = {};
-records.forEach((r) => (perYear[r.year] = (perYear[r.year] || 0) + 1));
-const busiest = Object.entries(perYear).sort((a, b) => b[1] - a[1])[0];
 const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value));
 
 const homeData = {
@@ -89,7 +85,6 @@ const jsonld = {
       <div class="stat" data-in style="--d:1"><span class="n"><span data-count={site.stats.programs}>{site.stats.programs}</span>+</span><span>مشاركة موثّقة في التدريب والإرشاد والتحكيم.</span></div>
       <div class="stat" data-in style="--d:2"><span class="n"><span data-count={site.stats.partners}>{site.stats.partners}</span>+</span><span>جهة حكومية وخاصة وغير ربحية.</span></div>
       <div class="stat" data-in style="--d:3"><span class="n"><span data-count={site.stats.beneficiaries}>{site.stats.beneficiaries.toLocaleString('en-US')}</span>+</span><span>شاب وشابة استفادوا من البرامج.</span></div>
-      <div class="stat" data-in style="--d:4"><span class="n"><span data-count={busiest[1]}>{busiest[1]}</span></span><span>مشاركة في عام {busiest[0]} وحده.</span></div>
     </div>
   </div>
 </section>

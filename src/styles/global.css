@@ -95,7 +95,7 @@ p{text-wrap:pretty}
 /* ---------- numbers ---------- */
 .nums h2{font-size:var(--t-h1);line-height:1.08}
 .nums .lead{font-size:var(--t-lead);color:var(--on-dark-2);max-width:40ch;margin-top:18px;line-height:1.45}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:48px 32px;margin-top:80px}
+.grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 32px;margin-top:80px}
 .stat{display:grid;gap:6px;align-content:start}
 .stat .n{font-size:var(--t-h1);font-weight:700;line-height:1;direction:ltr;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .stat > span:not(.n){color:var(--on-dark-2);font-size:var(--t-body);max-width:22ch}
@@ -266,7 +266,7 @@ p{text-wrap:pretty}
   .lnav ul{display:none}
   .sec{padding-block:80px}
   .sec-head{flex-direction:column;align-items:flex-start}
-  .grid4{grid-template-columns:1fr 1fr;gap:40px 20px;margin-top:56px}
+  .grid4{grid-template-columns:1fr;gap:36px;margin-top:48px}
   .bento{grid-template-columns:1fr;grid-auto-rows:auto}
   .tile{min-height:260px}
   .tile.big{grid-column:auto;grid-row:auto;min-height:420px}
