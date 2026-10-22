@@ -135,11 +135,14 @@ data.ring.forEach((f, k) => {
   const a = document.createElement('a');
   a.className = 'frame'; a.href = '#wl'; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
   const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
+  const fr = { el: a, k, ar: f.ratio || 1.5 };
+  const setAr = () => { if (im.naturalWidth) fr.ar = Math.min(2.2, Math.max(0.6, im.naturalWidth / im.naturalHeight)); };
+  im.addEventListener('load', setAr); setAr();
   a.append(im);
   const on = () => { paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.title)}</b>${esc(f.caption)}`; };
   const off = () => { paused = false; ring.classList.remove('focus'); a.classList.remove('on'); sub.innerHTML = subBase; };
   a.addEventListener('mouseenter', on); a.addEventListener('focus', on); a.addEventListener('mouseleave', off); a.addEventListener('blur', off);
-  ring.appendChild(a); frames.push({ el: a, k });
+  ring.appendChild(a); frames.push(fr);
 });
 function drawRing() {
   const W = ring.clientWidth, H = ring.clientHeight, phone = W < 760, n = phone ? 12 : frames.length;
@@ -151,7 +154,8 @@ function drawRing() {
     if (i >= n) { f.el.hidden = true; return; }
     f.el.hidden = false;
     const t = -Math.PI / 2 + (i / n) * Math.PI * 2 + spin, x = cx + rx * Math.cos(t), y = cy + ry * Math.sin(t), depth = (Math.sin(t) + 1) / 2;
-    const w = phone ? 60 + 26 * depth : 96 + 58 * depth, tall = i % 3 === 1, hgt = tall ? (w * 4) / 3 : (w * 3) / 4;
+    const base = phone ? 60 + 26 * depth : 96 + 58 * depth, area = base * base * 0.75;
+    const w = Math.sqrt(area * f.ar), hgt = Math.sqrt(area / f.ar);
     const ang = Math.max(-24, Math.min(24, Math.cos(t) * -18));
     f.el.style.width = w + 'px'; f.el.style.height = hgt + 'px'; f.el.style.zIndex = depth > 0.5 ? 2 : 1;
     const sc = (f.el.classList.contains('on') ? 1.25 : 1) * (1 - c * 0.55);
