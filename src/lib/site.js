@@ -104,6 +104,9 @@ export const PARTNER_GROUP = {
 };
 export const BIO_SECTION = {
   career: 'المسيرة المهنية',
+  education: 'التعليم والدرجات الأكاديمية',
+  projects: 'مشاريع تدريبية مرموقة',
+  sdgs: 'أهداف التنمية المستدامة',
   achievements: 'الإنجازات',
   credentials: 'الاعتمادات',
   committees: 'اللجان والعضويات',

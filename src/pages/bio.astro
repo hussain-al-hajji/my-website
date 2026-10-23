@@ -4,6 +4,7 @@ import PageHead from '../components/PageHead.astro';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
 import { href, BIO_SECTION, site } from '../lib/site.js';
+import { fillTokens } from '../lib/faq.js';
 
 const p = pages.bio;
 const CHIP = ['expertise', 'skills', 'values'];
@@ -11,7 +12,8 @@ const by = (s) => bio.filter((x) => x.section === s);
 // ترتيب الأقسام من لوحة التحكم، وما لم يُذكر يُلحق في آخره
 const all = Object.keys(BIO_SECTION);
 const saved = (p.order || []).filter((k) => all.includes(k));
-const order = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => by(k).length);
+const hidden = new Set(p.hidden || []);
+const order = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => by(k).length && !hidden.has(k));
 const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map((s) => ({ label: BIO_SECTION[s], href: '#' + s }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
@@ -22,7 +24,7 @@ const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map
   <section class="sec tight flush" id="top">
     <div class="measure">
       <div class="prose">
-        {p.intro.map((t) => <p>{t}</p>)}
+        {p.intro.map((t) => <p>{fillTokens(t)}</p>)}
       </div>
     </div>
   </section>
