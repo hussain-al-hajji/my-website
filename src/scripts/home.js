@@ -264,6 +264,46 @@ if (splash) {
   }
 }
 
+// روزنامة المدرب: بكرة عمودية، البارز في وسطها وما فوقه وتحته يخفت ويميل
+const whView = $('#whView');
+if (whView) {
+  const rows = $$('.wh-row', whView), count = $('#whCount'), up = $('#whUp'), down = $('#whDown');
+  const today = new Date().toLocaleDateString('en-CA');
+  const LBL = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
+  rows.forEach((r) => {
+    const st = r.dataset.to < today ? 'past' : r.dataset.from <= today ? 'now' : 'next';
+    r.dataset.state = st; $('.wh-state', r).textContent = LBL[st];
+  });
+  let rh = rows[0].offsetHeight, cur = -1, raf = 0;
+  const paint = () => {
+    raf = 0;
+    const c = whView.scrollTop + whView.clientHeight / 2;
+    let best = 0, bd = 1e9;
+    rows.forEach((r, i) => {
+      const d = (r.offsetTop + rh / 2 - c) / rh, a = Math.min(Math.abs(d), 2.6);
+      r.style.setProperty('--d', d.toFixed(3)); r.style.setProperty('--a', a.toFixed(3));
+      if (Math.abs(d) < bd) { bd = Math.abs(d); best = i; }
+    });
+    if (best !== cur) {
+      cur = best;
+      rows.forEach((r, i) => { r.classList.toggle('is-focus', i === best); r.querySelector('.wh-like').tabIndex = i === best ? 0 : -1; });
+      count.textContent = `برنامج ${best + 1} من ${rows.length}`;
+      up.disabled = best === 0; down.disabled = best === rows.length - 1;
+    }
+  };
+  const go = (i, smooth = true) => whView.scrollTo({ top: Math.max(0, Math.min(rows.length - 1, i)) * rh, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+  const focusIndex = () => { const i = rows.findIndex((r) => r.dataset.state !== 'past'); return i < 0 ? rows.length - 1 : i; };
+  const measure = () => { rh = rows[0].offsetHeight; go(cur < 0 ? focusIndex() : cur, false); paint(); };
+  whView.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true });
+  rows.forEach((r, i) => r.addEventListener('click', (e) => { if (i !== cur && !e.target.closest('a')) go(i); }));
+  up.addEventListener('click', () => go(cur - 1)); down.addEventListener('click', () => go(cur + 1));
+  whView.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') { e.preventDefault(); go(cur - 1); } else if (e.key === 'ArrowDown') { e.preventDefault(); go(cur + 1); }
+  });
+  addEventListener('resize', measure);
+  measure(); requestAnimationFrame(measure);
+}
+
 function onScroll() { opening(); inkFill(); }
 onScroll(); addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
 

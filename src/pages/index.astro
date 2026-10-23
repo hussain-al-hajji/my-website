@@ -6,7 +6,8 @@ import highlights from '../data/highlights.json';
 import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
-import { site, href, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
+import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
+import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
@@ -59,9 +60,12 @@ const homeData = {
     ['البحرين', ['البحرين'], 26.23, 50.59], ['الكويت', ['الكويت'], 29.37, 47.98],
   ],
 };
-const jsonld = {
-  '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar',
-};
+const wheel = wheelItems();
+const STATE = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
+const jsonld = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar' },
+  ...eventSchemas(site, abs),
+];
 ---
 <Base
   description={site.description}
@@ -131,6 +135,40 @@ const jsonld = {
   </div>
   <div class="paddles"><button type="button" id="prev" aria-label="السابق">›</button><button type="button" id="next" aria-label="التالي">‹</button></div>
 </section>
+
+{wheel.length > 0 && (
+<section class="sec alt cal" id="calendar" aria-labelledby="cal-h">
+  <div class="wide sec-head"><h2 id="cal-h" data-in>روزنامة المدرب.</h2><a class="more" href={href('/training-programs')}>سجل الأثر</a></div>
+  <div class="wide">
+    <p class="lede cal-lede" data-in>برامجي وفعالياتي بتتابعها الزمني. اسحب لأعلى أو لأسفل لتتنقل بينها.</p>
+    <div class="wheel" id="wheel">
+      <div class="wh-band" aria-hidden="true"></div>
+      <div class="wh-view" id="whView" tabindex="0" role="list" aria-label="روزنامة المدرب">
+        <ol class="wh-list">
+          {wheel.map((x) => {
+            const r = rangeAr(x.from, x.to);
+            const sub = [x.org && 'بالتعاون مع ' + x.org, x.duration, x.location].filter(Boolean).join(' · ');
+            return (
+              <li class="wh-row" role="listitem" data-from={x.from} data-to={x.to} data-state={stateOf(x)}>
+                <div class="wh-date"><b>{r.line}</b><span>{r.year}</span><i class="wh-state">{STATE[stateOf(x)]}</i></div>
+                <div class="wh-main">
+                  <h3>{x.title}</h3>
+                  {sub && <p class="wh-sub">{sub}</p>}
+                  {x.details && <p class="wh-det">{x.details}</p>}
+                  <a class="more wh-like" href={href('/contact') + '?like=' + encodeURIComponent(x.title)} tabindex="-1">اطلب برنامجاً مشابهاً</a>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+      <button class="wh-btn up" type="button" id="whUp" aria-label="الأسبق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></button>
+      <button class="wh-btn down" type="button" id="whDown" aria-label="الأحدث"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    </div>
+    <p class="wh-count" id="whCount" aria-live="polite"></p>
+  </div>
+</section>
+)}
 
 <section class="sec dark nums" aria-labelledby="nm">
   <div class="measure">

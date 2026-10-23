@@ -3,7 +3,8 @@ import site from '../data/site.json';
 import news from '../data/news.json';
 import posts from '../data/posts.json';
 import kits from '../data/kits.json';
-import records from '../data/records.json';
+import rawRecords from '../data/records.json';
+import { archivedRecords } from './calendar.js';
 import media from '../data/media.json';
 import courses from '../data/courses.json';
 
@@ -134,6 +135,9 @@ export function stats() {
     inLastYear: records.filter((r) => r.year === last).length,
   };
 }
+
+// برامج الروزنامة المنتهية تنضم تلقائياً إلى سجل الأثر (الأحدث سنةً أولاً)
+const records = [...archivedRecords(), ...rawRecords].sort((a, b) => b.year - a.year);
 
 export { site, records, media, courses };
 export const contactLinks = () => {

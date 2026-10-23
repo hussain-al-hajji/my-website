@@ -48,6 +48,8 @@ const links = contactLinks();
     const f = document.getElementById('cf');
     const q = new URLSearchParams(location.search).get('kit');
     if (q) { const s = document.getElementById('f-kit'); if ([...s.options].some((o) => o.value === q)) s.value = q; }
+    const like = new URLSearchParams(location.search).get('like');
+    if (like) document.getElementById('f-msg').value = 'أرغب في برنامج مشابه لـ«' + like + '».';
     function body() {
       const d = new FormData(f);
       const kit = f.querySelector('#f-kit');
