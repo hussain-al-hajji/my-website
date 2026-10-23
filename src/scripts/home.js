@@ -247,7 +247,7 @@ if (splash) {
   if (!root.classList.contains('sp-on')) splash.remove();
   else {
     const decoded = Promise.all($$('img', splash).map((i) => (i.decode ? i.decode().catch(() => {}) : 0)));
-    const hold = new Promise((r) => setTimeout(r, Math.max(0, 1500 - performance.now())));
+    const hold = new Promise((r) => setTimeout(r, Math.max(0, 2250 - performance.now())));
     Promise.all([decoded, hold]).then(() => {
       scrollTo(0, 0);
       const jobs = [[$('.sp-fig', splash), $('#pfig')], [$('.sp-name', splash), $('.hero-name img')]];
