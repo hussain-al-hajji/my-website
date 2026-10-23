@@ -145,11 +145,63 @@ $$('[data-filter-root]').forEach((root) => {
   }
   $$('[data-f]', root).forEach((b) => b.addEventListener('click', () => {
     const [k, v] = b.dataset.f.split(':');
-    $$(`[data-f^="${k}:"]`, root).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    $$(`[data-f^="${k}:"]:not([data-clone])`, root).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     state[k] = v; apply();
   }));
   input?.addEventListener('input', apply);
   apply();
+});
+
+// شريط اختيارات أفقي دائري: يُسحب يميناً ويساراً ويعود من أوله عند آخر خيار دون رجوع
+$$('[data-loop]').forEach((row) => {
+  const orig = [...row.children];
+  if (orig.length < 2) return;
+  row.classList.add('looping');                       // سطر واحد: نقيس عرضه الحقيقي
+  if (row.scrollWidth <= row.clientWidth + 2) { row.classList.remove('looping'); return; }   // يتسع كله: يبقى بلا حلقة
+  const mk = (src) => src.map((el) => {
+    const c = el.cloneNode(true);
+    c.dataset.clone = '1'; c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1; c.removeAttribute('id');
+    return c;
+  });
+  const before = mk(orig), after = mk(orig);
+  row.prepend(...before); row.append(...after);
+  const rtl = getComputedStyle(row).direction === 'rtl';
+  const get = () => (rtl ? -row.scrollLeft : row.scrollLeft), put = (p) => { row.scrollLeft = rtl ? -p : p; };
+  let W = 0;
+  const measure = () => {
+    W = Math.abs(after[0].getBoundingClientRect().left - orig[0].getBoundingClientRect().left);
+    return W;
+  };
+  const home = () => { measure(); put(W); };
+  home();
+  addEventListener('resize', () => { const frac = W ? (get() - W) / W : 0; measure(); put(W + frac * W); });
+  let busy = false;
+  row.addEventListener('scroll', () => {
+    if (busy || !W) return;
+    const p = get();
+    if (p < W * 0.35) { busy = true; put(p + W); } else if (p > W * 1.65) { busy = true; put(p - W); }
+    requestAnimationFrame(() => { busy = false; });
+  }, { passive: true });
+  // النسخ تعكس حالة الأصل وتنقل نقراتها إليه
+  const sync = () => orig.forEach((o, i) => { const v = o.getAttribute('aria-pressed'); if (v != null) { before[i].setAttribute('aria-pressed', v); after[i].setAttribute('aria-pressed', v); } });
+  const mo = new MutationObserver(sync);
+  orig.forEach((o) => mo.observe(o, { attributes: true, attributeFilter: ['aria-pressed'] }));   // الأصول فقط، حتى لا تتكرر الحلقة
+  sync();
+  row.addEventListener('click', (e) => {
+    const c = e.target.closest('[data-clone]'); if (!c) return;
+    const i = (c.parentElement === row ? [...before, ...after] : []).indexOf(c) % orig.length;
+    if (i >= 0) orig[i].click();
+  });
+  // سحب بالفأرة على الحاسوب
+  let d = null, moved = 0;
+  row.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button) return; d = { x: e.clientX, s: row.scrollLeft }; moved = 0; });
+  row.addEventListener('pointermove', (e) => {
+    if (!d) return; const dx = e.clientX - d.x; moved = Math.max(moved, Math.abs(dx));
+    if (moved > 5) { row.classList.add('dragging'); row.scrollLeft = d.s - dx; }
+  });
+  const stop = () => { d = null; row.classList.remove('dragging'); };
+  row.addEventListener('pointerup', stop); row.addEventListener('pointerleave', stop);
+  row.addEventListener('click', (e) => { if (moved > 5) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
 });
 
 // نسخ نص

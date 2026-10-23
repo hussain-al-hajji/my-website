@@ -17,12 +17,12 @@ const kits = getKits();
       <div class="wide">
         <h2 class="h2" style="margin-bottom:20px" data-in>اختر جمهورك وما تريده.</h2>
         <p class="filter-label">الفئة</p>
-        <div class="chips-l" role="group" aria-label="الفئة">
+        <div class="chips-l" data-loop role="group" aria-label="الفئة">
           <button class="fchip" type="button" aria-pressed="true" data-f="aud:">كل الفئات</button>
           {Object.entries(AUDIENCES).map(([v, l]) => <button class="fchip" type="button" aria-pressed="false" data-f={`aud:${v}`}>{l}</button>)}
         </div>
         <p class="filter-label">المخرج المتوقع</p>
-        <div class="chips-l" role="group" aria-label="المخرج المتوقع">
+        <div class="chips-l" data-loop role="group" aria-label="المخرج المتوقع">
           <button class="fchip" type="button" aria-pressed="true" data-f="goal:">كل المخرجات</button>
           {Object.entries(GOALS).map(([v, l]) => <button class="fchip" type="button" aria-pressed="false" data-f={`goal:${v}`}>{l}</button>)}
         </div>

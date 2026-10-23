@@ -86,7 +86,7 @@ function render() {
   result.classList.remove('swap'); void result.offsetWidth; result.classList.add('swap');
 }
 $$('.seg').forEach((grp) => $$('button', grp).forEach((b) => b.addEventListener('click', () => {
-  $$('button', grp).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  $$('button:not([data-clone])', grp).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
   sel[grp.dataset.q] = b.dataset.v; render();
 })));
 render();

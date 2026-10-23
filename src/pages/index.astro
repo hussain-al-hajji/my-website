@@ -261,14 +261,14 @@ const jsonld = [
     <div class="sec-head"><h2 id="kt" data-in>مجالات التعاون.</h2><a class="more" href={href('/collaborate')}>قارن الحقائب</a></div>
     <div class="finder">
       <div class="qs">
-        <div class="q" data-in><h3>من جمهورك؟</h3><div class="seg" data-q="a">
+        <div class="q" data-in><h3>من جمهورك؟</h3><div class="seg" data-loop data-q="a">
           {Object.entries(AUDIENCES).map(([v, l], i) => <button type="button" aria-pressed={String(i === 0)} data-v={v}>{l}</button>)}
         </div></div>
-        <div class="q" data-in style="--d:1"><h3>ما المخرج الذي تريده؟</h3><div class="seg" data-q="g">
+        <div class="q" data-in style="--d:1"><h3>ما المخرج الذي تريده؟</h3><div class="seg" data-loop data-q="g">
           <button type="button" aria-pressed="true" data-v="">أي مخرج</button>
           {Object.entries(GOALS).map(([v, l]) => <button type="button" aria-pressed="false" data-v={v}>{l}</button>)}
         </div></div>
-        <div class="q" data-in style="--d:2"><h3>كم لديكم من الوقت؟ <small>اختياري</small></h3><div class="seg" data-q="t">
+        <div class="q" data-in style="--d:2"><h3>كم لديكم من الوقت؟ <small>اختياري</small></h3><div class="seg" data-loop data-q="t">
           <button type="button" aria-pressed="true" data-v="">أي مدة</button>
           {Object.entries(TIMES).map(([v, l]) => <button type="button" aria-pressed="false" data-v={v}>{l}</button>)}
         </div></div>
