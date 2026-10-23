@@ -24,14 +24,14 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const years = [...new Set(log.map((r) => r.y))].sort(), y0 = years[0], y1 = years[years.length - 1];
   const geo = $$('#map .geo path').map((p) => new Path2D(p.getAttribute('d')));
   const img = new Image(); img.src = cv.dataset.logo; try { await img.decode(); } catch {}
-  const DUST = 1500, random = rng(7);
+  const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 650 : 1500, random = rng(7);
   const sc = [], nm = [], mp = [], yr = [], dsc = [], dnm = [], dmp = [], dyr = [];
   let W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0];
   const gauss = () => (random() + random() + random() - 1.5) * 1.3;
 
   function layout() {
     const r = cv.getBoundingClientRect(); W = Math.max(280, r.width); H = Math.max(260, r.height);
-    dpr = Math.min(2, devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr;
+    dpr = Math.min(coarse ? 1.5 : 2, devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr;
     // الاسم: عيّنات من بكسلات المخطوطة
     const nw = Math.min(W * 0.9, 820), nh = nw * 961 / 2600, ox = (W - nw) / 2, oy = (H - nh) / 2;
     const off = document.createElement('canvas'); off.width = Math.round(nw); off.height = Math.round(nh);
@@ -97,7 +97,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     }
     // غبار
     ctx.fillStyle = 'rgba(232,189,99,.62)';
-    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p), j = reduce ? 0 : Math.sin(t / 900 + i) * 1.2; ctx.fillRect(q[0] + j, q[1] + Math.cos(t / 1100 + i) * 1.2, 1.9, 1.9); }
+    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p), j = reduce || coarse ? 0 : Math.sin(t / 900 + i) * 1.2; ctx.fillRect(q[0] + j, q[1] + (reduce || coarse ? 0 : Math.cos(t / 1100 + i) * 1.2), 1.9, 1.9); }
     // النقاط
     for (let i = 0; i < N; i++) {
       const q = pos(i, p), h = i === hover;
@@ -115,13 +115,15 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       yearCols.forEach((c) => { ctx.fillText(String(c.y), c.x, H - 34); ctx.fillStyle = `rgba(163,162,155,${(wYear - 0.5) * 2})`; ctx.font = '500 12px "Noto Sans Arabic", system-ui, sans-serif'; ctx.fillText(c.n + ' برنامج', c.x, H - 14); ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif'; });
     }
   }
-  let last = 0;
+  let last = 0, lastCur = -1, lastHover = -2;
   function frame(t) {
     if (!active) return;
     target = measure(); cur += (target - cur) * (reduce ? 1 : 0.14); if (Math.abs(target - cur) < 0.0004) cur = target;
     const st = cur < 0.28 ? 0 : cur < 0.6 ? 1 : 2;
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
-    draw(t); last = t; requestAnimationFrame(frame);
+    // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
+    if (!coarse || cur !== lastCur || hover !== lastHover) { draw(t); lastCur = cur; lastHover = hover; }
+    last = t; requestAnimationFrame(frame);
   }
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);
   // التلميح عند المرور على نقطة
@@ -242,8 +244,9 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       grab.mx = Math.max(grab.mx, Math.hypot(e.clientX - grab.px, e.clientY - grab.py)); grab.hist.push([performance.now(), nx, ny]); if (grab.hist.length > 5) grab.hist.shift();
       b.x = Math.max(b.r, Math.min(W - b.r, nx)); b.y = Math.max(b.r, Math.min(H - b.r, ny));
     });
-    const up = () => {
+    const up = (e) => {
       if (!grab || grab.b !== b) return; const h = grab.hist; b.drag = false;
+      if (e && e.type === 'pointercancel') { grab = null; return; }   // المتصفح أخذ اللمسة للتمرير
       if (grab.mx < 6) select(b); else if (h.length > 1) { const a = h[0], z = h[h.length - 1], dt = Math.max(16, z[0] - a[0]); b.vx = Math.max(-18, Math.min(18, (z[1] - a[1]) / dt * 16)); b.vy = Math.max(-18, Math.min(18, (z[2] - a[2]) / dt * 16)); }
       grab = null;
     };
