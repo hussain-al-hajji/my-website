@@ -231,10 +231,16 @@ const jsonld = [
       <canvas id="csCanvas" role="img" aria-label="كل برنامج في سجل الأثر نقطة ضوء تتشكل مرة اسماً، ومرة خريطة، ومرة أعمدة سنوات" data-logo={href('/brand/logo-full-white.svg')}></canvas>
       <div class="tip" id="csTip" hidden></div>
     </div>
-    <div class="const-steps" role="group" aria-label="عرض الكوكبة">
-      <button type="button" data-cs="0" aria-pressed="true">الاسم</button>
-      <button type="button" data-cs="1" aria-pressed="false">الخريطة</button>
-      <button type="button" data-cs="2" aria-pressed="false">السنوات</button>
+    <div class="const-ctl">
+      <label class="const-scrub" dir="rtl">
+        <span class="cs-hint" id="csHint">اسحب المؤشر لتعيد تشكيل النقاط</span>
+        <input type="range" id="csScrub" min="0" max="1000" step="1" value="0" aria-label="تشكيل النقاط: من التبعثر إلى الاسم ثم الخريطة ثم السنوات" aria-describedby="csHint">
+      </label>
+      <div class="const-steps" role="group" aria-label="عرض الكوكبة">
+        <button type="button" data-cs="0" aria-pressed="true">الاسم</button>
+        <button type="button" data-cs="1" aria-pressed="false">الخريطة</button>
+        <button type="button" data-cs="2" aria-pressed="false">السنوات</button>
+      </div>
     </div>
   </div>
 </section>

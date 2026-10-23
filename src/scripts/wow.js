@@ -80,6 +80,17 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     const k = +b.dataset.cs;
     if (reduce) { force = HOLD[k]; cur = target = force; } else sec.scrollIntoView(), scrollTo({ top: sec.offsetTop + range() * HOLD[k] - 0, behavior: 'smooth' });
   }));
+  // مؤشر التشكيل: يحرّك التقدّم مباشرة (بتمرير الصفحة نفسها حتى تبقى الحالة واحدة)
+  const scrub = $('#csScrub'); let scrubbing = false;
+  if (scrub) {
+    const seek = () => {
+      const p = clamp(+scrub.value / 1000); $('#csHint')?.classList.add('done');
+      if (reduce) { force = p; cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
+    };
+    scrub.addEventListener('input', seek);
+    scrub.addEventListener('pointerdown', () => { scrubbing = true; });
+    ['pointerup', 'pointercancel', 'blur'].forEach((ev) => scrub.addEventListener(ev, () => { scrubbing = false; }));
+  }
   const CAP = [`${N} برنامجاً، وكل نقطة منها حكاية.`, `${placedN} موقعاً داخل المملكة وخارجها.`, `من ${y0} إلى ${y1}، سنة بعد سنة.`];
 
   function pos(i, p) {
@@ -119,6 +130,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   function frame(t) {
     if (!active) return;
     target = measure(); cur += (target - cur) * (reduce ? 1 : 0.14); if (Math.abs(target - cur) < 0.0004) cur = target;
+    if (scrub && !scrubbing) scrub.value = Math.round(cur * 1000);
     const st = cur < 0.28 ? 0 : cur < 0.6 ? 1 : 2;
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
     // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
