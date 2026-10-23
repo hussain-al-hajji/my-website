@@ -6,10 +6,13 @@ import pages from '../data/pages.json';
 import { href, BIO_SECTION, site } from '../lib/site.js';
 
 const p = pages.bio;
-const order = ['career', 'achievements', 'credentials', 'committees', 'leadership', 'mentoring', 'bootcamps', 'learning', 'writing', 'volunteer'];
-const chipSections = ['expertise', 'skills', 'values'];
+const CHIP = ['expertise', 'skills', 'values'];
 const by = (s) => bio.filter((x) => x.section === s);
-const local = [{ label: 'السيرة', href: '#top' }, ...order.filter((s) => by(s).length).slice(0, 4).map((s) => ({ label: BIO_SECTION[s], href: '#' + s }))];
+// ترتيب الأقسام من لوحة التحكم، وما لم يُذكر يُلحق في آخره
+const all = Object.keys(BIO_SECTION);
+const saved = (p.order || []).filter((k) => all.includes(k));
+const order = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => by(k).length);
+const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map((s) => ({ label: BIO_SECTION[s], href: '#' + s }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
   <PageHead title={p.title} lead={p.lead}>
@@ -36,36 +39,32 @@ const local = [{ label: 'السيرة', href: '#top' }, ...order.filter((s) => b
     </div>
   </section>
 
-  {order.filter((s) => by(s).length).map((s, i) => (
+  {order.map((s, i) => (
     <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={s}>
       <div class="measure">
         <h2 class="h2" style="margin-bottom:28px" data-in>{BIO_SECTION[s]}.</h2>
-        <ol class="tl">
-          {by(s).map((it) => (
-            <li>
-              <span class="period">{it.period}</span>
-              <div>
-                {it.link
-                  ? <a href={it.link} rel="noopener"><b>{it.title}</b></a>
-                  : <b>{it.title}</b>}
-                {it.subtitle && <span class="org">{it.subtitle}</span>}
-                {it.desc && <p>{it.desc}</p>}
-              </div>
-            </li>
-          ))}
-        </ol>
+        {CHIP.includes(s) ? (
+          <ul class="chip-list">{by(s).map((it) => <li>{it.title}</li>)}</ul>
+        ) : (
+          <ol class="tl">
+            {by(s).map((it) => (
+              <li>
+                <span class="period">{it.period}</span>
+                <div class="tl-row">
+                  {it.logo ? <img class="tl-logo" src={href(it.logo)} alt={it.subtitle || ''} loading="lazy" width="56" height="56"> : by(s).some((x) => x.logo) ? <span class="tl-logo ph" /> : null}
+                  <div class="tl-body">
+                    {it.link
+                      ? <a href={it.link} rel="noopener"><b>{it.title}</b></a>
+                      : <b>{it.title}</b>}
+                    {it.subtitle && <span class="org">{it.subtitle}</span>}
+                    {it.desc && <p>{it.desc}</p>}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </section>
   ))}
-
-  <section class="sec tight dark">
-    <div class="measure">
-      {chipSections.filter((s) => by(s).length).map((s) => (
-        <div style="margin-bottom:44px">
-          <h2 class="h2" style="margin-bottom:20px">{BIO_SECTION[s]}.</h2>
-          <ul class="chip-list">{by(s).map((it) => <li style="background:var(--tile-dark)">{it.title}</li>)}</ul>
-        </div>
-      ))}
-    </div>
-  </section>
 </Base>

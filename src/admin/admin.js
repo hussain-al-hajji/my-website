@@ -153,6 +153,21 @@ function field(f, get, set, ctx) {
           h('button', { type: 'button', class: 'btn sm ghost', onClick: () => { upd(''); refresh(); } }, 'إزالة'))), file);
       refresh(); break;
     }
+    case 'sections': {
+      const keys = f.options.map((o) => o[0]), lab = Object.fromEntries(f.options);
+      const cur = () => { const a = (get(f.k) || []).filter((k) => keys.includes(k)); return [...a, ...keys.filter((k) => !a.includes(k))]; };
+      const box = h('ol', { class: 'ordl', id });
+      const draw = () => {
+        const a = cur();
+        box.replaceChildren(...a.map((k, i) => h('li', {}, h('span', {}, `${i + 1}. ${lab[k]}`),
+          h('span', { class: 'row-btns' },
+            h('button', { type: 'button', class: 'btn sm ghost', disabled: i === 0, onClick: () => mv(i, -1) }, 'أعلى'),
+            h('button', { type: 'button', class: 'btn sm ghost', disabled: i === a.length - 1, onClick: () => mv(i, 1) }, 'أسفل')))));
+      };
+      const mv = (i, d) => { const a = cur(), j = i + d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; upd(a); draw(); };
+      if (!Array.isArray(get(f.k))) set(f.k, cur());
+      draw(); input = box; break;
+    }
     case 'objects': {
       const arr = () => get(f.k) || [];
       const box = h('div', { class: 'objs', id });

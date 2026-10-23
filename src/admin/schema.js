@@ -242,11 +242,12 @@ export const SECTIONS = [
   {
     id: 'bio', label: 'السيرة', file: 'bio', kind: 'list', group: 'المحتوى',
     title: (x) => x.title, meta: (x) => [x.section, x.period].filter(Boolean).join(' · '),
-    blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', period: '', desc: '', link: '' }),
+    blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', logo: '', period: '', desc: '', link: '' }),
     fields: [
       { k: 'section', label: 'القسم', type: 'select', options: [['career', 'المسيرة المهنية'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
       { k: 'title', label: 'العنوان', type: 'text', ...req },
       { k: 'subtitle', label: 'الجهة', type: 'text' },
+      { k: 'logo', label: 'شعار الجهة (اختياري)', type: 'image', help: 'يظهر بجانب العنصر في صفحة «عني» وفي ملف السيرة PDF. الأفضل شعار بخلفية شفافة أو بيضاء.' },
       { k: 'period', label: 'الفترة', type: 'text' },
       { k: 'desc', label: 'الوصف', type: 'textarea', rows: 4 },
       { k: 'link', label: 'رابط', type: 'url' },
@@ -336,6 +337,7 @@ export const SECTIONS = [
       { k: 'bio.intro', label: 'السيرة: الفقرات (فقرة لكل سطر)', type: 'lines' },
       { k: 'bio.tracks', label: 'السيرة: المسارات', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
       { k: 'bio.closing', label: 'السيرة: الخاتمة', type: 'textarea', rows: 3 },
+      { k: 'bio.order', label: 'السيرة: ترتيب الأقسام في الصفحة وملف PDF', type: 'sections', help: 'حرّك القسم بالسهمين. القسم الأعلى يظهر أولاً. الأقسام الفارغة لا تظهر.', options: [['career', 'المسيرة المهنية'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
     ],
   },
 ];

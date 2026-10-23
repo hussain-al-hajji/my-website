@@ -703,7 +703,8 @@ html{scroll-padding-top:calc(var(--gnav-h) + 64px)}
 .pf-sec p{text-align:justify;margin-top:1.5mm}
 .pf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 9mm}
 .pf-list{list-style:none;display:grid;gap:1.6mm}
-.pf-list li{display:grid;gap:0}
+.pf-list li{display:flex;gap:2.4mm;align-items:flex-start}
+.pf-list li > div{display:grid;gap:0;min-width:0}
 .pf-list b{font-weight:700;line-height:1.45}
 .pf-list small{color:var(--ink-2);font-size:8.4pt;line-height:1.5}
 .pf-kits{list-style:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.8mm 6mm}
@@ -872,3 +873,13 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .seg.looping > *,.chips-l.looping > *{flex:none;white-space:nowrap}
 .finder > *,.qs,.q{min-width:0}
 @media (max-width:820px){.finder{grid-template-columns:minmax(0,1fr)}}
+
+/* شعارات الجهات في السيرة */
+.tl-row{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.tl-logo{flex:none;width:56px;height:56px;object-fit:contain;background:#fff;border:1px solid var(--hair);border-radius:12px;padding:6px}
+.tl-body{min-width:0}
+
+.pf-logo{flex:none;width:8mm;height:8mm;object-fit:contain;border:.2mm solid var(--hair);border-radius:1.6mm;padding:.8mm;background:#fff}
+
+.pf-logo.ph,.tl-logo.ph{border-color:transparent;background:none}
+.pf-list:not(:has(img.pf-logo)) .pf-logo.ph{display:none}

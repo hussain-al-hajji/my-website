@@ -20,7 +20,13 @@ const nums = [
 ];
 const fmt = (n) => (n >= 1000 && n !== site.stats.since ? n.toLocaleString('en-US') : String(n));
 const plus = (n) => (n === site.stats.since ? '' : '+');
-const secs = [['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['leadership', 'برامج القيادة'], ['committees', 'اللجان والعضويات']];
+// نفس ترتيب الأقسام المحفوظ في لوحة التحكم: الأول بعرض الصفحة والأربعة التالية في عمودين
+const CHIP = ['expertise', 'skills', 'values'];
+const all = Object.keys(BIO_SECTION).filter((k) => !CHIP.includes(k));
+const saved = (p.order || []).filter((k) => all.includes(k));
+const ordered = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => by(k).length);
+const [first, ...rest] = ordered;
+const secs = rest.slice(0, 4).map((k) => [k, BIO_SECTION[k]]);
 ---
 <Base title="الملف التعريفي" description={p.lead} noindex cta={null} bare>
   <main class="pf-page" id="main">
@@ -44,14 +50,16 @@ const secs = [['achievements', 'الإنجازات'], ['credentials', 'الاع�
         {p.intro.slice(0, 2).map((t) => <p>{t}</p>)}
       </section>
 
-      <section class="pf-sec">
-        <h2>المسيرة المهنية</h2>
-        <ul class="pf-list">
-          {by('career').slice(0, 6).map((x) => (
-            <li><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></li>
-          ))}
-        </ul>
-      </section>
+      {first && (
+        <section class="pf-sec">
+          <h2>{BIO_SECTION[first]}</h2>
+          <ul class="pf-list">
+            {by(first).slice(0, 6).map((x) => (
+              <li>{x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : <span class="pf-logo ph" />}<div><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></div></li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <div class="pf-cols">
         {secs.map(([s, title]) => (
@@ -59,7 +67,7 @@ const secs = [['achievements', 'الإنجازات'], ['credentials', 'الاع�
             <h2>{title}</h2>
             <ul class="pf-list">
               {by(s).slice(0, 5).map((x) => (
-                <li><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></li>
+                <li>{x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : <span class="pf-logo ph" />}<div><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></div></li>
               ))}
             </ul>
           </section>
