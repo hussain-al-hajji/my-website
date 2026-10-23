@@ -239,6 +239,31 @@ if (pfig) {
   });
 }
 
+// شاشة الافتتاح: الصورة والمخطوطة كبيرتان وتومضان ثم تتقلصان إلى مكانهما في الرئيسية
+const splash = $('#splash');
+if (splash) {
+  const root = document.documentElement;
+  const finish = () => { root.classList.remove('sp-on'); root.classList.add('sp-done'); splash.remove(); };
+  if (!root.classList.contains('sp-on')) splash.remove();
+  else {
+    const decoded = Promise.all($$('img', splash).map((i) => (i.decode ? i.decode().catch(() => {}) : 0)));
+    const hold = new Promise((r) => setTimeout(r, Math.max(0, 1500 - performance.now())));
+    Promise.all([decoded, hold]).then(() => {
+      scrollTo(0, 0);
+      const jobs = [[$('.sp-fig', splash), $('#pfig')], [$('.sp-name', splash), $('.hero-name img')]];
+      const anims = jobs.map(([el, to]) => {
+        const c = el.getBoundingClientRect(), t = to.getBoundingClientRect();
+        return el.animate(
+          [{ transformOrigin: '0 0', transform: 'none' }, { transformOrigin: '0 0', transform: `translate(${t.left - c.left}px,${t.top - c.top}px) scale(${t.width / c.width})` }],
+          { duration: 1050, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' },
+        );
+      });
+      splash.animate([{ backgroundColor: 'rgba(255,255,255,1)' }, { backgroundColor: 'rgba(255,255,255,1)', offset: .4 }, { backgroundColor: 'rgba(255,255,255,0)' }], { duration: 1050, fill: 'forwards' });
+      return Promise.all(anims.map((a) => a.finished));
+    }).then(finish, finish);
+  }
+}
+
 function onScroll() { opening(); inkFill(); }
 onScroll(); addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
 

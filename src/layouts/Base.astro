@@ -29,6 +29,8 @@ const rawPath = baseP && Astro.url.pathname.startsWith(baseP) ? Astro.url.pathna
 const cleanPath = rawPath.replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 const ogSlug = slugOf(cleanPath);
 const image = imageProp || (ogSlugSet().has(ogSlug) ? '/og/' + ogSlug + '.png' : '/og/index.png');
+// شاشة الافتتاح تُعرض مرة في الجلسة، وتُفرض بإضافة ?splash إلى الرابط
+const splashInit = String.raw`(function(){try{var d=document.documentElement,f=/[?&]splash\b/.test(location.search);if(!f&&(matchMedia('(prefers-reduced-motion: reduce)').matches||sessionStorage.getItem('sp')||location.hash||scrollY>20))return;sessionStorage.setItem('sp','1');d.classList.add('sp-on');setTimeout(function(){d.classList.remove('sp-on')},7000)}catch(e){}})()`;
 const fullTitle = title ? `${title} | ${site.name}` : site.title;
 const path = canonical ?? cleanPath;
 const ann = getAnnouncement();
@@ -61,6 +63,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   <meta property="og:image" content={abs(image)}>
   <meta name="twitter:card" content="summary_large_image">
   <script is:inline>document.documentElement.classList.add('js')</script>
+  {cleanPath === '/' && <script is:inline set:html={splashInit}></script>}
   <script type="application/ld+json" set:html={JSON.stringify(person)}></script>
   {crumbs && <script type="application/ld+json" set:html={JSON.stringify(crumbs)}></script>}
   {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)}></script>}
