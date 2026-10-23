@@ -25,9 +25,8 @@ const acts = [
   <main class="card-page" id="main">
     <div class="card-sheet">
       <span class="card-photo"><img src={href('/img/brand/portrait-sketch-560.webp')} alt="رسم بالرصاص لي" width="560" height="694"></span>
-      <h1 class="card-name"><img src={href('/brand/logo-name.svg')} alt={site.name} width="2600" height="815"></h1>
+      <h1 class="card-name"><img src={href('/brand/logo-full-black.svg')} alt={site.name + '، ' + site.tagline} width="2600" height="961"></h1>
       <p class="card-role">{site.role}</p>
-      <p class="card-tag">{site.tagline}</p>
 
       <a class="pill card-save" href={href('/hussain-al-hajji.vcf')} download set:html={svg('save') + '<span>احفظ جهة الاتصال</span>'}></a>
 

@@ -79,7 +79,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
     <div class="wide">
       <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية">
         <span class="mark-chip"><img src={href('/img/brand/portrait-sketch-560.webp')} alt="" width="560" height="694"></span>
-        <img class="mark-name" src={href('/brand/logo-name.svg')} alt="حسين الحاجي" width="2600" height="815">
+        <img class="mark-name" src={href('/brand/logo-full-white.svg')} alt="حسين الحاجي، أمكّن الشباب" width="2600" height="961">
       </a>
       <ul>
         {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
@@ -101,7 +101,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
 
   {!bare && (<nav class="lnav" aria-label="هذه الصفحة">
     <div class="wide">
-      <a class="brand brand-link" href={href('/')}><img src={href('/brand/logo-name-gold.svg')} alt="حسين الحاجي" width="102" height="32"></a>
+      <a class="brand brand-link" href={href('/')}><img src={href('/brand/logo-full-light.svg')} alt="حسين الحاجي، أمكّن الشباب" width="102" height="38"></a>
       {local.length > 0 && (
         <ul class="ltools">
           {local.map((l, i) => <li><a href={l.href.startsWith('#') ? l.href : href(l.href)} class={i === 0 ? 'on' : undefined}>{l.label}</a></li>)}

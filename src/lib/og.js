@@ -5,8 +5,10 @@ import { Resvg } from '@resvg/resvg-js';
 
 const root = process.cwd();
 const fontFiles = ['src/fonts/og/arabic-bold.ttf', 'src/fonts/og/latin-bold.ttf'].map((f) => path.join(root, f));
-const logoSvg = fs.readFileSync(path.join(root, 'public/brand/logo-name-gold.svg'), 'utf8');
-const logoPath = /<path[^>]* d="([^"]+)"/.exec(logoSvg)?.[1] || '';
+
+// الشعار الكامل: الاسم مع السلوقن تحته، يُرسم بلون واحد
+const fullLogo = fs.readFileSync(path.join(root, 'public/brand/logo-full-light.svg'), 'utf8');
+const fullPaths = [...fullLogo.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -33,7 +35,7 @@ export function renderOg({ title, kicker = '' }) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <rect width="1200" height="630" fill="#f5f5f2"/>
 <rect x="24" y="24" width="1152" height="582" rx="28" fill="none" stroke="#d9d8d2" stroke-width="2"/>
-<g transform="translate(${1140 - 300} 52) scale(${sc})"><path d="${logoPath}" fill="#1b1b1a" fill-rule="evenodd"/></g>
+<g transform="translate(${1140 - 300} 44) scale(${sc})" fill="#1b1b1a" fill-rule="evenodd">${fullPaths.map((d) => `<path d="${d}"/>`).join('')}</g>
 ${k}${body}
 <line x1="60" y1="548" x2="1140" y2="548" stroke="#d9d8d2" stroke-width="2"/>
 <text x="1140" y="584" font-family="OG Arabic" font-size="28" font-weight="700" fill="#6b6a64" direction="rtl" text-anchor="end">مؤسس مشاريع رقمية، مدرب أعمال، ومرشد مهني معتمد، أمكّن الشباب</text>
@@ -44,8 +46,6 @@ ${k}${body}
 }
 
 // صورة مشاركة الصفحة الرئيسية: رسم الرصاص بجانب الاسم والسلوقن بالمخطوطة السوداء
-const fullLogo = fs.readFileSync(path.join(root, 'public/brand/logo-full-light.svg'), 'utf8');
-const fullPaths = [...fullLogo.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
 const portraitB64 = fs.readFileSync(path.join(root, 'src/assets/og-portrait.png')).toString('base64');
 
 export function renderHomeOg() {
