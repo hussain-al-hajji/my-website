@@ -12,6 +12,7 @@
 - `public/` الصور المضغوطة والخطوط والشعار.
 - `/card` بطاقة الأعمال الرقمية (رمز QR وبطاقة اتصال vCard تُولَّد من `site.json`).
 - `/profile` ورقة A4 تُحوَّل وقت البناء إلى `hussain-al-hajji-profile.pdf` بواسطة `scripts/make-pdf.mjs`، فيتجدد الملف مع كل نشر. إن لم يتوفر متصفح يُكتفى بتحذير، وللإلزام اضبط `REQUIRE_PDF=1`.
+- روابط الحملات: `/?for=owners&goal=ai` تحدّد الجمهور والمخرج في الباحث وصفحة الحقائب والتواصل وتضيف جملة ترحيب في الرئيسية. الفئات: students و employees و owners و leaders و trainers. المخرجات: ai و ecom و sales و leadership و career و training. الجمل من لوحة التحكم (الصفحة الرئيسية).
 - `.github/workflows/` النشر التلقائي إلى GitHub Pages، وبناء يومي يخفي الأخبار والإعلانات المنتهية.
 
 ## التشغيل محلياً

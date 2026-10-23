@@ -1,4 +1,5 @@
 // لحظات التفاعل في الصفحة الرئيسية.
+import { getAud, getGoal } from './aud.js';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -54,6 +55,17 @@ function inkFill() {
 // اللحظة 4: باحث الحقائب، يقترح أكثر من برنامج حسب الفئة والمخرج والمدة
 const KITS = data.kits, LB = data.labels;
 const sel = { a: 'students', g: '', t: '' };
+// رابط حملة ?for=owners&goal=ai: يُحدَّد الجمهور والمخرج في الباحث وتظهر جملة ترحيب في الأعلى
+{
+  const A = getAud(), G = getGoal();
+  if (A) { sel.a = A; $$('.seg[data-q="a"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === A))); }
+  if (G) { sel.g = G; $$('.seg[data-q="g"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === G))); }
+  const line = A && data.campaign?.[A], box = $('#forLine');
+  if (line && box) {
+    box.innerHTML = `<span>${esc(line)}</span><a class="pill" href="${data.collabUrl}?for=${A}${G ? '&goal=' + G : ''}">الحقائب المناسبة لي</a>`;
+    box.hidden = false;
+  }
+}
 const rMain = $('#rMain'), rMore = $('#rMore'), result = $('#result');
 function rank() {
   const score = (k) => (k.audiences.includes(sel.a) ? 4 : 0) + (sel.g && k.goals.includes(sel.g) ? 4 : 0) + (sel.t && k.times.includes(sel.t) ? 2 : 0);

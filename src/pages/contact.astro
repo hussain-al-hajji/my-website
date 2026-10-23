@@ -6,7 +6,7 @@ const kits = getKits();
 const c = site.contact;
 const links = contactLinks();
 ---
-<Base title="تواصل" description="اطلب برنامجاً تدريبياً أو استشارة أو دعوة للمشاركة." active="contact" cta={null}>
+<Base title="تواصل" description="اطلب برنامجاً تدريبياً أو استشارة أو دعوة للمشاركة." active="contact" cta={null} fab={false}>
   <PageHead title="لنبدأ." lead="أخبرني عن جهتك والفئة التي تخدمها، وسأقترح عليك البرنامج المناسب لها." />
   <section class="sec tight flush alt" style="padding-top:60px">
     <div class="wide cols2" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start">
@@ -17,7 +17,7 @@ const links = contactLinks();
         </div>
         <div class="two">
           <div class="field"><label for="f-aud">الجمهور</label>
-            <select id="f-aud" name="aud"><option value="">اختر</option>{Object.entries(AUDIENCES).map(([v, l]) => <option value={l}>{l}</option>)}</select></div>
+            <select id="f-aud" name="aud"><option value="">اختر</option>{Object.entries(AUDIENCES).map(([v, l]) => <option value={l} data-k={v}>{l}</option>)}</select></div>
           <div class="field"><label for="f-time">الوقت المتاح</label>
             <select id="f-time" name="time"><option value="">اختر</option>{Object.entries(TIMES).map(([v, l]) => <option value={l}>{l}</option>)}</select></div>
         </div>
@@ -48,6 +48,8 @@ const links = contactLinks();
     const f = document.getElementById('cf');
     const q = new URLSearchParams(location.search).get('kit');
     if (q) { const s = document.getElementById('f-kit'); if ([...s.options].some((o) => o.value === q)) s.value = q; }
+    const A = new URLSearchParams(location.search).get('for') || (() => { try { return sessionStorage.getItem('for'); } catch { return ''; } })();
+    const ao = A && document.querySelector('#f-aud option[data-k="' + A + '"]'); if (ao) ao.selected = true;
     const like = new URLSearchParams(location.search).get('like');
     if (like) document.getElementById('f-msg').value = 'أرغب في برنامج مشابه لـ«' + like + '».';
     function body() {

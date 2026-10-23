@@ -4,6 +4,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 import './lang.js';
+import { getAud, getGoal, AUDS } from './aud.js';
 
 // ظهور العناصر عند التمرير
 const io = new IntersectionObserver((es) => es.forEach((e) => {
@@ -150,6 +151,10 @@ $$('[data-filter-root]').forEach((root) => {
   }));
   input?.addEventListener('input', apply);
   apply();
+  // رابط حملة: ?for=owners&goal=ai يحدّد الفئة والمخرج مسبقاً
+  const A = getAud(), G = getGoal();
+  if (A) $(`[data-f="aud:${A}"]:not([data-clone])`, root)?.click();
+  if (G) $(`[data-f="goal:${G}"]:not([data-clone])`, root)?.click();
 });
 
 // شريط اختيارات أفقي دائري: يُسحب يميناً ويساراً ويعود من أوله عند آخر خيار دون رجوع
@@ -203,6 +208,41 @@ $$('[data-loop]').forEach((row) => {
   row.addEventListener('pointerup', stop); row.addEventListener('pointerleave', stop);
   row.addEventListener('click', (e) => { if (moved > 5) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
 });
+
+// زر واتساب العائم: رسالة مناسبة للصفحة، وللحقيبة التي يقرؤها الزائر
+const fab = $('#waFab');
+if (fab) {
+  let kit = '';
+  const aud = getAud();
+  const page = location.origin + location.pathname.replace(/index\.html$/, '').replace(/\.html$/, '');
+  const title = fab.dataset.title || document.title.split('|')[0].trim();
+  const msg = () => {
+    const l = ['السلام عليكم ورحمة الله،', ''];
+    if (kit) l.push(`أرغب في الاستفسار عن حقيبة «${kit}».`);
+    else if (fab.dataset.type === 'article') l.push(`قرأتُ مقالك «${title}» وأودّ التواصل معك.`);
+    else if (location.pathname.endsWith('/') || /\/(index)?(\.html)?$/.test(location.pathname)) l.push('زرتُ موقعك وأرغب في الحديث معك.');
+    else l.push(`زرتُ صفحة «${title}» وأرغب في الحديث معك.`);
+    if (aud) l.push('', 'الفئة: ' + AUDS[aud]);
+    l.push('', 'الصفحة: ' + page);
+    return l.join('\n');
+  };
+  const sync = () => { fab.href = 'https://wa.me/' + fab.dataset.wa + '?text=' + encodeURIComponent(msg()); };
+  sync();
+  fab.addEventListener('click', sync);
+  const kits = $$('.kit[id]');
+  if (kits.length) {
+    const vis = new Map();
+    const ko = new IntersectionObserver((es) => {
+      es.forEach((e) => vis.set(e.target, e.isIntersecting ? e.intersectionRatio : 0));
+      const best = [...vis.entries()].sort((a, b) => b[1] - a[1])[0];
+      kit = best && best[1] > 0 ? ($('h2', best[0])?.textContent || '').trim() : '';
+      sync();
+    }, { threshold: [0, .25, .5, .75] });
+    kits.forEach((k) => ko.observe(k));
+  }
+  const show = () => { fab.hidden = false; fab.classList.toggle('on', scrollY > 520); };
+  show(); addEventListener('scroll', show, { passive: true });
+}
 
 // نسخ نص
 $$('[data-copy]').forEach((b) => b.addEventListener('click', async () => {

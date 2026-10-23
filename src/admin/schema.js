@@ -123,7 +123,7 @@ export const SECTIONS = [
   {
     id: 'media', label: 'الإعلام', file: 'media', kind: 'list', group: 'المحتوى',
     title: (x) => x.title, meta: (x) => [x.section, x.outlet].filter(Boolean).join(' · '),
-    blank: () => ({ id: uid('m'), section: 'tv', outlet: '', title: '', date: today().slice(0, 7), link: '', image: '', note: '' }),
+    blank: () => ({ id: uid('m'), section: 'tv', outlet: '', title: '', date: today().slice(0, 7), link: '', image: '', note: '', strip: false, short: '', logo: '' }),
     fields: [
       { k: 'title', label: 'العنوان', type: 'text', ...req },
       { k: 'section', label: 'النوع', type: 'select', options: [['tv', 'تلفزيون'], ['radio', 'إذاعة'], ['press', 'صحافة ومقالات'], ['event', 'فعاليات'], ['award-press', 'صحافة عن التكريم'], ['award-tv', 'تلفزيون عن التكريم']] },
@@ -132,6 +132,9 @@ export const SECTIONS = [
       { k: 'link', label: 'الرابط', type: 'url' },
       { k: 'image', label: 'صورة', type: 'image' },
       { k: 'note', label: 'ملاحظة', type: 'textarea', rows: 2 },
+      { k: 'strip', label: 'يظهر في شريط «ظهرتُ في» بالرئيسية', type: 'bool', help: 'علّم عنصراً واحداً لكل جهة. تظهر الجهة مرة واحدة.' },
+      { k: 'short', label: 'اسم الجهة في الشريط (مختصر)', type: 'text', help: 'مثل: صحيفة الوطن. إن تُرك فارغاً يُؤخذ الجزء الأول من اسم الجهة.' },
+      { k: 'logo', label: 'شعار الجهة الإعلامية (اختياري)', type: 'image', help: 'إن وُجد يظهر الشعار في الشريط بدل الاسم.' },
     ],
   },
   {
@@ -265,6 +268,12 @@ export const SECTIONS = [
       { k: 'stats.partners', label: 'عدد الجهات', type: 'number' },
       { k: 'stats.beneficiaries', label: 'عدد المستفيدين', type: 'number' },
       { k: 'stats.since', label: 'سنة البداية', type: 'number' },
+      { k: 'campaign.students', label: 'رابط الحملة ?for=students: الجملة الترحيبية (طلاب وحديثو تخرج)', type: 'text', help: 'تظهر في الرئيسية لمن يدخل بالرابط hussain-al-hajji.com/?for=students ويُحدَّد له الجمهور تلقائياً في الباحث وصفحة الحقائب. بقية الفئات: employees و owners و leaders و trainers. أضف &goal=ai (أو ecom أو sales أو leadership أو career أو training) لتحديد المخرج أيضاً.' },
+      { k: 'campaign.employees', label: 'الجملة الترحيبية (?for=employees، موظفون)', type: 'text' },
+      { k: 'campaign.owners', label: 'الجملة الترحيبية (?for=owners، أصحاب منشآت ورواد أعمال)', type: 'text' },
+      { k: 'campaign.leaders', label: 'الجملة الترحيبية (?for=leaders، قادة شباب)', type: 'text' },
+      { k: 'campaign.trainers', label: 'الجملة الترحيبية (?for=trainers، مدربون)', type: 'text' },
+      { k: 'floatWa', label: 'إظهار زر واتساب العائم', type: 'bool', help: 'زر صغير في زاوية الصفحات يفتح واتساب برسالة مناسبة للصفحة التي يتصفحها الزائر.' },
       { k: 'closing.title', label: 'عنوان الختام', type: 'text' },
       { k: 'closing.text', label: 'نص الختام', type: 'textarea', rows: 2 },
       { k: 'services', label: 'الخدمات', type: 'objects', fields: [
