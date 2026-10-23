@@ -20,6 +20,7 @@ export const STATIC_PAGES = [
   { path: '/news', title: 'الأخبار' },
   { path: '/methodology', title: 'منهجي في التدريب' },
   { path: '/faq', title: 'أسئلة شائعة' },
+  { path: '/card', title: 'بطاقتي الرقمية' },
 ];
 
 export const slugOf = (p) => (p === '/' ? 'index' : p.replace(/^\//, ''));

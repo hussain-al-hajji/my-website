@@ -157,7 +157,7 @@ export const GNAV = [
   { label: 'تواصل', href: '/contact', key: 'contact' },
 ];
 export const FOOT_DIR = [
-  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery']] },
+  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery'], ['بطاقتي الرقمية', '/card']] },
   { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['أسئلة شائعة', '/faq'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['مبادرات مبتكرة', '/my-projects']] },
   { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['محتوى مرئي', '/recorded-courses'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
 ];

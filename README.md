@@ -10,13 +10,16 @@
 - `src/admin/` لوحة التحكم (`/admin`).
 - `worker/` خدمة Cloudflare Worker الصغيرة التي تتحقق من الدخول وتودع التعديلات في GitHub.
 - `public/` الصور المضغوطة والخطوط والشعار.
+- `/card` بطاقة الأعمال الرقمية (رمز QR وبطاقة اتصال vCard تُولَّد من `site.json`).
+- `/profile` ورقة A4 تُحوَّل وقت البناء إلى `hussain-al-hajji-profile.pdf` بواسطة `scripts/make-pdf.mjs`، فيتجدد الملف مع كل نشر. إن لم يتوفر متصفح يُكتفى بتحذير، وللإلزام اضبط `REQUIRE_PDF=1`.
 - `.github/workflows/` النشر التلقائي إلى GitHub Pages، وبناء يومي يخفي الأخبار والإعلانات المنتهية.
 
 ## التشغيل محلياً
 ```sh
 npm install
 npm run dev       # http://localhost:4321
-npm run build     # الناتج في dist/
+npm run build     # الناتج في dist/، ويولّد الملف التعريفي PDF إن وُجد متصفح Chrome
+npm run build:site  # بناء الموقع فقط دون PDF
 npm test          # اختبارات الـ Worker
 ```
 

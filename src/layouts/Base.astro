@@ -15,11 +15,12 @@ interface Props {
   cta?: { label: string; href: string } | null;
   jsonld?: object | null;
   canonical?: string;
+  bare?: boolean;
 }
 const {
   title, description = site.description, active = '', image: imageProp,
   noindex = false, type = 'website', local = [], cta = { label: 'اطلب برنامجاً', href: '/contact' },
-  jsonld = null, canonical,
+  jsonld = null, canonical, bare = false,
 } = Astro.props;
 
 // عند البناء بصيغة ملف تأتي المسارات بـ .html، فنوحّدها لتطابق الروابط المنشورة
@@ -64,10 +65,10 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   {crumbs && <script type="application/ld+json" set:html={JSON.stringify(crumbs)}></script>}
   {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)}></script>}
 </head>
-<body data-search={href('/search.json')}>
+<body data-search={href('/search.json')} class={bare ? 'bare' : undefined}>
   <a class="skip" href="#main">انتقل إلى المحتوى</a>
 
-  {ann && (
+  {ann && !bare && (
     <div class="promo" role="region" aria-label="إعلان">
       {ann.text}
       {ann.link && <a href={href(ann.link)}>{ann.linkText || 'اعرف المزيد'}</a>}
@@ -98,7 +99,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
     </div>
   </nav>
 
-  <nav class="lnav" aria-label="هذه الصفحة">
+  {!bare && (<nav class="lnav" aria-label="هذه الصفحة">
     <div class="wide">
       <a class="brand brand-link" href={href('/')}><img src={href('/brand/logo-name-gold.svg')} alt="حسين الحاجي" width="102" height="32"></a>
       {local.length > 0 && (
@@ -108,7 +109,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
       )}
       {cta && <a class="pill" href={href(cta.href)}>{cta.label}</a>}
     </div>
-  </nav>
+  </nav>)}
 
   <div class="mnav" id="mnav" hidden role="dialog" aria-modal="true" aria-label="القائمة">
     <button class="icon-btn x" type="button" data-menu-close aria-label="إغلاق">
@@ -121,7 +122,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
 
   <main id="main"><slot /></main>
 
-  <footer class="foot">
+  {!bare && (<footer class="foot">
     <div class="wide">
       <div class="foot-brand"><img src={href('/brand/logo-full-light.svg')} alt="حسين الحاجي، أمكّن الشباب" width="320" height="118" loading="lazy"></div>
       <div class="dir">
@@ -139,7 +140,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
       </div>
       <div class="legal"><span>© {new Date().getFullYear()} حسين الحاجي. جميع الحقوق محفوظة.</span><span>{site.contact.country}</span></div>
     </div>
-  </footer>
+  </footer>)}
 
   <div class="sov" id="sov" hidden role="dialog" aria-modal="true" aria-label="بحث في الموقع">
     <div class="spanel">

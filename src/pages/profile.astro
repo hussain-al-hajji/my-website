@@ -1,24 +1,93 @@
 ---
 import Base from '../layouts/Base.astro';
+import QRCode from 'qrcode';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
-import { site, BIO_SECTION } from '../lib/site.js';
+import partners from '../data/partners.json';
+import { site, href, abs, getKits, BIO_SECTION } from '../lib/site.js';
+
 const p = pages.bio;
-const secs = ['career', 'credentials', 'achievements', 'leadership', 'committees', 'writing'];
 const c = site.contact;
+const by = (s) => bio.filter((x) => x.section === s);
+const kits = getKits();
+const orgs = partners.filter((x) => x.marquee).map((x) => x.name);
+const qr = await QRCode.toString(abs('/card'), { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#1b1b1a', light: '#ffffff' } });
+const nums = [
+  [site.stats.programs, 'برنامج وفعالية'],
+  [site.stats.partners, 'جهة شريكة'],
+  [site.stats.beneficiaries, 'مستفيد'],
+  [site.stats.since, 'نشط منذ عام'],
+];
+const fmt = (n) => (n >= 1000 && n !== site.stats.since ? n.toLocaleString('en-US') : String(n));
+const plus = (n) => (n === site.stats.since ? '' : '+');
+const secs = [['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['leadership', 'برامج القيادة'], ['committees', 'اللجان والعضويات']];
 ---
-<Base title="نبذة تعريفية" description={p.lead} noindex cta={null}>
-  <div class="profile-sheet">
-    <p class="no-print" style="text-align:end"><button class="pill" type="button" onclick="print()" style="border:0;cursor:pointer;font:inherit">طباعة أو حفظ PDF</button></p>
-    <h1>{site.name}</h1>
-    <p style="color:var(--ink-2)">{site.role}. {p.lead}</p>
-    <p style="margin-top:6px" class="ltr">{c.email} · {c.phone}</p>
-    {p.intro.map((t) => <p style="margin-top:14px;line-height:1.9">{t}</p>)}
-    {secs.map((s) => (
-      <section>
-        <h2>{BIO_SECTION[s]}</h2>
-        <ul>{bio.filter((x) => x.section === s).map((x) => <li><b>{x.title}</b>{x.subtitle ? '، ' + x.subtitle : ''}{x.period ? ' (' + x.period + ')' : ''}</li>)}</ul>
+<Base title="الملف التعريفي" description={p.lead} noindex cta={null} bare>
+  <main class="pf-page" id="main">
+    <p class="no-print pf-bar"><a class="pill" href={href('/hussain-al-hajji-profile.pdf')} download>حمّل الملف (PDF)</a><button type="button" class="more" onclick="print()">طباعة</button></p>
+    <article class="pf">
+      <header class="pf-head">
+        <div class="pf-id">
+          <h1><img src={href('/brand/logo-name.svg')} alt={site.name} width="2600" height="815"></h1>
+          <p class="pf-role">{site.role}</p>
+          <p class="pf-tag">{site.tagline}</p>
+          <p class="pf-lead">{p.lead}</p>
+        </div>
+        <img class="pf-photo" src={href('/img/brand/portrait-sketch-560.webp')} alt="" width="560" height="694">
+      </header>
+
+      <ul class="pf-nums">
+        {nums.map(([n, t]) => <li><b>{fmt(n)}{plus(n)}</b><span>{t}</span></li>)}
+      </ul>
+
+      <section class="pf-sec">
+        <h2>نبذة</h2>
+        {p.intro.slice(0, 2).map((t) => <p>{t}</p>)}
       </section>
-    ))}
-  </div>
+
+      <section class="pf-sec">
+        <h2>المسيرة المهنية</h2>
+        <ul class="pf-list">
+          {by('career').slice(0, 6).map((x) => (
+            <li><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></li>
+          ))}
+        </ul>
+      </section>
+
+      <div class="pf-cols">
+        {secs.map(([s, title]) => (
+          <section class="pf-sec">
+            <h2>{title}</h2>
+            <ul class="pf-list">
+              {by(s).slice(0, 5).map((x) => (
+                <li><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</small></li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <section class="pf-sec">
+        <h2>الحقائب التدريبية</h2>
+        <ul class="pf-kits">
+          {kits.map((k) => <li><b>{k.short}</b><small>{k.duration}</small></li>)}
+        </ul>
+      </section>
+
+      <section class="pf-sec">
+        <h2>من الجهات التي عملتُ معها</h2>
+        <p class="pf-orgs">{orgs.join('، ')}.</p>
+      </section>
+
+      <footer class="pf-foot">
+        <ul>
+          <li><span>الموقع</span><b class="ltr">{abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '')}</b></li>
+          <li><span>البريد</span><b class="ltr">{c.email}</b></li>
+          <li><span>الجوال</span><b class="ltr">{c.phone}</b></li>
+          <li><span>لينكدإن</span><b class="ltr">{c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</b></li>
+        </ul>
+        <div class="pf-qr" aria-hidden="true" set:html={qr}></div>
+      </footer>
+    </article>
+  </main>
 </Base>

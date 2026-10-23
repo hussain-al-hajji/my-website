@@ -221,6 +221,24 @@ function nextCard() {
 cards.forEach((c) => c.addEventListener('click', nextCard));
 $('#deckNext')?.addEventListener('click', nextCard);
 
+// ذوبان الرسم إلى الصورة: بالمؤشر على الحاسوب، وباللمس على الجوال
+const pfig = $('#pfig');
+if (pfig) {
+  let off = 0;
+  const at = (e) => {
+    const r = pfig.getBoundingClientRect();
+    pfig.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
+    pfig.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
+  };
+  pfig.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'mouse') return; at(e); pfig.classList.add('on'); });
+  pfig.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') pfig.classList.remove('on'); });
+  pfig.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse') return;
+    clearTimeout(off);
+    if (pfig.classList.toggle('on')) { at(e); off = setTimeout(() => pfig.classList.remove('on'), 3600); }
+  });
+}
+
 function onScroll() { opening(); inkFill(); }
 onScroll(); addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
 

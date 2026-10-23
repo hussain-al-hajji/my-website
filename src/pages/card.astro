@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import QRCode from 'qrcode';
+import { site, href, abs, contactLinks } from '../lib/site.js';
+
+const c = site.contact;
+const l = contactLinks();
+const qr = await QRCode.toString(abs('/card'), { type: 'svg', margin: 1, errorCorrectionLevel: 'M', color: { dark: '#1b1b1a', light: '#ffffff' } });
+const ico = {
+  save: '<path d="M12 3v12m0 0-4-4m4 4 4-4M5 19h14"/>',
+  wa: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2.5 21.5Z"/><path d="M9.2 8.6c-.3 1.2.5 3.1 2 4.6s3.4 2.4 4.6 2l.9-1.3-2.2-1.1-.9.8c-.9-.4-1.9-1.3-2.4-2.3l.8-.9-1-2.1Z"/>',
+  tel: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/>',
+  in: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+};
+const svg = (k) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ico[k]}</svg>`;
+const acts = [
+  { k: 'wa', t: 'واتساب', u: l.wa, ext: true },
+  { k: 'tel', t: 'اتصال', u: l.tel },
+  { k: 'mail', t: 'البريد', u: l.mail },
+  { k: 'in', t: 'لينكدإن', u: c.linkedin, ext: true },
+];
+---
+<Base title="بطاقتي" description="بطاقتي الرقمية: احفظ جهة اتصالي، أو تواصل معي مباشرة، أو حمّل ملفي التعريفي." bare>
+  <main class="card-page" id="main">
+    <div class="card-sheet">
+      <span class="card-photo"><img src={href('/img/brand/portrait-sketch-560.webp')} alt="رسم بالرصاص لي" width="560" height="694"></span>
+      <h1 class="card-name"><img src={href('/brand/logo-name.svg')} alt={site.name} width="2600" height="815"></h1>
+      <p class="card-role">{site.role}</p>
+      <p class="card-tag">{site.tagline}</p>
+
+      <a class="pill card-save" href={href('/hussain-al-hajji.vcf')} download set:html={svg('save') + '<span>احفظ جهة الاتصال</span>'}></a>
+
+      <ul class="card-acts">
+        {acts.map((a) => (
+          <li><a href={a.u} rel={a.ext ? 'noopener' : undefined} set:html={svg(a.k) + '<span>' + a.t + '</span>'}></a></li>
+        ))}
+      </ul>
+
+      <ul class="card-links">
+        <li><a href={href('/hussain-al-hajji-profile.pdf')}>حمّل ملفي التعريفي (PDF)</a></li>
+        <li><a href={href('/')}>موقعي الإلكتروني</a></li>
+        <li><a href="https://academy.hussain-al-hajji.com/" rel="noopener">الأكاديمية</a></li>
+        <li><a href={c.podcast} rel="noopener">استمع إلى بودكاستي</a></li>
+      </ul>
+
+      <figure class="card-qr">
+        <div class="qr" role="img" aria-label="رمز QR لفتح بطاقتي" set:html={qr}></div>
+        <figcaption>امسح الرمز لتفتح بطاقتي وتحفظ جهة اتصالي.</figcaption>
+      </figure>
+    </div>
+  </main>
+</Base>
