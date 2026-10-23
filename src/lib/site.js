@@ -67,6 +67,16 @@ export function getAnnouncement() {
 export const getPosts = () => [...posts].sort(byDateDesc);
 export const getKits = () => [...kits].sort((a, b) => (a.priority || 99) - (b.priority || 99));
 
+export const PROMPT_CAT = {
+  products: 'اكتشاف المنتجات والفرص',
+  listings: 'وصف المنتجات والمتجر',
+  content: 'المحتوى والتسويق',
+  support: 'خدمة العملاء',
+  sales: 'المبيعات والعروض',
+  ops: 'التحليل والتشغيل',
+  training: 'التدريب وتصميم المحتوى',
+};
+
 export const AUDIENCES = {
   students: 'طلاب وحديثو تخرج',
   employees: 'موظفون',
@@ -166,5 +176,5 @@ export const GNAV = [
 export const FOOT_DIR = [
   { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery'], ['بطاقتي الرقمية', '/card']] },
   { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['ابنِ عرضك', '/proposal'], ['أسئلة شائعة', '/faq'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['مبادرات مبتكرة', '/my-projects']] },
-  { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['محتوى مرئي', '/recorded-courses'], ['اسأل حسين', '/faq#ask'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
+  { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['محتوى مرئي', '/recorded-courses'], ['اسأل حسين', '/faq#ask'], ['مكتبة الأوامر', '/prompts'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
 ];

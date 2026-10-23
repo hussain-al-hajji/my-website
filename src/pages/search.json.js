@@ -2,6 +2,7 @@ import { getKits, getPosts, getNews, href, records, courses, MEDIA_SECTION } fro
 import projects from '../data/projects.json';
 import media from '../data/media.json';
 import featured from '../data/featured.json';
+import prompts from '../data/prompts.json';
 import pages from '../data/pages.json';
 
 export function GET() {
@@ -16,6 +17,7 @@ export function GET() {
   getPosts().forEach((p) => add('post', p.body ? href('/blog/' + p.slug) : p.link || p.pdf, p.title, p.summary, p.body));
   records.forEach((r) => add('record', href('/training-programs'), r.title, [r.org, r.location, r.year].filter(Boolean).join(' · '), [r.role, r.topic].join(' ')));
   courses.forEach((c) => add('course', c.link || href('/recorded-courses'), c.title, c.platform, c.desc));
+  prompts.forEach((p) => add('post', href('/prompts') + '#' + p.id, p.title, p.when, p.prompt));
   featured.forEach((f) => add('project', href('/featured'), f.title, f.orgs, f.group));
   projects.forEach((p) => add('project', href('/my-projects'), p.name, p.nameEn, p.desc));
   media.forEach((m) => add('media', m.link || href('/media'), m.title, `${m.outlet} · ${MEDIA_SECTION[m.section] || ''}`, m.note));

@@ -1,5 +1,5 @@
 // فحص ما يُرسل للنشر: مسارات مسموحة فقط، JSON صالح، صور WebP بحجم معقول.
-export const LIST_FILES = ['bio', 'calendar', 'courses', 'faq', 'featured', 'gallery', 'highlights', 'honors', 'kits', 'media', 'news', 'partners', 'posters', 'posts', 'projects', 'records', 'ring', 'testimonials'];
+export const LIST_FILES = ['bio', 'calendar', 'courses', 'faq', 'featured', 'gallery', 'highlights', 'honors', 'kits', 'media', 'news', 'partners', 'posters', 'posts', 'projects', 'prompts', 'records', 'ring', 'testimonials'];
 export const OBJECT_FILES = ['award', 'pages', 'site'];
 const DATA_RE = /^src\/data\/([a-z0-9-]+)\.json$/;
 const IMG_RE = /^public\/img\/uploads\/[a-z0-9][a-z0-9-]{0,60}\.webp$/;

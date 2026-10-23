@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import prompts from '../data/prompts.json';
+import { href, norm, PROMPT_CAT } from '../lib/site.js';
+
+const cats = Object.keys(PROMPT_CAT).filter((k) => prompts.some((p) => p.category === k));
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// الأجزاء بين [ ] تُظهَر كخانات تعبئة
+const show = (t) => esc(t).replace(/\[([^\]]+)\]/g, '<mark>[$1]</mark>');
+const jsonld = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'مكتبة الأوامر: أوامر جاهزة للتجارة الإلكترونية والتدريب', inLanguage: 'ar',
+  itemListElement: prompts.slice(0, 50).map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, description: p.when })),
+};
+---
+<Base title="مكتبة الأوامر" description="أوامر جاهزة للنسخ والاستخدام مع أدوات الذكاء الاصطناعي في التجارة الإلكترونية والمبيعات وخدمة العملاء وتصميم التدريب. غيّر الخانات بين الأقواس وابدأ." active="blog"
+  jsonld={jsonld} local={[{ label: 'الأوامر', href: '#top' }, { label: 'الحقائب التدريبية', href: '/collaborate' }]}>
+  <PageHead title="مكتبة الأوامر." lead="أوامر جاهزة تنسخها وتلصقها في أداة الذكاء الاصطناعي التي تستخدمها. استبدل ما بين الأقواس بمعلوماتك، وراجع الناتج قبل اعتماده.">
+    <div class="ctas" style="margin-top:24px"><a class="pill" href={href('/collaborate') + '#ai-ecommerce'}>تعلّم بناءها في حقيبتي</a><a class="more" href={href('/contact')}>اطلب تدريباً لفريقك</a></div>
+  </PageHead>
+  <section class="sec tight flush" id="top">
+    <div class="wide" data-filter-root>
+      <div class="toolbar">
+        <input class="search" type="search" data-q placeholder="ابحث في الأوامر…" aria-label="ابحث في الأوامر">
+        <div class="chips-l" data-loop role="group" aria-label="التصنيف">
+          <button class="fchip" type="button" aria-pressed="true" data-f="cat:">كل الأوامر</button>
+          {cats.map((k) => <button class="fchip" type="button" aria-pressed="false" data-f={`cat:${k}`}>{PROMPT_CAT[k]}</button>)}
+        </div>
+      </div>
+      <p class="result-count" data-count-out aria-live="polite"></p>
+      <div class="pgrid">
+        {prompts.map((p) => (
+          <article class="pcard" id={p.id} data-item data-cat={p.category} data-text={norm([p.title, p.when, p.prompt].join(' '))}>
+            <span class="pcat">{PROMPT_CAT[p.category]}</span>
+            <h2>{p.title}</h2>
+            <p class="pwhen">{p.when}</p>
+            <div class="pbox" dir="rtl" set:html={show(p.prompt)}></div>
+            {p.tip && <p class="ptip"><b>نصيحة:</b> {p.tip}</p>}
+            <button class="pill pcopy" type="button" data-copy={p.prompt}>انسخ الأمر</button>
+          </article>
+        ))}
+      </div>
+      <p class="result-empty" data-empty hidden>لا يوجد أمر مطابق. جرّب كلمة أخرى أو غيّر التصنيف.</p>
+      <p class="notice" style="margin-top:36px">هذه الأوامر نقطة بداية. الأدوات قد تخطئ في الأرقام والمعلومات النظامية، فراجع ما تنتجه قبل أن تنشره أو تعتمد عليه.</p>
+    </div>
+  </section>
+</Base>

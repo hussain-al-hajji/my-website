@@ -22,6 +22,7 @@ export const STATIC_PAGES = [
   { path: '/faq', title: 'أسئلة شائعة' },
   { path: '/card', title: 'بطاقتي الرقمية' },
   { path: '/proposal', title: 'ابنِ عرضك' },
+  { path: '/prompts', title: 'مكتبة الأوامر' },
 ];
 
 export const slugOf = (p) => (p === '/' ? 'index' : p.replace(/^\//, ''));

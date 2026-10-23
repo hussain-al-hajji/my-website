@@ -3,6 +3,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 const uid = (p) => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 4);
 
 const req = { required: true };
+const PROMPT_CATS = [['products', 'اكتشاف المنتجات والفرص'], ['listings', 'وصف المنتجات والمتجر'], ['content', 'المحتوى والتسويق'], ['support', 'خدمة العملاء'], ['sales', 'المبيعات والعروض'], ['ops', 'التحليل والتشغيل'], ['training', 'التدريب وتصميم المحتوى']];
 const TOPICS = ['التجارة الإلكترونية', 'المسار المهني', 'العمل الحر', 'ريادة الأعمال', 'أخرى'];
 
 export const SECTIONS = [
@@ -85,6 +86,19 @@ export const SECTIONS = [
       { k: 'image', label: 'الصورة', type: 'image' },
       { k: 'kind', label: 'الحالة', type: 'select', options: [['recorded', 'منشور'], ['upcoming', 'قريباً']] },
       { k: 'date', label: 'التاريخ', type: 'date' },
+    ],
+  },
+  {
+    id: 'prompts', label: 'مكتبة الأوامر', file: 'prompts', kind: 'list', group: 'المحتوى',
+    help: 'أوامر جاهزة للنسخ تظهر في صفحة «مكتبة الأوامر». ضع الخانات التي يغيّرها الزائر بين أقواس مربعة مثل [المنتج]، فتظهر مظلَّلة.',
+    title: (x) => x.title, meta: (x) => (PROMPT_CATS.find((c) => c[0] === x.category) || [])[1] || x.category,
+    blank: () => ({ id: uid('pr'), category: 'products', title: '', when: '', prompt: '', tip: '' }),
+    fields: [
+      { k: 'title', label: 'العنوان', type: 'text', ...req },
+      { k: 'category', label: 'التصنيف', type: 'select', options: PROMPT_CATS },
+      { k: 'when', label: 'متى يُستخدم (سطر واحد)', type: 'text' },
+      { k: 'prompt', label: 'نص الأمر', type: 'textarea', rows: 8, ...req },
+      { k: 'tip', label: 'نصيحة (اختياري)', type: 'text' },
     ],
   },
   {
