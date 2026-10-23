@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import QRCode from 'qrcode';
+import { site, href, abs, getKits, contactLinks, AUDIENCES } from '../lib/site.js';
+
+const c = site.contact;
+const kits = getKits();
+const qr = await QRCode.toString(abs('/collaborate'), { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#1b1b1a', light: '#ffffff' } });
+const data = {
+  kits: kits.map((k) => ({ id: k.id, title: k.title, short: k.short, duration: k.duration, headline: k.headline || '', summary: k.summary, audience: k.audience || [], axes: k.axes || [], outcomes: k.outcomes || [] })),
+  audiences: AUDIENCES,
+  site: { name: site.name, role: site.role, email: c.email, phone: c.phone, wa: c.whatsapp, web: abs('/').replace(/^https?:\/\//, '').replace(/\/$/, ''), programs: site.stats.programs, partners: site.stats.partners, since: site.stats.since },
+  logo: href('/brand/logo-full-black.svg'),
+  qr,
+};
+---
+<Base title="ابنِ عرضك" description="اختر الحقائب التدريبية وحدّد جمهورك وعدد المشاركين، فيُجهَّز لك عرض مقترح بصيغتي جاهز للحفظ PDF وإرساله لإدارتك." active="collaborate" cta={null}>
+  <div class="pr-page">
+    <PageHead title="ابنِ عرضك." lead="اختر الحقائب وحدّد التفاصيل، فيُجهَّز لك عرض مقترح بصيغتي، تحفظه PDF وترسله لإدارتك أو تطلبه مني مباشرة." />
+    <section class="sec tight flush alt" style="padding-top:48px">
+      <div class="wide pr-wrap">
+        <form class="form pr-form" id="prForm" novalidate>
+          <fieldset class="pr-kits">
+            <legend>الحقائب</legend>
+            <div class="pr-kitlist">
+              {kits.map((k) => (
+                <label class="pr-opt">
+                  <input type="checkbox" name="kit" value={k.id}>
+                  <span><b>{k.short}</b><small>{k.duration}</small></span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="two">
+            <div class="field"><label for="p-org">الجهة</label><input id="p-org" name="org" autocomplete="organization"></div>
+            <div class="field"><label for="p-who">اسمك</label><input id="p-who" name="who" autocomplete="name"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="p-aud">الجمهور</label>
+              <select id="p-aud" name="aud"><option value="">اختر</option>{Object.values(AUDIENCES).map((l) => <option value={l}>{l}</option>)}</select></div>
+            <div class="field"><label for="p-n">عدد المشاركين</label><input id="p-n" name="n" type="number" min="1" inputmode="numeric"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="p-fmt">شكل التنفيذ</label>
+              <select id="p-fmt" name="fmt"><option value="">اختر</option><option>حضوري</option><option>افتراضي</option><option>مدمج</option></select></div>
+            <div class="field"><label for="p-when">الإطار الزمني المقترح</label><input id="p-when" name="when" placeholder="مثل: الربع الأول"></div>
+          </div>
+          <div class="field"><label for="p-where">الموقع</label><input id="p-where" name="where"></div>
+          <div class="field"><label for="p-notes">ملاحظات</label><textarea id="p-notes" name="notes" placeholder="الهدف من البرنامج، أو أي احتياج خاص…"></textarea></div>
+          <div class="ctas pr-ui" style="justify-content:flex-start">
+            <button class="pill" type="button" id="prPdf" style="border:0;cursor:pointer;font:inherit">حمّل العرض (PDF)</button>
+            <button class="more" type="button" id="prWa" style="background:none;border:0;cursor:pointer;font:inherit">أطلبه عبر واتساب</button>
+            <button class="more" type="button" id="prMail" style="background:none;border:0;cursor:pointer;font:inherit">عبر البريد</button>
+          </div>
+          <p class="notice pr-ui" id="prHint">يفتح زر PDF نافذة الطباعة: اختر منها «حفظ كـ PDF». لا يُحفظ شيء على الموقع، وأزرار واتساب والبريد تفتح رسالة جاهزة تراجعها قبل الإرسال.</p>
+        </form>
+
+        <div class="pr-preview">
+          <div class="pr-sheet" id="prSheet" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script type="application/json" id="prData" set:html={JSON.stringify(data)}></script>
+  <script>import '../scripts/proposal.js';</script>
+</Base>

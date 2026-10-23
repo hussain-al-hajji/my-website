@@ -11,6 +11,12 @@ const io = new IntersectionObserver((es) => es.forEach((e) => {
 }), { rootMargin: '0px 0px -8% 0px' });
 $$('[data-in]').forEach((el) => io.observe(el));
 
+// خط بقلم رصاص تحت عناوين الأقسام: يُرسم من اليمين عند ظهور العنوان
+const hio = new IntersectionObserver((es) => es.forEach((e) => {
+  if (e.isIntersecting) { e.target.classList.add('ul-in'); hio.unobserve(e.target); }
+}), { threshold: 0.7 });
+$$('h2.h2, .sec-head h2').forEach((el) => hio.observe(el));
+
 // قائمة الجوال
 const mnav = $('#mnav');
 const openBtn = $('[data-menu-open]');

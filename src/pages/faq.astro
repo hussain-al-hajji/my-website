@@ -3,24 +3,58 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { faqItems } from '../lib/faq.js';
 import { faqSchema } from '../lib/seo.js';
-import { href } from '../lib/site.js';
+import { href, site } from '../lib/site.js';
 
 const items = faqItems();
 ---
 <Base title="أسئلة شائعة" description="إجابات مباشرة عن برامجي وحقائبي التدريبية واعتماداتي وكيفية طلب برنامج لجهتك." active="contact"
   jsonld={faqSchema(items)} local={[{ label: 'الأسئلة', href: '#top' }, { label: 'تواصل', href: '/contact' }]}>
-  <PageHead title="أسئلة شائعة." lead="إجابات مختصرة عمّا يسأل عنه أغلب من يتواصل معي." />
+  <PageHead title="أسئلة شائعة." lead="إجابات مختصرة عمّا يسأل عنه أغلب من يتواصل معي.">
+    <div class="ctas" style="margin-top:28px"><a class="pill" href="#ask">اسأل حسين</a></div>
+  </PageHead>
   <section class="sec tight flush" id="top">
     <div class="measure">
       <div class="faq">
         {items.map((q, i) => (
           <details class="acc" open={i === 0}>
             <summary>{q.q}</summary>
-            <div class="in-acc"><p>{q.a}</p></div>
+            <div class="in-acc"><p>{q.a}</p>{q.audio && <audio class="faq-audio" controls preload="none" src={q.audio} aria-label="استمع إلى الجواب"></audio>}</div>
           </details>
         ))}
       </div>
       <div class="ctas" style="margin-top:44px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/collaborate')}>الحقائب التدريبية</a></div>
     </div>
   </section>
+  <section class="sec alt tight" id="ask">
+    <div class="measure">
+      <h2 class="h2" style="margin-bottom:12px" data-in>اسأل حسين.</h2>
+      <p class="lede" style="margin-bottom:28px">لم تجد جوابك؟ اكتب سؤالك، وأجيب عن المختار منها هنا بسطر أو بتسجيل صوتي قصير.</p>
+      <form class="form contact-box" id="askForm" novalidate>
+        <div class="field"><label for="a-q">سؤالك</label><textarea id="a-q" name="q" maxlength="500" required></textarea><span class="ask-count" id="askCount">0 من 500 حرف</span></div>
+        <div class="two">
+          <div class="field"><label for="a-name">اسمك (اختياري)</label><input id="a-name" name="name" autocomplete="name"></div>
+          <div class="field"><label for="a-org">جهتك (اختياري)</label><input id="a-org" name="org" autocomplete="organization"></div>
+        </div>
+        <div class="ctas" style="justify-content:flex-start">
+          <button class="pill" type="submit" style="border:0;cursor:pointer;font:inherit">أرسل عبر البريد</button>
+          <button class="more" type="button" id="askWa" style="background:none;border:0;cursor:pointer;font:inherit">أرسل عبر واتساب</button>
+        </div>
+        <p class="notice">لا يُحفظ شيء على الموقع. يفتح الزر تطبيق البريد أو واتساب برسالة جاهزة تراجعها قبل الإرسال. وإن نشرتُ جواب سؤالك فلن أذكر اسمك إلا بإذنك.</p>
+      </form>
+    </div>
+  </section>
+  <script define:vars={{ email: site.contact.email, wa: site.contact.whatsapp }}>
+    const f = document.getElementById('askForm'), q = document.getElementById('a-q'), cnt = document.getElementById('askCount');
+    q.addEventListener('input', () => { cnt.textContent = q.value.length + ' من 500 حرف'; });
+    function msg() {
+      const d = new FormData(f);
+      const l = ['السلام عليكم ورحمة الله،', '', 'سؤالي لك:', '', (d.get('q') || '').trim()];
+      if ((d.get('org') || '').trim()) l.push('', 'الجهة: ' + d.get('org').trim());
+      l.push('', (d.get('name') || '').trim());
+      return { subject: 'سؤال من موقعك', text: l.join('\n') };
+    }
+    const ok = () => { if (q.value.trim()) return true; q.focus(); return false; };
+    f.addEventListener('submit', (e) => { e.preventDefault(); if (!ok()) return; const m = msg(); location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(m.subject) + '&body=' + encodeURIComponent(m.text); });
+    document.getElementById('askWa').addEventListener('click', () => { if (!ok()) return; const m = msg(); open('https://wa.me/' + wa + '?text=' + encodeURIComponent(m.subject + '\n\n' + m.text), '_blank', 'noopener'); });
+  </script>
 </Base>

@@ -1,7 +1,7 @@
 import { abs, href, getPosts, getNews } from '../lib/site.js';
 
 const STATIC = ['/', '/bio', '/training-programs', '/collaborate', '/contact', '/honor', '/arab-youth-pioneers', '/media', '/feedback',
-  '/recorded-courses', '/partnerships', '/gallery', '/blog', '/my-projects', '/featured', '/faq', '/news', '/methodology', '/card'];
+  '/recorded-courses', '/partnerships', '/gallery', '/blog', '/my-projects', '/featured', '/faq', '/news', '/methodology', '/card', '/proposal'];
 
 export function GET() {
   const urls = [

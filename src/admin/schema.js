@@ -217,6 +217,7 @@ export const SECTIONS = [
     fields: [
       { k: 'q', label: 'السؤال', type: 'text', ...req },
       { k: 'a', label: 'الإجابة (مباشرة ومختصرة)', type: 'textarea', rows: 6, ...req },
+      { k: 'audio', label: 'رابط تسجيل صوتي للجواب (mp3) اختياري', type: 'url' },
     ],
   },
   {
