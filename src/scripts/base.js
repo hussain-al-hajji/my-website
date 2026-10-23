@@ -5,6 +5,8 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 import './lang.js';
 import { getAud, getGoal, AUDS } from './aud.js';
+import './ink.js';
+import './season.js';
 
 // ظهور العناصر عند التمرير
 const io = new IntersectionObserver((es) => es.forEach((e) => {

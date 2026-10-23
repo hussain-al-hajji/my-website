@@ -84,7 +84,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
     <div class="wide">
       <a class="mark" href={href('/')} aria-label="حسين الحاجي، الصفحة الرئيسية">
         <span class="mark-chip"><img src={href('/img/brand/portrait-composite-560.webp')} alt="" width="560" height="694"></span>
-        <img class="mark-name" src={href('/brand/logo-full-white.svg')} alt="حسين الحاجي، أمكّن الشباب" width="2600" height="961">
+        <span class="inkgold mark-ink" data-ink style={`--logo:url(${href('/brand/logo-full-white.svg')})`}><img class="mark-name" src={href('/brand/logo-full-white.svg')} alt="حسين الحاجي، أمكّن الشباب" width="2600" height="961"><i class="gold" aria-hidden="true"></i></span>
       </a>
       <ul>
         {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
@@ -169,6 +169,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   )}
 
   <div id="gt-el" class="notranslate" aria-hidden="true"></div>
+  {!bare && site.seasons?.enabled !== false && <script type="application/json" id="seasons-data" set:html={JSON.stringify(site.seasons || {})}></script>}
   <script>import '../scripts/base.js';</script>
 </body>
 </html>

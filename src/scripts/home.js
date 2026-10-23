@@ -1,5 +1,6 @@
 // لحظات التفاعل في الصفحة الرئيسية.
 import { getAud, getGoal } from './aud.js';
+import { onTilt } from './tiltfx.js';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -242,6 +243,11 @@ new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { map.classList.
 
 // اللحظة 3ب: الدرع يتبع اليد
 const tilt = $('#tilt');
+onTilt(tilt, (x, y) => {
+  if (!tilt) return;
+  tilt.style.setProperty('--ry', ((x - 0.5) * 16).toFixed(2) + 'deg'); tilt.style.setProperty('--rx', ((0.5 - y) * 14).toFixed(2) + 'deg');
+  tilt.style.setProperty('--gx', x * 100 + '%'); tilt.style.setProperty('--gy', y * 100 + '%'); tilt.style.setProperty('--go', 1);
+});
 if (tilt && !reduce && matchMedia('(hover:hover)').matches) {
   tilt.addEventListener('pointermove', (e) => {
     const r = tilt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;

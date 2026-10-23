@@ -8,7 +8,9 @@ import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
 import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
 import media from '../data/media.json';
-import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
+import pagesData from '../data/pages.json';
+import bioData from '../data/bio.json';
+import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
@@ -31,6 +33,17 @@ const kits = getKits();
 const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && (t.quote || t.full));
 const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value));
 
+// منهجي على السبورة
+const pillars = (pagesData.methodology?.pillars || []).slice(0, 5);
+// فقاعات المهارات: مجالات الخبرة والمهارات من السيرة
+const bubbles = bioData.filter((x) => ['expertise', 'skills'].includes(x.section)).map((x) => x.title);
+// شبكة الشراكات: أكثر الجهات حضوراً في سجل الأثر مع برامجها
+const netAll = partners.filter((p) => p.logo).map((p) => {
+  const nm = norm(p.name).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim();
+  const recs = records.filter((r) => norm(r.org || '').includes(nm)).map((r) => ({ t: r.title, y: r.year }));
+  return { name: p.name, logo: href(p.logo), recs };
+}).filter((x) => x.recs.length >= 2).sort((a, b) => b.recs.length - a.recs.length).slice(0, 14);
+
 const homeData = {
   log: logForClient(),
   recordsUrl: href('/training-programs'),
@@ -51,6 +64,10 @@ const homeData = {
   })),
   labels: { aud: AUDIENCES, goal: GOALS, time: TIMES },
   campaign: site.campaign || {},
+  net: netAll,
+  bubbles,
+  logo: href('/brand/logo-full-black.svg'),
+  portrait: href('/img/brand/portrait-composite-560.webp'),
   cities: [
     ['الأحساء', ['الأحساء', 'الاحساء', 'الهفوف'], 25.38, 49.59], ['الرياض', ['الرياض', 'الدرعية'], 24.71, 46.68],
     ['الدمام والخبر', ['الدمام', 'الخبر', 'الظهران', 'المنطقة الشرقية', 'الشرقية'], 26.43, 50.10], ['العلا', ['العلا'], 26.61, 37.92],
@@ -63,6 +80,7 @@ const homeData = {
   ],
 };
 const wheel = wheelItems();
+
 // شريط «ظهرتُ في»: جهة واحدة لكل عنصر معلَّم في قسم الإعلام
 const seenOut = new Set();
 const appeared = media.filter((m) => m.strip).map((m) => ({ name: (m.short || m.outlet.split('،')[0]).trim(), logo: m.logo }))
@@ -97,7 +115,7 @@ const jsonld = [
         <span class="pfig-sash" aria-hidden="true"><img src={href('/img/brand/portrait-sash-560.webp')} srcset={`${href('/img/brand/portrait-sash-560.webp')} 560w, ${href('/img/brand/portrait-sash-840.webp')} 840w`} sizes="(max-width: 820px) 50vw, 300px" width="560" height="694" alt="" decoding="async"></span>
         <span class="pfig-photo" aria-hidden="true"><img src={href('/img/brand/portrait-photo-560.webp')} srcset={`${href('/img/brand/portrait-photo-560.webp')} 560w, ${href('/img/brand/portrait-photo-840.webp')} 840w`} sizes="(max-width: 820px) 40vw, 240px" width="560" height="694" alt="" loading="lazy" decoding="async"></span>
       </div>
-      <h1 class="hero-name" data-in><img src={href('/brand/logo-full-black.svg')} alt={site.hero.headline + '، ' + site.tagline} width="2600" height="961"></h1>
+      <h1 class="hero-name" data-in><span class="inkgold" data-ink style={`--logo:url(${href('/brand/logo-full-black.svg')})`}><img src={href('/brand/logo-full-black.svg')} alt={site.hero.headline + '، ' + site.tagline} width="2600" height="961"><i class="gold" aria-hidden="true"></i></span></h1>
       <p class="sub" id="sub" aria-live="polite" data-in style="--d:2">{site.hero.sub}</p>
       <p class="for-line" id="forLine" hidden></p>
       <div class="ctas hero-cta" data-in style="--d:3"><a class="more" href={href('/featured')}>مشاريع مميزة</a></div>
@@ -203,6 +221,24 @@ const jsonld = [
   </div>
 </section>
 
+<section class="sec dark const" id="constellation" aria-labelledby="cs-h">
+  <div class="const-pin">
+    <div class="wide const-head">
+      <h2 id="cs-h" data-in>كوكبة<br>الأثر.</h2>
+      <p class="const-cap" id="csCap" aria-live="polite"></p>
+    </div>
+    <div class="const-stage">
+      <canvas id="csCanvas" role="img" aria-label="كل برنامج في سجل الأثر نقطة ضوء تتشكل مرة اسماً، ومرة خريطة، ومرة أعمدة سنوات" data-logo={href('/brand/logo-full-white.svg')}></canvas>
+      <div class="tip" id="csTip" hidden></div>
+    </div>
+    <div class="const-steps" role="group" aria-label="عرض الكوكبة">
+      <button type="button" data-cs="0" aria-pressed="true">الاسم</button>
+      <button type="button" data-cs="1" aria-pressed="false">الخريطة</button>
+      <button type="button" data-cs="2" aria-pressed="false">السنوات</button>
+    </div>
+  </div>
+</section>
+
 <section class="sec dark" style="padding-top:40px" aria-labelledby="mp">
   <div class="wide">
     <div class="wall-head">
@@ -225,6 +261,17 @@ const jsonld = [
   </div>
 </section>
 
+{netAll.length > 3 && (
+<section class="sec dark net" id="network" aria-labelledby="net-h" style="padding-top:8px">
+  <div class="wide">
+    <div class="sec-head"><h2 id="net-h" data-in>شبكة<br>الشراكات.</h2><a class="more" href={href('/partnerships')}>كل الشركاء</a></div>
+    <p class="net-note">مرّر المؤشر أو اضغط على جهة لترى برامجي معها.</p>
+    <div class="netv" id="netv" aria-label="شبكة الجهات الأكثر تعاوناً وبرامجي معها"></div>
+    <div class="net-card" id="netCard" aria-live="polite"></div>
+  </div>
+</section>
+)}
+
 <section class="sec alt" aria-labelledby="dd">
   <div class="wide">
     <div class="sec-head"><h2 id="dd" data-in>ما أقدّمه<br>لجهتك.</h2><a class="more" href={href('/collaborate')}>الحقائب التدريبية</a></div>
@@ -240,6 +287,40 @@ const jsonld = [
     </div>
   </div>
 </section>
+
+{pillars.length > 0 && (
+<section class="sec board" id="board" aria-labelledby="bd-h">
+  <div class="wide">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="chalk" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></svg>
+    <div class="bd-frame">
+      <h2 id="bd-h" class="chalk"><span>منهجي في التدريب</span></h2>
+      <svg class="chalk-line" viewBox="0 0 300 18" aria-hidden="true"><path d="M3 10C40 3 70 15 110 8S190 4 230 10S280 11 297 6" pathLength="1"/></svg>
+      <ol class="bd-steps">
+        {pillars.map((pl, i) => (
+          <li class="bd-step">
+            <span class="bd-n"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 6C60 4 76 20 74 42S58 76 36 74S4 58 7 36S22 8 44 7" pathLength="1"/></svg><b>{i + 1}</b></span>
+            <h3 class="chalk">{pl.title}</h3>
+            <p>{pl.text}</p>
+            {i < pillars.length - 1 && <svg class="bd-arrow" viewBox="0 0 120 40" aria-hidden="true"><path d="M112 22C84 8 52 32 14 18" pathLength="1"/><path d="M26 6L12 18L28 30" pathLength="1"/></svg>}
+          </li>
+        ))}
+      </ol>
+      <a class="chalk-link" href={href('/methodology')}>اقرأ منهجي كاملاً</a>
+    </div>
+  </div>
+</section>
+)}
+
+{bubbles.length > 3 && (
+<section class="sec bubsec" id="skills" aria-labelledby="bb-h">
+  <div class="wide">
+    <div class="sec-head"><h2 id="bb-h" data-in>مجالات<br>خبرتي.</h2></div>
+    <p class="net-note">اسحب الكرات وارمِها، واضغط على أي مجال لترى الحقائب المرتبطة به.</p>
+    <div class="bub-field" id="bubField"></div>
+    <div class="bub-panel" id="bubPanel" aria-live="polite"></div>
+  </div>
+</section>
+)}
 
 <section class="sec dark feature" aria-labelledby="aw">
   <div class="wide">
@@ -328,4 +409,5 @@ const jsonld = [
 
 <script type="application/json" id="homeData" set:html={JSON.stringify(homeData)}></script>
 <script>import '../scripts/home.js';</script>
+<script>import '../scripts/wow.js';</script>
 </Base>

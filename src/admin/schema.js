@@ -288,6 +288,12 @@ export const SECTIONS = [
       { k: 'campaign.leaders', label: 'الجملة الترحيبية (?for=leaders، قادة شباب)', type: 'text' },
       { k: 'campaign.trainers', label: 'الجملة الترحيبية (?for=trainers، مدربون)', type: 'text' },
       { k: 'floatWa', label: 'إظهار زر واتساب العائم', type: 'bool', help: 'زر صغير في زاوية الصفحات يفتح واتساب برسالة مناسبة للصفحة التي يتصفحها الزائر.' },
+      { k: 'seasons.enabled', label: 'تزيين الموقع في المواسم', type: 'bool', help: 'فوانيس رمضان، وقصاصات العيدين، ولمسة خضراء مع عبارة تهنئة في اليوم الوطني ويوم التأسيس. تحسب التواريخ تلقائياً. للمعاينة أضف ?season=ramadan أو fitr أو adha أو national أو founding إلى رابط الموقع.' },
+      { k: 'seasons.ramadan', label: 'عبارة رمضان', type: 'text' },
+      { k: 'seasons.fitr', label: 'عبارة عيد الفطر', type: 'text' },
+      { k: 'seasons.adha', label: 'عبارة عيد الأضحى', type: 'text' },
+      { k: 'seasons.national', label: 'عبارة اليوم الوطني', type: 'text' },
+      { k: 'seasons.founding', label: 'عبارة يوم التأسيس', type: 'text' },
       { k: 'closing.title', label: 'عنوان الختام', type: 'text' },
       { k: 'closing.text', label: 'نص الختام', type: 'textarea', rows: 2 },
       { k: 'services', label: 'الخدمات', type: 'objects', fields: [

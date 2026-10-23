@@ -12,6 +12,34 @@ const kits = getKits();
     <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/proposal')}>ابنِ عرضك</a><a class="more" href={href('/methodology')}>منهجي في التدريب</a><a class="more" href="https://academy.hussain-al-hajji.com/" rel="noopener">المنصة التفاعلية للبرامج</a></div>
   </PageHead>
 
+  <section class="sec tight kitdeck-sec" aria-labelledby="kd-h">
+    <div class="wide">
+      <h2 class="h2" id="kd-h" data-in>نظرة سريعة على الحقائب.</h2>
+      <p class="lede" style="margin-bottom:28px" data-in>اضغط على البطاقة لتقلبها وترى أهم محاورها، ثم انتقل إلى تفاصيلها أو اطلبها مباشرة.</p>
+      <ul class="kd" data-kd>
+        {kits.map((k) => (
+          <li class="kd-i">
+            <div class="kd-c">
+              <button class="kd-f" type="button" aria-expanded="false" aria-label={`اقلب بطاقة ${k.short || k.title}`}>
+                <img src={href(k.image)} alt="" loading="lazy" width="400" height="300">
+                <span class="kd-t">{k.short || k.title}</span>
+                <span class="kd-d">{k.duration}</span>
+              </button>
+              <div class="kd-b" aria-hidden="true">
+                <p class="kd-h">{k.headline || k.short || k.title}</p>
+                <ul>{k.axes.slice(0, 3).map((a) => <li>{a}</li>)}</ul>
+                <div class="kd-a">
+                  <a class="pill" href={`#${k.id}`} tabindex="-1">التفاصيل</a>
+                  <a class="more" href={href('/contact') + '?kit=' + k.id} tabindex="-1">اطلبها</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <div id="top" data-filter-root>
     <section class="sec alt tight">
       <div class="wide">
@@ -66,6 +94,7 @@ const kits = getKits();
       <div class="ctas"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={'https://wa.me/' + site.contact.whatsapp} rel="noopener">واتساب</a></div>
     </div>
   </section>
+  <script>import '../scripts/cards.js';</script>
   <script>
     // يمرّر باحث الرئيسية اختياره عبر ?aud=...&goal=...
     addEventListener('load', () => {
