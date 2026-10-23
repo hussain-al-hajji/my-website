@@ -126,7 +126,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       yearCols.forEach((c) => { ctx.fillText(String(c.y), c.x, H - 34); ctx.fillStyle = `rgba(163,162,155,${(wYear - 0.5) * 2})`; ctx.font = '500 12px "Noto Sans Arabic", system-ui, sans-serif'; ctx.fillText(c.n + ' برنامج', c.x, H - 14); ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif'; });
     }
   }
-  let last = 0, lastCur = -1, lastHover = -2;
+  let last = 0, lastCur = -1, lastHover = -2, keepPin = () => {};
   function frame(t) {
     if (!active) return;
     target = measure(); cur += (target - cur) * (reduce ? 1 : 0.14); if (Math.abs(target - cur) < 0.0004) cur = target;
@@ -135,7 +135,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
     // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
     if (!coarse || cur !== lastCur || hover !== lastHover) { draw(t); lastCur = cur; lastHover = hover; }
-    last = t; requestAnimationFrame(frame);
+    keepPin(); last = t; requestAnimationFrame(frame);
   }
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);
   // التلميح عند المرور على نقطة
@@ -144,15 +144,37 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     for (let i = 0; i < N; i++) { const q = pos(i, cur), d = (q[0] - x) ** 2 + (q[1] - y) ** 2; if (d < bd) { bd = d; best = i; } }
     return { best, x, y };
   };
-  const show = (e) => {
-    const { best, x, y } = near(e); hover = best;
-    if (best < 0) { tip.hidden = true; return; }
-    const rec = log[best]; tip.innerHTML = `<b>${esc(rec.n)}</b><span>${esc(rec.o || '')}</span><span>${rec.y}${rec.l ? ' · ' + esc(rec.l) : ''}</span>`; tip.hidden = false;
-    const w = cv.parentNode.getBoundingClientRect(), tw = tip.offsetWidth;
-    tip.style.left = Math.max(0, Math.min(w.width - tw, x - tw / 2)) + 'px'; tip.style.top = Math.max(0, y - tip.offsetHeight - 16) + 'px';
+  // البطاقة: المرور يعرضها مؤقتاً، والنقر أو اللمس يثبّتها للقراءة حتى النقر على نقطة أخرى أو في الفراغ أو خارج القسم
+  let pinned = -1;
+  const place = (i, x, y) => {
+    const rec = log[i], w = cv.parentNode.getBoundingClientRect();
+    if (tip.dataset.i !== String(i)) {
+      tip.dataset.i = i;
+      tip.innerHTML = `<b>${esc(rec.n)}</b><span>${esc(rec.o || '')}</span><span>${rec.y}${rec.l ? ' · ' + esc(rec.l) : ''}</span>` + (pinned === i ? '<button type="button" class="tip-x" aria-label="إغلاق البطاقة">×</button>' : '');
+    }
+    tip.hidden = false; tip.classList.toggle('pinned', pinned === i);
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = Math.max(0, Math.min(w.width - tw, x - tw / 2)) + 'px';
+    tip.style.top = (y - th - 16 < 0 ? Math.min(w.height - th, y + 18) : y - th - 16) + 'px';
   };
-  cv.addEventListener('pointermove', show); cv.addEventListener('pointerdown', show);
-  cv.addEventListener('pointerleave', () => { hover = -1; tip.hidden = true; });
+  const unpin = () => { pinned = -1; hover = -1; tip.hidden = true; tip.classList.remove('pinned'); delete tip.dataset.i; };
+  // تتبّع النقطة المثبّتة إذا تحرّكت مع التمرير أو المؤشر
+  keepPin = () => { if (pinned >= 0) { const q = pos(pinned, cur); place(pinned, q[0], q[1]); } };
+  cv.addEventListener('pointermove', (e) => {
+    if (pinned >= 0 || e.pointerType === 'touch') return;
+    const { best, x, y } = near(e); hover = best;
+    if (best < 0) { tip.hidden = true; delete tip.dataset.i; return; }
+    place(best, x, y);
+  });
+  cv.addEventListener('click', (e) => {
+    const { best } = near(e);
+    if (best < 0 || best === pinned) { unpin(); return; }
+    pinned = hover = best; delete tip.dataset.i; const q = pos(best, cur); place(best, q[0], q[1]);
+  });
+  cv.addEventListener('pointerleave', () => { if (pinned < 0) { hover = -1; tip.hidden = true; delete tip.dataset.i; } });
+  tip.addEventListener('click', (e) => { if (e.target.closest('.tip-x')) unpin(); });
+  document.addEventListener('pointerdown', (e) => { if (pinned >= 0 && !e.target.closest('#csTip') && e.target !== cv) unpin(); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && pinned >= 0) unpin(); });
 })();
 
 /* ------------------------------------------------------------------ شبكة الشراكات */

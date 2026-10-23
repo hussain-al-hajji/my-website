@@ -1058,3 +1058,7 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @keyframes csPulse{0%,100%{box-shadow:0 0 0 2px var(--action-on-dark),0 0 12px rgba(226,178,87,.4)}50%{box-shadow:0 0 0 2px var(--action-on-dark),0 0 0 9px rgba(226,178,87,.22)}}
 @media (prefers-reduced-motion:reduce){.const-scrub input::-webkit-slider-thumb{animation:none!important}}
 .const-pin{grid-template-rows:auto minmax(0,1fr) auto}
+
+.tip.pinned{pointer-events:auto;padding-inline-end:44px}
+.tip-x{position:absolute;top:8px;inset-inline-end:8px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(0,0,0,.07);color:var(--ink);font:inherit;font-size:20px;line-height:1;cursor:pointer}
+.tip-x:hover{background:rgba(0,0,0,.14)}
