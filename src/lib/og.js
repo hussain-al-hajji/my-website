@@ -36,8 +36,8 @@ export function renderOg({ title, kicker = '' }) {
 <g transform="translate(${1140 - 300} 52) scale(${sc})"><path d="${logoPath}" fill="#1b1b1a" fill-rule="evenodd"/></g>
 ${k}${body}
 <line x1="60" y1="548" x2="1140" y2="548" stroke="#d9d8d2" stroke-width="2"/>
-<text x="1140" y="584" font-family="OG Arabic" font-size="28" font-weight="700" fill="#6b6a64" direction="rtl" text-anchor="end">مدرب ومرشد مهني معتمد، أمكّن الشباب</text>
-<text x="60" y="584" font-family="OG Latin" font-size="26" font-weight="700" fill="#6b6a64" text-anchor="start">hussain-al-hajji.com</text>
+<text x="1140" y="584" font-family="OG Arabic" font-size="28" font-weight="700" fill="#6b6a64" direction="rtl" text-anchor="end">مؤسس مشاريع رقمية، مدرب أعمال، ومرشد مهني معتمد، أمكّن الشباب</text>
+<text x="60" y="108" font-family="OG Latin" font-size="26" font-weight="700" fill="#6b6a64" text-anchor="start">hussain-al-hajji.com</text>
 </svg>`;
   const png = new Resvg(svg, { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Arabic' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
   return png;
