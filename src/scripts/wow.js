@@ -84,7 +84,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const scrub = $('#csScrub'); let scrubbing = false;
   if (scrub) {
     const seek = () => {
-      const p = clamp(+scrub.value / 1000); $('#csHint')?.classList.add('done');
+      const p = clamp(+scrub.value / 1000);
       if (reduce) { force = p; cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
     };
     scrub.addEventListener('input', seek);
