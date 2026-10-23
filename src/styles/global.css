@@ -69,8 +69,6 @@ p{text-wrap:pretty}
 .hero .hero-name{line-height:0;margin-top:2px}
 .hero .hero-name img{width:clamp(230px,24vw,350px);height:auto;margin-inline:auto}
 .hero .sub{font-size:clamp(1rem,.95rem + .3vw,1.1875rem);color:var(--ink-2);max-width:54ch;margin:12px auto 0;line-height:1.7}
-.hero .slogan{display:grid;justify-items:center;gap:0;margin:14px auto 0;font-size:clamp(1.15rem,1rem + .6vw,1.5rem);font-weight:700;line-height:1.35;color:var(--ink)}
-.hero .slogan span:last-child{color:var(--action)}
 .hero .ctas{margin-top:20px}
 .hero figure img{width:100%;max-height:760px;object-fit:cover;object-position:50% 30%}
 
@@ -295,8 +293,7 @@ p{text-wrap:pretty}
   .hero figure img{aspect-ratio:4/3}
   .ringstage{height:max(800px,100svh)}
   .hero .sub{font-size:.9375rem;line-height:1.65;min-height:0}
-  .hero .slogan{margin-top:10px}
-  .portrait{height:clamp(195px,29svh,270px)}
+    .portrait{height:clamp(195px,29svh,270px)}
   .core > div{max-width:88vw;padding:16px}
   .deck{padding-top:40px}
   .deck .voice{padding:28px 24px}
@@ -745,8 +742,7 @@ html{scroll-padding-top:calc(var(--gnav-h) + 64px)}
 .sp-on .pfig-sash img,.sp-done .pfig-sash img{animation:none!important}
 .sp-on .hero [data-in]:not(#pfig):not(.hero-name){opacity:0!important}
 .sp-done .hero .sub{--d:1!important}
-.sp-done .hero .slogan{--d:4!important}
-.sp-done .hero .ctas{--d:6!important}
+.sp-done .sp-done .hero .ctas{--d:6!important}
 
 /* ---------- خط بقلم رصاص تحت عناوين الأقسام ---------- */
 h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,150px);height:12px;margin-top:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='1.8'/%3E%3C/filter%3E%3Cpath d='M2 7C20 4 38 9 60 6S100 5 120 7S150 8 158 5' fill='none' stroke='%232a2a28' stroke-width='2.8' stroke-linecap='round' opacity='.9' filter='url(%23r)'/%3E%3C/svg%3E") no-repeat center/100% 100%}
@@ -860,3 +856,9 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
   .wh-det{-webkit-line-clamp:1}
   .wh-main h3{font-size:1rem}
 }
+
+/* سحب الحلقة باليد: الأفقي للحلقة، والعمودي يبقى لتمرير الصفحة */
+.ringstage{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.ring.dragging,.ring.dragging .frame{cursor:grabbing}
+.ring.dragging .frame{transition:none}
+.frame{-webkit-user-drag:none}

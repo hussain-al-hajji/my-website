@@ -94,16 +94,16 @@ render();
 // اللحظة 0: حلقة صور البرامج
 const ring = $('#ring'), stage = $('#ringStage'), sub = $('#sub');
 const subBase = sub.innerHTML;
-const frames = []; let spin = 0, paused = false, visible = true, last = performance.now();
+const frames = []; let spin = 0, vel = 0, rxNow = 500, dragging = false, paused = false, visible = true, last = performance.now();
 data.ring.forEach((f, k) => {
   const a = document.createElement('a');
-  a.className = 'frame'; a.href = data.recordsUrl; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
-  const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
+  a.className = 'frame'; a.draggable = false; a.href = data.recordsUrl; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
+  const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.draggable = false; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
   const fr = { el: a, k, ar: f.ratio || 1.5 };
   const setAr = () => { if (im.naturalWidth) fr.ar = Math.min(2.2, Math.max(0.6, im.naturalWidth / im.naturalHeight)); };
   im.addEventListener('load', setAr); setAr();
   a.append(im);
-  const on = () => { paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.title)}</b>${esc(f.caption)}`; };
+  const on = () => { if (dragging) return; paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.title)}</b>${esc(f.caption)}`; };
   const off = () => { paused = false; ring.classList.remove('focus'); a.classList.remove('on'); sub.innerHTML = subBase; };
   a.addEventListener('mouseenter', on); a.addEventListener('focus', on); a.addEventListener('mouseleave', off); a.addEventListener('blur', off);
   ring.appendChild(a); frames.push(fr);
@@ -112,28 +112,66 @@ function drawRing() {
   const W = ring.clientWidth, H = ring.clientHeight, phone = W < 760, n = phone ? 12 : frames.length;
   const r = stage.getBoundingClientRect(), c = reduce ? 0 : Math.min(1, Math.max(0, -r.top / (H * 0.55)));
   const cx = W / 2, cy = H / 2;
-  const rx = (phone ? W * 0.62 : Math.min(600, W * 0.42)) * (1 - c * 0.85);
+  const rx = (phone ? W * 0.62 : Math.min(600, W * 0.42)) * (1 - c * 0.85); rxNow = rx;
   const ry = (phone ? W * 0.74 : Math.min(450, H * 0.45)) * (1 - c * 0.85);
   frames.forEach((f, i) => {
     if (i >= n) { f.el.hidden = true; return; }
     f.el.hidden = false;
     const t = -Math.PI / 2 + (i / n) * Math.PI * 2 + spin, x = cx + rx * Math.cos(t), y = cy + ry * Math.sin(t), depth = (Math.sin(t) + 1) / 2;
+    // الصورة الواصلة أسفل الأزرار تكبر تدريجياً، وتعود لحجمها حين تبتعد
+    const bot = Math.max(0, Math.min(1, (Math.sin(t) - 0.84) / 0.16)), grow = 1 + (phone ? 0.5 : 0.7) * bot * bot * (3 - 2 * bot);
     const base = phone ? 60 + 26 * depth : 96 + 58 * depth, area = base * base * 0.75;
     const w = Math.sqrt(area * f.ar), hgt = Math.sqrt(area / f.ar);
-    const ang = Math.max(-24, Math.min(24, Math.cos(t) * -18));
+    const ang = Math.max(-24, Math.min(24, Math.cos(t) * -18)) * (1 - Math.min(1, (grow - 1) * 3));
     f.el.style.width = w + 'px'; f.el.style.height = hgt + 'px'; f.el.style.zIndex = depth > 0.5 ? 2 : 1;
-    const sc = (f.el.classList.contains('on') ? 1.25 : 1) * (1 - c * 0.55);
-    f.el.style.transform = `translate(${x - w / 2}px,${y - hgt / 2}px) rotate(${ang.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+    let sc = (f.el.classList.contains('on') ? 1.25 : 1) * grow * (1 - c * 0.55);
+    // النمو يمتد إلى الأسفل: تبقى الحافة العلوية مكانها فلا تغطي الأزرار
+    const yy = y + (grow > 1 ? hgt * (sc - (1 - c * 0.55)) / 2 : 0);
+    f.el.style.transform = `translate(${x - w / 2}px,${yy - hgt / 2}px) rotate(${ang.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
     if (!ring.classList.contains('focus')) f.el.style.opacity = (1 - c).toFixed(3);
   });
 }
 function loop(t) {
   const dt = Math.min(64, t - last); last = t;
-  if (!paused && !reduce && visible) spin += dt * 0.000045;
+  if (!dragging) {
+    if (Math.abs(vel) > 1e-6) { spin += vel * dt; vel *= Math.pow(0.94, dt / 16); } else vel = 0;
+    if (!paused && !reduce && visible) spin += dt * 0.000045;
+  }
   if (visible) drawRing();
   requestAnimationFrame(loop);
 }
 new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(stage);
+// سحب الحلقة باليد يميناً ويساراً مع قصور ذاتي، وتستأنف حركتها الآلية بعد الإفلات
+{
+  let down = null, moved = 0, lx = 0, lt = 0, wasPaused = false;
+  const cyOf = () => stage.getBoundingClientRect().top + ring.clientHeight / 2;
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.button > 0 || e.target.closest('.core > div')) return;
+    down = { id: e.pointerId, x: e.clientX, y: e.clientY, top: e.clientY < cyOf() }; moved = 0; lx = e.clientX; lt = performance.now(); vel = 0;
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (!down || e.pointerId !== down.id) return;
+    const dx = e.clientX - lx, now = performance.now(), dtm = Math.max(1, now - lt);
+    moved += Math.abs(dx);
+    if (!dragging && moved > 6) { dragging = true; wasPaused = paused; paused = true; ring.classList.add('dragging'); ring.classList.remove('focus'); frames.forEach((x) => x.el.classList.remove('on')); stage.setPointerCapture(e.pointerId); }
+    if (!dragging) return;
+    const dth = (down.top ? 1 : -1) * dx / Math.max(200, rxNow);
+    spin += dth; vel = 0.8 * vel + 0.2 * (dth / dtm); lx = e.clientX; lt = now;
+  });
+  const end = (e) => {
+    if (!down || (e && e.pointerId !== down.id)) return;
+    const was = dragging; down = null;
+    if (was) { dragging = false; paused = wasPaused; ring.classList.remove('dragging'); setTimeout(() => { moved = 0; }, 0); }
+  };
+  stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+  // لا يُفتح الرابط بعد سحب
+  stage.addEventListener('click', (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+  // لوحة اللمس: التمرير الأفقي يحرّك الحلقة
+  stage.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 2) { e.preventDefault(); spin -= e.deltaX / Math.max(200, rxNow); }
+  }, { passive: false });
+}
+
 drawRing(); requestAnimationFrame(loop);
 
 // اللحظة 2ب: خريطة الأثر من السجل نفسه
