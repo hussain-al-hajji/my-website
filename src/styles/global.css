@@ -69,8 +69,8 @@ p{text-wrap:pretty}
 .hero .hero-name{line-height:0;margin-top:2px}
 .hero .hero-name img{width:clamp(230px,24vw,350px);height:auto;margin-inline:auto}
 .hero .sub{font-size:clamp(1rem,.95rem + .3vw,1.1875rem);color:var(--ink-2);max-width:54ch;margin:12px auto 0;line-height:1.7}
-.hero .slogan{display:grid;justify-items:start;gap:0;margin:14px auto 0;font-size:clamp(1.15rem,1rem + .6vw,1.5rem);font-weight:700;line-height:1.35;color:var(--ink)}
-.hero .slogan span:last-child{color:var(--action);padding-inline-start:1.6em}
+.hero .slogan{display:grid;justify-items:center;gap:0;margin:14px auto 0;font-size:clamp(1.15rem,1rem + .6vw,1.5rem);font-weight:700;line-height:1.35;color:var(--ink)}
+.hero .slogan span:last-child{color:var(--action)}
 .hero .ctas{margin-top:20px}
 .hero figure img{width:100%;max-height:760px;object-fit:cover;object-position:50% 30%}
 
