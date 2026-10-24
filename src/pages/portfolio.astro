@@ -13,6 +13,8 @@ import mediaAll from '../data/media.json';
 import honors from '../data/honors.json';
 import { site, href, abs, getKits, records, stats, isRemote } from '../lib/site.js';
 import { fillTokens } from '../lib/faq.js';
+import { mapShapes } from '../lib/impactmap.js';
+import geo from '../assets/gulf-geo.html?raw';
 
 const st = stats();
 const y0 = st.years[0], y1 = st.lastYear;
@@ -58,7 +60,9 @@ const kitPages = chunk(kits, 6);
 let pg = 1;
 const P = () => String(++pg).padStart(2, '0');
 const pillars = (pages.methodology?.pillars || []).slice(0, 5);
-const TOTAL = 1 + 1 + 1 + (pillars.length ? 1 : 0) + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
+const impactMap = mapShapes(records);
+const topCities = [...impactMap.placed].sort((a, b) => b.n - a.n).slice(0, 6);
+const TOTAL = 1 + 1 + (impactMap.total ? 1 : 0) + 1 + (pillars.length ? 1 : 0) + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
 const tot = String(TOTAL).padStart(2, '0');
 // صورة لحظة التكريم من معرض الجائزة، وإلا صورة الصفحة الرئيسية للجائزة
 const awardImg = (award.gallery || []).find((g) => /لحظة التكريم/.test(g.caption || ''))?.image || award.hero;
@@ -76,7 +80,7 @@ const ICONS = [
   [/كاتب|محتوى/, '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>'],
 ];
 const roleIcon = (r) => `<svg viewBox="0 0 24 24" aria-hidden="true">${(ICONS.find(([re]) => re.test(r)) || [0, '<circle cx="12" cy="12" r="8"/>'])[1]}</svg>`;
-const order = ['me', 'impact', ...(pillars.length ? ['method'] : []), 'proj', 'award', 'feat', 'kits', 'partners', 'voices'];
+const order = ['me', ...(impactMap.total ? ['map'] : []), 'impact', ...(pillars.length ? ['method'] : []), 'proj', 'award', 'feat', 'kits', 'partners', 'voices'];
 const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2, '0')]));
 ---
 <Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
@@ -122,6 +126,34 @@ const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2,
       </ul>
       <footer class="pp-foot"><span>hussain-al-hajji.com</span><span dir="ltr">{P()} / {tot}</span></footer>
     </section>
+
+    <!-- خريطة الأثر: نفس خريطة الرئيسية مرسومة كاملة -->
+    {impactMap.total > 0 && (
+      <section class="pp pp-dark pp-map">
+        <header class="pp-head"><span class="pp-num">{sec.map}</span><h2>خريطة الأثر</h2><img class="pp-mark" src={href('/brand/logo-full-white.svg')} alt="" width="2600" height="961"></header>
+        <div class="pp-map-body">
+          <svg class="map in" viewBox="0 0 1000 600" role="img" aria-label="خريطة المدن التي قُدّمت فيها البرامج">
+            <g class="geo" aria-hidden="true" set:html={geo}></g>
+            <g>{impactMap.placed.filter((c) => c.arc).map((c) => <path class="arc" d={c.arc} />)}</g>
+            <g>{impactMap.placed.map((c) => (
+              <g class="c">
+                <circle class="halo" cx={c.x} cy={c.y} r={c.rad * 2} />
+                <circle class={'city' + (c.isHome ? ' home' : '')} cx={c.x} cy={c.y} r={c.rad} />
+                {c.label && <text x={c.label.x} y={c.label.y} text-anchor={c.label.anchor} direction="rtl">{c.name}</text>}
+                {c.label && <text class="sm" x={c.label.x} y={c.label.y + 18} text-anchor={c.label.anchor} direction="rtl">{c.n} مشاركة</text>}
+              </g>
+            ))}</g>
+          </svg>
+          <aside class="pp-map-side">
+            <p class="pp-map-count"><b>{impactMap.total}</b><span>{impactMap.label}</span></p>
+            <p class="pp-cap">أكثر المواقع مشاركة</p>
+            <ol class="pp-map-top">{topCities.map((c) => <li><span>{c.name}</span><b>{c.n}</b></li>)}</ol>
+            <p class="pp-map-home"><i></i>الأحساء، منطلق الرحلة، ومنها تمتد الأقواس إلى كل موقع.</p>
+          </aside>
+        </div>
+        <footer class="pp-foot"><span>hussain-al-hajji.com</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    )}
 
     <!-- الأثر في أرقام -->
     <section class="pp pp-dark">

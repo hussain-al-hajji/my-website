@@ -183,3 +183,20 @@
 .pp-method .bd-step p{font-size:9.6pt;line-height:1.75;opacity:1;transition:none;text-align:center}
 .pp-method .bd-arrow{top:3mm;inset-inline-end:-9mm;width:13mm;height:5mm;transform:none}
 .pp-method .chalk-link{margin-top:0;font-size:9.5pt}
+
+/* خريطة الأثر: خريطة الرئيسية مرسومة كاملة دون حركة */
+.pp-map-body{display:grid;grid-template-columns:1fr 66mm;gap:8mm;flex:1;min-height:0;margin-bottom:6mm;align-items:center}
+.pp-map .map{width:100%;height:auto;max-height:150mm;border-radius:5mm;background:#0e0e0d}
+.pp-map .map .arc{stroke-dasharray:none!important;stroke-dashoffset:0!important;transition:none!important;stroke-opacity:.6}
+.pp-map .map .halo{animation:none!important;opacity:.2}
+.pp-map .map text{font-size:17px;font-weight:600}
+.pp-map .map text.sm{font-size:14px;font-weight:400}
+.pp-map-side{display:flex;flex-direction:column;gap:3mm}
+.pp-map-count{display:grid;gap:1.5mm;margin-bottom:4mm}
+.pp-map-count b{font-size:46pt;line-height:1;color:var(--gold)}
+.pp-map-count span{font-size:9.5pt;line-height:1.6;color:#d8d6cf}
+.pp-map-top{list-style:none;display:grid;gap:1.6mm;counter-reset:t}
+.pp-map-top li{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(226,178,87,.18);padding-bottom:1.4mm;font-size:10pt}
+.pp-map-top li b{color:var(--gold);font-size:11pt}
+.pp-map-home{margin-top:3mm;font-size:8.5pt;color:#a3a29b;display:flex;gap:2mm;align-items:center}
+.pp-map-home i{flex:none;width:3mm;height:3mm;border-radius:50%;background:#fff}
