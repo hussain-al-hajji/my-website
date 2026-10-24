@@ -192,9 +192,11 @@ const CITIES = data.cities;
 const counts = {}, samples = {};
 log.forEach((r) => {
   const txt = `${r.l} ${r.o} ${r.n}`;
-  CITIES.forEach((c) => {
-    if (c[1].some((k) => txt.includes(k))) { counts[c[0]] = (counts[c[0]] || 0) + 1; (samples[c[0]] = samples[c[0]] || []).push(r.n); }
-  });
+  const add = (c) => { counts[c[0]] = (counts[c[0]] || 0) + 1; (samples[c[0]] = samples[c[0]] || []).push(r.n); };
+  let hit = false;
+  CITIES.forEach((c) => { if (c[1].some((k) => txt.includes(k))) { add(c); hit = true; } });
+  // أي برنامج حضوري لم تُحدَّد مدينته يُحتسب في الرياض
+  if (!hit && !/عن بُعد/.test(r.k || '')) { const ry = CITIES.find((c) => c[0] === 'الرياض'); if (ry) add(ry); }
 });
 const NS = 'http://www.w3.org/2000/svg';
 const map = $('#map'), mCard = $('#mCard');
