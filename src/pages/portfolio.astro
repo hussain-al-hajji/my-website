@@ -63,6 +63,18 @@ const tot = String(TOTAL).padStart(2, '0');
 const awardImg = (award.gallery || []).find((g) => /لحظة التكريم/.test(g.caption || ''))?.image || award.hero;
 // الصورة الجماعية للمكرّمين في حفل التكريم
 const awardGroup = (award.gallery || []).find((g) => /صورة جماعية لرواد الشباب العربي في النسخة الرابعة/.test(g.caption || '')) || (award.gallery || []).find((g) => /صورة جماعية/.test(g.caption || ''));
+// أدواري في التعاون (من لوحة التحكم)، ولكل دور أيقونة خطية بحسب كلماته
+const roles = site.portfolioRoles || [];
+const ICONS = [
+  [/مدرب/, '<path d="M3 4h18v11H3z"/><path d="M8 20l4-5 4 5"/><path d="M7 11l3-3 2 2 4-4"/>'],
+  [/مرشد/, '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'],
+  [/مستشار/, '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/>'],
+  [/مطور|مبادر/, '<path d="M12 21v-8"/><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/>'],
+  [/مدير|مشاريع/, '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5M8 17h7"/><path d="M4 9h2"/>'],
+  [/محك/, '<path d="M12 3v18M6 21h12"/><path d="M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>'],
+  [/كاتب|محتوى/, '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>'],
+];
+const roleIcon = (r) => `<svg viewBox="0 0 24 24" aria-hidden="true">${(ICONS.find(([re]) => re.test(r)) || [0, '<circle cx="12" cy="12" r="8"/>'])[1]}</svg>`;
 const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits: '06', partners: '07', voices: '08' };
 ---
 <Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
@@ -81,7 +93,6 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
         <p class="pp-cover-role">{site.role}</p>
         <p class="pp-cover-years"><b>{y0}</b><i></i><b>{y1}</b></p>
       </div>
-      <p class="pp-cover-note">كل نقطة ذهبية برنامجٌ قدّمته: {n(records.length)} برنامجاً في سجل الأثر منذ {y0}، والأحدث أسطع.</p>
     </section>
 
     <!-- من أنا -->
@@ -91,6 +102,12 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
         <div class="pp-me-txt">
           <p class="pp-lead">{pages.bio.lead}</p>
           {intro.slice(0, 2).map((t) => <p class="pp-just">{t}</p>)}
+          {roles.length > 0 && (
+            <div class="pp-roles">
+              <h3 class="pp-sub">أدوار يمكننا التعاون فيها</h3>
+              <ul>{roles.map((r, i) => <li><span class="ic" set:html={roleIcon(r)}></span><b>{r}</b><i>{String(i + 1).padStart(2, '0')}</i></li>)}</ul>
+            </div>
+          )}
         </div>
         <figure class="pp-me-fig"><img src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694"></figure>
       </div>

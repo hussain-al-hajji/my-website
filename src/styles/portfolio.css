@@ -40,7 +40,7 @@
 
 /* من أنا */
 .pp-me{display:grid;grid-template-columns:1fr 70mm;gap:12mm;flex:1;min-height:0}
-.pp-me-txt{display:grid;gap:4mm;align-content:start}
+.pp-me-txt{display:flex;flex-direction:column;gap:4mm}
 .pp-me-txt .pp-lead{color:var(--gold-d)}
 .pp-me-fig{align-self:end;margin-bottom:-4mm}
 .pp-me-fig img{width:70mm;height:auto}
@@ -155,3 +155,17 @@
 .pp-group img{width:100%;height:50mm;object-fit:cover;object-position:50% 92%;border-radius:3mm}
 .pp-group figcaption{font-size:8pt;color:#a3a29b}
 .pp-sub{font-size:12pt;font-weight:800;margin-bottom:3mm;color:var(--ink)}
+
+/* أدوار التعاون في صفحة «من أنا» */
+.pp-roles{margin-top:auto;margin-bottom:5mm}
+.pp-roles ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2.6mm}
+.pp-roles li{position:relative;display:flex;align-items:center;gap:2.6mm;min-height:13mm;padding:2mm 3mm;border-radius:3mm;background:#fff;box-shadow:0 0 0 1px #e6e1d6;overflow:hidden}
+.pp-roles li::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:1.2mm;background:linear-gradient(var(--gold),var(--gold-d))}
+.pp-roles .ic{flex:none;width:8.5mm;height:8.5mm;border-radius:50%;display:grid;place-items:center;background:#1b1b1a}
+.pp-roles .ic svg{width:5mm;height:5mm;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pp-roles b{font-size:9.6pt;line-height:1.3;font-weight:700}
+.pp-roles i{position:absolute;inset-block-start:1mm;inset-inline-end:2mm;font-style:normal;font-size:6.5pt;font-weight:700;color:#c9c3b6}
+.pp-roles li:nth-child(4n+1){background:#1b1b1a;box-shadow:none}
+.pp-roles li:nth-child(4n+1) b{color:#f5f5f2}
+.pp-roles li:nth-child(4n+1) .ic{background:var(--gold)}
+.pp-roles li:nth-child(4n+1) .ic svg{stroke:#1b1b1a}
