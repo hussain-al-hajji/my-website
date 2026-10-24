@@ -1,5 +1,6 @@
 // شريط جانبي خفيف يبيّن أقسام الصفحة وموقع القارئ منها؛ يظهر في الصفحات ذات الأقسام الكثيرة فقط.
 const MIN = 4;
+const wide = matchMedia('(min-width: 821px)');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const main = document.querySelector('main');
 const labelOf = (s) => {
@@ -18,7 +19,18 @@ if (main && document.querySelector('.foot')) {
       `<button type="button" class="rail-dot" style="--p:${(i / (secs.length - 1) * 100).toFixed(2)}%" aria-label="${s.label.replace(/"/g, '&quot;')}"><span class="rail-tip">${s.label.replace(/</g, '&lt;')}</span></button>`).join('');
     document.body.appendChild(nav);
     const dots = [...nav.querySelectorAll('.rail-dot')], fill = nav.querySelector('.rail-fill');
-    dots.forEach((d, i) => d.addEventListener('click', () => secs[i].el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })));
+    // الضغط على نقطة ينقل فوراً إلى بداية قسمها، أسفل الشريط العلوي الثابت
+    const topBar = () => ['.gnav', '.lnav'].reduce((m, s) => {
+      const el = document.querySelector(s); if (!el || !/sticky|fixed/.test(getComputedStyle(el).position)) return m;
+      return Math.max(m, el.getBoundingClientRect().bottom);
+    }, 0);
+    dots.forEach((d, i) => d.addEventListener('click', () => {
+      const y = secs[i].el.getBoundingClientRect().top + scrollY - topBar();
+      scrollTo({ top: Math.max(0, y), behavior: 'instant' });
+      update();
+      nav.querySelectorAll('.peek').forEach((x) => x.classList.remove('peek'));
+      d.classList.add('peek'); clearTimeout(peek); peek = setTimeout(() => d.classList.remove('peek'), 1400);
+    }));
     let cur = -1, raf = 0, peek = 0;
     const update = () => {
       raf = 0;
@@ -34,7 +46,7 @@ if (main && document.querySelector('.foot')) {
         cur = a; dots[a].classList.add('is'); dots[a].setAttribute('aria-current', 'location');
         // يظهر اسم القسم الجديد لحظة ثم يختفي
         nav.querySelectorAll('.peek').forEach((d) => d.classList.remove('peek'));
-        if (nav.classList.contains('on')) { dots[a].classList.add('peek'); clearTimeout(peek); peek = setTimeout(() => dots[a].classList.remove('peek'), 1400); }
+        if (nav.classList.contains('on') && wide.matches) { dots[a].classList.add('peek'); clearTimeout(peek); peek = setTimeout(() => dots[a].classList.remove('peek'), 1400); }
       }
       dots.forEach((d, i) => d.classList.toggle('done', i < a));
     };
