@@ -259,14 +259,15 @@ const jsonld = [
       <div class="tip" id="mCard" hidden></div>
     </div>
     <p class="map-note">اضغط على المدينة لترى التفاصيل</p>
-    <div class="mq-head"><p>من الجهات التي تعاونتُ معها</p><a class="more" href={href('/partnerships')}>كل الشركاء</a></div>
-    <div class="mq" aria-label="شعارات جهات تعاونتُ معها">
+    {netAll.length <= 3 && (
+      <div class="mq" aria-label="شعارات جهات تعاونتُ معها">
       <ul class="mq-track">
         {[0, 1].map((rep) => marquee.map((p) => (
           <li aria-hidden={rep ? 'true' : undefined}><img src={href(p.logo)} alt={rep ? '' : p.name} loading="lazy"></li>
         )))}
       </ul>
     </div>
+    )}
   </div>
 </section>
 
@@ -277,6 +278,13 @@ const jsonld = [
     <p class="net-note">مرّر المؤشر أو اضغط على جهة لترى برامجي معها.</p>
     <div class="netv" id="netv" aria-label="شبكة الجهات الأكثر تعاوناً وبرامجي معها"></div>
     <div class="net-card" id="netCard" aria-live="polite"></div>
+    <div class="mq" aria-label="شعارات جهات تعاونتُ معها">
+      <ul class="mq-track">
+        {[0, 1].map((rep) => marquee.map((p) => (
+          <li aria-hidden={rep ? 'true' : undefined}><img src={href(p.logo)} alt={rep ? '' : p.name} loading="lazy"></li>
+        )))}
+      </ul>
+    </div>
   </div>
 </section>
 )}

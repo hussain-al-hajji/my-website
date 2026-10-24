@@ -1070,3 +1070,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @keyframes csRipple{0%{transform:scale(.15);opacity:.95}70%{opacity:.25}100%{transform:scale(1.15);opacity:0}}
 @keyframes csTapHand{0%,100%{transform:translateY(0)}30%{transform:translateY(7px) scale(.97)}}
 @media (prefers-reduced-motion:reduce){.cs-hand svg,.cs-hand i{animation:none}.cs-hand i{opacity:.5;transform:scale(.6)}}
+
+.net .mq{margin-top:14px}
