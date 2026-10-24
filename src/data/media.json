@@ -129,8 +129,7 @@
     "note": "مقابلة بالبث المباشر.",
     "short": "قناة أبوظبي",
     "logo": "",
-    "strip": true,
-    "pdfLogo": "/img/media/logos/adtv.webp"
+    "strip": true
   },
   {
     "id": "m011",
