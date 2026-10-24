@@ -60,6 +60,8 @@ const TOTAL = 1 + 1 + 1 + projPages.length + 1 + featPages.length + kitPages.len
 const tot = String(TOTAL).padStart(2, '0');
 // صورة لحظة التكريم من معرض الجائزة، وإلا صورة الصفحة الرئيسية للجائزة
 const awardImg = (award.gallery || []).find((g) => /لحظة التكريم/.test(g.caption || ''))?.image || award.hero;
+// الصورة الجماعية للمكرّمين في حفل التكريم
+const awardGroup = (award.gallery || []).find((g) => /صورة جماعية لرواد الشباب العربي في النسخة الرابعة/.test(g.caption || '')) || (award.gallery || []).find((g) => /صورة جماعية/.test(g.caption || ''));
 const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits: '06', partners: '07', voices: '08' };
 ---
 <Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
@@ -166,6 +168,7 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
         <ul class="pp-facts">{(award.facts || []).slice(0, 4).map((f) => <li><b>{f.value}</b><span>{f.label}</span></li>)}</ul>
         <p class="pp-fine">{award.sponsor}</p>
       </div>
+      {awardGroup && <figure class="pp-group"><img src={href(awardGroup.image)} alt=""><figcaption>{awardGroup.caption}</figcaption></figure>}
       <footer class="pp-foot"><span>hussain-al-hajji.com/arab-youth-pioneers</span><span dir="ltr">{P()} / {tot}</span></footer>
     </section>
 

@@ -149,3 +149,6 @@
 @media screen and (max-width:1160px){
   .pp-doc{zoom:.6}
 }
+.pp-group{position:absolute;right:16mm;bottom:19mm;width:136mm;display:grid;gap:1.6mm}
+.pp-group img{width:100%;height:50mm;object-fit:cover;object-position:50% 92%;border-radius:3mm}
+.pp-group figcaption{font-size:8pt;color:#a3a29b}
