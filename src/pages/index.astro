@@ -398,12 +398,12 @@ const jsonld = [
   <section class="sec alt" aria-labelledby="vc">
     <div class="wide">
       <div class="sec-head"><h2 id="vc" data-in>ماذا يقولون.</h2><a class="more" href={href('/feedback')}>كل التوصيات</a></div>
-      <div class="deck" id="deck">
+      <div class="deck" id="deck" tabindex="0" aria-label="التوصيات: اسحب يمينًا أو يسارًا للتقليب، أو استخدم السهمين">
         {voices.map((v, i) => (
           <figure class="voice" data-pos={i}><p>“{(v.quote || v.full).replace(/^[“"]|[”"]$/g, '')}”</p>{(v.name || v.role) && <footer>{v.name && <b>{v.name}</b>}{v.role && <span>{v.role}</span>}</footer>}</figure>
         ))}
       </div>
-      <div class="deck-ctl"><button class="pill" type="button" id="deckNext">التوصية التالية</button><span id="deckPos">1 من {voices.length}</span></div>
+      <div class="deck-ctl"><button class="pill" type="button" id="deckNext">التوصية التالية</button><span class="deck-hint" aria-hidden="true">اسحب البطاقة يميناً أو يساراً</span><span id="deckPos">1 من {voices.length}</span></div>
     </div>
   </section>
 )}

@@ -221,6 +221,10 @@ p{text-wrap:pretty}
 .deck .voice[data-pos="2"]{transform:translateY(-42px) scale(.9);z-index:1;opacity:.6}
 .deck .voice:not([data-pos="0"]):not([data-pos="1"]):not([data-pos="2"]){transform:translateY(-42px) scale(.9);opacity:0;z-index:0;pointer-events:none}
 .deck .voice.out{transform:translateX(-120%) rotate(-8deg);opacity:0}
+.deck .voice{touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.deck .voice.drag{transition:none;cursor:grabbing}
+.deck .voice.enter{transform:translateX(120%) rotate(8deg);opacity:0;transition:none}
+.deck:focus-visible{outline:2px solid var(--action);outline-offset:6px;border-radius:var(--r-tile)}
 .deck-ctl{display:flex;justify-content:center;gap:12px;margin-top:28px;align-items:center;color:var(--ink-2);font-size:var(--t-small)}
 
 /* ---------- moment 3: words that light up ---------- */
@@ -1114,3 +1118,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .mnav-group span{font-size:1.75rem;font-weight:600;padding:0 0 6px}
 .mnav-group a{font-size:1.25rem;font-weight:500;border:0;padding:8px 18px;color:var(--action-on-dark)}
 .gnav .sub a.ic-contact::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.6'/%3E%3Cpath d='M4.5 20c.9-3.8 3.8-5.6 7.5-5.6s6.6 1.8 7.5 5.6'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.6'/%3E%3Cpath d='M4.5 20c.9-3.8 3.8-5.6 7.5-5.6s6.6 1.8 7.5 5.6'/%3E%3C/svg%3E")}
+.deck-hint{font-size:var(--t-small);color:var(--ink-2)}
+@media (hover:hover) and (pointer:fine){.deck-hint{display:none}}

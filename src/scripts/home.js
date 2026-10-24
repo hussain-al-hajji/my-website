@@ -264,20 +264,61 @@ if (tilt && !reduce && matchMedia('(hover:hover)').matches) {
   });
 }
 
-// اللحظة 5: رزمة أصوات
-const cards = $$('#deck .voice'); let top = 0;
-const deckPos = $('#deckPos');
-function nextCard() {
-  const cur = cards[top];
-  cur.classList.add('out');
-  setTimeout(() => {
-    cur.classList.remove('out'); top = (top + 1) % cards.length;
-    cards.forEach((c, i) => { c.dataset.pos = (i - top + cards.length) % cards.length; });
-    deckPos.textContent = `${top + 1} من ${cards.length}`;
-  }, reduce ? 0 : 380);
+// اللحظة 5: رزمة أصوات: زر التالي أو النقر أو السحب (يساراً للتالي ويميناً للسابق)
+const cards = $$('#deck .voice'); let top = 0, busy = false, dragged = false;
+const deckPos = $('#deckPos'), deckEl = $('#deck');
+const layout = () => {
+  cards.forEach((c, i) => { c.dataset.pos = (i - top + cards.length) % cards.length; });
+  if (deckPos) deckPos.textContent = `${top + 1} من ${cards.length}`;
+};
+function go(dir) {
+  if (busy || cards.length < 2) return;
+  busy = true;
+  if (dir > 0) {
+    const cur = cards[top];
+    cur.style.transform = ''; cur.classList.add('out');
+    setTimeout(() => { cur.classList.remove('out'); top = (top + 1) % cards.length; layout(); busy = false; }, reduce ? 0 : 380);
+  } else {
+    top = (top - 1 + cards.length) % cards.length; layout();
+    const nxt = cards[top];
+    if (reduce) { busy = false; return; }
+    nxt.classList.add('enter');
+    requestAnimationFrame(() => requestAnimationFrame(() => { nxt.classList.remove('enter'); setTimeout(() => { busy = false; }, 420); }));
+  }
 }
-cards.forEach((c) => c.addEventListener('click', nextCard));
+const nextCard = () => go(1);
+cards.forEach((c) => c.addEventListener('click', () => { if (dragged) { dragged = false; return; } nextCard(); }));
 $('#deckNext')?.addEventListener('click', nextCard);
+deckEl?.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); go(1); } else if (e.key === 'ArrowRight') { e.preventDefault(); go(-1); } });
+if (deckEl) {
+  let d = null;
+  deckEl.addEventListener('pointerdown', (e) => {
+    const card = e.target.closest('.voice'); if (!card || card !== cards[top] || busy) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    d = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now(), dx: 0, on: false, card };
+  });
+  deckEl.addEventListener('pointermove', (e) => {
+    if (!d || d.id !== e.pointerId) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.on) {
+      if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      d.on = true; d.card.classList.add('drag'); try { d.card.setPointerCapture(e.pointerId); } catch {}
+    }
+    d.dx = dx; d.card.style.transform = `translateX(${dx}px) rotate(${(dx / 22).toFixed(2)}deg)`;
+  });
+  const end = (e) => {
+    if (!d || d.id !== e.pointerId) return;
+    const { card, dx, on, t } = d; d = null;
+    if (!on) return;
+    dragged = true; setTimeout(() => { dragged = false; }, 0);
+    card.classList.remove('drag');
+    const fast = Math.abs(dx) / Math.max(1, performance.now() - t) > 0.5;
+    if (dx < -70 || (fast && dx < -25)) { go(1); }
+    else if (dx > 70 || (fast && dx > 25)) { card.style.transform = ''; go(-1); }
+    else card.style.transform = '';
+  };
+  deckEl.addEventListener('pointerup', end); deckEl.addEventListener('pointercancel', (e) => { if (d && d.id === e.pointerId) { d.card.classList.remove('drag'); d.card.style.transform = ''; d = null; } });
+}
 
 // ذوبان الرسم إلى الصورة: بالمؤشر على الحاسوب، وباللمس على الجوال
 const pfig = $('#pfig');
