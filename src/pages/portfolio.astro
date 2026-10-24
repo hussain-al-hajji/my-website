@@ -58,6 +58,8 @@ let pg = 1;
 const P = () => String(++pg).padStart(2, '0');
 const TOTAL = 1 + 1 + 1 + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
 const tot = String(TOTAL).padStart(2, '0');
+// صورة لحظة التكريم من معرض الجائزة، وإلا صورة الصفحة الرئيسية للجائزة
+const awardImg = (award.gallery || []).find((g) => /لحظة التكريم/.test(g.caption || ''))?.image || award.hero;
 const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits: '06', partners: '07', voices: '08' };
 ---
 <Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
@@ -155,7 +157,7 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
 
     <!-- رواد الشباب العربي -->
     <section class="pp pp-dark pp-award">
-      <img class="pp-award-img" src={href(award.hero)} alt="">
+      <img class="pp-award-img" src={href(awardImg)} alt="">
       <div class="pp-award-txt">
         <header class="pp-head"><span class="pp-num">{sec.award}</span><h2>{award.title}</h2></header>
         <p class="pp-kicker">{award.edition} · {award.dates}</p>

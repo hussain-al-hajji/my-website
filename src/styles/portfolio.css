@@ -82,8 +82,7 @@
 
 /* الجائزة */
 .pp-award{padding:0;display:block}
-.pp-award-img{position:absolute;left:0;top:0;width:128mm;height:100%;object-fit:cover;object-position:50% 30%}
-.pp-award-img::after{content:""}
+.pp-award-img{position:absolute;left:0;top:0;width:128mm;height:100%;object-fit:cover;object-position:50% 55%}
 .pp-award-txt{position:absolute;right:16mm;top:13mm;width:136mm;display:grid;gap:5mm}
 .pp-award-txt .pp-head{margin-bottom:0}
 .pp-award-txt .pp-lead{font-size:12.5pt;font-weight:500;color:#e9e7e0;text-align:justify}
