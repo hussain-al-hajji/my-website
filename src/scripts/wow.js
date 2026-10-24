@@ -15,19 +15,11 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const cv = $('#csCanvas'), sec = $('#constellation');
   if (!cv || !sec) return;
   const log = data.log, N = log.length, ctx = cv.getContext('2d'), tip = $('#csTip'), cap = $('#csCap');
-  const P = (lat, lon) => [((lon - 35) / 25) * 1000, ((31 - lat) / 15.2) * 600];
-  const CITIES = data.cities;
-  // مكان كل سجل: مدينة، أو «عن بُعد» (حسب نوع البرنامج وليس نص المكان)، أو -2 لحضوري لم تُعرف مدينته
-  const remoteOf = log.map((r) => /عن بُعد/.test(r.k || '') && !/حضوري/.test(r.k || ''));
-  const cityOf = log.map((r, i) => { if (remoteOf[i]) return -1; const t = `${r.l} ${r.o} ${r.n}`; const ci = CITIES.findIndex((c) => c[1].some((k) => t.includes(k))); return ci >= 0 ? ci : -2; });
-  const counts = {}; cityOf.forEach((ci) => { if (ci >= 0) counts[ci] = (counts[ci] || 0) + 1; });
-  const placedN = Object.keys(counts).length, otherN = cityOf.filter((c) => c === -2).length;
   const years = [...new Set(log.map((r) => r.y))].sort(), y0 = years[0], y1 = years[years.length - 1];
-  const geo = $$('#map .geo path').map((p) => new Path2D(p.getAttribute('d')));
   const img = new Image(); img.src = cv.dataset.logo; try { await img.decode(); } catch {}
   const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 900 : 1500, random = rng(7);
-  const sc = [], nm = [], mp = [], yr = [], dsc = [], dnm = [], dmp = [], dyr = [];
-  let handPt = 0, W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0], othPt = [0, 0];
+  const sc = [], nm = [], yr = [], dsc = [], dnm = [], dyr = [];
+  let handPt = 0, W = 0, H = 0, dpr = 1, yearCols = [];
   const gauss = () => (random() + random() + random() - 1.5) * 1.3;
 
   function layout() {
@@ -40,34 +32,22 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     const px = o.getImageData(0, 0, off.width, off.height).data, pts = [];
     for (let y = 0; y < off.height; y += 2) for (let x = 0; x < off.width; x += 2) if (px[(y * off.width + x) * 4 + 3] > 140) pts.push([ox + x, oy + y]);
     const rr = rng(11), pick = () => pts[Math.floor(rr() * pts.length)] || [W / 2, H / 2];
-    // الخريطة
-    const s = Math.min(W / 1000, H / 600) * 0.93, mx = (W - 1000 * s) / 2, my = (H - 600 * s) / 2;
-    mapT = { s, mx, my };
-    const home = P(25.38, 49.59);
-    const cp = CITIES.map((c) => { const q = P(c[2], c[3]); return [mx + q[0] * s, my + q[1] * s]; });
-    const virt = [mx + 150 * s, my + 500 * s], oth = [mx + 850 * s, my + 520 * s]; virtN = cityOf.filter((c) => c === -1).length; virtPt = virt; othPt = oth;
     // السنوات
     const m = Math.max(34, W * 0.06), cw = (W - m * 2) / Math.max(1, years.length - 1);
     yearCols = years.map((y, i) => ({ y, x: W - m - i * cw, n: log.filter((r) => r.y === y).length }));   // الأقدم عند اليمين
     const seen = {}, base = H - 64, gap = Math.max(8, Math.min(12, cw / 7));
     for (let i = 0; i < N; i++) {
-      const rec = log[i], c = CITIES[cityOf[i]];
+      const rec = log[i];
       sc[i] = [rr() * W, rr() * H]; nm[i] = pick();
-      const base2 = cityOf[i] >= 0 ? cp[cityOf[i]] : cityOf[i] === -1 ? virt : oth, rad = 4 + Math.sqrt(cityOf[i] >= 0 ? counts[cityOf[i]] : cityOf[i] === -1 ? virtN : otherN) * 3.6;
-      const a = rr() * Math.PI * 2, d = Math.sqrt(rr()) * rad * s * (W < 600 ? 1.1 : 1.3);
-      mp[i] = [base2[0] + Math.cos(a) * d, base2[1] + Math.sin(a) * d];
       const k = seen[rec.y] = (seen[rec.y] || 0) + 1, col = yearCols.find((c2) => c2.y === rec.y), cols = col.n > 30 ? 5 : 3;
       yr[i] = [col.x + ((k - 1) % cols - (cols - 1) / 2) * gap, base - Math.floor((k - 1) / cols) * gap];
     }
-    const wt = Object.entries(counts).map(([ci, n]) => [+ci, n]), tot = wt.reduce((a, b) => a + b[1], 0);
     for (let i = 0; i < DUST; i++) {
       dsc[i] = [rr() * W, rr() * H]; dnm[i] = pick();
-      let t = rr() * tot, c2 = wt[0][0]; for (const [ci, n] of wt) { t -= n; if (t <= 0) { c2 = ci; break; } }
-      const b2 = cp[c2], sp = 16 * s * (0.5 + rr()); mp[N + i] = [b2[0] + gauss() * sp, b2[1] + gauss() * sp];
       const col = yearCols[Math.floor(rr() * yearCols.length)];
       yr[N + i] = [col.x + gauss() * 18, base - rr() * 150 - 6];
     }
-    for (let i = 0; i < DUST; i++) { dmp[i] = mp[N + i]; dyr[i] = yr[N + i]; }
+    for (let i = 0; i < DUST; i++) dyr[i] = yr[N + i];
     handPt = 0; { let bd = 1e12; for (let i = 0; i < N; i++) { const d = (nm[i][0] - W / 2) ** 2 + (nm[i][1] - H / 2) ** 2 + 0.6 * ((sc[i][0] - W / 2) ** 2 + (sc[i][1] - H / 2) ** 2); if (d < bd) { bd = d; handPt = i; } } }
   }
   layout();
@@ -79,7 +59,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   let target = reduce ? 0.86 : 0, cur = target, force = free && !reduce ? 0 : null, hover = -1, active = false, stage = -1;
   const range = () => Math.max(1, sec.offsetHeight - innerHeight);
   const measure = () => { if (force != null) return force; if (reduce) return 0.86; const r = sec.getBoundingClientRect(); return clamp(-r.top / range()); };
-  const HOLD = [0.24, 0.5, 0.9];
+  const HOLD = [0.24, 0.9];
   $$('[data-cs]').forEach((b) => b.addEventListener('click', () => {
     const k = +b.dataset.cs;
     if (free) { force = HOLD[k]; if (reduce) cur = target = force; } else sec.scrollIntoView(), scrollTo({ top: sec.offsetTop + range() * HOLD[k] - 0, behavior: 'smooth' });
@@ -109,32 +89,27 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   });
   const endDrag = () => { drag = null; setTimeout(() => { dragged = false; }, 0); };
   cv.addEventListener('pointerup', endDrag); cv.addEventListener('pointercancel', endDrag);
-  const CAP = [`${N} برنامجاً، وكل نقطة منها حكاية.`, `${placedN} موقعاً داخل المملكة وخارجها.`, `من ${y0} إلى ${y1}، سنة بعد سنة.`];
+  const CAP = [`${N} برنامجاً، وكل نقطة منها حكاية.`, `من ${y0} إلى ${y1}، سنة بعد سنة.`];
 
   let clock = 0, swimK = reduce ? 0 : 1, frozen = false;
   function pos(i, p) {
-    const dust = i >= N, a = ease(clamp(p / 0.18)), b = ease(clamp((p - 0.3) / 0.2)), c = ease(clamp((p - 0.62) / 0.2));
-    const A = dust ? dsc[i - N] : sc[i], B = dust ? dnm[i - N] : nm[i], C = mp[i], D = yr[i];
-    let x = lerp(lerp(lerp(A[0], B[0], a), C[0], b), D[0], c), y = lerp(lerp(lerp(A[1], B[1], a), C[1], b), D[1], c);
-    // سباحة هادئة للنقاط في التبعثر والاسم، تتلاشى مع الانتقال إلى الخريطة، وتتجمّد عند تثبيت بطاقة
-    // تسبح النقاط وهي تتشكّل، ثم تستقر تماماً عند اكتمال الاسم ليسهل قراءته
-    const w = (1 - b) * (1 - ease(clamp((p - 0.13) / 0.1))) * swimK * (dust ? 2.6 : 4.2);
+    const dust = i >= N, a = ease(clamp(p / 0.18)), c = ease(clamp((p - 0.38) / 0.3));
+    const A = dust ? dsc[i - N] : sc[i], B = dust ? dnm[i - N] : nm[i], D = yr[i];
+    let x = lerp(lerp(A[0], B[0], a), D[0], c), y = lerp(lerp(A[1], B[1], a), D[1], c);
+    // تسبح النقاط وهي تتشكّل، ثم تستقر تماماً عند اكتمال الاسم ليسهل قراءته، وتتجمّد عند تثبيت بطاقة
+    const w = (1 - ease(clamp((p - 0.13) / 0.1))) * swimK * (dust ? 2.6 : 4.2);
     if (w > 0.01) { x += (Math.sin(clock / 760 + i * 1.7) + Math.sin(clock / 1350 + i * 0.9) * 0.6) * w; y += (Math.cos(clock / 880 + i * 1.3) + Math.cos(clock / 1500 + i * 2.1) * 0.6) * w; }
     return [x, y];
   }
   const font = '600 13px "Noto Sans Arabic", system-ui, sans-serif';
   function draw(t) {
     clock = t;
-    const p = cur, wMap = ease(clamp((p - 0.3) / 0.2)) * (1 - ease(clamp((p - 0.62) / 0.2))), wYear = ease(clamp((p - 0.62) / 0.2));
+    const p = cur, wYear = ease(clamp((p - 0.38) / 0.3));
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
-    if (wMap > 0.02 && mapT) {
-      ctx.save(); ctx.translate(mapT.mx, mapT.my); ctx.scale(mapT.s, mapT.s); ctx.strokeStyle = `rgba(255,255,255,${0.2 * wMap})`; ctx.fillStyle = `rgba(255,255,255,${0.035 * wMap})`; ctx.lineWidth = 1 / mapT.s;
-      geo.forEach((g) => { ctx.fill(g); ctx.stroke(g); }); ctx.restore();
-    }
     // غبار
     ctx.fillStyle = 'rgba(232,189,99,.62)';
     // في مرحلة الاسم تصغر النقاط الكبيرة ويكبر الغبار قليلاً حتى تُقرأ الحروف
-    const wName = ease(clamp(p / 0.18)) * (1 - ease(clamp((p - 0.3) / 0.2))), kd = 1 - 0.42 * wName, ds = 1.9 + 0.5 * wName;
+    const wName = ease(clamp(p / 0.18)) * (1 - wYear), kd = 1 - 0.42 * wName, ds = 1.9 + 0.5 * wName;
     for (let i = 0; i < DUST; i++) { const q = pos(N + i, p); ctx.fillRect(q[0], q[1], ds, ds); }
     // النقاط
     for (let i = 0; i < N; i++) {
@@ -143,12 +118,6 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       ctx.beginPath(); ctx.arc(q[0], q[1], h ? 4.6 : 3.1 * kd, 0, 6.283); ctx.fillStyle = h ? '#fff' : '#e8bd63'; ctx.fill();
     }
     ctx.font = font; ctx.direction = 'rtl'; ctx.textAlign = 'center';
-    if (wMap > 0.5 && mapT) {
-      ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`;
-      CITIES.forEach((c, ci) => { if ((counts[ci] || 0) >= 6) { const q = P(c[2], c[3]); ctx.fillText(c[0], mapT.mx + q[0] * mapT.s, mapT.my + q[1] * mapT.s - (8 + Math.sqrt(counts[ci]) * 5) * mapT.s * 1.2); } });
-    }
-    if (wMap > 0.5 && otherN) { ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`; ctx.fillText(`مواقع أخرى · ${otherN}`, othPt[0], othPt[1] - (10 + Math.sqrt(otherN) * 4) * mapT.s * 1.1 - 8); }
-    if (wMap > 0.5 && virtN) { ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`; ctx.fillText(`عن بُعد · ${virtN} برنامجاً`, virtPt[0], virtPt[1] - (10 + Math.sqrt(virtN) * 4) * mapT.s * 1.1 - 8); }
     if (wYear > 0.5) {
       ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif';
       yearCols.forEach((c) => { ctx.fillText(String(c.y), c.x, H - 34); ctx.fillStyle = `rgba(163,162,155,${(wYear - 0.5) * 2})`; ctx.font = '500 12px "Noto Sans Arabic", system-ui, sans-serif'; ctx.fillText(c.n + ' برنامج', c.x, H - 14); ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif'; });
@@ -166,7 +135,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     if (!active) return;
     target = measure(); cur += (target - cur) * (reduce ? 1 : 0.14); if (Math.abs(target - cur) < 0.0004) cur = target;
     if (scrub && !scrubbing) scrub.value = Math.round(cur * 1000);
-    const st = cur < 0.28 ? 0 : cur < 0.6 ? 1 : 2;
+    const st = cur < 0.5 ? 0 : 1;
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
     // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
     if (!reduce) swimK += ((frozen ? 0 : 1) - swimK) * 0.08;

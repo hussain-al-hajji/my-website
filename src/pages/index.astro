@@ -228,7 +228,7 @@ const jsonld = [
       <p class="const-cap" id="csCap" aria-live="polite"></p>
     </div>
     <div class="const-stage">
-      <canvas id="csCanvas" role="img" aria-label="كل برنامج في سجل الأثر نقطة ضوء تتشكل مرة اسماً، ومرة خريطة، ومرة أعمدة سنوات" data-logo={href('/brand/logo-full-white.svg')}></canvas>
+      <canvas id="csCanvas" role="img" aria-label="كل برنامج في سجل الأثر نقطة ضوء تتشكل مرة اسماً، ومرة أعمدة سنوات" data-logo={href('/brand/logo-full-white.svg')}></canvas>
       <div class="cs-hand" id="csHand" aria-hidden="true">
         <i></i><i></i><i></i>
         <svg viewBox="0 0 48 62" width="44" height="57"><path d="M17 8.5a5 5 0 0 1 10 0V30l2.2-.5a4.2 4.2 0 0 1 5 2.8 4.3 4.3 0 0 1 5.4 2.2 4.3 4.3 0 0 1 4.6 3.8l.6 6.2c.5 4.9-1.1 9.4-4.4 12.8L38 61H22.5c-2.7 0-4.8-1.4-6.2-3.6L7.5 43.2a4.2 4.2 0 0 1 6.9-4.8L17 41.8V8.5z" fill="#fff" stroke="#1b1b1a" stroke-width="2.4" stroke-linejoin="round"/><path d="M27 30v8M33.4 33v6.5M39.6 36.5v5" fill="none" stroke="#1b1b1a" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>
@@ -237,12 +237,11 @@ const jsonld = [
     </div>
     <div class="const-ctl">
       <label class="const-scrub" dir="rtl">
-        <input type="range" id="csScrub" min="0" max="1000" step="1" value="0" aria-label="تشكيل النقاط: من التبعثر إلى الاسم ثم الخريطة ثم السنوات">
+        <input type="range" id="csScrub" min="0" max="1000" step="1" value="0" aria-label="تشكيل النقاط: من التبعثر إلى الاسم ثم السنوات">
       </label>
       <div class="const-steps" role="group" aria-label="عرض الكوكبة">
         <button type="button" data-cs="0" aria-pressed="true">الاسم</button>
-        <button type="button" data-cs="1" aria-pressed="false">الخريطة</button>
-        <button type="button" data-cs="2" aria-pressed="false">السنوات</button>
+      <button type="button" data-cs="1" aria-pressed="false">السنوات</button>
       </div>
     </div>
   </div>
