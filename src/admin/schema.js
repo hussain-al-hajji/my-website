@@ -260,14 +260,15 @@ export const SECTIONS = [
   {
     id: 'bio', label: 'السيرة', file: 'bio', kind: 'list', group: 'المحتوى',
     title: (x) => x.title, meta: (x) => [x.section, x.period].filter(Boolean).join(' · '),
-    blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', logo: '', period: '', desc: '', link: '' }),
+    blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', logo: '', period: '', desc: '', details: '', link: '' }),
     fields: [
       { k: 'section', label: 'القسم', type: 'select', options: [['career', 'المسيرة المهنية'], ['education', 'التعليم والدرجات الأكاديمية'], ['projects', 'مشاريع تدريبية مرموقة'], ['sdgs', 'أهداف التنمية المستدامة'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
       { k: 'title', label: 'العنوان', type: 'text', ...req },
       { k: 'subtitle', label: 'الجهة', type: 'text' },
       { k: 'logo', label: 'شعار الجهة (اختياري)', type: 'image', help: 'يظهر بجانب العنصر في صفحة «عني» وفي ملف السيرة PDF. الأفضل شعار بخلفية شفافة أو بيضاء.' },
       { k: 'period', label: 'الفترة', type: 'text' },
-      { k: 'desc', label: 'الوصف', type: 'textarea', rows: 4 },
+      { k: 'desc', label: 'الوصف (نبذة قصيرة)', type: 'textarea', rows: 4 },
+      { k: 'details', label: 'التفاصيل (المهام والإنجازات)', type: 'textarea', rows: 10, help: 'اختياري. يظهر بعد النبذة بزر «عرض المزيد» إن كان طويلاً، ويُصدَّر كاملاً في ملف السيرة PDF. اكتب كل مهمة في سطر يبدأ بـ «- »، وأي سطر ينتهي بنقطتين يصير عنواناً فرعياً (مثل: التدريب وتطوير المحتوى:).' },
       { k: 'link', label: 'رابط', type: 'url' },
     ],
   },

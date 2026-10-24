@@ -683,48 +683,6 @@ html{scroll-padding-top:calc(var(--gnav-h) + 64px)}
 .card-qr figcaption{color:var(--ink-2);font-size:var(--t-fine);max-width:24ch;line-height:1.6}
 
 /* ---------- الملف التعريفي /profile: ورقة A4 تُطبع وتُحفظ PDF ---------- */
-.pf-page{background:#e9e8e3;min-height:100svh;padding:20px 12px 40px}
-.pf-bar{display:flex;justify-content:center;gap:20px;align-items:center;margin-bottom:16px}
-.pf-bar button{background:none;border:0;font:inherit;cursor:pointer}
-.pf{width:210mm;max-width:100%;margin:0 auto;background:#fff;padding:12mm 14mm;color:var(--ink);font-size:9.2pt;line-height:1.6;box-shadow:0 10px 40px rgba(0,0,0,.1)}
-.pf-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;border-bottom:1.5px solid var(--ink);padding-bottom:6mm}
-.pf-id h1{line-height:0}
-.pf-id h1 img{display:block;width:62mm;height:auto}
-.pf-role{font-size:13pt;font-weight:700;margin-top:3mm}
-.pf-tag{color:var(--action);font-weight:700;font-size:11pt}
-.pf-lead{color:var(--ink-2);margin-top:2mm;max-width:92mm}
-.pf-photo{display:block;height:40mm;width:auto;flex:none}
-.pf-nums{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:5mm 0 1mm;padding:4mm 0;border-bottom:1px solid var(--hair)}
-.pf-nums li{display:grid;gap:0}
-.pf-nums b{font-size:17pt;font-weight:800;line-height:1.1;direction:ltr;text-align:right}
-.pf-nums span{color:var(--ink-2);font-size:8.6pt}
-.pf-sec{margin-top:4.2mm;break-inside:avoid}
-.pf-sec h2{font-size:11pt;font-weight:800;color:var(--action);margin-bottom:2mm}
-.pf-sec p{text-align:justify;margin-top:1.5mm}
-.pf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 9mm}
-.pf-list{list-style:none;display:grid;gap:1.6mm}
-.pf-list li{display:flex;gap:2.4mm;align-items:flex-start}
-.pf-list li > div{display:grid;gap:0;min-width:0}
-.pf-list b{font-weight:700;line-height:1.45}
-.pf-list small{color:var(--ink-2);font-size:8.4pt;line-height:1.5}
-.pf-kits{list-style:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.8mm 6mm}
-.pf-kits li{display:grid;gap:0;border-bottom:1px dotted var(--hair);padding-bottom:1.2mm}
-.pf-kits b{font-weight:600;font-size:8.8pt;line-height:1.45}
-.pf-kits small{color:var(--ink-2);font-size:8pt}
-.pf-orgs{color:var(--ink-2)}
-.pf-foot{display:flex;justify-content:space-between;align-items:center;gap:6mm;margin-top:6mm;padding-top:4mm;border-top:1.5px solid var(--ink);break-inside:avoid}
-.pf-foot ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 8mm}
-.pf-foot li{display:grid}
-.pf-foot span{color:var(--ink-2);font-size:8.2pt}
-.pf-foot b{font-weight:600;font-size:9pt;direction:ltr;text-align:right}
-.pf-qr{width:24mm;height:24mm;flex:none}
-.pf-qr svg{display:block;width:100%;height:100%}
-@media print{
-  .pf-page{background:#fff;padding:0;min-height:0}
-  .pf{box-shadow:none;width:auto;padding:12mm 14mm}
-  .bare .gnav{display:none}
-}
-
 /* ---------- شاشة الافتتاح ---------- */
 #splash{display:none}
 .sp-on{overflow:hidden}
@@ -1108,3 +1066,23 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @media print{.rail{display:none}}
 
 .pill-dl{width:16px;height:16px;margin-inline-end:7px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- نبذة السيرة مع «عرض المزيد» ---------- */
+.more-body p{margin-top:8px}
+.more-body p:first-child{margin-top:8px}
+.more-det{margin-top:6px;color:var(--ink-2);font-size:var(--t-small);line-height:1.8;max-width:62ch}
+.more-det h4{font-size:var(--t-small);font-weight:700;color:var(--ink);margin:14px 0 4px}
+.more-det h4:first-child{margin-top:4px}
+.more-det ul{list-style:none;padding:0;margin:2px 0 0}
+.more-det li{position:relative;padding-inline-start:16px;margin:3px 0}
+.more-det li::before{content:"";position:absolute;inset-inline-start:0;top:.78em;width:6px;height:6px;border-radius:50%;background:var(--action)}
+.more-det p{margin-top:4px}
+.more-box.fold .more-body{max-height:5.9em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
+.tl .more-body{font-size:var(--t-small);line-height:1.8}
+.more-btn{margin-top:8px;padding:0;border:0;background:none;color:var(--action);font:inherit;font-size:var(--t-small);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.more-btn::after{content:"﹀";font-size:.8em}
+.more-box.open .more-btn::after{content:"︿"}
+.more-btn:hover{text-decoration:underline}
+.dark .more-det h4{color:var(--on-dark)}
+.tl .more-det li,.tl .more-det li:last-child{display:block;grid-template-columns:none;gap:0;padding:0 16px 0 0;padding-inline:16px 0;border:0;margin:3px 0}
+.tl .more-det p{max-width:none}

@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
-import { href, BIO_SECTION, site } from '../lib/site.js';
+import { href, BIO_SECTION, site, detailsHtml } from '../lib/site.js';
 import { fillTokens } from '../lib/faq.js';
 
 const p = pages.bio;
@@ -59,7 +59,15 @@ const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map
                       ? <a href={it.link} rel="noopener"><b>{it.title}</b></a>
                       : <b>{it.title}</b>}
                     {it.subtitle && <span class="org">{it.subtitle}</span>}
-                    {it.desc && <p>{it.desc}</p>}
+                    {(it.desc || it.details) && (
+                      <div class="more-box" data-more>
+                        <div class="more-body">
+                          {it.desc && <p>{it.desc}</p>}
+                          {it.details && <div class="more-det" set:html={detailsHtml(it.details)}></div>}
+                        </div>
+                        <button type="button" class="more-btn" aria-expanded="false" hidden>عرض المزيد</button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>
@@ -69,4 +77,5 @@ const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map
       </div>
     </section>
   ))}
+  <script>import '../scripts/more.js';</script>
 </Base>

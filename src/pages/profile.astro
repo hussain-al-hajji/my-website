@@ -4,7 +4,8 @@ import QRCode from 'qrcode';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
 import partners from '../data/partners.json';
-import { site, href, abs, getKits, BIO_SECTION } from '../lib/site.js';
+import { site, href, abs, getKits, BIO_SECTION, detailsHtml } from '../lib/site.js';
+import '../styles/profile.css';
 import { fillTokens } from '../lib/faq.js';
 
 const p = pages.bio;
@@ -27,8 +28,10 @@ const all = Object.keys(BIO_SECTION).filter((k) => !CHIP.includes(k));
 const saved = (p.order || []).filter((k) => all.includes(k));
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
 const ordered = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => want.has(k) && by(k).length);
-const [first, ...rest] = ordered;
-const secs = rest.map((k) => [k, BIO_SECTION[k]]);
+const secs = ordered.map((k) => [k, BIO_SECTION[k]]);
+const first = ordered[0];
+const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
+const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
 <Base title="الملف التعريفي" description={p.lead} noindex cta={null} bare>
   <main class="pf-page" id="main">
@@ -36,68 +39,64 @@ const secs = rest.map((k) => [k, BIO_SECTION[k]]);
     <article class="pf">
       <header class="pf-head">
         <div class="pf-id">
-          <h1><img src={href('/brand/logo-full-black.svg')} alt={site.name + '، ' + site.tagline} width="2600" height="961"></h1>
+          <h1>{site.name}</h1>
           <p class="pf-role">{site.role}</p>
           <p class="pf-lead">{p.lead}</p>
+          <p class="pf-contact">
+            <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>
+          </p>
         </div>
         <img class="pf-photo" src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694">
       </header>
 
-      <ul class="pf-nums">
-        {nums.map(([n, t]) => <li><b>{fmt(n)}{plus(n)}</b><span>{t}</span></li>)}
-      </ul>
-
       <section class="pf-sec">
-        <h2>نبذة</h2>
-        {p.intro.slice(0, 2).map((t) => <p>{fillTokens(t)}</p>)}
+        <h2>الملخص المهني</h2>
+        {p.intro.slice(0, 2).map((t) => <p class="pf-p">{fillTokens(t)}</p>)}
+        <ul class="pf-nums">
+          {nums.map(([n, t]) => <li><b>{fmt(n)}{plus(n)}</b> {t}</li>)}
+        </ul>
       </section>
 
-      {first && (
+      {secs.map(([s, title]) => (
         <section class="pf-sec">
-          <h2>{BIO_SECTION[first]}</h2>
+          <h2>{title}</h2>
           <ul class="pf-list">
-            {by(first).map((x) => (
-              <li>{x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : <span class="pf-logo ph" />}<div><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ') || x.desc}</small></div></li>
+            {by(s).map((x) => (
+              <li class="pf-item">
+                {x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : null}
+                <div class="pf-body">
+                  <div class="pf-row"><h3>{x.title}</h3>{x.period && <span class="pf-date">{x.period}</span>}</div>
+                  {x.subtitle && <p class="pf-org">{x.subtitle}</p>}
+                  {x.desc && <p class="pf-desc">{x.desc}</p>}
+                  {x.details && <div class="pf-det" set:html={detailsHtml(x.details)}></div>}
+                </div>
+              </li>
             ))}
           </ul>
         </section>
-      )}
-
-      <div class="pf-cols">
-        {secs.map(([s, title]) => (
-          <section class="pf-sec">
-            <h2>{title}</h2>
-            <ul class="pf-list">
-              {by(s).map((x) => (
-                <li>{x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : <span class="pf-logo ph" />}<div><b>{x.title}</b><small>{[x.subtitle, x.period].filter(Boolean).join(' · ') || x.desc}</small></div></li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
+      ))}
 
       <section class="pf-sec">
         <h2>الحقائب التدريبية</h2>
         <ul class="pf-kits">
-          {kits.map((k) => <li><b>{k.short}</b><small>{k.duration}</small></li>)}
+          {kits.map((k) => <li><b>{k.short}</b> <span>{k.duration}</span></li>)}
         </ul>
       </section>
 
       <section class="pf-sec">
         <h2>من الجهات التي عملتُ معها</h2>
-        <p class="pf-orgs">{orgs.join('، ')}.</p>
+        <p class="pf-p">{orgs.join('، ')}.</p>
       </section>
 
       <footer class="pf-foot">
         <ul>
-          <li><span>الموقع</span><b class="ltr">{abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '')}</b></li>
+          <li><span>الموقع</span><b class="ltr">{siteShort}</b></li>
           <li><span>البريد</span><b class="ltr">{c.email}</b></li>
           <li><span>الجوال</span><b class="ltr">{c.phone}</b></li>
-          <li><span>لينكدإن</span><b class="ltr">{c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</b></li>
+          <li><span>لينكدإن</span><b class="ltr">{inShort}</b></li>
         </ul>
         <div class="pf-qr" aria-hidden="true" set:html={qr}></div>
       </footer>
     </article>
   </main>
-  <style is:global>@page{size:A4;margin:0}</style>
 </Base>

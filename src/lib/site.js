@@ -159,6 +159,19 @@ export const isRemote = (r) => r.kind?.includes(REMOTE) && !r.kind.includes('ح�
 const records = [...archivedRecords(), ...rawRecords].map((r) => ({ ...r, kind: unifyRemote(r.kind), location: unifyRemote(r.location) })).sort((a, b) => b.year - a.year);
 
 export { site, records, media, courses };
+/** نص «التفاصيل» في السيرة إلى HTML: سطر يبدأ بـ«- » نقطة، وسطر ينتهي بنقطتين عنوان فرعي، وغيرهما فقرة. */
+export function detailsHtml(src = '') {
+  const e = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let out = '', list = false;
+  const close = () => { if (list) { out += '</ul>'; list = false; } };
+  String(src).split(/\r?\n/).map((l) => l.trim()).filter(Boolean).forEach((l) => {
+    if (/^[-•*]\s+/.test(l)) { if (!list) { out += '<ul>'; list = true; } out += `<li>${e(l.replace(/^[-•*]\s+/, ''))}</li>`; return; }
+    close();
+    out += /[:：]$/.test(l) ? `<h4>${e(l.replace(/[:：]$/, ''))}</h4>` : `<p>${e(l)}</p>`;
+  });
+  close();
+  return out;
+}
 export const contactLinks = () => {
   const c = site.contact;
   return {

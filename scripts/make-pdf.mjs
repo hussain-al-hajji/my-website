@@ -20,7 +20,10 @@ async function slim(file) {
 const dist = path.resolve('dist');
 const base = (process.env.SITE_BASE || '/').replace(/\/$/, '');
 const JOBS = [
-  { page: '/profile', file: 'hussain-al-hajji-profile.pdf', pdf: { format: 'A4', preferCSSPageSize: true } },
+  { page: '/profile', file: 'hussain-al-hajji-profile.pdf', pdf: {
+    format: 'A4', preferCSSPageSize: false, margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' }, displayHeaderFooter: true, headerTemplate: '<span></span>',
+    footerTemplate: '<div style="width:100%;font-size:8px;color:#8d8c85;text-align:center;font-family:Arial,sans-serif"><span class="pageNumber"></span> / <span class="totalPages"></span></div>',
+  } },
   { page: '/portfolio', file: 'hussain-al-hajji-portfolio.pdf', pdf: { width: '297mm', height: '210mm', preferCSSPageSize: true } },
 ];
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2', '.json': 'application/json' };
