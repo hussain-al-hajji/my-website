@@ -73,20 +73,22 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   addEventListener('resize', () => { layout(); });
 
   // التقدّم مع التمرير
-  let target = reduce ? 0.86 : 0, cur = target, force = null, hover = -1, active = false, stage = -1;
+  // على اللمس (وعند تقليل الحركة) لا يُثبَّت القسم ولا يرتبط بالتمرير، فيتحرك الجوال بحرية؛ والمؤشر والأزرار هي التي تشكّل النقاط
+  const free = reduce || coarse; if (free) sec.classList.add('free');
+  let target = reduce ? 0.86 : 0, cur = target, force = free && !reduce ? 0 : null, hover = -1, active = false, stage = -1;
   const range = () => Math.max(1, sec.offsetHeight - innerHeight);
   const measure = () => { if (force != null) return force; if (reduce) return 0.86; const r = sec.getBoundingClientRect(); return clamp(-r.top / range()); };
   const HOLD = [0.24, 0.5, 0.9];
   $$('[data-cs]').forEach((b) => b.addEventListener('click', () => {
     const k = +b.dataset.cs;
-    if (reduce) { force = HOLD[k]; cur = target = force; } else sec.scrollIntoView(), scrollTo({ top: sec.offsetTop + range() * HOLD[k] - 0, behavior: 'smooth' });
+    if (free) { force = HOLD[k]; if (reduce) cur = target = force; } else sec.scrollIntoView(), scrollTo({ top: sec.offsetTop + range() * HOLD[k] - 0, behavior: 'smooth' });
   }));
   // مؤشر التشكيل: يحرّك التقدّم مباشرة (بتمرير الصفحة نفسها حتى تبقى الحالة واحدة)
   const scrub = $('#csScrub'); let scrubbing = false;
   if (scrub) {
     const seek = () => {
       const p = clamp(+scrub.value / 1000);
-      if (reduce) { force = p; cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
+      if (free) { force = p; if (reduce) cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
     };
     scrub.addEventListener('input', seek);
     scrub.addEventListener('pointerdown', () => { scrubbing = true; });
@@ -155,6 +157,8 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     if (!coarse || cur !== lastCur || hover !== lastHover || (!reduce && cur < 0.24 && swimK > 0.01)) { draw(t); lastCur = cur; lastHover = hover; }
     keepPin(); moveHand(); last = t; requestAnimationFrame(frame);
   }
+  // على اللمس: عند ظهور القسم تتجمع النقاط وحدها في الاسم
+  if (free && !reduce) new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); setTimeout(() => { if (force === 0) force = HOLD[0]; }, 500); } }, { threshold: 0.4 }).observe(sec);
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);
   // التلميح عند المرور على نقطة
   const near = (e) => {
