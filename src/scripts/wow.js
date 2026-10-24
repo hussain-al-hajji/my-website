@@ -24,7 +24,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const years = [...new Set(log.map((r) => r.y))].sort(), y0 = years[0], y1 = years[years.length - 1];
   const geo = $$('#map .geo path').map((p) => new Path2D(p.getAttribute('d')));
   const img = new Image(); img.src = cv.dataset.logo; try { await img.decode(); } catch {}
-  const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 650 : 1500, random = rng(7);
+  const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 900 : 1500, random = rng(7);
   const sc = [], nm = [], mp = [], yr = [], dsc = [], dnm = [], dmp = [], dyr = [];
   let handPt = 0, W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0];
   const gauss = () => (random() + random() + random() - 1.5) * 1.3;
@@ -100,7 +100,8 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     const A = dust ? dsc[i - N] : sc[i], B = dust ? dnm[i - N] : nm[i], C = mp[i], D = yr[i];
     let x = lerp(lerp(lerp(A[0], B[0], a), C[0], b), D[0], c), y = lerp(lerp(lerp(A[1], B[1], a), C[1], b), D[1], c);
     // سباحة هادئة للنقاط في التبعثر والاسم، تتلاشى مع الانتقال إلى الخريطة، وتتجمّد عند تثبيت بطاقة
-    const w = (1 - b) * swimK * (dust ? 2.6 : 4.2);
+    // تسبح النقاط وهي تتشكّل، ثم تستقر تماماً عند اكتمال الاسم ليسهل قراءته
+    const w = (1 - b) * (1 - ease(clamp((p - 0.13) / 0.1))) * swimK * (dust ? 2.6 : 4.2);
     if (w > 0.01) { x += (Math.sin(clock / 760 + i * 1.7) + Math.sin(clock / 1350 + i * 0.9) * 0.6) * w; y += (Math.cos(clock / 880 + i * 1.3) + Math.cos(clock / 1500 + i * 2.1) * 0.6) * w; }
     return [x, y];
   }
@@ -115,12 +116,14 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     }
     // غبار
     ctx.fillStyle = 'rgba(232,189,99,.62)';
-    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p); ctx.fillRect(q[0], q[1], 1.9, 1.9); }
+    // في مرحلة الاسم تصغر النقاط الكبيرة ويكبر الغبار قليلاً حتى تُقرأ الحروف
+    const wName = ease(clamp(p / 0.18)) * (1 - ease(clamp((p - 0.3) / 0.2))), kd = 1 - 0.42 * wName, ds = 1.9 + 0.5 * wName;
+    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p); ctx.fillRect(q[0], q[1], ds, ds); }
     // النقاط
     for (let i = 0; i < N; i++) {
       const q = pos(i, p), h = i === hover;
-      ctx.beginPath(); ctx.arc(q[0], q[1], h ? 11 : 7.5, 0, 6.283); ctx.fillStyle = h ? 'rgba(255,255,255,.22)' : 'rgba(226,178,87,.16)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(q[0], q[1], h ? 4.6 : 3.1, 0, 6.283); ctx.fillStyle = h ? '#fff' : '#e8bd63'; ctx.fill();
+      ctx.beginPath(); ctx.arc(q[0], q[1], h ? 11 : 7.5 * kd, 0, 6.283); ctx.fillStyle = h ? 'rgba(255,255,255,.22)' : 'rgba(226,178,87,.16)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(q[0], q[1], h ? 4.6 : 3.1 * kd, 0, 6.283); ctx.fillStyle = h ? '#fff' : '#e8bd63'; ctx.fill();
     }
     ctx.font = font; ctx.direction = 'rtl'; ctx.textAlign = 'center';
     if (wMap > 0.5 && mapT) {
@@ -149,7 +152,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
     // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
     if (!reduce) swimK += ((frozen ? 0 : 1) - swimK) * 0.08;
-    if (!coarse || cur !== lastCur || hover !== lastHover || (!reduce && cur < 0.5 && swimK > 0.01)) { draw(t); lastCur = cur; lastHover = hover; }
+    if (!coarse || cur !== lastCur || hover !== lastHover || (!reduce && cur < 0.24 && swimK > 0.01)) { draw(t); lastCur = cur; lastHover = hover; }
     keepPin(); moveHand(); last = t; requestAnimationFrame(frame);
   }
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);

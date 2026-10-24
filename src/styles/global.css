@@ -1045,7 +1045,7 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 /* مؤشر تشكيل الكوكبة */
 .const-ctl{display:grid;gap:10px;justify-items:center}
 .const-scrub{display:grid;gap:6px;width:min(560px,100%);padding-inline:6px}
-.const-scrub input{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;cursor:grab;touch-action:none;margin:0}
+.const-scrub input{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;cursor:grab;touch-action:pan-y;margin:0}
 .const-scrub input:active{cursor:grabbing}
 .const-scrub input::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(226,178,87,.7))}
 .const-scrub input::-moz-range-track{height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(226,178,87,.7))}
@@ -1072,3 +1072,8 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @media (prefers-reduced-motion:reduce){.cs-hand svg,.cs-hand i{animation:none}.cs-hand i{opacity:.5;transform:scale(.6)}}
 
 .net .mq{margin-top:14px}
+
+/* التمرير العمودي بالسحب متاح في كل القسم، وحتى فوق المؤشر (الأفقي فقط يحرّكه) */
+.const,.const *{touch-action:pan-y}
+.const-steps button{touch-action:manipulation}
+#csCanvas{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
