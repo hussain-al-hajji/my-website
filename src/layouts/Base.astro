@@ -91,7 +91,12 @@ const crumbs = breadcrumbSchema(cleanPath, title);
         <span class="inkgold mark-ink" data-ink style={`--logo:url(${href('/brand/logo-full-white.svg')})`}><img class="mark-name" src={href('/brand/logo-full-white.svg')} alt="حسين الحاجي، أمكّن الشباب" width="2600" height="961"><i class="gold" aria-hidden="true"></i></span>
       </a>
       <ul>
-        {GNAV.map((n) => <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
+        {GNAV.map((n) => n.children ? (
+          <li class="has-sub">
+            <button type="button" class="sub-btn" aria-haspopup="true" aria-expanded="false" data-sub>{n.label}<svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1.5 1.5 4.5 4.5 4.5-4.5"/></svg></button>
+            <ul class="sub">{n.children.map((c) => <li><a href={href(c.href)} download={c.download ? '' : undefined}>{c.label}</a></li>)}</ul>
+          </li>
+        ) : <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
       <div class="tools">
         <button class="icon-btn lang-btn" type="button" data-lang-toggle aria-label="English" title="English / عربي" aria-pressed="false">
@@ -124,9 +129,12 @@ const crumbs = breadcrumbSchema(cleanPath, title);
     <button class="icon-btn x" type="button" data-menu-close aria-label="إغلاق">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
-    {GNAV.map((n) => <a href={href(n.href)}>{n.label}</a>)}
+    {GNAV.filter((n) => !n.children).map((n) => <a href={href(n.href)}>{n.label}</a>)}
     <a href={href('/gallery')}>المعرض</a>
     <a href={href('/partnerships')}>الشركاء</a>
+    {GNAV.filter((n) => n.children).map((n) => (
+      <div class="mnav-group"><span>{n.label}</span>{n.children.map((c) => <a href={href(c.href)} download={c.download ? '' : undefined}>{c.label}</a>)}</div>
+    ))}
   </div>
 
   <main id="main"><slot /></main>

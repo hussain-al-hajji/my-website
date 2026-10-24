@@ -1095,3 +1095,21 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @media (max-width:560px){.visit-pill{inset-inline:76px 16px;width:auto;margin:0;font-size:.88rem}}
 @media (prefers-reduced-motion:reduce){.visit-pill{transition:none}}
 .legal #visitCount{font-variant-numeric:tabular-nums}
+
+/* قائمة «مركز المستندات» */
+.gnav .has-sub{position:relative}
+.gnav .sub-btn{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;opacity:.85;transition:opacity .2s}
+.gnav .sub-btn:hover,.gnav .has-sub.open .sub-btn{opacity:1}
+.gnav .sub-btn svg{width:9px;height:6px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.gnav .has-sub.open .sub-btn svg{transform:rotate(180deg)}
+.gnav .sub{position:absolute;top:calc(100% + 14px);inset-inline-start:0;min-width:210px;display:none;flex-direction:column;gap:0;padding:8px;border-radius:14px;background:rgba(22,22,21,.98);border:1px solid #2f2f2c;box-shadow:0 18px 40px rgba(0,0,0,.35);z-index:40}
+.gnav .has-sub.open .sub{display:flex}
+@media (hover:hover){.gnav .has-sub:hover .sub{display:flex}.gnav .has-sub:hover .sub-btn{opacity:1}}
+.gnav .has-sub::after{content:"";position:absolute;inset-inline:-8px;top:100%;height:16px}
+.gnav .sub li{display:block}
+.gnav .sub a{display:flex;align-items:center;gap:8px;opacity:1;padding:9px 12px;border-radius:9px;white-space:nowrap;font-size:var(--t-small)}
+.gnav .sub a::before{content:"";width:14px;height:14px;flex:none;background:var(--action-on-dark);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14'/%3E%3C/svg%3E") center/contain no-repeat}
+.gnav .sub a:hover{background:#2a2a27}
+.mnav-group{display:grid;border-bottom:1px solid var(--hair-dark);padding:10px 0 6px}
+.mnav-group span{font-size:1.75rem;font-weight:600;padding:0 0 6px}
+.mnav-group a{font-size:1.25rem;font-weight:500;border:0;padding:8px 18px;color:var(--action-on-dark)}

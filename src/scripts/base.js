@@ -10,6 +10,18 @@ import './season.js';
 import './hit.js';
 import './rail.js';
 
+// قائمة «مركز المستندات» في الشريط العلوي: تُفتح بالمرور أو الضغط، وتُغلق بالضغط خارجها أو Esc
+(() => {
+  const li = document.querySelector('.gnav .has-sub'), btn = li?.querySelector('[data-sub]');
+  if (!li) return;
+  const set = (o) => { li.classList.toggle('open', o); btn.setAttribute('aria-expanded', String(o)); };
+  btn.addEventListener('click', (e) => { e.stopPropagation(); set(!li.classList.contains('open')); });
+  document.addEventListener('click', (e) => { if (!li.contains(e.target)) set(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { set(false); } });
+  li.addEventListener('focusout', (e) => { if (!li.contains(e.relatedTarget)) set(false); });
+  li.querySelectorAll('.sub a').forEach((a) => a.addEventListener('click', () => set(false)));
+})();
+
 // ظهور العناصر عند التمرير
 const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }

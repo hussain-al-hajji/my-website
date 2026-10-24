@@ -191,6 +191,11 @@ export const GNAV = [
   { label: 'محتوى مضيء', href: '/blog', key: 'blog' },
   { label: 'الأخبار', href: '/news', key: 'news' },
   { label: 'تواصل', href: '/contact', key: 'contact' },
+  // مركز المستندات: ملفان يُولَّدان مع كل نشر (السيرة الذاتية من صفحة «عني»، وملف الأعمال)
+  { label: 'مركز المستندات', key: 'docs', children: [
+    { label: 'السيرة الذاتية PDF', href: '/hussain-al-hajji-profile.pdf', download: true },
+    { label: 'ملف الأعمال PDF', href: '/hussain-al-hajji-portfolio.pdf', download: true },
+  ] },
 ];
 export const FOOT_DIR = [
   { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery'], ['بطاقتي الرقمية', '/card']] },
