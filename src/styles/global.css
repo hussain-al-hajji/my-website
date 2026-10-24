@@ -1106,3 +1106,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 }
 @media (prefers-reduced-motion:reduce){.rail,.rail-fill,.rail-dot::before,.rail-tip{transition:none}}
 @media print{.rail{display:none}}
+
+.pill-dl{width:16px;height:16px;margin-inline-end:7px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}

@@ -12,7 +12,7 @@ interface Props {
   noindex?: boolean;
   type?: 'website' | 'article';
   local?: { label: string; href: string }[];
-  cta?: { label: string; href: string } | null;
+  cta?: { label: string; href: string; download?: boolean } | null;
   jsonld?: object | null;
   canonical?: string;
   bare?: boolean;
@@ -112,7 +112,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
           {local.map((l, i) => <li><a href={l.href.startsWith('#') ? l.href : href(l.href)} class={i === 0 ? 'on' : undefined}>{l.label}</a></li>)}
         </ul>
       )}
-      {cta && <a class="pill" href={href(cta.href)}>{cta.label}</a>}
+      {cta && <a class="pill" href={href(cta.href)} download={cta.download ? '' : undefined}>{cta.download && <svg class="pill-dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>}{cta.label}</a>}
     </div>
   </nav>)}
 
