@@ -85,15 +85,29 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   }));
   // مؤشر التشكيل: يحرّك التقدّم مباشرة (بتمرير الصفحة نفسها حتى تبقى الحالة واحدة)
   const scrub = $('#csScrub'); let scrubbing = false;
+  const setProgress = (p) => {
+    p = clamp(p);
+    if (free) { force = p; if (reduce) cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
+  };
   if (scrub) {
-    const seek = () => {
-      const p = clamp(+scrub.value / 1000);
-      if (free) { force = p; if (reduce) cur = target = p; } else scrollTo({ top: sec.getBoundingClientRect().top + scrollY + range() * p, behavior: 'instant' });
-    };
-    scrub.addEventListener('input', seek);
+    scrub.addEventListener('input', () => setProgress(+scrub.value / 1000));
     scrub.addEventListener('pointerdown', () => { scrubbing = true; });
     ['pointerup', 'pointercancel', 'blur'].forEach((ev) => scrub.addEventListener(ev, () => { scrubbing = false; }));
   }
+  // السحب يمين ويسار على اللوحة يحرّك المؤشر مع الإصبع (السحب العمودي يمرّر الصفحة كالمعتاد)
+  let drag = null, dragged = false;
+  cv.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.button !== 0) return; drag = { x: e.clientX, y: e.clientY, p: cur, on: false, id: e.pointerId }; });
+  cv.addEventListener('pointermove', (e) => {
+    if (!drag || drag.id !== e.pointerId) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.on) {
+      if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      drag.on = true; dragged = true; hideHand(); unpin(); try { cv.setPointerCapture(e.pointerId); } catch {}
+    }
+    setProgress(drag.p - dx / (W * 0.85));   // السحب لليسار يتقدّم (اتجاه المؤشر من اليمين لليسار)
+  });
+  const endDrag = () => { drag = null; setTimeout(() => { dragged = false; }, 0); };
+  cv.addEventListener('pointerup', endDrag); cv.addEventListener('pointercancel', endDrag);
   const CAP = [`${N} برنامجاً، وكل نقطة منها حكاية.`, `${placedN} موقعاً داخل المملكة وخارجها.`, `من ${y0} إلى ${y1}، سنة بعد سنة.`];
 
   let clock = 0, swimK = reduce ? 0 : 1, frozen = false;
@@ -181,12 +195,13 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   // تتبّع النقطة المثبّتة إذا تحرّكت مع التمرير أو المؤشر
   keepPin = () => { if (pinned >= 0) { const q = pos(pinned, cur); place(pinned, q[0], q[1]); } };
   cv.addEventListener('pointermove', (e) => {
-    if (pinned >= 0 || e.pointerType === 'touch') return;
+    if (pinned >= 0 || e.pointerType === 'touch' || drag?.on) return;
     const { best, x, y } = near(e); hover = best;
     if (best < 0) { tip.hidden = true; delete tip.dataset.i; return; }
     place(best, x, y);
   });
   cv.addEventListener('click', (e) => {
+    if (dragged) return;
     hideHand();
     const { best } = near(e);
     if (best < 0 || best === pinned) { unpin(); return; }
