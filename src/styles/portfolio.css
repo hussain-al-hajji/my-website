@@ -169,3 +169,17 @@
 .pp-roles li:nth-child(4n+1) b{color:#f5f5f2}
 .pp-roles li:nth-child(4n+1) .ic{background:var(--gold)}
 .pp-roles li:nth-child(4n+1) .ic svg{stroke:#1b1b1a}
+
+/* منهجي في التدريب: سبورة الرئيسية بمقاس الصفحة، مرسومة كاملة دون حركة */
+.pp-method .pp-head{margin-bottom:4mm}
+.pp-method .bd-frame{flex:1;min-height:0;margin-bottom:7mm;padding:9mm 10mm 8mm;border-width:4mm;border-radius:6mm;display:flex;flex-direction:column;align-items:center;text-align:center}
+.pp-method #bd-h{font-size:30pt;line-height:1.15;opacity:1;transform:none;transition:none}
+.pp-method .chalk-line{width:70mm;margin:2mm auto 7mm}
+.pp-method .bd-frame svg path{stroke-dashoffset:0;transition:none}
+.pp-method .bd-steps{grid-template-columns:repeat(5,minmax(0,1fr));gap:9mm;width:100%;margin-block:auto}
+.pp-method .bd-n{width:17mm;height:17mm}
+.pp-method .bd-n b{font-size:16pt}
+.pp-method .bd-step h3{font-size:12.5pt;opacity:1;transform:none;transition:none}
+.pp-method .bd-step p{font-size:9.6pt;line-height:1.75;opacity:1;transition:none;text-align:center}
+.pp-method .bd-arrow{top:3mm;inset-inline-end:-9mm;width:13mm;height:5mm;transform:none}
+.pp-method .chalk-link{margin-top:0;font-size:9.5pt}

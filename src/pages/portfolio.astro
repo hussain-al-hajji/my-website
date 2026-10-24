@@ -57,7 +57,8 @@ const kitPages = chunk(kits, 6);
 // ترقيم الصفحات
 let pg = 1;
 const P = () => String(++pg).padStart(2, '0');
-const TOTAL = 1 + 1 + 1 + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
+const pillars = (pages.methodology?.pillars || []).slice(0, 5);
+const TOTAL = 1 + 1 + 1 + (pillars.length ? 1 : 0) + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
 const tot = String(TOTAL).padStart(2, '0');
 // صورة لحظة التكريم من معرض الجائزة، وإلا صورة الصفحة الرئيسية للجائزة
 const awardImg = (award.gallery || []).find((g) => /لحظة التكريم/.test(g.caption || ''))?.image || award.hero;
@@ -75,7 +76,8 @@ const ICONS = [
   [/كاتب|محتوى/, '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>'],
 ];
 const roleIcon = (r) => `<svg viewBox="0 0 24 24" aria-hidden="true">${(ICONS.find(([re]) => re.test(r)) || [0, '<circle cx="12" cy="12" r="8"/>'])[1]}</svg>`;
-const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits: '06', partners: '07', voices: '08' };
+const order = ['me', 'impact', ...(pillars.length ? ['method'] : []), 'proj', 'award', 'feat', 'kits', 'partners', 'voices'];
+const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2, '0')]));
 ---
 <Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
   <main class="pp-doc" id="main">
@@ -154,6 +156,30 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
       </div>
       <footer class="pp-foot"><span>hussain-al-hajji.com</span><span dir="ltr">{P()} / {tot}</span></footer>
     </section>
+
+    <!-- منهجي في التدريب: سبورة الرئيسية نفسها مرسومة كاملة -->
+    {pillars.length > 0 && (
+      <section class="pp pp-paper pp-method">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="chalk" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></svg>
+        <header class="pp-head"><span class="pp-num">{sec.method}</span><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+        <div class="bd-frame">
+          <h2 id="bd-h" class="chalk drawn"><span>منهجي في التدريب</span></h2>
+          <svg class="chalk-line drawn" viewBox="0 0 300 18" aria-hidden="true"><path d="M3 10C40 3 70 15 110 8S190 4 230 10S280 11 297 6" pathLength="1"/></svg>
+          <ol class="bd-steps">
+            {pillars.map((pl, i) => (
+              <li class="bd-step drawn">
+                <span class="bd-n"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 6C60 4 76 20 74 42S58 76 36 74S4 58 7 36S22 8 44 7" pathLength="1"/></svg><b>{i + 1}</b></span>
+                <h3 class="chalk">{pl.title}</h3>
+                <p>{pl.text}</p>
+                {i < pillars.length - 1 && <svg class="bd-arrow" viewBox="0 0 120 40" aria-hidden="true"><path d="M112 22C84 8 52 32 14 18" pathLength="1"/><path d="M26 6L12 18L28 30" pathLength="1"/></svg>}
+              </li>
+            ))}
+          </ol>
+          <a class="chalk-link" href={abs('/methodology')}>اقرأ منهجي كاملاً: hussain-al-hajji.com/methodology</a>
+        </div>
+        <footer class="pp-foot"><span>hussain-al-hajji.com/methodology</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    )}
 
     <!-- مشاريعي -->
     {projPages.map((list, pi) => (
