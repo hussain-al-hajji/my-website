@@ -67,7 +67,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       yr[N + i] = [col.x + gauss() * 18, base - rr() * 150 - 6];
     }
     for (let i = 0; i < DUST; i++) { dmp[i] = mp[N + i]; dyr[i] = yr[N + i]; }
-    handPt = 0; { let bd = 1e12; for (let i = 0; i < N; i++) { const d = (nm[i][0] - W / 2) ** 2 + (nm[i][1] - H / 2) ** 2; if (d < bd) { bd = d; handPt = i; } } }
+    handPt = 0; { let bd = 1e12; for (let i = 0; i < N; i++) { const d = (nm[i][0] - W / 2) ** 2 + (nm[i][1] - H / 2) ** 2 + 0.6 * ((sc[i][0] - W / 2) ** 2 + (sc[i][1] - H / 2) ** 2); if (d < bd) { bd = d; handPt = i; } } }
   }
   layout();
   addEventListener('resize', () => { layout(); });
@@ -157,8 +157,6 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     if (!coarse || cur !== lastCur || hover !== lastHover || (!reduce && cur < 0.24 && swimK > 0.01)) { draw(t); lastCur = cur; lastHover = hover; }
     keepPin(); moveHand(); last = t; requestAnimationFrame(frame);
   }
-  // على اللمس: عند ظهور القسم تتجمع النقاط وحدها في الاسم
-  if (free && !reduce) new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); setTimeout(() => { if (force === 0) force = HOLD[0]; }, 500); } }, { threshold: 0.4 }).observe(sec);
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);
   // التلميح عند المرور على نقطة
   const near = (e) => {
