@@ -1,0 +1,247 @@
+---
+// ملف الأعمال (Portfolio): صفحات A4 أفقية تُحوَّل إلى PDF عند البناء (scripts/make-pdf.mjs)، وكل رقم فيها محسوب من src/data.
+import Base from '../layouts/Base.astro';
+import QRCode from 'qrcode';
+import '../styles/portfolio.css';
+import pages from '../data/pages.json';
+import projects from '../data/projects.json';
+import featured from '../data/featured.json';
+import partners from '../data/partners.json';
+import award from '../data/award.json';
+import testimonials from '../data/testimonials.json';
+import mediaAll from '../data/media.json';
+import honors from '../data/honors.json';
+import { site, href, abs, getKits, records, stats, isRemote } from '../lib/site.js';
+import { fillTokens } from '../lib/faq.js';
+
+const st = stats();
+const y0 = st.years[0], y1 = st.lastYear;
+const kits = getKits();
+const n = (v) => Number(v).toLocaleString('en-US');
+const intro = (pages.bio.intro || []).map(fillTokens);
+const remoteN = records.filter(isRemote).length;
+const inN = records.length - remoteN;
+const logos = partners.filter((p) => p.logo);
+const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && t.quote && t.name).slice(0, 3);
+const seen = new Set();
+const outlets = mediaAll.filter((m) => m.strip).map((m) => (m.short || m.outlet.split('،')[0]).trim()).filter((o) => (seen.has(o) ? false : seen.add(o)));
+const qr = await QRCode.toString(abs('/'), { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#f5f5f2', light: '#0b0b0a' } });
+
+// الغلاف: كل برنامج في السجل نقطة على حلزون ذهبي، والأحدث أسطع
+const GA = Math.PI * (3 - Math.sqrt(5));
+const galaxy = [...records].sort((a, b) => a.year - b.year).map((r, i, arr) => {
+  const rr = 7.4 * Math.sqrt(i + 4), t = i * GA;
+  return { x: 200 + rr * Math.cos(t), y: 200 + rr * Math.sin(t), o: 0.28 + 0.72 * ((r.year - y0) / Math.max(1, y1 - y0)), s: 2.1 + (i % 7 === 0 ? 1.1 : 0) };
+});
+
+// الأثر في أرقام: أعمدة سنوات من نقاط (الأقدم يميناً)، والمواضيع
+const perYear = st.years.map((y) => ({ y, c: records.filter((r) => r.year === y).length }));
+const maxY = Math.max(...perYear.map((p) => p.c));
+const COLS = 4, DOT = 9, colW = 64;
+const yearsSvgW = perYear.length * colW;
+const yearsSvgH = Math.ceil(maxY / COLS) * DOT + 46;
+const tcount = {};
+records.forEach((r) => { tcount[r.topic] = (tcount[r.topic] || 0) + 1; });
+const topicsAll = Object.entries(tcount).filter(([t]) => t !== 'أخرى').sort((a, b) => b[1] - a[1]);
+const topics = topicsAll.slice(0, 6);
+const otherT = topicsAll.slice(6).reduce((a, b) => a + b[1], 0) + (tcount['أخرى'] || 0);
+if (otherT) topics.push(['مواضيع أخرى', otherT]);
+const remoteDeg = (remoteN / records.length) * 360;
+
+const chunk = (arr, k) => arr.reduce((a, x, i) => (i % k ? a[a.length - 1].push(x) : a.push([x]), a), []);
+const projPages = chunk(projects, 4);
+const featPages = chunk(featured, 8);
+const kitPages = chunk(kits, 6);
+
+// ترقيم الصفحات
+let pg = 1;
+const P = () => String(++pg).padStart(2, '0');
+const TOTAL = 1 + 1 + 1 + projPages.length + 1 + featPages.length + kitPages.length + 1 + (voices.length ? 1 : 0) + 1;
+const tot = String(TOTAL).padStart(2, '0');
+const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits: '06', partners: '07', voices: '08' };
+---
+<Base title="ملف الأعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}.`} noindex cta={null} bare>
+  <main class="pp-doc" id="main">
+    <p class="no-print pp-bar"><a class="pill" href={href('/hussain-al-hajji-portfolio.pdf')} download>حمّل البورتفليو (PDF)</a><a class="more" href={href('/')}>العودة إلى الموقع</a></p>
+
+    <!-- الغلاف -->
+    <section class="pp pp-dark pp-cover">
+      <svg class="pp-galaxy" viewBox="0 0 400 400" aria-hidden="true">
+        {galaxy.map((d) => <circle cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.s} fill="#e2b257" opacity={d.o.toFixed(2)} />)}
+      </svg>
+      <img class="pp-cover-photo" src={href('/img/brand/portrait-photo-840.webp')} alt="" width="560" height="694">
+      <div class="pp-cover-txt">
+        <p class="pp-kicker">ملف الأعمال · Portfolio</p>
+        <h1><img src={href('/brand/logo-full-white.svg')} alt={site.name + '، ' + site.tagline} width="2600" height="961"></h1>
+        <p class="pp-cover-role">{site.role}</p>
+        <p class="pp-cover-years"><b>{y0}</b><i></i><b>{y1}</b></p>
+      </div>
+      <p class="pp-cover-note">كل نقطة ذهبية برنامجٌ قدّمته: {n(records.length)} برنامجاً في سجل الأثر منذ {y0}، والأحدث أسطع.</p>
+    </section>
+
+    <!-- من أنا -->
+    <section class="pp pp-paper">
+      <header class="pp-head"><span class="pp-num">{sec.me}</span><h2>من أنا</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+      <div class="pp-me">
+        <div class="pp-me-txt">
+          <p class="pp-lead">{pages.bio.lead}</p>
+          {intro.slice(0, 2).map((t) => <p class="pp-just">{t}</p>)}
+        </div>
+        <figure class="pp-me-fig"><img src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694"></figure>
+      </div>
+      <ul class="pp-stats">
+        <li><b>{n(site.stats.programs)}+</b><span>برنامج وفعالية</span></li>
+        <li><b>{n(site.stats.partners)}+</b><span>جهة شريكة</span></li>
+        <li><b>{n(site.stats.beneficiaries)}+</b><span>مستفيد</span></li>
+        <li><b>{n(kits.length)}</b><span>حقيبة تدريبية</span></li>
+        <li><b>{site.stats.since}</b><span>بداية الرحلة</span></li>
+      </ul>
+      <footer class="pp-foot"><span>hussain-al-hajji.com</span><span dir="ltr">{P()} / {tot}</span></footer>
+    </section>
+
+    <!-- الأثر في أرقام -->
+    <section class="pp pp-dark">
+      <header class="pp-head"><span class="pp-num">{sec.impact}</span><h2>الأثر في أرقام</h2><img class="pp-mark" src={href('/brand/logo-full-white.svg')} alt="" width="2600" height="961"></header>
+      <div class="pp-impact">
+        <div class="pp-years">
+          <p class="pp-cap">{n(records.length)} برنامجاً موثّقاً، سنة بعد سنة (كل نقطة برنامج)</p>
+          <svg viewBox={`0 0 ${yearsSvgW} ${yearsSvgH}`} aria-hidden="true">
+            {perYear.map((p, i) => {
+              const cx = yearsSvgW - colW * (i + 0.5);
+              return (<g>
+                {Array.from({ length: p.c }, (_, k) => <circle cx={cx + ((k % COLS) - (COLS - 1) / 2) * DOT} cy={yearsSvgH - 40 - Math.floor(k / COLS) * DOT} r="3.3" fill="#e2b257" />)}
+                <text x={cx} y={yearsSvgH - 20} text-anchor="middle" class="yl">{p.y}</text>
+                <text x={cx} y={yearsSvgH - 4} text-anchor="middle" class="yc">{p.c}</text>
+              </g>);
+            })}
+          </svg>
+        </div>
+        <div class="pp-side">
+          <div class="pp-split">
+            <div class="pp-donut" style={`--d:${remoteDeg.toFixed(1)}deg`}><span><b>{n(records.length)}</b>برنامجاً</span></div>
+            <ul>
+              <li><i class="a"></i><b>{n(inN)}</b> حضورياً</li>
+              <li><i class="b"></i><b>{n(remoteN)}</b> عن بُعد</li>
+            </ul>
+          </div>
+          <p class="pp-cap">أكثر المواضيع</p>
+          <ul class="pp-topics">
+            {topics.map(([t, c]) => <li><span>{t}</span><b>{c}</b><i style={`--w:${(c / topics[0][1] * 100).toFixed(1)}%`}></i></li>)}
+          </ul>
+        </div>
+      </div>
+      <footer class="pp-foot"><span>hussain-al-hajji.com</span><span dir="ltr">{P()} / {tot}</span></footer>
+    </section>
+
+    <!-- مشاريعي -->
+    {projPages.map((list, pi) => (
+      <section class="pp pp-paper">
+        <header class="pp-head"><span class="pp-num">{sec.proj}</span><h2>مشاريع أسستها{projPages.length > 1 && <small> {pi + 1}/{projPages.length}</small>}</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+        <div class="pp-proj">
+          {list.map((p) => (
+            <article>
+              {p.image ? <img src={href(p.image)} alt="" loading="eager"> : <span class="ph"></span>}
+              <div>
+                <h3>{p.name}{p.nameEn && <small dir="ltr">{p.nameEn}</small>}</h3>
+                {p.status && <p class="tag">{p.status}</p>}
+                <p class="pp-just clamp">{p.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <footer class="pp-foot"><span>hussain-al-hajji.com/my-projects</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    ))}
+
+    <!-- رواد الشباب العربي -->
+    <section class="pp pp-dark pp-award">
+      <img class="pp-award-img" src={href(award.hero)} alt="">
+      <div class="pp-award-txt">
+        <header class="pp-head"><span class="pp-num">{sec.award}</span><h2>{award.title}</h2></header>
+        <p class="pp-kicker">{award.edition} · {award.dates}</p>
+        <p class="pp-lead">{award.lead}</p>
+        {award.story?.[0] && <p class="pp-just pp-story">{award.story[0]}</p>}
+        <ul class="pp-facts">{(award.facts || []).slice(0, 4).map((f) => <li><b>{f.value}</b><span>{f.label}</span></li>)}</ul>
+        <p class="pp-fine">{award.sponsor}</p>
+      </div>
+      <footer class="pp-foot"><span>hussain-al-hajji.com/arab-youth-pioneers</span><span dir="ltr">{P()} / {tot}</span></footer>
+    </section>
+
+    <!-- مشاركات مميزة -->
+    {featPages.map((list, pi) => (
+      <section class="pp pp-paper">
+        <header class="pp-head"><span class="pp-num">{sec.feat}</span><h2>مشاريع ومشاركات مميزة{featPages.length > 1 && <small> {pi + 1}/{featPages.length}</small>}</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+        <div class="pp-feat">
+          {list.map((f) => (
+            <article>
+              <span class="lg">{f.logo && <img src={href(f.logo)} alt="" loading="eager">}</span>
+              <div><p class="grp">{f.group}</p><h3 class="clamp3">{f.title}</h3>{f.orgs && <p class="org">{f.orgs}</p>}</div>
+            </article>
+          ))}
+        </div>
+        <footer class="pp-foot"><span>hussain-al-hajji.com/featured</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    ))}
+
+    <!-- الحقائب -->
+    {kitPages.map((list, pi) => (
+      <section class="pp pp-paper pp-alt">
+        <header class="pp-head"><span class="pp-num">{sec.kits}</span><h2>حقائب تدريبية جاهزة للتخصيص{kitPages.length > 1 && <small> {pi + 1}/{kitPages.length}</small>}</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+        <div class="pp-kits">
+          {list.map((k) => (
+            <article>
+              <img src={href(k.image)} alt="" loading="eager">
+              <h3>{k.short || k.title}</h3>
+              <p class="dur">{k.duration}</p>
+              {k.headline && <p class="hl">{k.headline}</p>}
+            </article>
+          ))}
+        </div>
+        <footer class="pp-foot"><span>hussain-al-hajji.com/collaborate</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    ))}
+
+    <!-- الشركاء والإعلام -->
+    <section class="pp pp-paper">
+      <header class="pp-head"><span class="pp-num">{sec.partners}</span><h2>جهات صنعتُ معها الأثر</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
+      <ul class="pp-logos">{logos.slice(0, 60).map((p) => <li><img src={href(p.logo)} alt={p.name} loading="eager"></li>)}</ul>
+      {outlets.length > 0 && (
+        <div class="pp-media"><p class="pp-cap">ظهرتُ في</p><p class="names">{outlets.join('  ·  ')}</p></div>
+      )}
+      <footer class="pp-foot"><span>hussain-al-hajji.com/partnerships</span><span dir="ltr">{P()} / {tot}</span></footer>
+    </section>
+
+    <!-- قالوا -->
+    {voices.length > 0 && (
+      <section class="pp pp-dark">
+        <header class="pp-head"><span class="pp-num">{sec.voices}</span><h2>قالوا عن العمل معي</h2><img class="pp-mark" src={href('/brand/logo-full-white.svg')} alt="" width="2600" height="961"></header>
+        <div class="pp-voices">
+          {voices.map((t) => (
+            <blockquote><p class="pp-just">{t.quote}</p><footer><b>{t.name}</b>{t.role && <span>{t.role}</span>}</footer></blockquote>
+          ))}
+        </div>
+        <p class="pp-honors">و{n(honors.length)} شهادة شكر وتقدير من الجهات التي عملتُ معها.</p>
+        <footer class="pp-foot"><span>hussain-al-hajji.com/feedback</span><span dir="ltr">{P()} / {tot}</span></footer>
+      </section>
+    )}
+
+    <!-- الغلاف الخلفي -->
+    <section class="pp pp-dark pp-back">
+      <svg class="pp-galaxy" viewBox="0 0 400 400" aria-hidden="true">
+        {galaxy.map((d) => <circle cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.s} fill="#e2b257" opacity={(d.o * 0.5).toFixed(2)} />)}
+      </svg>
+      <div class="pp-back-txt">
+        <h2>لنصنع الأثر معاً.</h2>
+        <p class="pp-lead">أصمّم البرامج وأقدّمها حضورياً وعن بُعد، وأخصّص كل حقيبة لجهتكم وجمهوركم.</p>
+        <ul class="pp-contact">
+          <li><span>البريد</span><b dir="ltr">{site.contact.email}</b></li>
+          <li><span>الجوال وواتساب</span><b dir="ltr">{site.contact.phone}</b></li>
+          <li><span>لينكدإن</span><b dir="ltr">linkedin.com/in/hussain-al-hajji</b></li>
+          <li><span>الموقع</span><b dir="ltr">hussain-al-hajji.com</b></li>
+        </ul>
+      </div>
+      <div class="pp-qr"><div set:html={qr}></div><p>امسح لزيارة الموقع</p></div>
+      <img class="pp-back-logo" src={href('/brand/logo-full-white.svg')} alt="" width="2600" height="961">
+    </section>
+  </main>
+</Base>
