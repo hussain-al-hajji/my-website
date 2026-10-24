@@ -24,7 +24,8 @@ const inN = records.length - remoteN;
 const logos = partners.filter((p) => p.logo);
 const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && t.quote && t.name).slice(0, 3);
 const seen = new Set();
-const outlets = mediaAll.filter((m) => m.strip).map((m) => (m.short || m.outlet.split('،')[0]).trim()).filter((o) => (seen.has(o) ? false : seen.add(o)));
+// شعارات الاستضافات الإعلامية (حقل «شعار البورتفليو» في قسم الإعلام)، شعار واحد لكل جهة
+const outlets = mediaAll.filter((m) => m.pdfLogo).map((m) => ({ name: (m.short || m.outlet.split('،')[0]).trim(), logo: m.pdfLogo })).filter((o) => (seen.has(o.logo) ? false : seen.add(o.logo)));
 const qr = await QRCode.toString(abs('/'), { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#f5f5f2', light: '#0b0b0a' } });
 
 // الغلاف: كل برنامج في السجل نقطة على حلزون ذهبي، والأحدث أسطع
@@ -211,7 +212,7 @@ const sec = { me: '01', impact: '02', proj: '03', award: '04', feat: '05', kits:
       <header class="pp-head"><span class="pp-num">{sec.partners}</span><h2>جهات صنعتُ معها الأثر</h2><img class="pp-mark" src={href('/brand/logo-full-black.svg')} alt="" width="2600" height="961"></header>
       <ul class="pp-logos">{logos.slice(0, 60).map((p) => <li><img src={href(p.logo)} alt={p.name} loading="eager"></li>)}</ul>
       {outlets.length > 0 && (
-        <div class="pp-media"><p class="pp-cap">ظهرتُ في</p><p class="names">{outlets.join('  ·  ')}</p></div>
+        <div class="pp-media"><h3 class="pp-sub">استضافات في الصحافة والإعلام</h3><ul class="pp-mlogos">{outlets.map((o) => <li><img src={href(o.logo)} alt={o.name} loading="eager"></li>)}</ul></div>
       )}
       <footer class="pp-foot"><span>hussain-al-hajji.com/partnerships</span><span dir="ltr">{P()} / {tot}</span></footer>
     </section>

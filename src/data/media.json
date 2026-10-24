@@ -23,7 +23,8 @@
     "note": "استضافة هاتفية ظهر الخميس 15 مايو للحديث عن المعرض المقام في جامعة الملك سعود بالرياض.",
     "short": "إذاعة الإخبارية",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/ekhbariya.webp"
   },
   {
     "id": "m003",
@@ -36,7 +37,8 @@
     "note": "استضافة مباشرة ضمن فقرات برنامج 120.",
     "short": "القناة الإخبارية",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/ekhbariya.webp"
   },
   {
     "id": "m004",
@@ -127,7 +129,8 @@
     "note": "مقابلة بالبث المباشر.",
     "short": "قناة أبوظبي",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/adtv.webp"
   },
   {
     "id": "m011",
@@ -140,7 +143,8 @@
     "note": "استضافة هاتفية مع المذيع محمد الكردي، رمضان 1444 هـ.",
     "short": "إذاعة بانوراما إف إم",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/panorama.webp"
   },
   {
     "id": "m012",
@@ -153,7 +157,8 @@
     "note": "مقابلة تلفزيونية.",
     "short": "روتانا خليجية",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/rotana.webp"
   },
   {
     "id": "m013",
@@ -192,7 +197,8 @@
     "note": "",
     "short": "وكالة الأنباء السعودية (واس)",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m05.webp"
   },
   {
     "id": "m016",
@@ -231,7 +237,8 @@
     "note": "",
     "short": "صحيفة الوطن",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m08.webp"
   },
   {
     "id": "m019",
@@ -387,7 +394,8 @@
     "note": "",
     "short": "صحيفة المدينة",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m20.webp"
   },
   {
     "id": "m031",
@@ -400,7 +408,8 @@
     "note": "",
     "short": "صحيفة عكاظ",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m21.webp"
   },
   {
     "id": "m032",
@@ -413,7 +422,8 @@
     "note": "",
     "short": "صحيفة مال",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m22.webp"
   },
   {
     "id": "m033",
@@ -426,7 +436,8 @@
     "note": "",
     "short": "صحيفة اليوم",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m23.webp"
   },
   {
     "id": "m034",
@@ -439,7 +450,8 @@
     "note": "",
     "short": "صحيفة أوان الإلكترونية",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/m24.webp"
   },
   {
     "id": "m035",
@@ -465,7 +477,8 @@
     "note": "",
     "short": "وكالة أنباء الإمارات (وام)",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/wam.webp"
   },
   {
     "id": "m037",
@@ -491,7 +504,8 @@
     "note": "",
     "short": "مركز الاتحاد للأخبار",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/etihad.webp"
   },
   {
     "id": "m039",
@@ -504,7 +518,8 @@
     "note": "",
     "short": "تلفزيون دبي",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/dubaitv.webp"
   },
   {
     "id": "m040",
@@ -517,7 +532,8 @@
     "note": "",
     "short": "النهار العربي",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/nahar.webp"
   },
   {
     "id": "m041",
@@ -569,7 +585,8 @@
     "note": "",
     "short": "العين الإخبارية",
     "logo": "",
-    "strip": true
+    "strip": true,
+    "pdfLogo": "/img/media/logos/ain.webp"
   },
   {
     "id": "m045",
