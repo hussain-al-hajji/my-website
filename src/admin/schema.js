@@ -296,6 +296,7 @@ export const SECTIONS = [
       { k: 'seasons.national', label: 'عبارة اليوم الوطني', type: 'text' },
       { k: 'seasons.founding', label: 'عبارة يوم التأسيس', type: 'text' },
       { k: 'portfolioRoles', label: 'أدواري في البورتفليو (سطر لكل دور)', type: 'lines', help: 'تظهر في صفحة «من أنا» بملف البورتفليو تحت عنوان «أدوار يمكننا التعاون فيها». يُفضّل من 4 إلى 8 أدوار.' },
+      { k: 'portfolioTopicExamples', label: 'أمثلة «مواضيع أخرى» في البورتفليو (سطر لكل مثال)', type: 'lines', help: 'تظهر عناوين فقط تحت «مواضيع أخرى» في صفحة «الأثر في أرقام» بملف البورتفليو. يُفضّل من 4 إلى 6 أمثلة.' },
       { k: 'closing.title', label: 'عنوان الختام', type: 'text' },
       { k: 'closing.text', label: 'نص الختام', type: 'textarea', rows: 2 },
       { k: 'services', label: 'الخدمات', type: 'objects', fields: [

@@ -203,9 +203,6 @@
 .pp-map-home{margin-top:3mm;font-size:8.5pt;color:#a3a29b;display:flex;gap:2mm;align-items:center}
 .pp-map-home i{flex:none;width:3mm;height:3mm;border-radius:50%;background:#fff}
 
-/* نماذج مميزة تحت «مواضيع أخرى» */
+/* أمثلة «مواضيع أخرى»: عناوين فقط */
 .pp-samples{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:2.4mm 4mm;margin-top:1mm;padding-top:3mm;border-top:1px dashed rgba(226,178,87,.35)}
-.pp-samples li{display:grid;grid-template-columns:1fr;gap:.2mm;padding-inline-start:3mm;border-inline-start:1.2px solid var(--gold)}
-.pp-samples em{font-style:normal;font-size:7pt;font-weight:700;color:var(--gold);letter-spacing:.01em}
-.pp-samples span{font-size:8.2pt;line-height:1.4;color:#ece9e1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-.pp-samples small{font-size:7pt;color:#a3a29b}
+.pp-samples li{font-size:10pt;line-height:1.5;color:#ece9e1;padding-inline-start:3mm;border-inline-start:1.2px solid var(--gold)}

@@ -50,25 +50,8 @@ const topicsAll = Object.entries(tcount).filter(([t]) => t !== 'أخرى').sort(
 const topics = topicsAll.slice(0, 6);
 const otherT = topicsAll.slice(6).reduce((a, b) => a + b[1], 0) + (tcount['أخرى'] || 0);
 if (otherT) topics.push(['مواضيع أخرى', otherT]);
-// نماذج مميزة من «مواضيع أخرى»: أحدث برنامج عن كل محور (عنوانه عربي)، ولا يتكرر برنامج
-const TOP_TOPICS = new Set(topicsAll.slice(0, 6).map(([t]) => t));
-const THEMES = [
-  ['الإلقاء والتواصل', /الإلقاء|الحديث أمام|المهارات الناعمة|المهارات الشخصية/],
-  ['القيادات والمبادرات الشبابية', /القيادات|المبادرات الشبابية|مجلس|لامع|صناع الأثر/],
-  ['التطوع والعمل المجتمعي', /التطوع|المتطوع/],
-  ['الابتكار والأمن السيبراني', /السيبراني|الابتكار العلمي/],
-  ['التسويق والمبيعات', /أخصائي التسويق|التسويق الرقمي|البيع|التاجر الصغير/],
-  ['الحرف والثقافة والسياحة', /الحرف|رواد السياحة|الرواية|الثقافة/],
-];
-const otherRecs = [...records].filter((r) => !TOP_TOPICS.has(r.topic) && !/[A-Za-z]{4,}/.test(r.title)).sort((a, b) => b.year - a.year);
-const usedO = new Set();
-const orgShort = (s = '') => s.split(/\s[+&]\s|\sبالتعاون|،/)[0].trim();
-const otherSamples = THEMES.map(([theme, re]) => {
-  const r = otherRecs.find((x) => re.test(x.title) && !usedO.has(x.title));
-  if (!r) return null;
-  usedO.add(r.title);
-  return { theme, title: r.title.replace(/^ورشة\s*\(?|\)\s*$/g, '').trim(), org: orgShort(r.org), year: r.year };
-}).filter(Boolean);
+// أمثلة «مواضيع أخرى»: عناوين تُحرَّر من لوحة التحكم (portfolioTopicExamples)
+const otherSamples = site.portfolioTopicExamples || [];
 const remoteDeg = (remoteN / records.length) * 360;
 
 const chunk = (arr, k) => arr.reduce((a, x, i) => (i % k ? a[a.length - 1].push(x) : a.push([x]), a), []);
@@ -206,7 +189,7 @@ const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2,
           </ul>
           {otherSamples.length > 0 && (
             <ul class="pp-samples" aria-label="نماذج من مواضيع أخرى">
-              {otherSamples.map((s) => <li><em>{s.theme}</em><span>{s.title}</span><small>{s.org} · {s.year}</small></li>)}
+              {otherSamples.map((s) => <li>{s}</li>)}
             </ul>
           )}
         </div>
