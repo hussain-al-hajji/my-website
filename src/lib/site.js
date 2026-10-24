@@ -150,7 +150,13 @@ export function stats() {
 }
 
 // برامج الروزنامة المنتهية تنضم تلقائياً إلى سجل الأثر (الأحدث سنةً أولاً)
-const records = [...archivedRecords(), ...rawRecords].sort((a, b) => b.year - a.year);
+// صيغة واحدة لكل ما يعني التنفيذ عن بُعد (افتراضي، أونلاين، إلكتروني، عن بعد)، حتى لو كُتبت بغيرها في لوحة التحكم
+export const REMOTE = 'عن بُعد';
+const AR_LETTER = '\u0621-\u064A';
+const REMOTE_RE = new RegExp(`(?<![${AR_LETTER}])(و?)(?:افتراضي(?:ة|اً|ا)?|اونلاين|أونلاين|أون لاين|اون لاين|عن بعد|إلكتروني)ـ?(?![${AR_LETTER}])`, 'gi');
+export const unifyRemote = (s) => String(s ?? '').replace(REMOTE_RE, `$1${REMOTE}`);
+export const isRemote = (r) => r.kind?.includes(REMOTE) && !r.kind.includes('حضوري');
+const records = [...archivedRecords(), ...rawRecords].map((r) => ({ ...r, kind: unifyRemote(r.kind), location: unifyRemote(r.location) })).sort((a, b) => b.year - a.year);
 
 export { site, records, media, courses };
 export const contactLinks = () => {

@@ -17,16 +17,17 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const log = data.log, N = log.length, ctx = cv.getContext('2d'), tip = $('#csTip'), cap = $('#csCap');
   const P = (lat, lon) => [((lon - 35) / 25) * 1000, ((31 - lat) / 15.2) * 600];
   const CITIES = data.cities;
-  // مدينة كل سجل
-  const cityOf = log.map((r) => { const t = `${r.l} ${r.o} ${r.n}`; return CITIES.findIndex((c) => c[1].some((k) => t.includes(k))); });
+  // مكان كل سجل: مدينة، أو «عن بُعد» (حسب نوع البرنامج وليس نص المكان)، أو -2 لحضوري لم تُعرف مدينته
+  const remoteOf = log.map((r) => /عن بُعد/.test(r.k || '') && !/حضوري/.test(r.k || ''));
+  const cityOf = log.map((r, i) => { if (remoteOf[i]) return -1; const t = `${r.l} ${r.o} ${r.n}`; const ci = CITIES.findIndex((c) => c[1].some((k) => t.includes(k))); return ci >= 0 ? ci : -2; });
   const counts = {}; cityOf.forEach((ci) => { if (ci >= 0) counts[ci] = (counts[ci] || 0) + 1; });
-  const placedN = Object.keys(counts).length;
+  const placedN = Object.keys(counts).length, otherN = cityOf.filter((c) => c === -2).length;
   const years = [...new Set(log.map((r) => r.y))].sort(), y0 = years[0], y1 = years[years.length - 1];
   const geo = $$('#map .geo path').map((p) => new Path2D(p.getAttribute('d')));
   const img = new Image(); img.src = cv.dataset.logo; try { await img.decode(); } catch {}
   const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 900 : 1500, random = rng(7);
   const sc = [], nm = [], mp = [], yr = [], dsc = [], dnm = [], dmp = [], dyr = [];
-  let handPt = 0, W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0];
+  let handPt = 0, W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0], othPt = [0, 0];
   const gauss = () => (random() + random() + random() - 1.5) * 1.3;
 
   function layout() {
@@ -44,7 +45,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     mapT = { s, mx, my };
     const home = P(25.38, 49.59);
     const cp = CITIES.map((c) => { const q = P(c[2], c[3]); return [mx + q[0] * s, my + q[1] * s]; });
-    const virt = [mx + 150 * s, my + 500 * s]; virtN = cityOf.filter((c) => c < 0).length; virtPt = virt;
+    const virt = [mx + 150 * s, my + 500 * s], oth = [mx + 850 * s, my + 520 * s]; virtN = cityOf.filter((c) => c === -1).length; virtPt = virt; othPt = oth;
     // السنوات
     const m = Math.max(34, W * 0.06), cw = (W - m * 2) / Math.max(1, years.length - 1);
     yearCols = years.map((y, i) => ({ y, x: W - m - i * cw, n: log.filter((r) => r.y === y).length }));   // الأقدم عند اليمين
@@ -52,7 +53,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     for (let i = 0; i < N; i++) {
       const rec = log[i], c = CITIES[cityOf[i]];
       sc[i] = [rr() * W, rr() * H]; nm[i] = pick();
-      const base2 = cityOf[i] >= 0 ? cp[cityOf[i]] : virt, rad = 4 + Math.sqrt(cityOf[i] >= 0 ? counts[cityOf[i]] : virtN) * 3.6;
+      const base2 = cityOf[i] >= 0 ? cp[cityOf[i]] : cityOf[i] === -1 ? virt : oth, rad = 4 + Math.sqrt(cityOf[i] >= 0 ? counts[cityOf[i]] : cityOf[i] === -1 ? virtN : otherN) * 3.6;
       const a = rr() * Math.PI * 2, d = Math.sqrt(rr()) * rad * s * (W < 600 ? 1.1 : 1.3);
       mp[i] = [base2[0] + Math.cos(a) * d, base2[1] + Math.sin(a) * d];
       const k = seen[rec.y] = (seen[rec.y] || 0) + 1, col = yearCols.find((c2) => c2.y === rec.y), cols = col.n > 30 ? 5 : 3;
@@ -146,6 +147,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`;
       CITIES.forEach((c, ci) => { if ((counts[ci] || 0) >= 6) { const q = P(c[2], c[3]); ctx.fillText(c[0], mapT.mx + q[0] * mapT.s, mapT.my + q[1] * mapT.s - (8 + Math.sqrt(counts[ci]) * 5) * mapT.s * 1.2); } });
     }
+    if (wMap > 0.5 && otherN) { ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`; ctx.fillText(`مواقع أخرى · ${otherN}`, othPt[0], othPt[1] - (10 + Math.sqrt(otherN) * 4) * mapT.s * 1.1 - 8); }
     if (wMap > 0.5 && virtN) { ctx.fillStyle = `rgba(245,245,242,${(wMap - 0.5) * 2 * 0.9})`; ctx.fillText(`عن بُعد · ${virtN} برنامجاً`, virtPt[0], virtPt[1] - (10 + Math.sqrt(virtN) * 4) * mapT.s * 1.1 - 8); }
     if (wYear > 0.5) {
       ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif';

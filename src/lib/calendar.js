@@ -62,7 +62,7 @@ export function eventSchemas(site, abs) {
   const today = todayISO();
   return calendarItems().filter((x) => !isEnded(x, today)).map((x) => {
     const loc = x.location || '';
-    const online = /افتراض|إلكتروني|اونلاين|أونلاين/.test(loc + ' ' + (x.kind || ''));
+    const online = /عن بُعد|عن بعد|افتراض|إلكتروني|اونلاين|أونلاين/.test(loc + ' ' + (x.kind || ''));
     const onsite = /حضوري/.test(loc + ' ' + (x.kind || ''));
     const city = (loc.split(/\s*[-–]\s*/)[1] || '').trim();
     const place = { '@type': 'Place', name: city || loc.replace(/^حضوري\s*[-–]?\s*/, '') || 'المملكة العربية السعودية', address: { '@type': 'PostalAddress', ...(city ? { addressLocality: city } : {}), addressCountry: 'SA' } };

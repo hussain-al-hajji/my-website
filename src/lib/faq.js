@@ -1,5 +1,5 @@
 import faq from '../data/faq.json';
-import { site, records, getKits } from './site.js';
+import { site, records, getKits, isRemote } from './site.js';
 
 const n = (v) => Number(v).toLocaleString('en-US');
 const tokens = () => ({
@@ -9,7 +9,7 @@ const tokens = () => ({
   beneficiaries: n(site.stats.beneficiaries),
   kits: n(getKits().length),
   inperson: n(records.filter((r) => /حضوري/.test(r.kind)).length),
-  virtual: n(records.filter((r) => /افتراض/.test(r.kind)).length),
+  virtual: n(records.filter(isRemote).length),
 });
 /** يستبدل الرموز {programs} ونحوها بأرقام تُحسب من بيانات الموقع. */
 export function fillTokens(text) {
