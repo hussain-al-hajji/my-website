@@ -191,10 +191,11 @@ export const GNAV = [
   { label: 'محتوى مضيء', href: '/blog', key: 'blog' },
   { label: 'الأخبار', href: '/news', key: 'news' },
   { label: 'تواصل', href: '/contact', key: 'contact' },
-  // مركز المستندات: ملفان يُولَّدان مع كل نشر (السيرة الذاتية من صفحة «عني»، وملف الأعمال)
+  // مركز المستندات: ملفان يُولَّدان مع كل نشر (السيرة الذاتية من صفحة «عني»، وملف الأعمال) وبطاقة اتصال تُحفظ في جهات الاتصال
   { label: 'مركز المستندات', key: 'docs', children: [
     { label: 'السيرة الذاتية PDF', href: '/hussain-al-hajji-profile.pdf', download: true },
     { label: 'ملف الأعمال PDF', href: '/hussain-al-hajji-portfolio.pdf', download: true },
+    { label: 'بطاقة التواصل', href: '/hussain-al-hajji.vcf', download: true, icon: 'contact' },
   ] },
 ];
 export const FOOT_DIR = [

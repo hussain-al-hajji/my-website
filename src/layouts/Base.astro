@@ -94,7 +94,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
         {GNAV.map((n) => n.children ? (
           <li class="has-sub">
             <button type="button" class="sub-btn" aria-haspopup="true" aria-expanded="false" data-sub>{n.label}<svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1.5 1.5 4.5 4.5 4.5-4.5"/></svg></button>
-            <ul class="sub">{n.children.map((c) => <li><a href={href(c.href)} download={c.download ? '' : undefined}>{c.label}</a></li>)}</ul>
+            <ul class="sub">{n.children.map((c) => <li><a href={href(c.href)} class={c.icon ? 'ic-' + c.icon : undefined} download={c.download ? '' : undefined}>{c.label}</a></li>)}</ul>
           </li>
         ) : <li><a href={href(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
