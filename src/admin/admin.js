@@ -1,5 +1,6 @@
 import { SECTIONS, FILES } from './schema.js';
 import PUB from './public-config.json';
+import { statsPanel } from './stats-view.js';
 
 const ENV = import.meta.env;
 // إعدادات Firebase للويب وعنوان الـ Worker عامة بطبيعتها (ليست أسراراً). المتغيّرات البيئية تتقدّم عليها إن وُجدت.
@@ -245,6 +246,23 @@ function resetDemo() {
   S.uploads = {}; load(seed); S.editing = null; render();
 }
 
+// ---------- مؤشرات الموقع ----------
+const STATS = '__stats';
+async function loadStats(force) {
+  const st = S.stats || (S.stats = { status: 'idle', tab: 'overview' });
+  if (S.mode !== 'live') { st.status = 'demo'; return render(); }
+  if (st.status === 'ok' && !force) return render();
+  st.status = 'loading'; render();
+  try {
+    const r = await fetch(API + '/api/stats', { headers: { Authorization: 'Bearer ' + (await S.token()) } });
+    if (!r.ok) throw new Error('رمز ' + r.status);
+    st.data = await r.json();
+    st.audit = await fetch(B + '/seo-audit.json', { cache: 'no-store' }).then((x) => (x.ok ? x.json() : null)).catch(() => null);
+    st.status = 'ok';
+  } catch (e) { st.status = 'err'; st.err = e.message; }
+  render();
+}
+
 // ---------- العرض ----------
 function render() {
   const sec = secOf(S.section);
@@ -254,6 +272,8 @@ function render() {
     h('div', { class: 'shell' },
       h('aside', { class: 'side', 'aria-label': 'الأقسام' },
         h('div', { class: 'brand' }, h('img', { src: B + '/brand/icon-192.png', alt: '', width: 28, height: 28 }), h('b', {}, 'لوحة التحكم')),
+        h('nav', {}, h('h2', {}, 'التحليلات'),
+          h('button', { class: 'nav' + (S.section === STATS ? ' on' : ''), onClick: () => { S.section = STATS; S.editing = null; render(); loadStats(); } }, 'مؤشرات الموقع')),
         ...groups.map((g) => h('nav', {}, h('h2', {}, g), ...SECTIONS.filter((s) => s.group === g).map((s) =>
           h('button', { class: 'nav' + (s.id === S.section ? ' on' : ''), onClick: () => { S.section = s.id; S.editing = null; S.filter = ''; render(); } },
             s.label, dirty.includes(s.file) ? h('i', { class: 'dot', title: 'تغييرات غير منشورة' }) : '')))),
@@ -266,7 +286,7 @@ function render() {
             S.mode === 'demo' && h('button', { class: 'btn ghost', onClick: resetDemo }, 'مسح المعاينة'),
             dirty.length > 0 && h('button', { class: 'btn ghost', onClick: exportJson }, 'تنزيل JSON'),
             h('button', { class: 'btn primary', disabled: S.busy || !dirty.length, onClick: publish }, S.busy ? 'جارٍ النشر…' : 'نشر التغييرات'))),
-        h('section', { class: 'panel' }, S.editing ? editor(sec) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
+        h('section', { class: S.section === STATS ? 'panel wide' : 'panel' }, S.section === STATS ? statsPanel({ h, S, reload: (soft) => (soft === true ? render() : loadStats(true)) }) : S.editing ? editor(sec) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
     ));
 }
 
@@ -347,6 +367,7 @@ async function signOutUser() {
 
 async function enterLive(user) {
   S.mode = 'live'; S.user = user;
+  try { localStorage.setItem('nocount', '1'); } catch {}   // لا تُحتسب زياراتي بعد دخول اللوحة
   S.token = () => user.getIdToken();
   load(seed);
   root.replaceChildren(h('p', { class: 'boot' }, 'جارٍ تحميل المحتوى…'));

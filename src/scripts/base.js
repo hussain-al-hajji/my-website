@@ -7,6 +7,7 @@ import './lang.js';
 import { getAud, getGoal, AUDS } from './aud.js';
 import './ink.js';
 import './season.js';
+import './hit.js';
 import './rail.js';
 
 // ظهور العناصر عند التمرير

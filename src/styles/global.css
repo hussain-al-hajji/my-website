@@ -1086,3 +1086,12 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .dark .more-det h4{color:var(--on-dark)}
 .tl .more-det li,.tl .more-det li:last-child{display:block;grid-template-columns:none;gap:0;padding:0 16px 0 0;padding-inline:16px 0;border:0;margin:3px 0}
 .tl .more-det p{max-width:none}
+
+/* إشعار رقم الزيارة */
+.visit-pill{position:fixed;inset-inline:0;bottom:24px;margin-inline:auto;width:fit-content;max-width:calc(100vw - 32px);z-index:59;padding:10px 20px;border-radius:999px;background:var(--ink);color:#fff;font-size:.95rem;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.18);opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s;pointer-events:none}
+.visit-pill b{color:var(--action-on-dark);font-variant-numeric:tabular-nums}
+.visit-pill.on{opacity:1;transform:none}
+.season-pill.on ~ .visit-pill,.season-pill ~ .visit-pill{bottom:78px}
+@media (max-width:560px){.visit-pill{inset-inline:76px 16px;width:auto;margin:0;font-size:.88rem}}
+@media (prefers-reduced-motion:reduce){.visit-pill{transition:none}}
+.legal #visitCount{font-variant-numeric:tabular-nums}

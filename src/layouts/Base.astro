@@ -65,6 +65,10 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   <meta property="og:image" content={abs(image)}>
   <meta name="twitter:card" content="summary_large_image">
   <script is:inline>document.documentElement.classList.add('js')</script>
+  {!bare && /^G-[A-Z0-9]+$/.test(site.analytics?.ga4 || '') && (<>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.analytics.ga4}`}></script>
+    <script is:inline define:vars={{ id: site.analytics.ga4 }}>if(!/^(localhost|127\.)/.test(location.hostname)&&!/^\/admin/.test(location.pathname)&&localStorage.getItem('nocount')!=='1'){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',id,{anonymize_ip:true})}</script>
+  </>)}
   {cleanPath === '/' && <script is:inline set:html={splashInit}></script>}
   <script type="application/ld+json" set:html={JSON.stringify(person)}></script>
   {crumbs && <script type="application/ld+json" set:html={JSON.stringify(crumbs)}></script>}
@@ -144,7 +148,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
           <p class="podcast-link"><a href={site.contact.podcast} rel="noopener">استمع إلى بودكاستي</a></p>
         </div>
       </div>
-      <div class="legal"><span>© {new Date().getFullYear()} حسين الحاجي. جميع الحقوق محفوظة.</span><span>{site.contact.country}</span></div>
+      <div class="legal"><span>© {new Date().getFullYear()} حسين الحاجي. جميع الحقوق محفوظة.</span><span id="visitCount" hidden></span><span>{site.contact.country}</span></div>
     </div>
   </footer>)}
 

@@ -1,6 +1,11 @@
 import { verifyIdToken, isAllowed, AuthError } from './auth.js';
 import { validatePublish, ValidationError, LIST_FILES, OBJECT_FILES } from './validate.js';
 import { commitFiles, readFile } from './github.js';
+import { Stats, BOT_RE } from './stats.js';
+import { searchConsole, analytics4 } from './google.js';
+import { bing } from './bing.js';
+
+export { Stats };
 
 // نطاقات الموقع الافتراضية، وتُضاف إليها ما في ALLOWED_ORIGIN
 const DEFAULT_ORIGINS = ['https://hussain-al-hajji.com', 'https://hussain-al-hajji.github.io', 'http://localhost:4321'];
@@ -29,12 +34,47 @@ export async function authorize(req, env, deps = {}) {
   return payload;
 }
 
+// الوصول إلى كائن الإحصاءات (أو بديل اختباري)
+const statsStub = (env, deps) => deps.stats || {
+  hit: async (d) => (await env.STATS.get(env.STATS.idFromName('main')).fetch('https://do/hit', { method: 'POST', body: JSON.stringify(d) })).json(),
+  snapshot: async (days) => (await env.STATS.get(env.STATS.idFromName('main')).fetch('https://do/snapshot?days=' + days)).json(),
+};
+const settle = async (p) => {
+  try { return { ok: true, ...(await p) }; } catch (e) { return { ok: false, reason: e.message === 'not-configured' ? 'not-configured' : 'error', detail: String(e.message).slice(0, 60) }; }
+};
+
 export async function handle(req, env, deps = {}) {
   const url = new URL(req.url);
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(env, req) });
   if (url.pathname === '/api/health') return reply(env, req, 200, { ok: true });
 
+  // تسجيل زيارة من الموقع: عام، يقبل نطاقات الموقع فقط ولا يحفظ بيانات شخصية
+  if (url.pathname === '/api/hit' && req.method === 'POST') {
+    const allow = cors(env, req)['Access-Control-Allow-Origin'];
+    const origin = req.headers.get('Origin') || '';
+    if (!origin || origin !== allow || /localhost|127\.0\.0\.1/.test(origin)) return new Response(null, { status: 204, headers: cors(env, req) });
+    const ua = req.headers.get('User-Agent') || '';
+    const b = await req.json().catch(() => null);
+    if (!b || typeof b !== 'object' || BOT_RE.test(ua) || /^\/admin/.test(String(b.p || ''))) return reply(env, req, 200, { visit: null });
+    const siteHost = new URL(origin).hostname;
+    const { visit, total } = await statsStub(env, deps).hit({
+      path: String(b.p || '/'), ref: String(b.r || '').slice(0, 300), utm: String(b.u || '').slice(0, 40), width: Number(b.w) || 0, newSession: !!b.s,
+      country: req.cf?.country || req.headers.get('CF-IPCountry') || '', siteHost, now: deps.now || Date.now(),
+    });
+    const base = Number(env.VISITS_BASE) || 0;
+    return reply(env, req, 200, { visit: visit == null ? null : visit + base, total: (total || 0) + base });
+  }
+
   try {
+    if (url.pathname === '/api/stats' && req.method === 'GET') {
+      await authorize(req, env, deps.auth);
+      const f = deps.fetch || fetch;
+      const [own, gsc, ga4, bg] = await Promise.all([
+        statsStub(env, deps).snapshot(30), settle(searchConsole(env, f)), settle(analytics4(env, f)), settle(bing(env, f)),
+      ]);
+      own.total += Number(env.VISITS_BASE) || 0;
+      return reply(env, req, 200, { own, gsc, ga4, bing: bg, at: new Date().toISOString() });
+    }
     if (url.pathname === '/api/content' && req.method === 'GET') {
       await authorize(req, env, deps.auth);
       const names = [...LIST_FILES, ...OBJECT_FILES];

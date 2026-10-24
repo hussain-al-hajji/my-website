@@ -9,3 +9,18 @@ GITHUB_BRANCH = "main"
 ALLOWED_ORIGIN = "https://hussain-al-hajji.com,https://hussain-al-hajji.github.io,http://localhost:4321"
 FIREBASE_PROJECT_ID = "my-website-983ed"
 # ALLOWED_EMAILS و ALLOWED_UIDS تُضبطان كأسرار ولا تُكتبان هنا.
+
+# عدّاد الزيارات والتحليلات الخاصة (كائن دائم واحد، لا يحتاج إنشاء موارد يدوياً)
+[[durable_objects.bindings]]
+name = "STATS"
+class_name = "Stats"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Stats"]
+
+# ربط مصادر البيانات (غير سرية). الأسرار GOOGLE_SA_JSON و BING_API_KEY تُضاف بـ wrangler secret put
+# GSC_SITE = "sc-domain:hussain-al-hajji.com"      # أو "https://hussain-al-hajji.com/" حسب نوع الخاصية في Search Console
+# GA4_PROPERTY_ID = "123456789"                    # رقم خاصية GA4 (أرقام فقط)
+# BING_SITE = "https://hussain-al-hajji.com/"
+# VISITS_BASE = "0"                                # رقم يُضاف إلى العدّاد إن أردت البدء من رقم سابق

@@ -117,3 +117,69 @@ test('CORS وفحص الصحة', async () => {
   const foreign = await handle(new Request('https://w.test/api/health', { headers: { Origin: 'https://evil.test' } }), env);
   assert.equal(foreign.headers.get('Access-Control-Allow-Origin'), 'https://site.test');
 });
+
+// ---------- الإحصاءات ----------
+import { classifySource, cleanPath, deviceOf, dayKey, Stats } from '../src/stats.js';
+import { googleToken, ranges } from '../src/google.js';
+
+const memStorage = () => {
+  const m = new Map();
+  return { get: async (k) => structuredClone(m.get(k)), put: async (k, v) => { if (typeof k === 'object') for (const [a, b] of Object.entries(k)) m.set(a, structuredClone(b)); else m.set(k, structuredClone(v)); },
+    list: async ({ prefix }) => new Map([...m].filter(([k]) => k.startsWith(prefix)).map(([k, v]) => [k, structuredClone(v)])), delete: async (ks) => { [].concat(ks).forEach((k) => m.delete(k)); }, m };
+};
+
+test('تصنيف مصادر الزيارة', () => {
+  assert.equal(classifySource('', 'hussain-al-hajji.com').kind, 'direct');
+  assert.equal(classifySource('https://hussain-al-hajji.com/bio', 'hussain-al-hajji.com').kind, 'direct');
+  assert.deepEqual(classifySource('https://www.google.com.sa/', 'x.com'), { kind: 'search', host: 'google.com.sa' });
+  assert.equal(classifySource('https://t.co/abc', 'x.com').kind, 'social');
+  assert.equal(classifySource('https://blog.example.org/post', 'x.com').kind, 'referral');
+  assert.equal(classifySource('', 'x.com', 'LinkedIn').host, 'utm:linkedin');
+});
+test('تنظيف المسارات والأجهزة واليوم', () => {
+  assert.equal(cleanPath('/bio.html?x=1#a'), '/bio');
+  assert.equal(cleanPath('/blog/post-1/'), '/blog/post-1');
+  assert.equal(cleanPath('/<script>'), '/');
+  assert.equal(deviceOf(390), 'mobile'); assert.equal(deviceOf(800), 'tablet'); assert.equal(deviceOf(1440), 'desktop');
+  assert.equal(dayKey(Date.UTC(2026, 0, 1, 22, 30)), '2026-01-02'); // الرياض UTC+3
+});
+test('العدّاد يزيد بالجلسة الجديدة فقط ويحسب المشاهدات', async () => {
+  const st = new Stats({ storage: memStorage() });
+  const base = { path: '/', ref: 'https://www.google.com/', width: 400, country: 'SA', siteHost: 'hussain-al-hajji.com', now: Date.UTC(2026, 5, 1, 9) };
+  assert.equal((await st.hit({ ...base, newSession: true })).visit, 1);
+  assert.equal((await st.hit({ ...base, path: '/bio.html', newSession: false })).visit, null);
+  assert.equal((await st.hit({ ...base, ref: '', newSession: true })).visit, 2);
+  const s = await st.snapshot(7);
+  assert.equal(s.total, 2); assert.equal(s.pageviews, 3);
+  assert.equal(s.sources.find((x) => x.k === 'search').n, 1);
+  assert.equal(s.pages[0].k, '/');
+  assert.equal(s.countries[0].k, 'SA');
+});
+test('/api/hit عام ويحترم النطاق والروبوتات', async () => {
+  const calls = [];
+  const stats = { hit: async (d) => { calls.push(d); return { visit: d.newSession ? 41 : null, total: 41 }; }, snapshot: async () => ({ total: 41 }) };
+  const mk = (body, origin = 'https://hussain-al-hajji.com', ua = 'Mozilla/5.0') => handle(new Request('https://w.test/api/hit', { method: 'POST', headers: { Origin: origin, 'User-Agent': ua, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }), { VISITS_BASE: '1000' }, { stats });
+  const ok = await (await mk({ p: '/', s: true })).json();
+  assert.equal(ok.visit, 1041); assert.equal(ok.total, 1041);
+  assert.equal((await (await mk({ p: '/', s: true }, 'https://hussain-al-hajji.com', 'Googlebot/2.1')).json()).visit, null);
+  assert.equal((await mk({ p: '/', s: true }, 'https://evil.example')).status, 204);
+  assert.equal((await mk({ p: '/admin', s: true })).status, 200);
+  assert.equal(calls.length, 1);
+});
+test('/api/stats يتطلب مصادقة', async () => {
+  const r = await handle(new Request('https://w.test/api/stats'), {}, { stats: { snapshot: async () => ({}) } });
+  assert.equal(r.status, 401);
+});
+test('رمز حساب خدمة Google يُوقَّع ويُطلب', async () => {
+  const pk = await crypto.subtle.exportKey('pkcs8', privateKey);
+  const pem = '-----BEGIN PRIVATE KEY-----\n' + Buffer.from(pk).toString('base64') + '\n-----END PRIVATE KEY-----\n';
+  let sent;
+  const f = async (u, o) => { sent = { u: String(u), body: String(o.body) }; return new Response(JSON.stringify({ access_token: 'tok' })); };
+  const t = await googleToken({ GOOGLE_SA_JSON: JSON.stringify({ client_email: 'sa@x.iam', private_key: pem }) }, 'scope-a', f);
+  assert.equal(t, 'tok');
+  assert.match(sent.u, /oauth2\.googleapis\.com\/token/);
+  assert.match(sent.body, /grant_type=urn/);
+  await assert.rejects(googleToken({}, 's', f), /not-configured/);
+  const r = ranges(Date.UTC(2026, 5, 29));
+  assert.equal(r.end, '2026-06-28'); assert.equal(r.start, '2026-06-01');
+});
