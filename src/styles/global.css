@@ -1060,3 +1060,13 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .tip.pinned{pointer-events:auto;padding-inline-end:44px}
 .tip-x{position:absolute;top:8px;inset-inline-end:8px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(0,0,0,.07);color:var(--ink);font:inherit;font-size:20px;line-height:1;cursor:pointer}
 .tip-x:hover{background:rgba(0,0,0,.14)}
+
+/* يد توحي بالضغط على نقطة، تختفي عند أول ضغط */
+.cs-hand{position:absolute;left:0;top:0;width:0;height:0;z-index:2;pointer-events:none;transition:opacity .35s}
+.cs-hand.gone{display:none}
+.cs-hand svg{position:absolute;left:-22px;top:-5px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));animation:csTapHand 1.8s ease-in-out infinite;transform-origin:22px 8px}
+.cs-hand i{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;border:2px solid rgba(232,189,99,.95);opacity:0;animation:csRipple 1.8s ease-out infinite}
+.cs-hand i:nth-child(2){animation-delay:.3s}.cs-hand i:nth-child(3){animation-delay:.6s}
+@keyframes csRipple{0%{transform:scale(.15);opacity:.95}70%{opacity:.25}100%{transform:scale(1.15);opacity:0}}
+@keyframes csTapHand{0%,100%{transform:translateY(0)}30%{transform:translateY(7px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){.cs-hand svg,.cs-hand i{animation:none}.cs-hand i{opacity:.5;transform:scale(.6)}}

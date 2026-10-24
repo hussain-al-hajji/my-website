@@ -26,7 +26,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   const img = new Image(); img.src = cv.dataset.logo; try { await img.decode(); } catch {}
   const coarse = matchMedia('(pointer:coarse)').matches, DUST = coarse ? 650 : 1500, random = rng(7);
   const sc = [], nm = [], mp = [], yr = [], dsc = [], dnm = [], dmp = [], dyr = [];
-  let W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0];
+  let handPt = 0, W = 0, H = 0, dpr = 1, mapT = null, yearCols = [], virtN = 0, virtPt = [0, 0];
   const gauss = () => (random() + random() + random() - 1.5) * 1.3;
 
   function layout() {
@@ -67,6 +67,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       yr[N + i] = [col.x + gauss() * 18, base - rr() * 150 - 6];
     }
     for (let i = 0; i < DUST; i++) { dmp[i] = mp[N + i]; dyr[i] = yr[N + i]; }
+    handPt = 0; { let bd = 1e12; for (let i = 0; i < N; i++) { const d = (nm[i][0] - W / 2) ** 2 + (nm[i][1] - H / 2) ** 2; if (d < bd) { bd = d; handPt = i; } } }
   }
   layout();
   addEventListener('resize', () => { layout(); });
@@ -93,13 +94,19 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
   }
   const CAP = [`${N} برنامجاً، وكل نقطة منها حكاية.`, `${placedN} موقعاً داخل المملكة وخارجها.`, `من ${y0} إلى ${y1}، سنة بعد سنة.`];
 
+  let clock = 0, swimK = reduce ? 0 : 1, frozen = false;
   function pos(i, p) {
     const dust = i >= N, a = ease(clamp(p / 0.18)), b = ease(clamp((p - 0.3) / 0.2)), c = ease(clamp((p - 0.62) / 0.2));
     const A = dust ? dsc[i - N] : sc[i], B = dust ? dnm[i - N] : nm[i], C = mp[i], D = yr[i];
-    return [lerp(lerp(lerp(A[0], B[0], a), C[0], b), D[0], c), lerp(lerp(lerp(A[1], B[1], a), C[1], b), D[1], c)];
+    let x = lerp(lerp(lerp(A[0], B[0], a), C[0], b), D[0], c), y = lerp(lerp(lerp(A[1], B[1], a), C[1], b), D[1], c);
+    // سباحة هادئة للنقاط في التبعثر والاسم، تتلاشى مع الانتقال إلى الخريطة، وتتجمّد عند تثبيت بطاقة
+    const w = (1 - b) * swimK * (dust ? 2.6 : 4.2);
+    if (w > 0.01) { x += (Math.sin(clock / 760 + i * 1.7) + Math.sin(clock / 1350 + i * 0.9) * 0.6) * w; y += (Math.cos(clock / 880 + i * 1.3) + Math.cos(clock / 1500 + i * 2.1) * 0.6) * w; }
+    return [x, y];
   }
   const font = '600 13px "Noto Sans Arabic", system-ui, sans-serif';
   function draw(t) {
+    clock = t;
     const p = cur, wMap = ease(clamp((p - 0.3) / 0.2)) * (1 - ease(clamp((p - 0.62) / 0.2))), wYear = ease(clamp((p - 0.62) / 0.2));
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     if (wMap > 0.02 && mapT) {
@@ -108,7 +115,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     }
     // غبار
     ctx.fillStyle = 'rgba(232,189,99,.62)';
-    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p), j = reduce || coarse ? 0 : Math.sin(t / 900 + i) * 1.2; ctx.fillRect(q[0] + j, q[1] + (reduce || coarse ? 0 : Math.cos(t / 1100 + i) * 1.2), 1.9, 1.9); }
+    for (let i = 0; i < DUST; i++) { const q = pos(N + i, p); ctx.fillRect(q[0], q[1], 1.9, 1.9); }
     // النقاط
     for (let i = 0; i < N; i++) {
       const q = pos(i, p), h = i === hover;
@@ -126,6 +133,13 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
       yearCols.forEach((c) => { ctx.fillText(String(c.y), c.x, H - 34); ctx.fillStyle = `rgba(163,162,155,${(wYear - 0.5) * 2})`; ctx.font = '500 12px "Noto Sans Arabic", system-ui, sans-serif'; ctx.fillText(c.n + ' برنامج', c.x, H - 14); ctx.fillStyle = `rgba(245,245,242,${(wYear - 0.5) * 2})`; ctx.font = '700 14px "Noto Sans Arabic", system-ui, sans-serif'; });
     }
   }
+  const hand = $('#csHand'); let handDone = false;
+  const hideHand = () => { handDone = true; hand?.classList.add('gone'); };
+  const moveHand = () => {
+    if (!hand || handDone) return;
+    const q = pos(handPt, cur); hand.style.transform = `translate(${q[0].toFixed(1)}px,${q[1].toFixed(1)}px)`;
+    hand.style.opacity = String(clamp(1 - (cur - 0.3) / 0.15));
+  };
   let last = 0, lastCur = -1, lastHover = -2, keepPin = () => {};
   function frame(t) {
     if (!active) return;
@@ -134,8 +148,9 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     const st = cur < 0.28 ? 0 : cur < 0.6 ? 1 : 2;
     if (st !== stage) { stage = st; cap.textContent = CAP[st]; $$('[data-cs]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.cs === st))); }
     // على اللمس لا نعيد الرسم ما لم يتغيّر التقدم أو النقطة المحددة، حتى لا يثقل التمرير
-    if (!coarse || cur !== lastCur || hover !== lastHover) { draw(t); lastCur = cur; lastHover = hover; }
-    keepPin(); last = t; requestAnimationFrame(frame);
+    if (!reduce) swimK += ((frozen ? 0 : 1) - swimK) * 0.08;
+    if (!coarse || cur !== lastCur || hover !== lastHover || (!reduce && cur < 0.5 && swimK > 0.01)) { draw(t); lastCur = cur; lastHover = hover; }
+    keepPin(); moveHand(); last = t; requestAnimationFrame(frame);
   }
   new IntersectionObserver((es) => { const on = es[0].isIntersecting; if (on && !active) { active = true; requestAnimationFrame(frame); } else if (!on) active = false; }, { rootMargin: '200px' }).observe(sec);
   // التلميح عند المرور على نقطة
@@ -157,7 +172,7 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     tip.style.left = Math.max(0, Math.min(w.width - tw, x - tw / 2)) + 'px';
     tip.style.top = (y - th - 16 < 0 ? Math.min(w.height - th, y + 18) : y - th - 16) + 'px';
   };
-  const unpin = () => { pinned = -1; hover = -1; tip.hidden = true; tip.classList.remove('pinned'); delete tip.dataset.i; };
+  const unpin = () => { frozen = false; pinned = -1; hover = -1; tip.hidden = true; tip.classList.remove('pinned'); delete tip.dataset.i; };
   // تتبّع النقطة المثبّتة إذا تحرّكت مع التمرير أو المؤشر
   keepPin = () => { if (pinned >= 0) { const q = pos(pinned, cur); place(pinned, q[0], q[1]); } };
   cv.addEventListener('pointermove', (e) => {
@@ -167,9 +182,10 @@ const norm = (s = '') => String(s).replace(/[ً-ٟـ]/g, '').replace(/[أإآ]/g
     place(best, x, y);
   });
   cv.addEventListener('click', (e) => {
+    hideHand();
     const { best } = near(e);
     if (best < 0 || best === pinned) { unpin(); return; }
-    pinned = hover = best; delete tip.dataset.i; const q = pos(best, cur); place(best, q[0], q[1]);
+    pinned = hover = best; frozen = true; hideHand(); delete tip.dataset.i; const q = pos(best, cur); place(best, q[0], q[1]);
   });
   cv.addEventListener('pointerleave', () => { if (pinned < 0) { hover = -1; tip.hidden = true; delete tip.dataset.i; } });
   tip.addEventListener('click', (e) => { if (e.target.closest('.tip-x')) unpin(); });
