@@ -120,13 +120,15 @@
 .pp-mlogos img{max-width:100%;max-height:9.6mm;width:auto;height:auto;object-fit:contain}
 
 /* آراء */
-.pp-voices{display:grid;grid-template-columns:repeat(3,1fr);gap:9mm;align-items:start;margin-top:4mm}
-.pp-voices blockquote{display:flex;flex-direction:column;gap:4mm;border-top:2px solid var(--gold);padding-top:5mm;position:relative}
-.pp-voices blockquote::before{content:"”";position:absolute;top:-1mm;inset-inline-end:0;font-size:40pt;line-height:1;color:var(--gold);opacity:.6}
-.pp-voices p{font-size:11pt;line-height:1.85;color:#e4e2db}
-.pp-voices footer{display:grid;font-size:8.5pt;color:#a3a29b;border-top:1px solid rgba(226,178,87,.2);padding-top:3mm}
+.pp-voices{display:grid;grid-template-columns:repeat(6,1fr);gap:7mm 9mm;align-items:start;margin-top:2mm}
+.pp-voices blockquote{grid-column:span 2}
+.pp-voices blockquote:nth-child(n+4):nth-last-child(-n+2):nth-child(4),.pp-voices blockquote:nth-child(5):last-child{grid-column:span 3}
+.pp-voices blockquote{display:flex;flex-direction:column;gap:2.5mm;border-top:2px solid var(--gold);padding-top:4mm;position:relative}
+.pp-voices blockquote::before{content:"”";position:absolute;top:-1mm;inset-inline-end:0;font-size:30pt;line-height:1;color:var(--gold);opacity:.6}
+.pp-voices p{font-size:9.2pt;line-height:1.75;color:#e4e2db}
+.pp-voices footer{display:grid;font-size:8pt;color:#a3a29b;border-top:1px solid rgba(226,178,87,.2);padding-top:2mm}
 .pp-voices footer b{font-size:10pt;color:#fff}
-.pp-honors{font-size:11pt;color:var(--gold);margin-top:auto;margin-bottom:10mm}
+.pp-honors{font-size:10pt;color:var(--gold);margin-top:auto;margin-bottom:9mm}
 
 /* الغلاف الخلفي */
 .pp-back{padding:0;display:block}

@@ -24,7 +24,8 @@ const intro = (pages.bio.intro || []).map(fillTokens);
 const remoteN = records.filter(isRemote).length;
 const inN = records.length - remoteN;
 const logos = partners.filter((p) => p.logo);
-const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && t.quote && t.name).slice(0, 3);
+// التوصيات المنشورة في الرئيسية نفسها (المميّزة)
+const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && (t.quote || t.full)).map((t) => ({ ...t, text: (t.quote || t.full).replace(/^[“"]|[”"]$/g, '') }));
 const seen = new Set();
 // شعارات الاستضافات الإعلامية (حقل «شعار البورتفليو» في قسم الإعلام)، شعار واحد لكل جهة
 const outlets = mediaAll.filter((m) => m.pdfLogo).map((m) => ({ name: (m.short || m.outlet.split('،')[0]).trim(), logo: m.pdfLogo })).filter((o) => (seen.has(o.logo) ? false : seen.add(o.logo)));
@@ -296,9 +297,9 @@ const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2,
     {voices.length > 0 && (
       <section class="pp pp-dark">
         <header class="pp-head"><span class="pp-num">{sec.voices}</span><h2>قالوا عن العمل معي</h2><img class="pp-mark" src={href('/brand/logo-full-white.svg')} alt="" width="2600" height="961"></header>
-        <div class="pp-voices">
+        <div class="pp-voices" style={`--n:${voices.length}`}>
           {voices.map((t) => (
-            <blockquote><p class="pp-just">{t.quote}</p><footer><b>{t.name}</b>{t.role && <span>{t.role}</span>}</footer></blockquote>
+            <blockquote><p class="pp-just">{t.text}</p>{(t.name || t.role) && <footer>{t.name && <b>{t.name}</b>}{t.role && <span>{t.role}</span>}</footer>}</blockquote>
           ))}
         </div>
         <p class="pp-honors">و{n(honors.length)} شهادة شكر وتقدير من الجهات التي عملتُ معها.</p>
