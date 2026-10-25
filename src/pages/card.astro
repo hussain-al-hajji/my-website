@@ -11,6 +11,8 @@ const ico = {
   wa: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2.5 21.5Z"/><path d="M9.2 8.6c-.3 1.2.5 3.1 2 4.6s3.4 2.4 4.6 2l.9-1.3-2.2-1.1-.9.8c-.9-.4-1.9-1.3-2.4-2.3l.8-.9-1-2.1Z"/>',
   tel: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/>',
+  web: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  pf: '<path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/>',
   in: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
 };
 const svg = (k) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ico[k]}</svg>`;
@@ -19,6 +21,8 @@ const acts = [
   { k: 'tel', t: 'اتصال', u: l.tel },
   { k: 'mail', t: 'البريد', u: l.mail },
   { k: 'in', t: 'لينكدإن', u: c.linkedin, ext: true },
+  { k: 'web', t: 'موقعي الإلكتروني', u: href('/') },
+  { k: 'pf', t: 'حمّل البورتفوليو', u: href('/hussain-al-hajji-portfolio.pdf'), dl: true },
 ];
 ---
 <Base title="بطاقتي" description="بطاقتي الرقمية: احفظ جهة اتصالي، أو تواصل معي مباشرة، أو حمّل ملفي التعريفي." bare>
@@ -32,15 +36,13 @@ const acts = [
 
       <ul class="card-acts">
         {acts.map((a) => (
-          <li><a href={a.u} rel={a.ext ? 'noopener' : undefined} set:html={svg(a.k) + '<span>' + a.t + '</span>'}></a></li>
+          <li><a href={a.u} rel={a.ext ? 'noopener' : undefined} download={a.dl ? '' : undefined} set:html={svg(a.k) + '<span>' + a.t + '</span>'}></a></li>
         ))}
       </ul>
 
       <ul class="card-links">
-        <li><a href={href('/hussain-al-hajji-profile.pdf')}>السيرة الذاتية PDF</a></li>
-        <li><a href={href('/')}>موقعي الإلكتروني</a></li>
-        <li><a href="https://academy.hussain-al-hajji.com/" rel="noopener">الأكاديمية</a></li>
-        <li><a href={c.podcast} rel="noopener">استمع إلى بودكاستي</a></li>
+        <li><a href={href('/bio')}>السيرة والإنجازات</a></li>
+        <li class="card-pair"><a href="https://academy.hussain-al-hajji.com/" rel="noopener">الأكاديمية</a><span aria-hidden="true">|</span><a href={c.podcast} rel="noopener">بودكاستي</a></li>
       </ul>
 
       <figure class="card-qr">

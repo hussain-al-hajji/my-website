@@ -1228,3 +1228,6 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .cv-box h2:focus{outline:0}
 .cv-act .pill.ghost{background:#fff;color:var(--action);border:1.5px solid var(--action)}
 .cv-act .pill:disabled{opacity:.6;cursor:progress}
+.card-links .card-pair{display:flex;align-items:center;justify-content:center;gap:6px}
+.card-links .card-pair a{flex:1;text-align:center}
+.card-links .card-pair span{color:var(--hair);font-weight:300}
