@@ -1142,9 +1142,9 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .bio-tbl tbody td:last-child{border-start-end-radius:12px;border-end-end-radius:12px}
 .bio-tbl .c-logo{width:84px;text-align:center}
 .bio-tbl .c-logo img{display:block;width:52px;height:52px;object-fit:contain;margin-inline:auto;background:#fff;border-radius:10px;padding:5px}
-.bio-tbl .c-org{width:22%}
-.bio-tbl .c-title{width:30%}
-.bio-tbl .c-date{width:13%}
+.bio-tbl .c-org{width:17%}
+.bio-tbl .c-title{width:22%}
+.bio-tbl .c-date{width:11%}
 .bio-tbl .c-org{color:var(--action);font-weight:600}
 .bio-tbl .c-title b{display:block;font-size:1.02rem;font-weight:600;line-height:1.5}
 .bio-tbl .c-title a:hover b{color:var(--action)}

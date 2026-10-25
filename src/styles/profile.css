@@ -68,9 +68,9 @@
 .pf-tbl tbody tr:nth-child(odd) td{background:#f7f5f0}
 .pf-tbl .c-logo{width:12mm;text-align:center}
 .pf-tbl .c-logo img{width:8mm;height:8mm;object-fit:contain;display:block;margin-inline:auto}
-.pf-tbl .c-org{width:24%}
-.pf-tbl .c-title{width:30%}
-.pf-tbl .c-date{width:13%}
+.pf-tbl .c-org{width:17%}
+.pf-tbl .c-title{width:22%}
+.pf-tbl .c-date{width:12%}
 .pf-tbl .c-org{color:#835410;font-weight:600;font-size:8.8pt}
 .pf-tbl .c-title{font-weight:700;font-size:9.4pt}
 .pf-tbl .c-date{color:#6b6a64;font-size:8.6pt}
