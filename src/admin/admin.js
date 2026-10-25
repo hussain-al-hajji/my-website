@@ -391,7 +391,10 @@ async function enterLive(user) {
     load(await r.json());
   } catch (e) {
     render();
-    const why = e.status ? `رمز الخطأ ${e.status}` : 'تعذّر الاتصال بخدمة النشر';
+    const why = e.status ? `رمز الخطأ ${e.status}`
+      : e instanceof TypeError ? `تعذّر الاتصال بخدمة النشر من ${location.origin}؛ تأكد من الشبكة ومن أن هذا العنوان ضمن ALLOWED_ORIGIN في الـ Worker`
+        : 'استجابة غير مفهومة من الخدمة: ' + (e.message || '');
+    console.error('content load failed', e);
     return say(`تعذّر جلب آخر نسخة من المحتوى (${why})، تُعرض النسخة المضمّنة في آخر بناء. النشر قد لا يعمل حتى تُصلح الخدمة.`, 'bad');
   }
   render();
