@@ -309,7 +309,7 @@
   },
   {
     "id": "b028",
-    "section": "mentoring",
+    "section": "committees",
     "title": "أعضاء مجلس أثر الشباب من المنظمات غير الربحية",
     "subtitle": "مؤسسة الأمير محمد بن سلمان (مسك)",
     "logo": "/img/partners/l02.webp",
@@ -340,7 +340,7 @@
   },
   {
     "id": "b031",
-    "section": "mentoring",
+    "section": "learning",
     "title": "دورة التسويق الرقمي",
     "subtitle": "مسك ومنصة يوداستي التعليمية (Udacity)",
     "logo": "/img/partners/l52.webp",
@@ -350,7 +350,7 @@
   },
   {
     "id": "b032",
-    "section": "mentoring",
+    "section": "projects",
     "title": "مسرّعة Tech Founders",
     "subtitle": "مركز ريادة الأعمال الرقمية (كود) ووزارة الاتصالات وتقنية المعلومات",
     "logo": "/img/partners/l09.webp",
@@ -360,7 +360,7 @@
   },
   {
     "id": "b033",
-    "section": "mentoring",
+    "section": "projects",
     "title": "هاكاثون المدن الذكية",
     "subtitle": "أكاديمية الموسى الصحية، ضمن مهرجان الشرقية تبدع",
     "logo": "",
@@ -370,7 +370,7 @@
   },
   {
     "id": "b034",
-    "section": "mentoring",
+    "section": "projects",
     "title": "برنامج تجسير",
     "subtitle": "بنك التنمية الاجتماعية، الأسر المنتجة",
     "logo": "/img/partners/l05.webp",
@@ -380,7 +380,7 @@
   },
   {
     "id": "b035",
-    "section": "mentoring",
+    "section": "projects",
     "title": "هاكاثون رواد السياحة",
     "subtitle": "وزارة السياحة",
     "logo": "/img/partners/l03.webp",
@@ -390,7 +390,7 @@
   },
   {
     "id": "b036",
-    "section": "mentoring",
+    "section": "projects",
     "title": "هاكاثون جادة ثون",
     "subtitle": "جادة 30 بالدمام، بنك التنمية الاجتماعية",
     "logo": "/img/partners/l05.webp",
@@ -400,7 +400,7 @@
   },
   {
     "id": "b037",
-    "section": "mentoring",
+    "section": "projects",
     "title": "برنامج ستارت سمارت Start Smart",
     "subtitle": "شركة عبداللطيف جميل لخدمة المجتمع (مجتمع جميل)",
     "logo": "/img/partners/l78.webp",
