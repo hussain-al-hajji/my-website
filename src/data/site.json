@@ -25,7 +25,7 @@
     "since": 2018
   },
   "announcement": {
-    "enabled": true,
+    "enabled": false,
     "text": "حقيبتي في إدارة المشاريع التنموية متاحة للتعاون: من يومين إلى ثلاثة أيام بالتعلم بالممارسة.",
     "link": "/collaborate#project-management",
     "linkText": "اعرف المزيد",
