@@ -13,3 +13,8 @@ document.addEventListener('click', (e) => {
   if (!a || a.origin !== location.origin || a.pathname !== location.pathname) return;
   open(a.hash);
 });
+
+document.querySelectorAll('[data-fold-all]').forEach((b) => b.addEventListener('click', () => {
+  const open = b.dataset.foldAll === 'open';
+  document.querySelectorAll('details.fold-sec').forEach((d) => { d.open = open; });
+}));

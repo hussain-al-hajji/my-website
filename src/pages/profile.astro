@@ -87,13 +87,14 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
           <ul class="pf-list">
             {by(s).map((x) => (
               <li class="pf-item">
-                {x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : null}
+                {x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : by(s).some((y) => y.logo) ? <span class="pf-logo ph"></span> : null}
                 <div class="pf-body">
-                  <div class="pf-row"><h3>{x.title}</h3>{x.period && <span class="pf-date">{x.period}</span>}</div>
+                  <div class="pf-row"><h3>{x.title}</h3></div>
                   {x.subtitle && <p class="pf-org">{x.subtitle}</p>}
                   {x.desc && <p class="pf-desc">{x.desc}</p>}
                   {x.details && <div class="pf-det" set:html={detailsHtml(x.details)}></div>}
                 </div>
+                {x.period ? <span class="pf-date">{x.period}</span> : <span></span>}
               </li>
             ))}
           </ul>

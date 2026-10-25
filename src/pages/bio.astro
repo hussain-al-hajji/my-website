@@ -10,6 +10,7 @@ const p = pages.bio;
 const by = (s) => bio.filter((x) => x.section === s);
 // الأقسام بترتيبها وأسمائها من لوحة التحكم؛ الكتلتان «نبذة» و«مسارات العمل» تُرتَّبان معها، والأقسام الفارغة أو المخفية لا تظهر
 const shown = getGroups('bio', bio).filter((g) => !g.hidden && (g.block || by(g.id).length));
+const firstFold = shown.findIndex((g) => g.block !== 'intro');
 const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.block).slice(0, 4).map((g) => ({ label: g.title, href: '#' + g.id }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
@@ -19,13 +20,20 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
 
   {shown.map((g, i) => {
     const anchor = i === 0 ? <span id="top"></span> : null;
+    const tools = i === firstFold && i > 0 ? (
+      <div class="fold-tools measure" role="group" aria-label="عرض الأقسام">
+        <span>استعرض أقسام السيرة</span>
+        <button type="button" data-fold-all="open">فتح الكل</button>
+        <button type="button" data-fold-all="close">طيّ الكل</button>
+      </div>
+    ) : null;
     if (g.block === 'intro') return (
       <section class="sec tight flush" id={g.id}>{anchor}
         <div class="measure"><div class="prose">{p.intro.map((t) => <p>{fillTokens(t)}</p>)}</div></div>
       </section>
     );
     if (g.block === 'tracks') return (
-      <section class="sec alt tight" id={g.id}>{anchor}
+      <section class="sec alt tight" id={g.id}>{anchor}{tools}
         <div class="wide">
           <details class="fold-sec">
             <summary><h2 class="h2" data-in>{g.title}.</h2><span class="tri" aria-hidden="true"></span></summary>
@@ -43,10 +51,10 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
     );
     const items = by(g.id);
     return (
-    <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={g.id}>{anchor}
+    <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={g.id}>{anchor}{tools}
       <div class="measure">
         <details class="fold-sec">
-          <summary><h2 class="h2" data-in>{g.title}.</h2><span class="tri" aria-hidden="true"></span></summary>
+          <summary><h2 class="h2" data-in>{g.title}.</h2><span class="fold-n">{items.length}</span><span class="tri" aria-hidden="true"></span></summary>
           <div class="fold-body">
         {g.style === 'chips' ? (
           <ul class="chip-list">{items.map((it) => <li>{it.title}</li>)}</ul>
