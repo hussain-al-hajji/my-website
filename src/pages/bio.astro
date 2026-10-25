@@ -15,7 +15,7 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
   <PageHead title={p.title} lead={p.lead}>
-    <div class="ctas" style="margin-top:28px"><a class="more" href={href('/hussain-al-hajji-profile.pdf')}>السيرة الذاتية PDF</a><a class="more" href={href('/card')}>بطاقتي الرقمية</a></div>
+    <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/hussain-al-hajji-portfolio.pdf')} download><svg class="pill-dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>حمّل البورتفوليو</a><a class="more" href={href('/hussain-al-hajji-profile.pdf')}>السيرة الذاتية PDF</a><a class="more" href={href('/card')}>بطاقتي الرقمية</a></div>
   </PageHead>
 
   {shown.map((g, i) => {
