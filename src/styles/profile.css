@@ -101,7 +101,8 @@
 .pf-short .pf-fullonly{display:none!important}
 .pf-short p.pf-shortonly{display:block}
 .pf-short ul.pf-shortonly{display:block}
-.pf-brief{margin-top:.8mm;color:#33322f;text-align:justify;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pf-brief{margin-top:.8mm;color:#33322f;text-align:justify}
+.pf-short .pf-brief{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pf-short .pf-item{padding-block:2mm}
 .pf-compact{list-style:none;columns:2;column-gap:9mm;border-top:.5mm solid #835410;border-bottom:.5mm solid #835410;padding:2mm 0}
 .pf-compact li{display:grid;grid-template-columns:7.5mm minmax(0,1fr);gap:2.2mm;align-items:center;padding:1.3mm 0;break-inside:avoid;border-bottom:.2mm dotted #d9d6cc}
