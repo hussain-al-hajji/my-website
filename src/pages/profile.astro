@@ -7,6 +7,7 @@ import partners from '../data/partners.json';
 import { site, href, abs, getKits, detailsHtml, getGroups } from '../lib/site.js';
 import '../styles/profile.css';
 import { fillTokens } from '../lib/faq.js';
+import { briefOf } from '../lib/brief.js';
 
 const p = pages.bio;
 const c = site.contact;
@@ -70,8 +71,18 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       {secs.map(([s, title, style, on], i) => (
         <section class={'pf-sec' + (i === firstOn && tagSecs.length ? ' pf-newpage' : '') + (on ? '' : ' pf-off')} data-sec={s}>
           <h2>{title}</h2>
+          {style === 'table' && (
+            <ul class="pf-compact pf-shortonly">
+              {by(s).map((x) => (
+                <li>
+                  {x.logo ? <img src={href(x.logo)} alt="" width="24" height="24"> : <span class="pf-cl ph"></span>}
+                  <div><b>{x.title}</b><span>{[x.subtitle, x.period].filter(Boolean).join(' · ')}</span></div>
+                </li>
+              ))}
+            </ul>
+          )}
           {style === 'table' ? (
-            <table class="pf-tbl">
+            <table class="pf-tbl pf-fullonly">
               <thead><tr><th class="c-logo"></th><th class="c-org">الجهة</th><th class="c-title">المسمى أو العنوان</th>{by(s).some((x) => x.desc || x.details) && <th class="c-desc">الوصف</th>}{by(s).some((x) => x.period) && <th class="c-date">التاريخ</th>}</tr></thead>
               <tbody>
                 {by(s).map((x) => (
@@ -93,8 +104,9 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
                 <div class="pf-body">
                   <div class="pf-row"><h3>{x.title}</h3></div>
                   {x.subtitle && <p class="pf-org">{x.subtitle}</p>}
-                  {x.desc && <p class="pf-desc">{x.desc}</p>}
-                  {x.details && <div class="pf-det" set:html={detailsHtml(x.details)}></div>}
+                  {x.desc && <p class="pf-desc pf-fullonly">{x.desc}</p>}
+                  {x.details && <div class="pf-det pf-fullonly" set:html={detailsHtml(x.details)}></div>}
+                  {briefOf(x) && <p class="pf-brief pf-shortonly">{briefOf(x)}</p>}
                 </div>
                 {x.period ? <span class="pf-date">{x.period}</span> : <span></span>}
               </li>
@@ -104,7 +116,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         </section>
       ))}
 
-      <section class="pf-sec" data-tail>
+      <section class="pf-sec pf-fullonly" data-tail>
         <h2>الحقائب التدريبية</h2>
         <ul class="pf-kits">
           {kits.map((k) => <li data-brk><b>{k.short}</b> <span>{k.duration}</span></li>)}
@@ -133,6 +145,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
     const off = (el, v) => el.classList.toggle('pf-off', v);
     const part = q.get('part');
     if (q.get('pack') === '1') document.body.classList.add('pf-pack');
+    if (q.get('mode') === 'short') document.body.classList.add('pf-short');
     const secs = [...document.querySelectorAll('[data-sec]')];
     if (q.has('s')) {
       const want = new Set(q.get('s').split(',').filter(Boolean));

@@ -198,10 +198,11 @@ const crumbs = breadcrumbSchema(cleanPath, title);
         <div class="cv-list">
           {cvPick.map((g) => <label class="cv-opt"><input type="checkbox" value={g.id} checked={g.on} /><span>{g.title}</span><em>{g.n}</em></label>)}
         </div>
-        <p class="cv-note">يُنزَّل الملف مباشرة بمقاس A4 ومرتّباً كما في النسخة الكاملة، وتبدأ كل قسم مختار من صفحة جديدة.</p>
+        <p class="cv-note">يُنزَّل الملف مباشرة بمقاس A4. الكاملة بكل التفاصيل، والمختصرة بملخص قصير لكل عنصر وسطور موجزة للأقسام الطويلة.</p>
         <div class="cv-act">
-          <button type="button" class="pill" data-cv-go>إنشاء الملف</button>
-          <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download>تنزيل النسخة الكاملة</a>
+          <button type="button" class="pill" data-cv-go="full">استخراج السيرة كاملة</button>
+          <button type="button" class="pill ghost" data-cv-go="short">استخراج السيرة المختصرة</button>
+          <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download>النسخة الكاملة الجاهزة</a>
           <button type="submit" class="cv-x" value="close">إلغاء</button>
         </div>
       </form>

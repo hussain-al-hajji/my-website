@@ -5,7 +5,7 @@ const dlg = document.getElementById('cvDialog');
 const PT = 0.75, MM = 72 / 25.4;                       // بكسل CSS إلى نقطة، وملم إلى نقطة
 const A4 = [595.28, 841.89], TOP = 14 * MM, BOTTOM = 17 * MM, LEFT = 15 * MM, GAP = 6 * MM;
 
-async function build(ids) {
+async function build(ids, short) {
   const { PDFDocument, StandardFonts, rgb, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } = await import('pdf-lib');
   const root = dlg.dataset.parts;
   // manifest يحدّد إصدار الأجزاء؛ إن كان قديماً (مخزَّناً) فتغيب أجزاؤه، فيُعاد جلبه بلاحقة جديدة
@@ -25,8 +25,9 @@ async function build(ids) {
   const room = () => y - BOTTOM;
   fresh(); // الخبرات تبدأ من الصفحة الثانية
 
-  for (const name of [...ids, 'tail']) {
-    const m = manifest[name]; if (!m) continue;
+  const pre = short ? 's-' : '';
+  for (const key of [...ids, 'tail']) {
+    const name = pre + key, m = manifest[name]; if (!m) continue;
     const src = await load(name);
     const [emb] = await out.embedPdf(src, [0]);
     // حماية من اختلاط الإصدارات: مقاس الصفحة الفعلي يجب أن يطابق ما سُجّل وقت التوليد وإلا نعود للنسخة الكاملة
@@ -79,7 +80,6 @@ async function build(ids) {
 if (dlg && typeof dlg.showModal === 'function') {
   const KEY = 'cv-sections';
   const boxes = [...dlg.querySelectorAll('.cv-opt input')];
-  const go = dlg.querySelector('[data-cv-go]');
   try { const saved = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(saved)) boxes.forEach((b) => { b.checked = saved.includes(b.value); }); } catch { /* تجاهل */ }
   document.addEventListener('click', (e) => {
     const a = e.target.closest?.('a[href$="hussain-al-hajji-profile.pdf"]');
@@ -87,19 +87,21 @@ if (dlg && typeof dlg.showModal === 'function') {
     e.preventDefault(); dlg.showModal(); dlg.querySelector('h2').focus();
   });
   dlg.querySelectorAll('[data-cv-all]').forEach((b) => b.addEventListener('click', () => boxes.forEach((x) => { x.checked = b.dataset.cvAll === '1'; })));
-  go.addEventListener('click', async () => {
+  dlg.querySelectorAll('[data-cv-go]').forEach((go) => go.addEventListener('click', async () => {
     const ids = boxes.filter((b) => b.checked).map((b) => b.value);
     try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch { /* تجاهل */ }
-    const label = go.textContent; go.disabled = true; go.textContent = 'جارٍ إنشاء الملف…';
+    const all = dlg.querySelectorAll('[data-cv-go]'), labels = [...all].map((b) => b.textContent);
+    all.forEach((b) => { b.disabled = true; });
+    go.textContent = 'جارٍ إنشاء الملف…';
     try {
-      const url = URL.createObjectURL(new Blob([await build(ids)], { type: 'application/pdf' }));
-      const a = Object.assign(document.createElement('a'), { href: url, download: 'hussain-al-hajji-cv.pdf' });
+      const url = URL.createObjectURL(new Blob([await build(ids, go.dataset.cvGo === 'short')], { type: 'application/pdf' }));
+      const a = Object.assign(document.createElement('a'), { href: url, download: go.dataset.cvGo === 'short' ? 'hussain-al-hajji-cv-short.pdf' : 'hussain-al-hajji-cv.pdf' });
       document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
       dlg.close();
     } catch (err) {
       console.error(err);
       location.href = dlg.querySelector('a[download]').href; // تعذّر الدمج: تُنزَّل النسخة الكاملة
-    } finally { go.disabled = false; go.textContent = label; }
-  });
+    } finally { all.forEach((b, i) => { b.disabled = false; b.textContent = labels[i]; }); }
+  }));
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 }

@@ -92,17 +92,22 @@ try {
     await cover.pdf({ path: path.join(parts, 'cover.pdf'), printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
     await cover.close();
     const manifest = {};
-    for (const [name, qs, tail] of [...ids.map((id) => [id, `part=sec&s=${encodeURIComponent(id)}&pack=1`, false]), ['tail', 'part=tail&pack=1', true]]) {
+    const plan = [];
+    for (const [pre, mode] of [['', ''], ['s-', '&mode=short']]) {
+      plan.push(...ids.map((id) => [pre + id, `part=sec&s=${encodeURIComponent(id)}&pack=1${mode}`, false]), [pre + 'tail', `part=tail&pack=1${mode}`, true]);
+    }
+    for (const [name, qs, tail] of plan) {
       const page = await browser.newPage({ viewport: { width: 680, height: 900 } });
       await page.goto(`http://127.0.0.1:${port}${base}/profile?${qs}`, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
       await page.emulateMedia({ media: 'print' });
       const info = await page.evaluate((isTail) => {
-        const els = [...document.querySelectorAll(isTail ? '[data-tail]' : '[data-sec]')].filter((e) => !e.classList.contains('pf-off'));
+        const shown = (e) => e.getClientRects().length > 0;
+        const els = [...document.querySelectorAll(isTail ? '[data-tail]' : '[data-sec]')].filter((e) => !e.classList.contains('pf-off') && shown(e));
         const y = (e, k) => e.getBoundingClientRect()[k] + scrollY;
         const top = y(els[0], 'top'), bottom = y(els.at(-1), 'bottom');
-        const brk = [...document.querySelectorAll('[data-brk]')].filter((e) => !e.closest('.pf-off')).map((e) => y(e, 'top') - top);
-        const th = els[0].querySelector('.pf-tbl thead');
+        const brk = [...document.querySelectorAll('[data-brk]')].filter((e) => !e.closest('.pf-off') && shown(e)).map((e) => y(e, 'top') - top);
+        const th = [...els[0].querySelectorAll('.pf-tbl thead')].find(shown);
         return { w: document.querySelector('.pf').getBoundingClientRect().width, h: bottom - top, brk: brk.slice(1), top, thead: th ? [y(th, 'top') - top, y(th, 'bottom') - top] : null };
       }, tail);
       const out = path.join(parts, name + '.pdf');
@@ -114,7 +119,7 @@ try {
       total += fs.statSync(out).size;
     }
     fs.writeFileSync(path.join(root, 'manifest.json'), JSON.stringify({ v: ver, parts: manifest }));
-    console.log(`[pdf] dist/cv-parts · ${ids.length + 2} جزءاً · ${(total / 1024).toFixed(0)} KB`);
+    console.log(`[pdf] dist/cv-parts · ${plan.length + 1} جزءاً · ${(total / 1024).toFixed(0)} KB`);
   }
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);

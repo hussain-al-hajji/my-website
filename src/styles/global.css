@@ -1226,3 +1226,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .cv-x{margin-inline-start:auto;font:inherit;font-size:.9rem;background:none;border:0;color:var(--ink-2);cursor:pointer;padding:6px 8px}
 @media (max-width:560px){.cv-list{grid-template-columns:1fr}.cv-box{padding:22px 18px 18px}}
 .cv-box h2:focus{outline:0}
+.cv-act .pill.ghost{background:#fff;color:var(--action);border:1.5px solid var(--action)}
+.cv-act .pill:disabled{opacity:.6;cursor:progress}
