@@ -27,13 +27,17 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
     if (g.block === 'tracks') return (
       <section class="sec alt tight" id={g.id}>{anchor}
         <div class="wide">
-          <h2 class="h2" style="margin-bottom:28px" data-in>{g.title}.</h2>
-          <div class="cards">
-            {p.tracks.map((t) => (
-              <article class="ccard" data-in><div class="body"><h3>{t.title}</h3><p>{t.text}</p></div></article>
-            ))}
-          </div>
-          <p class="lede" style="margin-top:36px">{p.closing}</p>
+          <details class="fold-sec">
+            <summary><h2 class="h2" data-in>{g.title}.</h2><span class="tri" aria-hidden="true"></span></summary>
+            <div class="fold-body">
+              <div class="cards">
+                {p.tracks.map((t) => (
+                  <article class="ccard"><div class="body"><h3>{t.title}</h3><p>{t.text}</p></div></article>
+                ))}
+              </div>
+              <p class="lede" style="margin-top:36px">{p.closing}</p>
+            </div>
+          </details>
         </div>
       </section>
     );
@@ -41,7 +45,9 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
     return (
     <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={g.id}>{anchor}
       <div class="measure">
-        <h2 class="h2" style="margin-bottom:28px" data-in>{g.title}.</h2>
+        <details class="fold-sec">
+          <summary><h2 class="h2" data-in>{g.title}.</h2><span class="tri" aria-hidden="true"></span></summary>
+          <div class="fold-body">
         {g.style === 'chips' ? (
           <ul class="chip-list">{items.map((it) => <li>{it.title}</li>)}</ul>
         ) : (
@@ -71,9 +77,12 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
             ))}
           </ol>
         )}
+          </div>
+        </details>
       </div>
     </section>
     );
   })}
-  <script>import '../scripts/more.js';</script>
+  <script>import '../scripts/more.js';
+import '../scripts/fold.js';</script>
 </Base>

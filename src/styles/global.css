@@ -1120,3 +1120,16 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .gnav .sub a.ic-contact::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.6'/%3E%3Cpath d='M4.5 20c.9-3.8 3.8-5.6 7.5-5.6s6.6 1.8 7.5 5.6'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.6'/%3E%3Cpath d='M4.5 20c.9-3.8 3.8-5.6 7.5-5.6s6.6 1.8 7.5 5.6'/%3E%3C/svg%3E")}
 .deck-hint{font-size:var(--t-small);color:var(--ink-2)}
 @media (hover:hover) and (pointer:fine){.deck-hint{display:none}}
+
+/* أقسام «عنّي» المطوية: العنوان يفتح القسم، ومثلث يشير للأسفل بجانبه */
+.fold-sec>summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:18px;padding:4px 0 8px;-webkit-tap-highlight-color:transparent}
+.fold-sec>summary::-webkit-details-marker{display:none}
+.fold-sec>summary h2{margin:0}
+.fold-sec .tri{flex:none;width:0;height:0;margin-top:.62em;border-inline:9px solid transparent;border-top:12px solid var(--action);transition:transform .25s var(--ease);font-size:var(--t-h2,1.6rem)}
+.fold-sec[open]>summary .tri{transform:rotate(180deg)}
+.fold-sec>summary:hover .tri{border-top-color:var(--ink)}
+.fold-sec>summary:focus-visible{outline:2px solid var(--action);outline-offset:6px;border-radius:6px}
+.fold-sec .fold-body{padding-top:20px}
+.dark .fold-sec>summary:hover .tri{border-top-color:var(--on-dark)}
+@media (prefers-reduced-motion:reduce){.fold-sec .tri{transition:none}}
+.sec.tight:has(>.measure>.fold-sec:not([open])),.sec.tight:has(>.wide>.fold-sec:not([open])){padding-block:clamp(22px,3.2vw,38px)}

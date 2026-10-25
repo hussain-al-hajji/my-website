@@ -16,6 +16,8 @@ boxes.forEach((box) => {
     if (!open) box.closest('li')?.scrollIntoView({ block: 'nearest' });
   });
 });
+// المحتوى داخل قسم مطوي بلا قياس؛ يُقاس عند فتح القسم
+document.querySelectorAll('details.fold-sec').forEach((d) => d.addEventListener('toggle', () => d.open && measure()));
 measure();
 document.fonts?.ready.then(measure);
 let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(measure, 150); });
