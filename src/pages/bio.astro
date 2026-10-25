@@ -50,6 +50,31 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
           <div class="fold-body">
         {g.style === 'chips' ? (
           <ul class="chip-list">{items.map((it) => <li>{it.title}</li>)}</ul>
+        ) : g.style === 'table' ? (
+          <table class="bio-tbl">
+            <thead><tr><th class="c-logo"><span class="sr-only">الشعار</span></th><th class="c-org">الجهة</th><th class="c-title">المسمى أو العنوان</th>{items.some((x) => x.desc || x.details) && <th class="c-desc">الوصف</th>}{items.some((x) => x.period) && <th class="c-date">التاريخ</th>}</tr></thead>
+            <tbody>
+              {items.map((it) => (
+                <tr>
+                  <td class="c-logo">{it.logo ? <img src={href(it.logo)} alt="" loading="lazy" width="48" height="48"> : null}</td>
+                  <td data-l="الجهة" class="c-org">{it.subtitle}</td>
+                  <td data-l="المسمى" class="c-title">{it.link ? <a href={it.link} rel="noopener"><b>{it.title}</b></a> : <b>{it.title}</b>}</td>
+                  {items.some((x) => x.desc || x.details) && <td data-l="الوصف" class="c-desc">
+                    {(it.desc || it.details) && (
+                      <div class="more-box" data-more>
+                        <div class="more-body">
+                          {it.desc && <p>{it.desc}</p>}
+                          {it.details && <div class="more-det" set:html={detailsHtml(it.details)}></div>}
+                        </div>
+                        <button type="button" class="more-btn" aria-expanded="false" hidden>عرض المزيد</button>
+                      </div>
+                    )}
+                  </td>}
+                  {items.some((x) => x.period) && <td data-l="التاريخ" class="c-date">{it.period}</td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <ol class="tl">
             {items.map((it) => (

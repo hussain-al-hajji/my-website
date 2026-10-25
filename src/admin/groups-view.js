@@ -3,7 +3,7 @@
 import { resolveGroups, GROUP_PAGES } from '../lib/group-defaults.js';
 
 const strip = (g) => { const o = { id: g.id, title: g.title }; if (g.hidden) o.hidden = true; if (g.block) o.block = g.block; if (g.style) o.style = g.style; return o; };
-const STYLES = [['', 'قائمة زمنية'], ['chips', 'وسوم']];
+const STYLES = [['', 'قائمة زمنية'], ['table', 'جدول'], ['chips', 'وسوم']];
 let drag = null; // { kind: 'group'|'item', id|index }
 
 export function groupedView(c) {

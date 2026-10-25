@@ -99,7 +99,8 @@
       },
       {
         "id": "projects",
-        "title": "مشاريع تدريبية مرموقة"
+        "title": "مشاركات تدريبية مميزة",
+        "style": "table"
       },
       {
         "id": "achievements",
@@ -111,7 +112,8 @@
       },
       {
         "id": "committees",
-        "title": "اللجان والعضويات"
+        "title": "اللجان والعضويات",
+        "style": "table"
       },
       {
         "id": "leadership",
@@ -127,7 +129,8 @@
       },
       {
         "id": "learning",
-        "title": "التعلّم والتطوير"
+        "title": "الدورات التدريبية",
+        "style": "table"
       },
       {
         "id": "sdgs",

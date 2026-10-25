@@ -24,7 +24,7 @@ const fmt = (n) => (n >= 1000 && n !== site.stats.since ? n.toLocaleString('en-U
 const plus = (n) => (n === site.stats.since ? '' : '+');
 // أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
-const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title]);
+const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title, g.style]);
 const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
 const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
@@ -52,9 +52,25 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         </ul>
       </section>
 
-      {secs.map(([s, title]) => (
+      {secs.map(([s, title, style]) => (
         <section class="pf-sec">
           <h2>{title}</h2>
+          {style === 'table' ? (
+            <table class="pf-tbl">
+              <thead><tr><th class="c-logo"></th><th class="c-org">الجهة</th><th class="c-title">المسمى أو العنوان</th>{by(s).some((x) => x.desc || x.details) && <th class="c-desc">الوصف</th>}{by(s).some((x) => x.period) && <th class="c-date">التاريخ</th>}</tr></thead>
+              <tbody>
+                {by(s).map((x) => (
+                  <tr>
+                    <td class="c-logo">{x.logo ? <img src={href(x.logo)} alt="" width="32" height="32"> : null}</td>
+                    <td class="c-org">{x.subtitle}</td>
+                    <td class="c-title">{x.title}</td>
+                    {by(s).some((y) => y.desc || y.details) && <td class="c-desc">{x.desc && <p>{x.desc}</p>}{x.details && <div class="pf-det" set:html={detailsHtml(x.details)}></div>}</td>}
+                    {by(s).some((y) => y.period) && <td class="c-date">{x.period}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
           <ul class="pf-list">
             {by(s).map((x) => (
               <li class="pf-item">
@@ -68,6 +84,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
               </li>
             ))}
           </ul>
+          )}
         </section>
       ))}
 
