@@ -74,3 +74,13 @@
 .pf-tbl .c-desc{font-size:8.8pt;color:#2c2b28}
 .pf-tbl .c-desc p{margin:0}
 .pf-tbl .pf-det{margin-top:1mm}
+
+/* الصفحة الأولى: المهارات ومجالات الخبرة والقيم بوسوم أنيقة، وتبدأ الخبرات من الصفحة الثانية */
+.pf-tags{display:grid;gap:2.6mm}
+.pf-tagrow{display:grid;grid-template-columns:27mm 1fr;gap:4mm;align-items:start;padding:2.8mm 3.4mm;background:#f7f5f0;border-radius:2mm;border-inline-start:1.2mm solid #835410;break-inside:avoid}
+.pf-sec .pf-tagrow h2{display:block;margin:0;padding:0;border:0;font-size:9.6pt;line-height:1.5;color:#835410;font-weight:800;break-after:auto}
+.pf-sec .pf-tagrow h2::before{display:none}
+.pf-tagrow ul{list-style:none;display:flex;flex-wrap:wrap;gap:1.4mm 1.8mm}
+.pf-tagrow li{padding:.7mm 2.6mm;border:.25mm solid #d8cfba;border-radius:99mm;background:#fff;font-size:8.6pt;line-height:1.6;color:#1b1b1a}
+.pf-newpage{break-before:page;margin-top:0}
+@media print{.pf-tagrow,.pf-tagrow li{-webkit-print-color-adjust:exact;print-color-adjust:exact}}

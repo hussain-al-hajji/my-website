@@ -25,6 +25,8 @@ const plus = (n) => (n === site.stats.since ? '' : '+');
 // أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
 const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title, g.style]);
+// أقسام الوسوم (المهارات ومجالات الخبرة والقيم) تُعرض في الصفحة الأولى تحت الملخص بترتيبها في لوحة التحكم
+const tagSecs = getGroups('bio', bio).filter((g) => !g.block && g.style === 'chips' && by(g.id).length);
 const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
 const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
@@ -52,8 +54,19 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         </ul>
       </section>
 
-      {secs.map(([s, title, style]) => (
-        <section class="pf-sec">
+      {tagSecs.length > 0 && (
+        <section class="pf-sec pf-tags">
+          {tagSecs.map((g) => (
+            <div class="pf-tagrow">
+              <h2>{g.title}</h2>
+              <ul>{by(g.id).map((x) => <li>{x.title}</li>)}</ul>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {secs.map(([s, title, style], i) => (
+        <section class={'pf-sec' + (i === 0 && tagSecs.length ? ' pf-newpage' : '')}>
           <h2>{title}</h2>
           {style === 'table' ? (
             <table class="pf-tbl">
