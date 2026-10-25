@@ -131,11 +131,6 @@
         "style": "table"
       },
       {
-        "id": "mentoring",
-        "title": "الإرشاد والمسرّعات",
-        "hidden": true
-      },
-      {
         "id": "sdgs",
         "title": "أهداف التنمية المستدامة"
       },
@@ -146,6 +141,11 @@
       {
         "id": "volunteer",
         "title": "العمل التطوعي"
+      },
+      {
+        "id": "mentoring",
+        "title": "الإرشاد والمسرّعات",
+        "hidden": true
       }
     ],
     "partners": [
