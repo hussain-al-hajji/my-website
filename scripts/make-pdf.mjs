@@ -73,7 +73,11 @@ try {
   }
   // أجزاء السيرة (الغلاف، كل قسم، الخاتمة) تُدمج في متصفح الزائر لتصدير النسخة المخصّصة بمقاس A4 مباشرة
   if (fs.existsSync(path.join(dist, 'profile.html'))) {
-    const parts = path.join(dist, 'cv-parts');
+    // كل بناء في مجلد بإصدار خاص، فلا يختلط جزء مخزَّن قديماً في المتصفح أو الشبكة بملف manifest جديد
+    const ver = Date.now().toString(36);
+    const root = path.join(dist, 'cv-parts');
+    fs.rmSync(root, { recursive: true, force: true });
+    const parts = path.join(root, ver);
     fs.mkdirSync(parts, { recursive: true });
     const probe = await browser.newPage();
     await probe.goto(`http://127.0.0.1:${port}${base}/profile`, { waitUntil: 'networkidle' });
@@ -106,10 +110,10 @@ try {
       await page.addStyleTag({ content: `@page{size:${info.w}px ${Math.ceil(info.top + info.h) + 2}px;margin:0}html,body{margin:0}` });
       await page.pdf({ path: out, printBackground: true, width: `${info.w}px`, height: `${Math.ceil(info.top + info.h) + 2}px`, margin: { top: 0, right: 0, bottom: 0, left: 0 }, pageRanges: '1' });
       await page.close();
-      manifest[name] = { w: info.w, top: info.top, h: info.h, brk: info.brk, thead: info.thead };
+      manifest[name] = { w: info.w, top: info.top, h: info.h, pageH: Math.ceil(info.top + info.h) + 2, brk: info.brk, thead: info.thead };
       total += fs.statSync(out).size;
     }
-    fs.writeFileSync(path.join(parts, 'manifest.json'), JSON.stringify(manifest));
+    fs.writeFileSync(path.join(root, 'manifest.json'), JSON.stringify({ v: ver, parts: manifest }));
     console.log(`[pdf] dist/cv-parts · ${ids.length + 2} جزءاً · ${(total / 1024).toFixed(0)} KB`);
   }
 } catch (e) {

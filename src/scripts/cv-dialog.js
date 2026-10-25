@@ -7,9 +7,14 @@ const A4 = [595.28, 841.89], TOP = 14 * MM, BOTTOM = 17 * MM, LEFT = 15 * MM, GA
 
 async function build(ids) {
   const { PDFDocument, StandardFonts, rgb, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } = await import('pdf-lib');
-  const base = dlg.dataset.parts;
-  const load = async (name) => PDFDocument.load(await (await fetch(`${base}/${name}.pdf`)).arrayBuffer());
-  const manifest = await (await fetch(`${base}/manifest.json`)).json();
+  const root = dlg.dataset.parts;
+  // manifest يحدّد إصدار الأجزاء؛ إن كان قديماً (مخزَّناً) فتغيب أجزاؤه، فيُعاد جلبه بلاحقة جديدة
+  const fetchManifest = async (bust) => { const r = await fetch(`${root}/manifest.json${bust ? '?t=' + Date.now() : ''}`, { cache: 'no-store' }); if (!r.ok) throw new Error('manifest'); return r.json(); };
+  let data = await fetchManifest(false);
+  const head = await fetch(`${root}/${data.v}/cover.pdf`, { method: 'HEAD' }).catch(() => null);
+  if (!head || !head.ok) data = await fetchManifest(true);
+  const manifest = data.parts, base = `${root}/${data.v}`;
+  const load = async (name) => { const r = await fetch(`${base}/${name}.pdf`); if (!r.ok) throw new Error(name); return PDFDocument.load(await r.arrayBuffer()); };
   const out = await PDFDocument.create();
 
   const cover = await load('cover');
@@ -24,6 +29,8 @@ async function build(ids) {
     const m = manifest[name]; if (!m) continue;
     const src = await load(name);
     const [emb] = await out.embedPdf(src, [0]);
+    // حماية من اختلاط الإصدارات: مقاس الصفحة الفعلي يجب أن يطابق ما سُجّل وقت التوليد وإلا نعود للنسخة الكاملة
+    if (Math.abs(emb.width - m.w * PT) > 3 || Math.abs(emb.height - m.pageH * PT) > 3) throw new Error('size mismatch ' + name);
     const W = m.w * PT, H = (m.h + m.top) * PT;
     // مقطع من الصفحة الطويلة من a إلى b (بكسل من أعلاها) يُرسم أعلاه عند y
     const draw = (a, b, yTop) => {
