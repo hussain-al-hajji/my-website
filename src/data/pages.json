@@ -68,6 +68,16 @@
         "block": "intro"
       },
       {
+        "id": "skills",
+        "title": "المهارات",
+        "style": "chips"
+      },
+      {
+        "id": "values",
+        "title": "القيم",
+        "style": "chips"
+      },
+      {
         "id": "tracks",
         "title": "مسارات العمل",
         "block": "tracks"
@@ -128,16 +138,6 @@
       {
         "id": "expertise",
         "title": "مجالات الخبرة",
-        "style": "chips"
-      },
-      {
-        "id": "skills",
-        "title": "المهارات",
-        "style": "chips"
-      },
-      {
-        "id": "values",
-        "title": "القيم",
         "style": "chips"
       }
     ],
