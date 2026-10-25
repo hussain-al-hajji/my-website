@@ -61,8 +61,8 @@
 }
 
 /* جدول بلا حدود: شعار، جهة، مسمى، وصف، تاريخ */
-.pf-tbl{width:100%;border-collapse:collapse;table-layout:fixed}
-.pf-tbl th{font-size:8.2pt;font-weight:600;color:#6b6a64;text-align:start;padding:0 2mm 1.4mm;white-space:nowrap}
+.pf-tbl{width:100%;border-collapse:collapse;table-layout:fixed;border-top:.5mm solid #835410;border-bottom:.5mm solid #835410}
+.pf-tbl th{font-size:8.2pt;font-weight:600;color:#6b6a64;text-align:start;padding:1.8mm 2mm 1.6mm;white-space:nowrap}
 .pf-tbl td{padding:2mm;vertical-align:top;border:0;line-height:1.55;overflow-wrap:anywhere}
 .pf-tbl tbody tr{break-inside:avoid}
 .pf-tbl tbody tr:nth-child(odd) td{background:#f7f5f0}
