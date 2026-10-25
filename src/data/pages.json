@@ -74,6 +74,11 @@
         "style": "chips"
       },
       {
+        "id": "expertise",
+        "title": "مجالات الخبرة",
+        "style": "chips"
+      },
+      {
         "id": "values",
         "title": "القيم",
         "style": "chips"
@@ -135,11 +140,6 @@
       {
         "id": "volunteer",
         "title": "العمل التطوعي"
-      },
-      {
-        "id": "expertise",
-        "title": "مجالات الخبرة",
-        "style": "chips"
       }
     ],
     "partners": [
