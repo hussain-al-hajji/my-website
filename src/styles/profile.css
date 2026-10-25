@@ -87,3 +87,11 @@
 .pf-tagrow li{padding:.7mm 2.6mm;border:.25mm solid #d8cfba;border-radius:99mm;background:#fff;font-size:8.6pt;line-height:1.6;color:#1b1b1a}
 .pf-newpage{break-before:page;margin-top:0}
 @media print{.pf-tagrow,.pf-tagrow li{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* وضع التوليد المتصل: جزء واحد بعرض 180mm وبلا حواف، يُقصّ وتُرصّ أجزاؤه في المتصفح */
+.pf-pack .pf-page{padding:0;background:#fff;min-height:0}
+.pf-pack .pf{width:180mm;max-width:none;padding:0;box-shadow:none;margin:0}
+.pf-pack .pf-sec{margin-top:0}
+.pf-pack [data-tail]+[data-tail]{margin-top:6mm}
+.pf-pack .pf-foot{padding-top:4mm}
+.pf-pack .pf-bar{display:none}

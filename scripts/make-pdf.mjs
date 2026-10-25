@@ -79,19 +79,38 @@ try {
     await probe.goto(`http://127.0.0.1:${port}${base}/profile`, { waitUntil: 'networkidle' });
     const ids = await probe.evaluate(() => [...document.querySelectorAll('[data-sec]')].map((e) => e.dataset.sec));
     await probe.close();
-    const jobs = [['cover', 'part=cover'], ...ids.map((id) => [id, `part=sec&s=${encodeURIComponent(id)}`]), ['tail', 'part=tail']];
+    // الغلاف بمقاس A4 كاملاً؛ وكل قسم والخاتمة صفحة واحدة طويلة بعرض 180mm، مع إحداثيات نقاط القصّ (بداية كل عنصر) ليرصّها المتصفح متصلة حسب اختيار الزائر
     let total = 0;
-    for (const [name, qs] of jobs) {
-      const page = await browser.newPage();
+    const cover = await browser.newPage();
+    await cover.goto(`http://127.0.0.1:${port}${base}/profile?part=cover`, { waitUntil: 'networkidle' });
+    await cover.evaluate(() => document.fonts.ready);
+    await cover.emulateMedia({ media: 'print' });
+    await cover.pdf({ path: path.join(parts, 'cover.pdf'), printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
+    await cover.close();
+    const manifest = {};
+    for (const [name, qs, tail] of [...ids.map((id) => [id, `part=sec&s=${encodeURIComponent(id)}&pack=1`, false]), ['tail', 'part=tail&pack=1', true]]) {
+      const page = await browser.newPage({ viewport: { width: 680, height: 900 } });
       await page.goto(`http://127.0.0.1:${port}${base}/profile?${qs}`, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
       await page.emulateMedia({ media: 'print' });
+      const info = await page.evaluate((isTail) => {
+        const els = [...document.querySelectorAll(isTail ? '[data-tail]' : '[data-sec]')].filter((e) => !e.classList.contains('pf-off'));
+        const y = (e, k) => e.getBoundingClientRect()[k] + scrollY;
+        const top = y(els[0], 'top'), bottom = y(els.at(-1), 'bottom');
+        const brk = [...document.querySelectorAll('[data-brk]')].filter((e) => !e.closest('.pf-off')).map((e) => y(e, 'top') - top);
+        const th = els[0].querySelector('.pf-tbl thead');
+        return { w: document.querySelector('.pf').getBoundingClientRect().width, h: bottom - top, brk: brk.slice(1), top, thead: th ? [y(th, 'top') - top, y(th, 'bottom') - top] : null };
+      }, tail);
       const out = path.join(parts, name + '.pdf');
-      await page.pdf({ path: out, printBackground: true, format: 'A4', preferCSSPageSize: false, margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
+      // يُقصّ أعلى الصفحة عند بداية القسم، فتبدأ الصفحة الطويلة من الحافة العليا للقسم
+      await page.addStyleTag({ content: `@page{size:${info.w}px ${Math.ceil(info.top + info.h) + 2}px;margin:0}html,body{margin:0}` });
+      await page.pdf({ path: out, printBackground: true, width: `${info.w}px`, height: `${Math.ceil(info.top + info.h) + 2}px`, margin: { top: 0, right: 0, bottom: 0, left: 0 }, pageRanges: '1' });
       await page.close();
+      manifest[name] = { w: info.w, top: info.top, h: info.h, brk: info.brk, thead: info.thead };
       total += fs.statSync(out).size;
     }
-    console.log(`[pdf] dist/cv-parts · ${jobs.length} جزءاً · ${(total / 1024).toFixed(0)} KB`);
+    fs.writeFileSync(path.join(parts, 'manifest.json'), JSON.stringify(manifest));
+    console.log(`[pdf] dist/cv-parts · ${ids.length + 2} جزءاً · ${(total / 1024).toFixed(0)} KB`);
   }
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);

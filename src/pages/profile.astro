@@ -75,7 +75,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
               <thead><tr><th class="c-logo"></th><th class="c-org">الجهة</th><th class="c-title">المسمى أو العنوان</th>{by(s).some((x) => x.desc || x.details) && <th class="c-desc">الوصف</th>}{by(s).some((x) => x.period) && <th class="c-date">التاريخ</th>}</tr></thead>
               <tbody>
                 {by(s).map((x) => (
-                  <tr>
+                  <tr data-brk>
                     <td class="c-logo">{x.logo ? <img src={href(x.logo)} alt="" width="32" height="32"> : null}</td>
                     <td class="c-org">{x.subtitle}</td>
                     <td class="c-title">{x.title}</td>
@@ -88,7 +88,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
           ) : (
           <ul class="pf-list">
             {by(s).map((x) => (
-              <li class="pf-item">
+              <li class="pf-item" data-brk>
                 {x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : by(s).some((y) => y.logo) ? <span class="pf-logo ph"></span> : null}
                 <div class="pf-body">
                   <div class="pf-row"><h3>{x.title}</h3></div>
@@ -107,16 +107,16 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       <section class="pf-sec" data-tail>
         <h2>الحقائب التدريبية</h2>
         <ul class="pf-kits">
-          {kits.map((k) => <li><b>{k.short}</b> <span>{k.duration}</span></li>)}
+          {kits.map((k) => <li data-brk><b>{k.short}</b> <span>{k.duration}</span></li>)}
         </ul>
       </section>
 
-      <section class="pf-sec" data-tail>
+      <section class="pf-sec" data-tail data-brk>
         <h2>من الجهات التي عملتُ معها</h2>
         <p class="pf-p">{orgs.join('، ')}.</p>
       </section>
 
-      <footer class="pf-foot" data-tail>
+      <footer class="pf-foot" data-tail data-brk>
         <ul>
           <li><span>الموقع</span><b class="ltr">{siteShort}</b></li>
           <li><span>البريد</span><b class="ltr">{c.email}</b></li>
@@ -132,6 +132,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
     const q = new URLSearchParams(location.search);
     const off = (el, v) => el.classList.toggle('pf-off', v);
     const part = q.get('part');
+    if (q.get('pack') === '1') document.body.classList.add('pf-pack');
     const secs = [...document.querySelectorAll('[data-sec]')];
     if (q.has('s')) {
       const want = new Set(q.get('s').split(',').filter(Boolean));
