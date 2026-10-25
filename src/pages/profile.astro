@@ -67,7 +67,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       )}
 
       {secs.map(([s, title, style], i) => (
-        <section class={'pf-sec' + (i === 0 && tagSecs.length ? ' pf-newpage' : '')}>
+        <section class={'pf-sec' + (i === 0 && tagSecs.length ? ' pf-newpage' : '')} data-sec={s}>
           <h2>{title}</h2>
           {style === 'table' ? (
             <table class="pf-tbl">
@@ -126,4 +126,18 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       </footer>
     </article>
   </main>
+  <script>
+    // ‎/profile?s=career,committees: يُبقي الأقسام المختارة فقط (النبذة والوسوم والحقائب ثابتة)، وتبدأ أول خبرة من صفحة جديدة؛ و print=1 تفتح الطباعة
+    const q = new URLSearchParams(location.search);
+    if (q.has('s')) {
+      const want = new Set(q.get('s').split(',').filter(Boolean));
+      const secs = [...document.querySelectorAll('[data-sec]')];
+      secs.forEach((el) => { el.hidden = !want.has(el.dataset.sec); el.classList.remove('pf-newpage'); });
+      secs.find((el) => !el.hidden)?.classList.add('pf-newpage');
+    }
+    if (q.get('print') === '1') {
+      const go = () => setTimeout(() => print(), 300);
+      Promise.all([document.fonts?.ready, ...[...document.images].map((i) => (i.complete ? 1 : new Promise((r) => { i.onload = i.onerror = r; })))]).then(go, go);
+    }
+  </script>
 </Base>

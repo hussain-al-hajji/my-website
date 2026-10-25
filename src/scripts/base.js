@@ -9,6 +9,7 @@ import './ink.js';
 import './season.js';
 import './hit.js';
 import './rail.js';
+import './cv-dialog.js';
 
 // قائمة «مركز المستندات» في الشريط العلوي: تُفتح بالمرور أو الضغط، وتُغلق بالضغط خارجها أو Esc
 (() => {

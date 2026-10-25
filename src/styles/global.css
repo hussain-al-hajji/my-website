@@ -1201,3 +1201,28 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 }
 .dark .fold-sec{background:#1d1d1b}
 .fold-sec .bio-tbl .c-date{color:var(--action);font-weight:600;font-size:.82rem}
+
+/* نافذة تخصيص السيرة الذاتية */
+.cv-dlg{position:fixed;inset:0;margin:auto;border:0;border-radius:20px;padding:0;width:min(560px,calc(100vw - 28px));max-height:calc(100vh - 40px);color:var(--ink);background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.28)}
+.cv-dlg::backdrop{background:rgba(20,18,14,.55);backdrop-filter:blur(3px)}
+.cv-box{padding:28px 28px 22px;display:grid;gap:14px;max-height:calc(100vh - 40px);overflow:auto}
+.cv-box h2{font-size:1.5rem;line-height:1.3}
+.cv-sub{color:var(--ink-2);font-size:var(--t-small);line-height:1.8}
+.cv-fixed{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.cv-fixed li{padding:4px 14px;border-radius:99px;background:color-mix(in srgb,var(--action) 10%,#fff);color:var(--action);font-size:.86rem;font-weight:600}
+.cv-fixed li::before{content:"✓";margin-inline-end:6px}
+.cv-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding-top:14px;border-top:1px solid var(--hair)}
+.cv-head span{display:flex;gap:6px}
+.cv-head button{font:inherit;font-size:.84rem;color:var(--action);background:none;border:0;padding:4px 8px;cursor:pointer;border-radius:8px}
+.cv-head button:hover{background:color-mix(in srgb,var(--action) 8%,#fff)}
+.cv-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cv-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--hair);border-radius:12px;cursor:pointer;font-size:.92rem;line-height:1.4;transition:border-color .2s,background .2s}
+.cv-opt:has(input:checked){border-color:var(--action);background:color-mix(in srgb,var(--action) 7%,#fff)}
+.cv-opt input{accent-color:var(--action);width:18px;height:18px;flex:none}
+.cv-opt span{flex:1;min-width:0}
+.cv-opt em{font-style:normal;font-size:.78rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.cv-note{font-size:.84rem;color:var(--ink-2)}
+.cv-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.cv-x{margin-inline-start:auto;font:inherit;font-size:.9rem;background:none;border:0;color:var(--ink-2);cursor:pointer;padding:6px 8px}
+@media (max-width:560px){.cv-list{grid-template-columns:1fr}.cv-box{padding:22px 18px 18px}}
+.cv-box h2:focus{outline:0}

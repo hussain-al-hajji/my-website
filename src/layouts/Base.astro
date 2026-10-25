@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
-import { site, href, abs, getAnnouncement, GNAV, FOOT_DIR, contactLinks, stats, AUDIENCES, GOALS } from '../lib/site.js';
+import { site, href, abs, getAnnouncement, GNAV, FOOT_DIR, contactLinks, stats, AUDIENCES, GOALS, getGroups } from '../lib/site.js';
+import bioData from '../data/bio.json';
+import pagesData from '../data/pages.json';
 import { ogSlugSet, slugOf } from '../lib/pages.js';
 import { personSchema, breadcrumbSchema } from '../lib/seo.js';
 
@@ -39,6 +41,11 @@ const ann = getAnnouncement();
 const links = contactLinks();
 const st = stats();
 const person = personSchema();
+// نافذة تخصيص السيرة الذاتية: الأقسام المتاحة للاختيار، أما النبذة والوسوم (المهارات والخبرة والقيم) فثابتة في الملف
+const cvAll = getGroups('bio', bioData);
+const cvCount = (id) => bioData.filter((x) => x.section === id).length;
+const cvPick = cvAll.filter((g) => !g.block && g.style !== 'chips' && cvCount(g.id)).map((g) => ({ id: g.id, title: g.title, n: cvCount(g.id), on: (pagesData.bio.pdf || []).includes(g.id) }));
+const cvFixed = [cvAll.find((g) => g.block === 'intro')?.title || 'نبذة', ...cvAll.filter((g) => g.style === 'chips' && cvCount(g.id)).map((g) => g.title)];
 const crumbs = breadcrumbSchema(cleanPath, title);
 ---
 <!doctype html>
@@ -179,6 +186,26 @@ const crumbs = breadcrumbSchema(cleanPath, title);
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2.5 21.5Z"/><path d="M9.2 8.6c-.3 1.2.5 3.1 2 4.6s3.4 2.4 4.6 2l.9-1.3-2.2-1.1-.9.8c-.9-.4-1.9-1.3-2.4-2.3l.8-.9-1-2.1Z"/></svg>
       <span>تحدّث معي</span>
     </a>
+  )}
+
+  {!bare && (
+    <dialog id="cvDialog" class="cv-dlg" aria-labelledby="cvT" data-profile={href('/profile')}>
+      <form method="dialog" class="cv-box">
+        <h2 id="cvT" tabindex="-1">خصّص سيرتي الذاتية</h2>
+        <p class="cv-sub">اختر الأقسام التي تريد تضمينها في الملف. الأقسام التالية تُضمَّن دائماً:</p>
+        <ul class="cv-fixed">{cvFixed.map((t) => <li>{t}</li>)}</ul>
+        <div class="cv-head"><b>الأقسام الاختيارية</b><span><button type="button" data-cv-all="1">تحديد الكل</button><button type="button" data-cv-all="0">إلغاء الكل</button></span></div>
+        <div class="cv-list">
+          {cvPick.map((g) => <label class="cv-opt"><input type="checkbox" value={g.id} checked={g.on} /><span>{g.title}</span><em>{g.n}</em></label>)}
+        </div>
+        <p class="cv-note">يُفتح الملف في نافذة الطباعة، فاختر منها «حفظ بصيغة PDF».</p>
+        <div class="cv-act">
+          <button type="button" class="pill" data-cv-go>إنشاء الملف</button>
+          <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download>تنزيل النسخة الكاملة</a>
+          <button type="submit" class="cv-x" value="close">إلغاء</button>
+        </div>
+      </form>
+    </dialog>
   )}
 
   <div id="gt-el" class="notranslate" aria-hidden="true"></div>
