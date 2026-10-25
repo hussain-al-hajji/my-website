@@ -25,7 +25,8 @@ const fmt = (n) => (n >= 1000 ? n.toLocaleString('en-US') : String(n));
 const plus = () => '+';
 // أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
-const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title, g.style]);
+const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && by(g.id).length).map((g) => [g.id, g.title, g.style, want.has(g.id)]);
+const firstOn = secs.findIndex((x) => x[3]);
 // أقسام الوسوم (المهارات ومجالات الخبرة والقيم) تُعرض في الصفحة الأولى تحت الملخص بترتيبها في لوحة التحكم
 const tagSecs = getGroups('bio', bio).filter((g) => !g.block && g.style === 'chips' && by(g.id).length);
 const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -35,7 +36,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
   <main class="pf-page" id="main">
     <p class="no-print pf-bar"><a class="pill" href={href('/hussain-al-hajji-profile.pdf')} download>حمّل السيرة الذاتية (PDF)</a><button type="button" class="more" onclick="print()">طباعة</button></p>
     <article class="pf">
-      <header class="pf-head">
+      <header class="pf-head" data-cover>
         <div class="pf-id">
           <h1>{site.name}</h1>
           <p class="pf-role">{site.role}</p>
@@ -47,7 +48,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         <img class="pf-photo" src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694">
       </header>
 
-      <section class="pf-sec">
+      <section class="pf-sec" data-cover>
         <h2>الملخص المهني</h2>
         {p.intro.slice(0, 2).map((t) => <p class="pf-p">{fillTokens(t)}</p>)}
         <ul class="pf-nums">
@@ -56,7 +57,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       </section>
 
       {tagSecs.length > 0 && (
-        <section class="pf-sec pf-tags">
+        <section class="pf-sec pf-tags" data-cover>
           {tagSecs.map((g) => (
             <div class="pf-tagrow">
               <h2>{g.title}</h2>
@@ -66,8 +67,8 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         </section>
       )}
 
-      {secs.map(([s, title, style], i) => (
-        <section class={'pf-sec' + (i === 0 && tagSecs.length ? ' pf-newpage' : '')} data-sec={s}>
+      {secs.map(([s, title, style, on], i) => (
+        <section class={'pf-sec' + (i === firstOn && tagSecs.length ? ' pf-newpage' : '') + (on ? '' : ' pf-off')} data-sec={s}>
           <h2>{title}</h2>
           {style === 'table' ? (
             <table class="pf-tbl">
@@ -103,19 +104,19 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         </section>
       ))}
 
-      <section class="pf-sec">
+      <section class="pf-sec" data-tail>
         <h2>الحقائب التدريبية</h2>
         <ul class="pf-kits">
           {kits.map((k) => <li><b>{k.short}</b> <span>{k.duration}</span></li>)}
         </ul>
       </section>
 
-      <section class="pf-sec">
+      <section class="pf-sec" data-tail>
         <h2>من الجهات التي عملتُ معها</h2>
         <p class="pf-p">{orgs.join('، ')}.</p>
       </section>
 
-      <footer class="pf-foot">
+      <footer class="pf-foot" data-tail>
         <ul>
           <li><span>الموقع</span><b class="ltr">{siteShort}</b></li>
           <li><span>البريد</span><b class="ltr">{c.email}</b></li>
@@ -127,13 +128,21 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
     </article>
   </main>
   <script>
-    // ‎/profile?s=career,committees: يُبقي الأقسام المختارة فقط (النبذة والوسوم والحقائب ثابتة)، وتبدأ أول خبرة من صفحة جديدة؛ و print=1 تفتح الطباعة
+    // ‎/profile?s=career,committees: يُبقي الأقسام المختارة فقط؛ و part=cover|sec|tail يولّد أجزاء الملف (الغلاف، الأقسام، الخاتمة) التي تُدمج في المتصفح
     const q = new URLSearchParams(location.search);
+    const off = (el, v) => el.classList.toggle('pf-off', v);
+    const part = q.get('part');
+    const secs = [...document.querySelectorAll('[data-sec]')];
     if (q.has('s')) {
       const want = new Set(q.get('s').split(',').filter(Boolean));
-      const secs = [...document.querySelectorAll('[data-sec]')];
-      secs.forEach((el) => { el.hidden = !want.has(el.dataset.sec); el.classList.remove('pf-newpage'); });
-      secs.find((el) => !el.hidden)?.classList.add('pf-newpage');
+      secs.forEach((el) => { off(el, !want.has(el.dataset.sec)); el.classList.remove('pf-newpage'); });
+      if (!part) secs.find((el) => !el.classList.contains('pf-off'))?.classList.add('pf-newpage');
+    }
+    if (part) {
+      document.querySelectorAll('[data-cover]').forEach((el) => off(el, part !== 'cover'));
+      document.querySelectorAll('[data-tail]').forEach((el) => off(el, part !== 'tail'));
+      if (part !== 'sec') secs.forEach((el) => off(el, true));
+      secs.forEach((el) => el.classList.remove('pf-newpage'));
     }
     if (q.get('print') === '1') {
       const go = () => setTimeout(() => print(), 300);

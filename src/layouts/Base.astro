@@ -189,7 +189,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   )}
 
   {!bare && (
-    <dialog id="cvDialog" class="cv-dlg" aria-labelledby="cvT" data-profile={href('/profile')}>
+    <dialog id="cvDialog" class="cv-dlg" aria-labelledby="cvT" data-parts={href('/cv-parts')}>
       <form method="dialog" class="cv-box">
         <h2 id="cvT" tabindex="-1">خصّص سيرتي الذاتية</h2>
         <p class="cv-sub">اختر الأقسام التي تريد تضمينها في الملف. الأقسام التالية تُضمَّن دائماً:</p>
@@ -198,7 +198,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
         <div class="cv-list">
           {cvPick.map((g) => <label class="cv-opt"><input type="checkbox" value={g.id} checked={g.on} /><span>{g.title}</span><em>{g.n}</em></label>)}
         </div>
-        <p class="cv-note">يُفتح الملف في نافذة الطباعة، فاختر منها «حفظ بصيغة PDF».</p>
+        <p class="cv-note">يُنزَّل الملف مباشرة بمقاس A4 ومرتّباً كما في النسخة الكاملة، وتبدأ كل قسم مختار من صفحة جديدة.</p>
         <div class="cv-act">
           <button type="button" class="pill" data-cv-go>إنشاء الملف</button>
           <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download>تنزيل النسخة الكاملة</a>

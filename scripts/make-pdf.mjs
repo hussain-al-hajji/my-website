@@ -71,6 +71,28 @@ try {
     const pages = (fs.readFileSync(out, 'latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
     console.log(`[pdf] ${path.relative(process.cwd(), out)} · ${pages} صفحة · ${(fs.statSync(out).size / 1024).toFixed(0)} KB`);
   }
+  // أجزاء السيرة (الغلاف، كل قسم، الخاتمة) تُدمج في متصفح الزائر لتصدير النسخة المخصّصة بمقاس A4 مباشرة
+  if (fs.existsSync(path.join(dist, 'profile.html'))) {
+    const parts = path.join(dist, 'cv-parts');
+    fs.mkdirSync(parts, { recursive: true });
+    const probe = await browser.newPage();
+    await probe.goto(`http://127.0.0.1:${port}${base}/profile`, { waitUntil: 'networkidle' });
+    const ids = await probe.evaluate(() => [...document.querySelectorAll('[data-sec]')].map((e) => e.dataset.sec));
+    await probe.close();
+    const jobs = [['cover', 'part=cover'], ...ids.map((id) => [id, `part=sec&s=${encodeURIComponent(id)}`]), ['tail', 'part=tail']];
+    let total = 0;
+    for (const [name, qs] of jobs) {
+      const page = await browser.newPage();
+      await page.goto(`http://127.0.0.1:${port}${base}/profile?${qs}`, { waitUntil: 'networkidle' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.emulateMedia({ media: 'print' });
+      const out = path.join(parts, name + '.pdf');
+      await page.pdf({ path: out, printBackground: true, format: 'A4', preferCSSPageSize: false, margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
+      await page.close();
+      total += fs.statSync(out).size;
+    }
+    console.log(`[pdf] dist/cv-parts · ${jobs.length} جزءاً · ${(total / 1024).toFixed(0)} KB`);
+  }
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);
 } finally {

@@ -15,9 +15,9 @@
 .pf-photo{display:block;height:36mm;width:auto;flex:none}
 
 .pf-sec{margin-top:6mm}
-.pf-sec h2{display:flex;align-items:center;gap:3mm;font-size:12pt;font-weight:800;color:#1b1b1a;margin-bottom:2.4mm;padding-bottom:1.6mm;border-bottom:.3mm solid #1b1b1a;position:relative;break-after:avoid}
-.pf-sec h2::after{content:"";position:absolute;inset-inline-start:0;bottom:-.3mm;width:22mm;height:.7mm;background:#835410}
-.pf-sec h2::before{content:"";width:2.4mm;height:2.4mm;background:#835410;border-radius:.5mm;flex:none}
+.pf-off{display:none!important}
+.pf-sec h2{display:flex;align-items:center;gap:3.2mm;font-size:13pt;font-weight:800;color:#141413;margin-bottom:3mm;padding:1.8mm 3mm 1.8mm 0;padding-inline:3mm 3mm;background:linear-gradient(to left,#f4ecd9,#faf6ec 70%,#fff);border-bottom:.8mm solid #835410;border-radius:1mm 1mm 0 0;break-after:avoid}
+.pf-sec h2::before{content:"";width:3mm;height:3mm;background:#835410;border-radius:.6mm;flex:none}
 .pf-p{text-align:justify;margin-top:1.6mm}
 .pf-nums{list-style:none;display:flex;flex-wrap:wrap;gap:1mm 6mm;margin-top:3mm;padding:2.4mm 3mm;background:#f6f4ee;border-radius:1.5mm;font-size:9pt;color:#4a4943}
 .pf-nums b{font-size:11pt;color:#1b1b1a;direction:ltr;unicode-bidi:isolate}
@@ -81,7 +81,7 @@
 /* الصفحة الأولى: المهارات ومجالات الخبرة والقيم بوسوم أنيقة، وتبدأ الخبرات من الصفحة الثانية */
 .pf-tags{display:grid;gap:2.6mm}
 .pf-tagrow{display:grid;grid-template-columns:27mm 1fr;gap:4mm;align-items:start;padding:2.8mm 3.4mm;background:#f7f5f0;border-radius:2mm;border-inline-start:1.2mm solid #835410;break-inside:avoid}
-.pf-sec .pf-tagrow h2{display:block;margin:0;padding:0;border:0;font-size:9.6pt;line-height:1.5;color:#835410;font-weight:800;break-after:auto}
+.pf-sec .pf-tagrow h2{display:block;margin:0;padding:0;border:0;background:none;border-radius:0;font-size:9.6pt;line-height:1.5;color:#835410;font-weight:800;break-after:auto}
 .pf-sec .pf-tagrow h2::before{display:none}
 .pf-tagrow ul{list-style:none;display:flex;flex-wrap:wrap;gap:1.4mm 1.8mm}
 .pf-tagrow li{padding:.7mm 2.6mm;border:.25mm solid #d8cfba;border-radius:99mm;background:#fff;font-size:8.6pt;line-height:1.6;color:#1b1b1a}
