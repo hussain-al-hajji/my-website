@@ -293,6 +293,8 @@ export const SECTIONS = [
       { k: 'stats.partners', label: 'عدد الجهات', type: 'number' },
       { k: 'stats.beneficiaries', label: 'عدد المستفيدين', type: 'number' },
       { k: 'stats.since', label: 'سنة البداية', type: 'number' },
+      { k: 'stats.proYears', label: 'سنوات الخبرة المهنية (تظهر في السيرة PDF)', type: 'number' },
+      { k: 'stats.trainYears', label: 'سنوات الخبرة التدريبية (تظهر في السيرة PDF)', type: 'number' },
       { k: 'campaign.students', label: 'رابط الحملة ?for=students: الجملة الترحيبية (طلاب وحديثو تخرج)', type: 'text', help: 'تظهر في الرئيسية لمن يدخل بالرابط hussain-al-hajji.com/?for=students ويُحدَّد له الجمهور تلقائياً في الباحث وصفحة الحقائب. بقية الفئات: employees و owners و leaders و trainers. أضف &goal=ai (أو ecom أو sales أو leadership أو career أو training) لتحديد المخرج أيضاً.' },
       { k: 'campaign.employees', label: 'الجملة الترحيبية (?for=employees، موظفون)', type: 'text' },
       { k: 'campaign.owners', label: 'الجملة الترحيبية (?for=owners، أصحاب منشآت ورواد أعمال)', type: 'text' },

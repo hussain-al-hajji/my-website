@@ -22,7 +22,9 @@
     "programs": 200,
     "partners": 70,
     "beneficiaries": 5000,
-    "since": 2018
+    "since": 2018,
+    "proYears": 10,
+    "trainYears": 8
   },
   "announcement": {
     "enabled": false,

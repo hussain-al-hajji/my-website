@@ -18,10 +18,11 @@ const nums = [
   [site.stats.programs, 'برنامج وفعالية'],
   [site.stats.partners, 'جهة شريكة'],
   [site.stats.beneficiaries, 'مستفيد'],
-  [site.stats.since, 'نشط منذ عام'],
+  [site.stats.proYears, 'سنوات خبرة مهنية'],
+  [site.stats.trainYears, 'سنوات خبرة تدريبية'],
 ];
-const fmt = (n) => (n >= 1000 && n !== site.stats.since ? n.toLocaleString('en-US') : String(n));
-const plus = (n) => (n === site.stats.since ? '' : '+');
+const fmt = (n) => (n >= 1000 ? n.toLocaleString('en-US') : String(n));
+const plus = () => '+';
 // أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
 const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title, g.style]);
