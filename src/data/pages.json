@@ -91,17 +91,30 @@
         "block": "tracks"
       },
       {
-        "id": "career",
-        "title": "المسيرة المهنية"
-      },
-      {
         "id": "education",
         "title": "التعليم والدرجات الأكاديمية",
         "hidden": true
       },
       {
+        "id": "leadership",
+        "title": "خريج برامج قيادية مرموقة"
+      },
+      {
+        "id": "bootcamps",
+        "title": "خريج معسكرات مهنية"
+      },
+      {
+        "id": "career",
+        "title": "المسيرة المهنية"
+      },
+      {
+        "id": "learning",
+        "title": "الدورات التدريبية",
+        "style": "table"
+      },
+      {
         "id": "projects",
-        "title": "مشاركات تدريبية مميزة",
+        "title": "مشاركات ومشاريع تدريب مميزة",
         "style": "table"
       },
       {
@@ -118,22 +131,9 @@
         "style": "table"
       },
       {
-        "id": "leadership",
-        "title": "خريج برامج قيادية مرموقة"
-      },
-      {
         "id": "mentoring",
         "title": "الإرشاد والمسرّعات",
         "hidden": true
-      },
-      {
-        "id": "bootcamps",
-        "title": "خريج معسكرات مهنية"
-      },
-      {
-        "id": "learning",
-        "title": "الدورات التدريبية",
-        "style": "table"
       },
       {
         "id": "sdgs",
