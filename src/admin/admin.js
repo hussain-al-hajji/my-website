@@ -50,7 +50,8 @@ const root = $('#app');
 let auth = null;
 
 function load(src) {
-  FILES.forEach((f) => { S.data[f] = clone(src[f]); S.base[f] = JSON.stringify(src[f]); });
+  // ملف لم تُرجعه الخدمة (نسخة Worker أقدم من اللوحة) يؤخذ من النسخة المضمّنة بدل أن يتعطّل التحميل كله
+  FILES.forEach((f) => { const v = src[f] ?? seed[f]; S.data[f] = clone(v); S.base[f] = JSON.stringify(v); });
 }
 const dirtyFiles = () => FILES.filter((f) => JSON.stringify(S.data[f]) !== S.base[f]);
 const navCmp = (a, b) => (NAV_ORDER.indexOf(a.id) + 1 || 99) - (NAV_ORDER.indexOf(b.id) + 1 || 99);
