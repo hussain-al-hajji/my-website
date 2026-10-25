@@ -50,27 +50,6 @@
       }
     ],
     "closing": "أجمع بين العمل التنفيذي والميداني، والخبرة التدريبية والاستشارية، والعمل على المبادرات والمشاريع، بما يتيح لي الانتقال من تطوير الفكرة وتصميم البرنامج إلى التنفيذ والإرشاد وقياس النتائج وتحسين التجربة.",
-    "order": [
-      "career",
-      "education",
-      "projects",
-      "achievements",
-      "credentials",
-      "committees",
-      "leadership",
-      "mentoring",
-      "bootcamps",
-      "learning",
-      "sdgs",
-      "writing",
-      "volunteer",
-      "expertise",
-      "skills",
-      "values"
-    ],
-    "hidden": [
-      "education"
-    ],
     "pdf": [
       "career",
       "achievements",
@@ -79,6 +58,188 @@
       "learning",
       "leadership",
       "committees"
+    ]
+  },
+  "groups": {
+    "bio": [
+      {
+        "id": "intro",
+        "title": "نبذة",
+        "block": "intro"
+      },
+      {
+        "id": "tracks",
+        "title": "مسارات العمل",
+        "block": "tracks"
+      },
+      {
+        "id": "career",
+        "title": "المسيرة المهنية"
+      },
+      {
+        "id": "education",
+        "title": "التعليم والدرجات الأكاديمية",
+        "hidden": true
+      },
+      {
+        "id": "projects",
+        "title": "مشاريع تدريبية مرموقة"
+      },
+      {
+        "id": "achievements",
+        "title": "الإنجازات"
+      },
+      {
+        "id": "credentials",
+        "title": "الاعتمادات"
+      },
+      {
+        "id": "committees",
+        "title": "اللجان والعضويات"
+      },
+      {
+        "id": "leadership",
+        "title": "برامج القيادة"
+      },
+      {
+        "id": "mentoring",
+        "title": "الإرشاد والمسرّعات"
+      },
+      {
+        "id": "bootcamps",
+        "title": "المعسكرات"
+      },
+      {
+        "id": "learning",
+        "title": "التعلّم والتطوير"
+      },
+      {
+        "id": "sdgs",
+        "title": "أهداف التنمية المستدامة"
+      },
+      {
+        "id": "writing",
+        "title": "الكتابة"
+      },
+      {
+        "id": "volunteer",
+        "title": "العمل التطوعي"
+      },
+      {
+        "id": "expertise",
+        "title": "مجالات الخبرة",
+        "style": "chips"
+      },
+      {
+        "id": "skills",
+        "title": "المهارات",
+        "style": "chips"
+      },
+      {
+        "id": "values",
+        "title": "القيم",
+        "style": "chips"
+      }
+    ],
+    "partners": [
+      {
+        "id": "gov",
+        "title": "جهات حكومية"
+      },
+      {
+        "id": "nonprofit",
+        "title": "جهات غير ربحية"
+      },
+      {
+        "id": "private",
+        "title": "القطاع الخاص"
+      },
+      {
+        "id": "edu",
+        "title": "جهات تعليمية"
+      },
+      {
+        "id": "chambers",
+        "title": "غرف تجارية"
+      },
+      {
+        "id": "gulf",
+        "title": "خليجية"
+      },
+      {
+        "id": "intl",
+        "title": "دولية"
+      }
+    ],
+    "media": [
+      {
+        "id": "tv",
+        "title": "تلفزيون"
+      },
+      {
+        "id": "radio",
+        "title": "إذاعة"
+      },
+      {
+        "id": "press",
+        "title": "صحافة ومقالات"
+      },
+      {
+        "id": "event",
+        "title": "فعاليات"
+      },
+      {
+        "id": "award-press",
+        "title": "الصحافة عن التكريم"
+      },
+      {
+        "id": "award-tv",
+        "title": "التلفزيون عن التكريم"
+      }
+    ],
+    "prompts": [
+      {
+        "id": "products",
+        "title": "اكتشاف المنتجات والفرص"
+      },
+      {
+        "id": "listings",
+        "title": "وصف المنتجات والمتجر"
+      },
+      {
+        "id": "content",
+        "title": "المحتوى والتسويق"
+      },
+      {
+        "id": "support",
+        "title": "خدمة العملاء"
+      },
+      {
+        "id": "sales",
+        "title": "المبيعات والعروض"
+      },
+      {
+        "id": "ops",
+        "title": "التحليل والتشغيل"
+      },
+      {
+        "id": "training",
+        "title": "التدريب وتصميم المحتوى"
+      }
+    ],
+    "featured": [
+      {
+        "id": "g1",
+        "title": "الإرشاد المهني والتطوير الوظيفي"
+      },
+      {
+        "id": "g2",
+        "title": "التدريب والتيسير والتحكيم"
+      },
+      {
+        "id": "g3",
+        "title": "كتابة المحتوى"
+      }
     ]
   }
 }

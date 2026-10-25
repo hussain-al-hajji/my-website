@@ -99,3 +99,33 @@ body.admin{background:#f2f1ec;color:var(--ink);font-size:15px}
 .st-chart rect{fill:var(--action)}
 .st-chart rect:hover{fill:var(--ink)}
 .st-chart text{fill:var(--ink-2);font:11px var(--font)}
+
+/* عرض الأقسام (عنّي، الشراكات، الإعلام، مكتبة الأوامر، المشاريع المميزة) */
+.gv-group{border:1px solid var(--line,#e3ddd0);border-radius:12px;margin:0 0 10px;background:var(--card,#fff);overflow:hidden}
+.gv-group.open{border-color:var(--ink-2,#9a8b6a)}
+.gv-group.off .gv-title b{opacity:.55}
+.gv-head{display:flex;align-items:center;gap:8px;padding:6px 8px;min-height:48px}
+.gv-head.over{outline:2px dashed var(--gold,#b8963e);outline-offset:-4px;background:rgba(184,150,62,.08)}
+.gv-grip{flex:none;width:18px;height:28px;cursor:grab;opacity:.55;background:radial-gradient(circle,currentColor 1.4px,transparent 1.6px) 0 0/6px 8px;background-repeat:repeat;border-radius:4px}
+.gv-grip:active{cursor:grabbing}
+.gv-title{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;padding:8px 4px;font:inherit;text-align:start;cursor:pointer;color:inherit}
+.gv-title b{font-weight:700}
+.gv-chev{flex:none;width:8px;height:8px;border:solid currentColor;border-width:0 0 2px 2px;transform:rotate(45deg);transition:transform .2s}
+.gv-group.open .gv-chev{transform:rotate(-45deg)}
+.gv-count{font-size:.78rem;padding:1px 9px;border-radius:99px;background:rgba(0,0,0,.07)}
+.gv-off{font-size:.78rem;color:#a14;border:1px solid currentColor;border-radius:99px;padding:0 8px}
+.gv-body{padding:4px 14px 14px;border-top:1px solid var(--line,#e3ddd0)}
+.gv-set{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 18px;padding:10px 0 12px}
+.gv-lbl{display:grid;gap:4px;font-size:.85rem;min-width:220px}
+.gv-lbl.sm{min-width:150px}
+.gv-name{font:inherit;padding:8px 10px;border:1px solid var(--line,#d9d2c3);border-radius:8px;background:#fff}
+.gv-add{margin:0 0 10px}
+.gv-items{margin:0;padding:0;list-style:none}
+.gv-item{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--line,#e6e0d3);border-radius:10px;padding:6px 8px;margin:0 0 6px;background:#fcfbf8}
+.gv-item .item{flex:1;min-width:200px;text-align:start}
+.gv-move{font:inherit;font-size:.82rem;padding:5px 6px;border-radius:8px;max-width:150px}
+.gv-new{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:12px;border:1px dashed var(--gold,#b8963e);border-radius:12px}
+.gv-new input{flex:1;min-width:200px;font:inherit;padding:8px 10px;border:1px solid var(--line,#d9d2c3);border-radius:8px}
+.gv-form{padding-top:6px}
+.gv-group.orphan{border-color:#c0504d}
+@media (max-width:700px){.gv-body{padding:4px 8px 12px}.gv-item .row-btns{width:100%}}

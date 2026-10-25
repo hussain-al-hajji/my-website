@@ -1,4 +1,6 @@
-import { SECTIONS, FILES } from './schema.js';
+import { SECTIONS, FILES, NAV_ORDER } from './schema.js';
+import { resolveGroups } from '../lib/group-defaults.js';
+import { groupedView } from './groups-view.js';
 import PUB from './public-config.json';
 import { statsPanel } from './stats-view.js';
 
@@ -51,6 +53,7 @@ function load(src) {
   FILES.forEach((f) => { S.data[f] = clone(src[f]); S.base[f] = JSON.stringify(src[f]); });
 }
 const dirtyFiles = () => FILES.filter((f) => JSON.stringify(S.data[f]) !== S.base[f]);
+const navCmp = (a, b) => (NAV_ORDER.indexOf(a.id) + 1 || 99) - (NAV_ORDER.indexOf(b.id) + 1 || 99);
 const secOf = (id) => SECTIONS.find((s) => s.id === id);
 const listOf = (s) => (s.kind === 'list' ? S.data[s.file] : null);
 const objOf = (s) => (s.path ? S.data[s.file][s.path] ??= {} : S.data[s.file]);
@@ -95,6 +98,13 @@ async function addUpload(file) {
 const imgSrc = (p) => (S.uploads[p]?.url || (p ? (p.startsWith('http') ? p : B + p) : ''));
 
 // ---------- حقول النموذج ----------
+// خيارات الأقسام لصفحة مقسّمة، بأسمائها الحالية كما عدّلتها في عرض الأقسام (وقيمة قديمة غير معرّفة تبقى ظاهرة)
+function groupOptions(page, cur) {
+  const gs = resolveGroups(page, S.data.pages?.groups?.[page], S.data[page]).filter((g) => !g.block);
+  const o = gs.map((g) => [g.id, g.title]);
+  if (cur && !gs.some((g) => g.id === cur)) o.push([cur, cur]);
+  return o;
+}
 function field(f, get, set, ctx) {
   const id = 'f' + Math.random().toString(36).slice(2, 8);
   const val = get(f.k);
@@ -115,8 +125,9 @@ function field(f, get, set, ctx) {
     case 'date':
       input = h('input', { id, type: 'date', onInput: (e) => upd(e.target.value) }); input.value = val ?? ''; break;
     case 'select': {
+      const opts = typeof f.options === 'string' ? groupOptions(f.options.slice(7), val) : f.options;
       input = h('select', { id, onChange: (e) => upd(e.target.value) },
-        ...f.options.map((o) => { const [v, l] = Array.isArray(o) ? o : [o, o]; const op = h('option', { value: v }, l); if (v === val) op.selected = true; return op; }));
+        ...opts.map((o) => { const [v, l] = Array.isArray(o) ? o : [o, o]; const op = h('option', { value: v }, l); if (v === val) op.selected = true; return op; }));
       break;
     }
     case 'combo': {
@@ -274,7 +285,7 @@ function render() {
         h('div', { class: 'brand' }, h('img', { src: B + '/brand/icon-192.png', alt: '', width: 28, height: 28 }), h('b', {}, 'لوحة التحكم')),
         h('nav', {}, h('h2', {}, 'التحليلات'),
           h('button', { class: 'nav' + (S.section === STATS ? ' on' : ''), onClick: () => { S.section = STATS; S.editing = null; render(); loadStats(); } }, 'مؤشرات الموقع')),
-        ...groups.map((g) => h('nav', {}, h('h2', {}, g), ...SECTIONS.filter((s) => s.group === g).map((s) =>
+        ...groups.map((g) => h('nav', {}, h('h2', {}, g), ...SECTIONS.filter((s) => s.group === g).sort(navCmp).map((s) =>
           h('button', { class: 'nav' + (s.id === S.section ? ' on' : ''), onClick: () => { S.section = s.id; S.editing = null; S.filter = ''; render(); } },
             s.label, dirty.includes(s.file) ? h('i', { class: 'dot', title: 'تغييرات غير منشورة' }) : '')))),
         h('div', { class: 'who' }, S.user ? [h('span', {}, S.user.email || S.user.name || 'مدير'), h('button', { class: 'btn sm ghost', onClick: signOutUser }, 'خروج')] : h('span', {}, 'وضع المعاينة'))),
@@ -286,9 +297,11 @@ function render() {
             S.mode === 'demo' && h('button', { class: 'btn ghost', onClick: resetDemo }, 'مسح المعاينة'),
             dirty.length > 0 && h('button', { class: 'btn ghost', onClick: exportJson }, 'تنزيل JSON'),
             h('button', { class: 'btn primary', disabled: S.busy || !dirty.length, onClick: publish }, S.busy ? 'جارٍ النشر…' : 'نشر التغييرات'))),
-        h('section', { class: S.section === STATS ? 'panel wide' : 'panel' }, S.section === STATS ? statsPanel({ h, S, reload: (soft) => (soft === true ? render() : loadStats(true)) }) : S.editing ? editor(sec) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
+        h('section', { class: S.section === STATS ? 'panel wide' : 'panel' }, S.section === STATS ? statsPanel({ h, S, reload: (soft) => (soft === true ? render() : loadStats(true)) }) : S.editing ? editor(sec) : sec.grouped ? groupedView({ h, S, sec, field, say, render, save: refreshCount, openEditor, clone, getPath, setPath, touch: refreshCount }) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
     ));
 }
+
+const openEditor = (i, draft) => { S.editing = { i, draft }; render(); };
 
 function listView(sec) {
   const all = listOf(sec);

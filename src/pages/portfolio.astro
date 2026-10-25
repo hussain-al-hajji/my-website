@@ -11,12 +11,13 @@ import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import mediaAll from '../data/media.json';
 import honors from '../data/honors.json';
-import { site, href, abs, getKits, records, stats, isRemote } from '../lib/site.js';
+import { site, href, abs, getKits, records, stats, isRemote, getGroups } from '../lib/site.js';
 import { fillTokens } from '../lib/faq.js';
 import { mapShapes } from '../lib/impactmap.js';
 import geo from '../assets/gulf-geo.html?raw';
 
 const st = stats();
+const featTitle = Object.fromEntries(getGroups('featured', featured).map((g) => [g.id, g.title]));
 const y0 = st.years[0], y1 = st.lastYear;
 const kits = getKits();
 const n = (v) => Number(v).toLocaleString('en-US');
@@ -264,7 +265,7 @@ const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2,
           {list.map((f) => (
             <article>
               <span class="lg">{f.logo && <img src={href(f.logo)} alt="" loading="eager">}</span>
-              <div><p class="grp">{f.group}</p><h3 class="clamp3">{f.title}</h3>{f.orgs && <p class="org">{f.orgs}</p>}</div>
+              <div><p class="grp">{featTitle[f.group] || f.group}</p><h3 class="clamp3">{f.title}</h3>{f.orgs && <p class="org">{f.orgs}</p>}</div>
             </article>
           ))}
         </div>

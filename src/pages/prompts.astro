@@ -2,9 +2,11 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import prompts from '../data/prompts.json';
-import { href, norm, PROMPT_CAT } from '../lib/site.js';
+import { href, norm, getGroups } from '../lib/site.js';
 
-const cats = Object.keys(PROMPT_CAT).filter((k) => prompts.some((p) => p.category === k));
+const catGroups = getGroups('prompts', prompts).filter((g) => !g.hidden);
+const PROMPT_CAT = Object.fromEntries(catGroups.map((g) => [g.id, g.title]));
+const cats = catGroups.map((g) => g.id).filter((k) => prompts.some((p) => p.category === k));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 // الأجزاء بين [ ] تُظهَر كخانات تعبئة
 const show = (t) => esc(t).replace(/\[([^\]]+)\]/g, '<mark>[$1]</mark>');

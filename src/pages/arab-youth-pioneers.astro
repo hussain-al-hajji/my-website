@@ -3,7 +3,9 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import award from '../data/award.json';
 import media from '../data/media.json';
-import { href, MEDIA_SECTION } from '../lib/site.js';
+import { href, getGroups } from '../lib/site.js';
+
+const MEDIA_SECTION = Object.fromEntries(getGroups('media', []).map((g) => [g.id, g.title]));
 
 const press = media.filter((m) => m.section.startsWith('award-'));
 ---

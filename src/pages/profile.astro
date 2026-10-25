@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
 import partners from '../data/partners.json';
-import { site, href, abs, getKits, BIO_SECTION, detailsHtml } from '../lib/site.js';
+import { site, href, abs, getKits, detailsHtml, getGroups } from '../lib/site.js';
 import '../styles/profile.css';
 import { fillTokens } from '../lib/faq.js';
 
@@ -22,14 +22,9 @@ const nums = [
 ];
 const fmt = (n) => (n >= 1000 && n !== site.stats.since ? n.toLocaleString('en-US') : String(n));
 const plus = (n) => (n === site.stats.since ? '' : '+');
-// أقسام الملف تُحدَّد من لوحة التحكم (حتى المخفية عن الصفحة) وبنفس ترتيب الأقسام فيها
-const CHIP = ['expertise', 'skills', 'values'];
-const all = Object.keys(BIO_SECTION).filter((k) => !CHIP.includes(k));
-const saved = (p.order || []).filter((k) => all.includes(k));
+// أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
 const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
-const ordered = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => want.has(k) && by(k).length);
-const secs = ordered.map((k) => [k, BIO_SECTION[k]]);
-const first = ordered[0];
+const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && want.has(g.id) && by(g.id).length).map((g) => [g.id, g.title]);
 const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
 const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---

@@ -2,9 +2,12 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import media from '../data/media.json';
-import { href, dateAr, MEDIA_SECTION, norm } from '../lib/site.js';
+import { href, dateAr, norm, getGroups, groupTitle } from '../lib/site.js';
 
-const secs = ['tv', 'radio', 'press', 'event'];
+// أقسام الصفحة من لوحة التحكم؛ أقسام «التكريم» (award-*) تُعرض في صفحة رواد الشباب العربي
+const allGroups = getGroups('media', media);
+const secs = allGroups.filter((g) => !g.hidden && !g.id.startsWith('award-')).map((g) => g.id);
+const MEDIA_SECTION = Object.fromEntries(allGroups.map((g) => [g.id, g.title]));
 const items = media.filter((m) => secs.includes(m.section)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
 ---
 <Base title="الإعلام" description="استضافات تلفزيونية وإذاعية ومقالات وتغطيات صحفية." active="media" local={[{ label: 'الإعلام', href: '#top' }]}>

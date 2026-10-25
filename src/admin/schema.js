@@ -3,7 +3,6 @@ const today = () => new Date().toISOString().slice(0, 10);
 const uid = (p) => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 4);
 
 const req = { required: true };
-const PROMPT_CATS = [['products', 'اكتشاف المنتجات والفرص'], ['listings', 'وصف المنتجات والمتجر'], ['content', 'المحتوى والتسويق'], ['support', 'خدمة العملاء'], ['sales', 'المبيعات والعروض'], ['ops', 'التحليل والتشغيل'], ['training', 'التدريب وتصميم المحتوى']];
 const TOPICS = ['التجارة الإلكترونية', 'المسار المهني', 'العمل الحر', 'ريادة الأعمال', 'أخرى'];
 
 export const SECTIONS = [
@@ -89,20 +88,20 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'prompts', label: 'مكتبة الأوامر', file: 'prompts', kind: 'list', group: 'المحتوى',
+    id: 'prompts', label: 'مكتبة الأوامر', file: 'prompts', kind: 'list', group: 'المحتوى', grouped: { page: 'prompts' },
     help: 'أوامر جاهزة للنسخ تظهر في صفحة «مكتبة الأوامر». ضع الخانات التي يغيّرها الزائر بين أقواس مربعة مثل [المنتج]، فتظهر مظلَّلة.',
-    title: (x) => x.title, meta: (x) => (PROMPT_CATS.find((c) => c[0] === x.category) || [])[1] || x.category,
+    title: (x) => x.title, meta: (x) => x.when || '',
     blank: () => ({ id: uid('pr'), category: 'products', title: '', when: '', prompt: '', tip: '' }),
     fields: [
       { k: 'title', label: 'العنوان', type: 'text', ...req },
-      { k: 'category', label: 'التصنيف', type: 'select', options: PROMPT_CATS },
+      { k: 'category', label: 'القسم', type: 'select', options: 'groups:prompts' },
       { k: 'when', label: 'متى يُستخدم (سطر واحد)', type: 'text' },
       { k: 'prompt', label: 'نص الأمر', type: 'textarea', rows: 8, ...req },
       { k: 'tip', label: 'نصيحة (اختياري)', type: 'text' },
     ],
   },
   {
-    id: 'posts', label: 'المقالات', file: 'posts', kind: 'list', group: 'المحتوى',
+    id: 'posts', label: 'محتوى مضيء', file: 'posts', kind: 'list', group: 'المحتوى',
     help: 'المقال الذي له نص يُنشر في الموقع. من دونه يفتح الرابط الخارجي.',
     title: (x) => x.title, meta: (x) => [x.kind, x.date].filter(Boolean).join(' · '),
     sort: (a, b) => String(b.date || '').localeCompare(String(a.date || '')),
@@ -121,7 +120,7 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'testimonials', label: 'الآراء والشهادات', file: 'testimonials', kind: 'list', group: 'المحتوى',
+    id: 'testimonials', label: 'آراء المتدربين', file: 'testimonials', kind: 'list', group: 'المحتوى',
     title: (x) => x.name || (x.full || '').slice(0, 60), meta: (x) => (x.kind === 'recommendation' ? 'توصية' : 'شهادة') + (x.featured ? ' · مميّزة' : ''),
     blank: () => ({ id: uid('t'), kind: 'recommendation', featured: false, name: '', role: '', quote: '', full: '', source: '', link: '', image: '' }),
     fields: [
@@ -135,12 +134,13 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'media', label: 'الإعلام', file: 'media', kind: 'list', group: 'المحتوى',
-    title: (x) => x.title, meta: (x) => [x.section, x.outlet].filter(Boolean).join(' · '),
+    id: 'media', label: 'الإعلام', file: 'media', kind: 'list', group: 'المحتوى', grouped: { page: 'media', fixed: ['award-press', 'award-tv'] },
+    help: 'الأقسام بعناوين صفحة «الإعلام». القسمان «الصحافة عن التكريم» و«التلفزيون عن التكريم» يظهران في صفحة «رواد الشباب العربي» لا في صفحة الإعلام.',
+    title: (x) => x.title, meta: (x) => [x.outlet, x.date].filter(Boolean).join(' · '),
     blank: () => ({ id: uid('m'), section: 'tv', outlet: '', title: '', date: today().slice(0, 7), link: '', image: '', note: '', strip: false, short: '', logo: '' }),
     fields: [
       { k: 'title', label: 'العنوان', type: 'text', ...req },
-      { k: 'section', label: 'النوع', type: 'select', options: [['tv', 'تلفزيون'], ['radio', 'إذاعة'], ['press', 'صحافة ومقالات'], ['event', 'فعاليات'], ['award-press', 'صحافة عن التكريم'], ['award-tv', 'تلفزيون عن التكريم']] },
+      { k: 'section', label: 'القسم', type: 'select', options: 'groups:media' },
       { k: 'outlet', label: 'الجهة الإعلامية', type: 'text', ...req },
       { k: 'date', label: 'التاريخ (سنة-شهر)', type: 'text', pattern: '^\\d{4}(-\\d{2})?(-\\d{2})?$' },
       { k: 'link', label: 'الرابط', type: 'url' },
@@ -198,12 +198,12 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'partners', label: 'الشركاء', file: 'partners', kind: 'list', group: 'المحتوى',
-    title: (x) => x.name, meta: (x) => x.group,
+    id: 'partners', label: 'الشراكات', file: 'partners', kind: 'list', group: 'المحتوى', grouped: { page: 'partners' },
+    title: (x) => x.name, meta: (x) => x.country || '',
     blank: () => ({ id: uid('p'), name: '', group: 'private', country: '', logo: '' }),
     fields: [
       { k: 'name', label: 'اسم الجهة', type: 'text', ...req },
-      { k: 'group', label: 'التصنيف', type: 'select', options: [['gov', 'جهات حكومية'], ['nonprofit', 'غير ربحية'], ['private', 'قطاع خاص'], ['edu', 'تعليمية'], ['chambers', 'غرف تجارية'], ['gulf', 'خليجية'], ['intl', 'دولية']] },
+      { k: 'group', label: 'القسم', type: 'select', options: 'groups:partners' },
       { k: 'country', label: 'الدولة (للخارجية)', type: 'text' },
       { k: 'logo', label: 'الشعار', type: 'image', ...req },
       { k: 'marquee', label: 'يظهر في شريط الشعارات بالرئيسية', type: 'bool', help: 'يُفضّل ألا يتجاوز 20 جهة.' },
@@ -234,12 +234,12 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'featured', label: 'مشاريع ومشاركات مميزة', file: 'featured', kind: 'list', group: 'المحتوى', ordered: true,
-    help: 'تظهر في صفحة «مشاريع ومشاركات مميزة» مع شعارات الجهات. الترتيب يهم، والتجميع حسب «المجموعة».',
-    title: (x) => x.title, meta: (x) => [x.group, x.orgs].filter(Boolean).join(' · '),
-    blank: () => ({ id: uid('ft'), group: 'التدريب والتيسير والتحكيم', title: '', orgs: '', logo: '', link: '' }),
+    id: 'featured', label: 'مشاريع ومشاركات مميزة', file: 'featured', kind: 'list', group: 'المحتوى', ordered: true, grouped: { page: 'featured' },
+    help: 'تظهر في صفحة «مشاريع ومشاركات مميزة» مع شعارات الجهات. الأقسام والعناصر داخلها بالترتيب الذي تراه في الصفحة.',
+    title: (x) => x.title, meta: (x) => x.orgs || '',
+    blank: () => ({ id: uid('ft'), group: 'g2', title: '', orgs: '', logo: '', link: '' }),
     fields: [
-      { k: 'group', label: 'المجموعة', type: 'combo', from: 'featured.group', ...req },
+      { k: 'group', label: 'القسم', type: 'select', options: 'groups:featured' },
       { k: 'title', label: 'وصف المشاركة', type: 'textarea', rows: 3, ...req },
       { k: 'orgs', label: 'أسماء الجهات (للنص البديل للشعارات)', type: 'text' },
       { k: 'logo', label: 'شعارات الجهات (صورة واحدة)', type: 'image', help: 'يُفضّل شريط عريض بنسبة 5:2 بخلفية بيضاء.' },
@@ -258,11 +258,20 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'bio', label: 'السيرة', file: 'bio', kind: 'list', group: 'المحتوى',
-    title: (x) => x.title, meta: (x) => [x.section, x.period].filter(Boolean).join(' · '),
+    id: 'bio', label: 'عنّي', file: 'bio', kind: 'list', group: 'المحتوى', grouped: { page: 'bio', pdf: true, styles: true, blocks: {
+      intro: [
+        { k: 'bio.title', label: 'عنوان الصفحة', type: 'text' }, { k: 'bio.lead', label: 'المقدمة تحت العنوان', type: 'text' },
+        { k: 'bio.intro', label: 'الفقرات (فقرة لكل سطر)', type: 'lines' },
+      ],
+      tracks: [
+        { k: 'bio.tracks', label: 'المسارات', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
+        { k: 'bio.closing', label: 'الخاتمة', type: 'textarea', rows: 3 },
+      ],
+    } },
+    title: (x) => x.title, meta: (x) => [x.subtitle, x.period].filter(Boolean).join(' · '),
     blank: () => ({ id: uid('b'), section: 'career', title: '', subtitle: '', logo: '', period: '', desc: '', details: '', link: '' }),
     fields: [
-      { k: 'section', label: 'القسم', type: 'select', options: [['career', 'المسيرة المهنية'], ['education', 'التعليم والدرجات الأكاديمية'], ['projects', 'مشاريع تدريبية مرموقة'], ['sdgs', 'أهداف التنمية المستدامة'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
+      { k: 'section', label: 'القسم', type: 'select', options: 'groups:bio' },
       { k: 'title', label: 'العنوان', type: 'text', ...req },
       { k: 'subtitle', label: 'الجهة', type: 'text' },
       { k: 'logo', label: 'شعار الجهة (اختياري)', type: 'image', help: 'يظهر بجانب العنصر في صفحة «عني» وفي ملف السيرة PDF. الأفضل شعار بخلفية شفافة أو بيضاء.' },
@@ -318,7 +327,7 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'contact', label: 'التواصل', file: 'site', kind: 'object', group: 'الموقع',
+    id: 'contact', label: 'تواصل', file: 'site', kind: 'object', group: 'الموقع',
     fields: [
       { k: 'contact.email', label: 'البريد الإلكتروني', type: 'text' },
       { k: 'contact.whatsapp', label: 'واتساب (أرقام فقط بمفتاح الدولة)', type: 'text', pattern: '^\\d{8,15}$' },
@@ -362,19 +371,15 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'pages', label: 'صفحات نصية', file: 'pages', kind: 'object', group: 'الموقع',
+    id: 'pages', label: 'منهجي في التدريب', file: 'pages', kind: 'object', group: 'الموقع',
     fields: [
-      { k: 'methodology.title', label: 'المنهج: العنوان', type: 'text' }, { k: 'methodology.lead', label: 'المنهج: المقدمة', type: 'textarea', rows: 3 },
-      { k: 'methodology.body', label: 'المنهج: النص (ماركداون)', type: 'md', rows: 12 },
-      { k: 'methodology.pillars', label: 'المنهج: الركائز', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
-      { k: 'bio.title', label: 'السيرة: العنوان', type: 'text' }, { k: 'bio.lead', label: 'السيرة: المقدمة', type: 'text' },
-      { k: 'bio.intro', label: 'السيرة: الفقرات (فقرة لكل سطر)', type: 'lines' },
-      { k: 'bio.tracks', label: 'السيرة: المسارات', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
-      { k: 'bio.closing', label: 'السيرة: الخاتمة', type: 'textarea', rows: 3 },
-      { k: 'bio.order', label: 'السيرة: ترتيب الأقسام في الصفحة وملف PDF', type: 'sections', help: 'حرّك القسم بالسهمين. القسم الأعلى يظهر أولاً. الأقسام الفارغة لا تظهر.', options: [['career', 'المسيرة المهنية'], ['education', 'التعليم والدرجات الأكاديمية'], ['projects', 'مشاريع تدريبية مرموقة'], ['sdgs', 'أهداف التنمية المستدامة'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
-      { k: 'bio.hidden', label: 'السيرة: الأقسام المخفية عن صفحة «عني»', type: 'multi', help: 'ضع علامة على ما تريد إخفاءه من الصفحة. يمكن إدراج القسم المخفي في ملف PDF من الحقل التالي.', options: [['career', 'المسيرة المهنية'], ['education', 'التعليم والدرجات الأكاديمية'], ['projects', 'مشاريع تدريبية مرموقة'], ['sdgs', 'أهداف التنمية المستدامة'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
-      { k: 'bio.pdf', label: 'السيرة: الأقسام التي تُدرج في ملف PDF', type: 'multi', help: 'تُدرج حتى لو كانت مخفية عن الصفحة، وبترتيب الأقسام أعلاه. أقسام المهارات والقيم لا تُصدَّر.', options: [['career', 'المسيرة المهنية'], ['education', 'التعليم والدرجات الأكاديمية'], ['projects', 'مشاريع تدريبية مرموقة'], ['sdgs', 'أهداف التنمية المستدامة'], ['achievements', 'الإنجازات'], ['credentials', 'الاعتمادات'], ['committees', 'اللجان والعضويات'], ['leadership', 'برامج القيادة'], ['mentoring', 'الإرشاد والمسرّعات'], ['bootcamps', 'المعسكرات'], ['learning', 'التعلّم'], ['writing', 'الكتابة'], ['volunteer', 'التطوع'], ['skills', 'المهارات'], ['expertise', 'مجالات الخبرة'], ['values', 'القيم']] },
+      { k: 'methodology.title', label: 'العنوان', type: 'text' }, { k: 'methodology.lead', label: 'المقدمة', type: 'textarea', rows: 3 },
+      { k: 'methodology.body', label: 'النص (ماركداون)', type: 'md', rows: 12 },
+      { k: 'methodology.pillars', label: 'الركائز', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
     ],
   },
 ];
 export const FILES = [...new Set(SECTIONS.map((s) => s.file))];
+
+// ترتيب القائمة الجانبية داخل كل مجموعة: يطابق ترتيب قائمة الموقع، ثم بقية الصفحات.
+export const NAV_ORDER = ['bio', 'records', 'kits', 'courses', 'media', 'testimonials', 'posts', 'news', 'contact', 'honors', 'featured', 'partners', 'gallery', 'projects', 'prompts', 'faq', 'pages', 'award'];

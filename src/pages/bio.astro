@@ -3,57 +3,54 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
-import { href, BIO_SECTION, site, detailsHtml } from '../lib/site.js';
+import { href, site, detailsHtml, getGroups } from '../lib/site.js';
 import { fillTokens } from '../lib/faq.js';
 
 const p = pages.bio;
-const CHIP = ['expertise', 'skills', 'values'];
 const by = (s) => bio.filter((x) => x.section === s);
-// ترتيب الأقسام من لوحة التحكم، وما لم يُذكر يُلحق في آخره
-const all = Object.keys(BIO_SECTION);
-const saved = (p.order || []).filter((k) => all.includes(k));
-const hidden = new Set(p.hidden || []);
-const order = [...saved, ...all.filter((k) => !saved.includes(k))].filter((k) => by(k).length && !hidden.has(k));
-const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map((s) => ({ label: BIO_SECTION[s], href: '#' + s }))];
+// الأقسام بترتيبها وأسمائها من لوحة التحكم؛ الكتلتان «نبذة» و«مسارات العمل» تُرتَّبان معها، والأقسام الفارغة أو المخفية لا تظهر
+const shown = getGroups('bio', bio).filter((g) => !g.hidden && (g.block || by(g.id).length));
+const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.block).slice(0, 4).map((g) => ({ label: g.title, href: '#' + g.id }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
   <PageHead title={p.title} lead={p.lead}>
     <div class="ctas" style="margin-top:28px"><a class="pill" href={href('/contact')}>اطلب برنامجاً</a><a class="more" href={href('/featured')}>مشاريع ومشاركات مميزة</a><a class="more" href={href('/hussain-al-hajji-profile.pdf')}>السيرة الذاتية PDF</a><a class="more" href={href('/card')}>بطاقتي الرقمية</a></div>
   </PageHead>
 
-  <section class="sec tight flush" id="top">
-    <div class="measure">
-      <div class="prose">
-        {p.intro.map((t) => <p>{fillTokens(t)}</p>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="sec alt tight">
-    <div class="wide">
-      <h2 class="h2" style="margin-bottom:28px" data-in>مسارات العمل.</h2>
-      <div class="cards">
-        {p.tracks.map((t) => (
-          <article class="ccard" data-in><div class="body"><h3>{t.title}</h3><p>{t.text}</p></div></article>
-        ))}
-      </div>
-      <p class="lede" style="margin-top:36px">{p.closing}</p>
-    </div>
-  </section>
-
-  {order.map((s, i) => (
-    <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={s}>
+  {shown.map((g, i) => {
+    const anchor = i === 0 ? <span id="top"></span> : null;
+    if (g.block === 'intro') return (
+      <section class="sec tight flush" id={g.id}>{anchor}
+        <div class="measure"><div class="prose">{p.intro.map((t) => <p>{fillTokens(t)}</p>)}</div></div>
+      </section>
+    );
+    if (g.block === 'tracks') return (
+      <section class="sec alt tight" id={g.id}>{anchor}
+        <div class="wide">
+          <h2 class="h2" style="margin-bottom:28px" data-in>{g.title}.</h2>
+          <div class="cards">
+            {p.tracks.map((t) => (
+              <article class="ccard" data-in><div class="body"><h3>{t.title}</h3><p>{t.text}</p></div></article>
+            ))}
+          </div>
+          <p class="lede" style="margin-top:36px">{p.closing}</p>
+        </div>
+      </section>
+    );
+    const items = by(g.id);
+    return (
+    <section class={`sec tight${i % 2 ? ' alt' : ''}`} id={g.id}>{anchor}
       <div class="measure">
-        <h2 class="h2" style="margin-bottom:28px" data-in>{BIO_SECTION[s]}.</h2>
-        {CHIP.includes(s) ? (
-          <ul class="chip-list">{by(s).map((it) => <li>{it.title}</li>)}</ul>
+        <h2 class="h2" style="margin-bottom:28px" data-in>{g.title}.</h2>
+        {g.style === 'chips' ? (
+          <ul class="chip-list">{items.map((it) => <li>{it.title}</li>)}</ul>
         ) : (
           <ol class="tl">
-            {by(s).map((it) => (
+            {items.map((it) => (
               <li>
                 <span class="period">{it.period}</span>
                 <div class="tl-row">
-                  {it.logo ? <img class="tl-logo" src={href(it.logo)} alt={it.subtitle || ''} loading="lazy" width="56" height="56"> : by(s).some((x) => x.logo) ? <span class="tl-logo ph" /> : null}
+                  {it.logo ? <img class="tl-logo" src={href(it.logo)} alt={it.subtitle || ''} loading="lazy" width="56" height="56"> : items.some((x) => x.logo) ? <span class="tl-logo ph" /> : null}
                   <div class="tl-body">
                     {it.link
                       ? <a href={it.link} rel="noopener"><b>{it.title}</b></a>
@@ -76,6 +73,7 @@ const local = [{ label: 'السيرة', href: '#top' }, ...order.slice(0, 4).map
         )}
       </div>
     </section>
-  ))}
+    );
+  })}
   <script>import '../scripts/more.js';</script>
 </Base>

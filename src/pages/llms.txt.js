@@ -1,4 +1,4 @@
-import { site, abs, getKits, getPosts, getNews, records, MEDIA_SECTION, contactLinks } from '../lib/site.js';
+import { site, abs, getKits, getPosts, getNews, records, contactLinks } from '../lib/site.js';
 import { STATIC_PAGES } from '../lib/pages.js';
 import { faqItems } from '../lib/faq.js';
 import partners from '../data/partners.json';

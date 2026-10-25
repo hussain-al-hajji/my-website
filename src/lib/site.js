@@ -3,6 +3,8 @@ import site from '../data/site.json';
 import news from '../data/news.json';
 import posts from '../data/posts.json';
 import kits from '../data/kits.json';
+import pagesJson from '../data/pages.json';
+import { PROMPT_CAT, MEDIA_SECTION, PARTNER_GROUP, BIO_SECTION, resolveGroups, groupTitle } from './group-defaults.js';
 import rawRecords from '../data/records.json';
 import { archivedRecords } from './calendar.js';
 import media from '../data/media.json';
@@ -67,15 +69,6 @@ export function getAnnouncement() {
 export const getPosts = () => [...posts].sort(byDateDesc);
 export const getKits = () => [...kits].sort((a, b) => (a.priority || 99) - (b.priority || 99));
 
-export const PROMPT_CAT = {
-  products: 'اكتشاف المنتجات والفرص',
-  listings: 'وصف المنتجات والمتجر',
-  content: 'المحتوى والتسويق',
-  support: 'خدمة العملاء',
-  sales: 'المبيعات والعروض',
-  ops: 'التحليل والتشغيل',
-  training: 'التدريب وتصميم المحتوى',
-};
 
 export const AUDIENCES = {
   students: 'طلاب وحديثو تخرج',
@@ -95,41 +88,6 @@ export const GOALS = {
 export const TIMES = { short: 'ساعتان إلى خمس', day: 'يوم كامل', long: 'عدة أيام' };
 
 export const POST_KIND = { long: 'مقال', short: 'مقالة قصيرة', external: 'منشور خارجي', guide: 'دليل' };
-export const MEDIA_SECTION = {
-  tv: 'تلفزيون',
-  radio: 'إذاعة',
-  press: 'صحافة ومقالات',
-  event: 'فعاليات',
-  'award-press': 'الصحافة عن التكريم',
-  'award-tv': 'التلفزيون عن التكريم',
-};
-export const PARTNER_GROUP = {
-  gov: 'جهات حكومية',
-  nonprofit: 'جهات غير ربحية',
-  private: 'القطاع الخاص',
-  edu: 'جهات تعليمية',
-  gulf: 'خليجية',
-  intl: 'دولية',
-  chambers: 'غرف تجارية',
-};
-export const BIO_SECTION = {
-  career: 'المسيرة المهنية',
-  education: 'التعليم والدرجات الأكاديمية',
-  projects: 'مشاريع تدريبية مرموقة',
-  sdgs: 'أهداف التنمية المستدامة',
-  achievements: 'الإنجازات',
-  credentials: 'الاعتمادات',
-  committees: 'اللجان والعضويات',
-  leadership: 'برامج القيادة',
-  mentoring: 'الإرشاد والمسرّعات',
-  bootcamps: 'المعسكرات',
-  learning: 'التعلّم والتطوير',
-  writing: 'الكتابة',
-  volunteer: 'العمل التطوعي',
-  skills: 'المهارات',
-  expertise: 'مجالات الخبرة',
-  values: 'القيم',
-};
 
 /** سجل مبسّط للجدار والخريطة، يُدمج في الصفحة كـ JSON. */
 export function logForClient() {
@@ -203,3 +161,8 @@ export const FOOT_DIR = [
   { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['ابنِ عرضك', '/proposal'], ['أسئلة شائعة', '/faq'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['مبادرات مبتكرة', '/my-projects']] },
   { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['محتوى مرئي', '/recorded-courses'], ['اسأل حسين', '/faq#ask'], ['مكتبة الأوامر', '/prompts'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
 ];
+
+export { PROMPT_CAT, MEDIA_SECTION, PARTNER_GROUP, BIO_SECTION, resolveGroups, groupTitle };
+
+/** أقسام صفحة مرتّبة وبأسمائها المعدّلة من لوحة التحكم (pages.json ← groups) */
+export const getGroups = (page, items = []) => resolveGroups(page, pagesJson.groups?.[page], items);
