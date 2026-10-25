@@ -58,7 +58,9 @@
       "learning",
       "leadership",
       "committees",
-      "education"
+      "education",
+      "projects",
+      "volunteer"
     ]
   },
   "groups": {
@@ -117,15 +119,16 @@
       },
       {
         "id": "leadership",
-        "title": "برامج القيادة"
+        "title": "خريج برامج قيادية مرموقة"
       },
       {
         "id": "mentoring",
-        "title": "الإرشاد والمسرّعات"
+        "title": "الإرشاد والمسرّعات",
+        "hidden": true
       },
       {
         "id": "bootcamps",
-        "title": "المعسكرات"
+        "title": "خريج معسكرات مهنية"
       },
       {
         "id": "learning",
@@ -138,7 +141,7 @@
       },
       {
         "id": "writing",
-        "title": "الكتابة"
+        "title": "كاتب وصانع محتوى لدى كل من:"
       },
       {
         "id": "volunteer",
