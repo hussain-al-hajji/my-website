@@ -681,15 +681,16 @@
     "section": "achievements",
     "title": "الدورة الأعلى مبيعاً",
     "subtitle": "منصة أقدِم",
-    "logo": "",
-    "period": "",
-    "desc": "دورة «العمل الحر عبر الإنترنت» التي أعدّها وسجّلها حققت الأعلى مبيعاً بين دورات المنصة.",
+    "logo": "/img/uploads/images-2-mvp1z16a.webp",
+    "period": "2022",
+    "desc": "دورة «العمل الحر عبر الإنترنت» من إعدادي وتسجيلي، حققت الأعلى مبيعاً بين دورات المنصة.",
     "link": "",
     "en": {
       "title": "Best-Selling Course",
       "subtitle": "Aqdim Platform",
       "desc": "The \"Online Freelancing\" course I prepared and recorded achieved the highest sales among the platform's courses."
-    }
+    },
+    "brief": "دورة «العمل الحر عبر الإنترنت» من إعدادي وتسجيلي، حققت الأعلى مبيعاً بين دورات المنصة."
   },
   {
     "id": "b043",
@@ -697,14 +698,15 @@
     "title": "الدورة الأعلى مبيعاً",
     "subtitle": "منصة إي يوث",
     "logo": "/img/partners/l51.webp",
-    "period": "",
-    "desc": "دورة «التجارة الإلكترونية» التي أعدّها وسجّلها حققت الأعلى مبيعاً بين دورات المنصة.",
+    "period": "2023",
+    "desc": "دورة «التجارة الإلكترونية» من إعدادي وتسجيلي، حققت الأعلى مبيعاً بين دورات المنصة.",
     "link": "",
     "en": {
       "title": "Best-Selling Course",
       "subtitle": "eYouth Platform",
       "desc": "The \"E-Commerce\" course I prepared and recorded achieved the highest sales among the platform's courses."
-    }
+    },
+    "brief": "دورة «التجارة الإلكترونية» من إعدادي وتسجيلي، حققت الأعلى مبيعاً بين دورات المنصة."
   },
   {
     "id": "b044",
