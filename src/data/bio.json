@@ -1417,36 +1417,6 @@
     "brief": "مهارات الحوار والتفكير الناقد والإقناع التواصلي."
   },
   {
-    "id": "b101",
-    "section": "learning",
-    "title": "قيادات سعودية (مسك وأكاديمية PwC)",
-    "subtitle": "دورات وبرامج من مسك",
-    "logo": "/img/partners/l02.webp",
-    "period": "2023",
-    "desc": "برنامج مكثف لتأهيل القيادات السعودية الشابة الواعدة في القطاع الحكومي والخاص وغير الربحي. 3 أشهر.",
-    "link": "",
-    "en": {
-      "title": "Saudi Leaders (Misk & PwC Academy)",
-      "subtitle": "Misk Courses & Programs"
-    },
-    "brief": "برنامج مكثف لتأهيل القيادات السعودية الشابة الواعدة في القطاع الحكومي والخاص وغير الربحي. 3 أشهر."
-  },
-  {
-    "id": "b102",
-    "section": "learning",
-    "title": "مسك الانطلاق (مسك ورايز أب)",
-    "subtitle": "دورات وبرامج من مسك",
-    "logo": "/img/partners/l02.webp",
-    "period": "2024",
-    "desc": "مسرعة أعمال مكثفة لتخريج ودعم المشاريع الريادية.",
-    "link": "",
-    "en": {
-      "title": "Misk Launch (Misk & Rise Up)",
-      "subtitle": "Misk Courses & Programs"
-    },
-    "brief": "مسرعة أعمال مكثفة لتخريج ودعم المشاريع الريادية."
-  },
-  {
     "id": "b103",
     "section": "learning",
     "title": "السعودية تبرمج (مسك)",
