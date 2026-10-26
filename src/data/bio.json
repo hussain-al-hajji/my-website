@@ -1160,14 +1160,15 @@
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/gcc-badge-pgm-1000x1000-mvp0jumz.webp",
     "period": "2021",
-    "desc": "",
-    "details": "- المدة: 6 أشهر (2021).\n- المحاور: الأساسيات، والبدء، والتخطيط، والتنفيذ، والمنهجيات الرشيقة (Agile)، ومشروع ختامي لتطبيق إدارة المشاريع في الواقع العملي.",
+    "desc": "برنامج يقع في 6 أشهر ويغطي المحاور: الأساسيات، والبدء، والتخطيط، والتنفيذ، والمنهجيات الرشيقة (Agile)، ومشروع ختامي لتطبيق إدارة المشاريع في الواقع العملي.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Google Project Management Professional Program",
       "subtitle": "Google Courses",
       "details": "- Duration: 6 months (2021).\n- Topics: fundamentals, initiation, planning, execution, Agile methodologies, and a capstone project applying project management in practice."
-    }
+    },
+    "brief": "برنامج يقع في 6 أشهر ويغطي المحاور: الأساسيات، والبدء، والتخطيط، والتنفيذ، والمنهجيات الرشيقة (Agile)، ومشروع ختامي لتطبيق إدارة المشاريع في الواقع العملي."
   },
   {
     "id": "b086",
@@ -1176,12 +1177,14 @@
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/image-mvp0l8q1.webp",
     "period": "2021",
-    "desc": "",
+    "desc": "برنامج شامل في التسويق الرقمي يحتوي 40 ساعة تدريبية في 17 فصلاً.",
     "link": "",
     "en": {
       "title": "Google Digital Marketing Skills Program",
       "subtitle": "Google Courses"
-    }
+    },
+    "brief": "برنامج شامل في التسويق الرقمي يحتوي 40 ساعة تدريبية في 17 فصلاً.",
+    "details": ""
   },
   {
     "id": "b087",
@@ -1190,12 +1193,13 @@
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/images-1-mvp0mdv3.webp",
     "period": "2022",
-    "desc": "",
+    "desc": "يغطي المستوى الأساسي والمتقدم من مهارات استخدام برامج قوقل في التعليم والتدريب.",
     "link": "",
     "en": {
       "title": "Google Certified Educator Program (Level 1 and Level 2)",
       "subtitle": "Google Courses"
-    }
+    },
+    "brief": "يغطي المستوى الأساسي والمتقدم من مهارات استخدام برامج قوقل في التعليم والتدريب."
   },
   {
     "id": "b088",
@@ -1204,12 +1208,13 @@
     "subtitle": "دورات من قوقل",
     "logo": "/img/partners/l19.webp",
     "period": "2022",
-    "desc": "",
+    "desc": "شهادة مدرب معتمد لدى قوقل للتعليم.",
     "link": "",
     "en": {
       "title": "Google Certified Trainer Program",
       "subtitle": "Google Courses"
-    }
+    },
+    "brief": "شهادة مدرب معتمد لدى قوقل للتعليم."
   },
   {
     "id": "b089",
@@ -1218,14 +1223,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2018",
-    "desc": "",
-    "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2018.",
+    "desc": "درجة النانو (Nanodegree) في التسويق الرقمي، 4 أشهر، قائمة على المشاريع.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Digital Marketing (Misk & Udacity)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Nanodegree, 4 months, project-based, 2018."
-    }
+    },
+    "brief": "درجة النانو (Nanodegree) في التسويق الرقمي، 4 أشهر، قائمة على المشاريع."
   },
   {
     "id": "b090",
@@ -1234,14 +1240,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2022",
-    "desc": "",
-    "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2019.",
+    "desc": "درجة النانو (Nanodegree) في تحليلات الأعمال، 4 أشهر، قائمة على المشاريع.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Business Analytics (Misk & Udacity)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Nanodegree, 4 months, project-based, 2019."
-    }
+    },
+    "brief": "درجة النانو (Nanodegree) في تحليلات الأعمال، 4 أشهر، قائمة على المشاريع."
   },
   {
     "id": "b091",
@@ -1250,14 +1257,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2019",
-    "desc": "",
-    "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2019.",
+    "desc": "درجة النانو (Nanodegree) في التحليل التنبؤي، 4 أشهر، قائمة على المشاريع.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Predictive Analytics (Misk & Udacity)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Nanodegree, 4 months, project-based, 2019."
-    }
+    },
+    "brief": "درجة النانو (Nanodegree) في التحليل التنبؤي، 4 أشهر، قائمة على المشاريع."
   },
   {
     "id": "b092",
@@ -1266,28 +1274,30 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2021",
-    "desc": "",
+    "desc": "برنامج تدريبي يوعي بحزمة من مهارات المستقبل التخصصية والشخصية.",
     "link": "",
     "en": {
       "title": "Future Makers Program (Misk & Udacity)",
       "subtitle": "Misk Courses & Programs"
-    }
+    },
+    "brief": "برنامج تدريبي يوعي بحزمة من مهارات المستقبل التخصصية والشخصية."
   },
   {
     "id": "b093",
     "section": "learning",
-    "title": "٦ سيجما الحزام الأصفر (مسك وكورسيرا)",
+    "title": "6 سيجما الحزام الأصفر (مسك وكورسيرا)",
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2020",
-    "desc": "",
-    "details": "- مسار تخصصي من 4 مقررات خلال 4 أشهر، 2020.",
+    "desc": "مسار تخصصي في الــ 6 سيجما، من 4 مقررات، خلال 4 أشهر.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Six Sigma Yellow Belt (Misk & Coursera)",
       "subtitle": "Misk Courses & Programs",
       "details": "- A specialization of 4 courses over 4 months, 2020."
-    }
+    },
+    "brief": "مسار تخصصي في الــ 6 سيجما، من 4 مقررات، خلال 4 أشهر."
   },
   {
     "id": "b094",
@@ -1296,14 +1306,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2020",
-    "desc": "",
-    "details": "- مسار تخصصي من 4 مقررات خلال 4 أشهر، 2020.",
+    "desc": "مسار تخصصي في مهارات القيادة في العصر الحديث، من 4 مقررات، خلال 4 أشهر.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Leading Work in the Modern Era (Misk & Coursera)",
       "subtitle": "Misk Courses & Programs",
       "details": "- A specialization of 4 courses over 4 months, 2020."
-    }
+    },
+    "brief": "مسار تخصصي في مهارات القيادة في العصر الحديث، من 4 مقررات، خلال 4 أشهر."
   },
   {
     "id": "b095",
@@ -1312,14 +1323,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2020",
-    "desc": "",
-    "details": "- 6 أسابيع من التدريب المكثف القائم على المشاريع في ريادة الأعمال بالشراكة مع نيوم، 2020.",
+    "desc": "6 أسابيع من التدريب المكثف القائم على المشاريع في ريادة الأعمال بالشراكة مع نيوم.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Spark Program (Misk & NEOM)",
       "subtitle": "Misk Courses & Programs",
       "details": "- 6 weeks of intensive, project-based entrepreneurship training in partnership with NEOM, 2020."
-    }
+    },
+    "brief": "6 أسابيع من التدريب المكثف القائم على المشاريع في ريادة الأعمال بالشراكة مع نيوم."
   },
   {
     "id": "b096",
@@ -1328,14 +1340,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2019",
-    "desc": "",
-    "details": "- استضافه مكتب بلومبيرغ في دبي، 2019.",
+    "desc": "برنامج تدريبي مكثف في الصحافة المالية باستضافة مقر مكتب بلومبيرغ في دبي، لمدة أسبوع.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Financial Journalism (Misk & Bloomberg)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Hosted by Bloomberg's Dubai office, 2019."
-    }
+    },
+    "brief": "برنامج تدريبي مكثف في الصحافة المالية باستضافة مقر مكتب بلومبيرغ في دبي، لمدة أسبوع."
   },
   {
     "id": "b097",
@@ -1344,14 +1357,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2019",
-    "desc": "",
-    "details": "- دورة مكثفة في التسويق الرقمي، 2019.",
+    "desc": "دورة مكثفة في التسويق الرقمي لمدة أسبوع في جامعة الفيصل بالرياض.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Digital Marketing (Misk & General Assembly)",
       "subtitle": "Misk Courses & Programs",
       "details": "- An intensive digital marketing course, 2019."
-    }
+    },
+    "brief": "دورة مكثفة في التسويق الرقمي لمدة أسبوع في جامعة الفيصل بالرياض."
   },
   {
     "id": "b098",
@@ -1360,14 +1374,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2019",
-    "desc": "",
-    "details": "- تدريب إلكتروني على مهارات الجاهزية الوظيفية، 2019.",
+    "desc": "تدريب إلكتروني على مهارات الجاهزية الوظيفية.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Path to the Future (Misk & Fullbridge)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Online training in job-readiness skills, 2019."
-    }
+    },
+    "brief": "تدريب إلكتروني على مهارات الجاهزية الوظيفية."
   },
   {
     "id": "b099",
@@ -1376,12 +1391,13 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2021",
-    "desc": "",
+    "desc": "برنامج إلكتروني يمنح المتدرب فرصة لمحاكاة مجموعة من الأدوار والمهام الوظيفية في عدة تخصصات وبالتعاون مع العديد من الجهات القيادية الكبرى بالمملكة.",
     "link": "",
     "en": {
       "title": "Virtual Work Experience Program (Misk)",
       "subtitle": "Misk Courses & Programs"
-    }
+    },
+    "brief": "برنامج إلكتروني يمنح المتدرب فرصة لمحاكاة مجموعة من الأدوار والمهام الوظيفية في عدة تخصصات وبالتعاون مع العديد من الجهات القيادية الكبرى بالمملكة."
   },
   {
     "id": "b100",
@@ -1390,14 +1406,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2021",
-    "desc": "",
-    "details": "- مهارات الحوار والتفكير الناقد والإقناع التواصلي، 2021.",
+    "desc": "مهارات الحوار والتفكير الناقد والإقناع التواصلي.",
+    "details": "مهارات الحوار والتفكير الناقد والإقناع التواصلي.",
     "link": "",
     "en": {
       "title": "Youth Voice (Misk)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Dialogue, critical thinking and persuasive communication skills, 2021."
-    }
+    },
+    "brief": "مهارات الحوار والتفكير الناقد والإقناع التواصلي."
   },
   {
     "id": "b101",
