@@ -1407,7 +1407,7 @@
     "logo": "/img/partners/l02.webp",
     "period": "2021",
     "desc": "مهارات الحوار والتفكير الناقد والإقناع التواصلي.",
-    "details": "مهارات الحوار والتفكير الناقد والإقناع التواصلي.",
+    "details": "",
     "link": "",
     "en": {
       "title": "Youth Voice (Misk)",
@@ -1423,12 +1423,13 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2023",
-    "desc": "",
+    "desc": "برنامج مكثف لتأهيل القيادات السعودية الشابة الواعدة في القطاع الحكومي والخاص وغير الربحي. 3 أشهر.",
     "link": "",
     "en": {
       "title": "Saudi Leaders (Misk & PwC Academy)",
       "subtitle": "Misk Courses & Programs"
-    }
+    },
+    "brief": "برنامج مكثف لتأهيل القيادات السعودية الشابة الواعدة في القطاع الحكومي والخاص وغير الربحي. 3 أشهر."
   },
   {
     "id": "b102",
@@ -1437,12 +1438,13 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2024",
-    "desc": "",
+    "desc": "مسرعة أعمال مكثفة لتخريج ودعم المشاريع الريادية.",
     "link": "",
     "en": {
       "title": "Misk Launch (Misk & Rise Up)",
       "subtitle": "Misk Courses & Programs"
-    }
+    },
+    "brief": "مسرعة أعمال مكثفة لتخريج ودعم المشاريع الريادية."
   },
   {
     "id": "b103",
@@ -1451,14 +1453,15 @@
     "subtitle": "دورات وبرامج من مسك",
     "logo": "/img/partners/l02.webp",
     "period": "2018",
-    "desc": "",
-    "details": "- دورات إلكترونية قصيرة للمبتدئين في البرمجة: Python وJava وMake-Code، 2018.",
+    "desc": "دورات إلكترونية قصيرة في البرمجة: Python وJava وMake-Code،",
+    "details": "",
     "link": "",
     "en": {
       "title": "Saudi Codes (Misk)",
       "subtitle": "Misk Courses & Programs",
       "details": "- Short online courses for beginners in programming: Python, Java and Make-Code, 2018."
-    }
+    },
+    "brief": "دورات إلكترونية قصيرة في البرمجة: Python وJava وMake-Code،"
   },
   {
     "id": "b128",
@@ -1474,14 +1477,15 @@
       "subtitle": "EF Education First",
       "period": "2014",
       "desc": "Advanced-level certificate in English through online training."
-    }
+    },
+    "brief": "شهادة المستوى المتقدم في اللغة الإنجليزية عبر التدريب الإلكتروني."
   },
   {
     "id": "b129",
     "section": "learning",
     "title": "تدريب المدربين TOT",
     "subtitle": "Udemy",
-    "logo": "",
+    "logo": "/img/uploads/5c85cb42c35fde773c72f74282322e-mvp1hxop.webp",
     "period": "2021",
     "desc": "34 ساعة تدريبية عبر الإنترنت.",
     "link": "",
@@ -1496,7 +1500,7 @@
     "id": "b130",
     "section": "learning",
     "title": "مهارات إدارة المشاريع (كن مدير مشاريع)",
-    "subtitle": "لينكدإن ليرنينغ",
+    "subtitle": "LinkedIn Learning",
     "logo": "/img/bio/linkedin.webp",
     "period": "2021",
     "desc": "12 ساعة تدريبية عبر الإنترنت في أهم مهارات إدارة المشاريع، موصى بها من لينكدإن.",
@@ -1506,7 +1510,8 @@
       "subtitle": "LinkedIn Learning",
       "period": "2021",
       "desc": "12 training hours online covering the most important project management skills, recommended by LinkedIn."
-    }
+    },
+    "brief": "12 ساعة تدريبية عبر الإنترنت في أهم مهارات إدارة المشاريع، موصى بها من لينكدإن."
   },
   {
     "id": "b131",
@@ -1522,7 +1527,8 @@
       "subtitle": "Happiness Business School",
       "period": "2021",
       "desc": "Three days (12 hours) on managing happiness in the workplace and developing the employee experience."
-    }
+    },
+    "brief": "ثلاثة أيام (12 ساعة) في إدارة السعادة في بيئة العمل وتطوير تجربة الموظف."
   },
   {
     "id": "b105",
