@@ -3,12 +3,20 @@
   "tagline": "أمكّن الشباب",
   "role": "مؤسس مشاريع رقمية، مدرب أعمال، ومرشد مهني معتمد",
   "focus": "متخصص في العمل مع الشباب",
+  "cvHead": [
+    "مؤسس مشاريع رقمية | مدرب أعمال | مرشد مهني معتمد.",
+    "متخصص في العمل مع الشباب - حاصل على جائزة رواد الشباب العربي (2025)."
+  ],
   "en": {
     "name": "Hussain Al-Hajji",
     "tagline": "Empowering Youth",
     "role": "Digital Projects Founder, Business Trainer, and Certified Career Counselor",
     "focus": "Specialized in working with youth",
-    "country": "Saudi Arabia"
+    "country": "Saudi Arabia",
+    "cvHead": [
+      "Digital Projects Founder | Business Trainer | Certified Career Counselor.",
+      "Specialized in working with youth - Arab Youth Pioneers Award Winner (2025)."
+    ]
   },
   "title": "حسين الحاجي | أمكّن الشباب",
   "description": "متخصص في إدارة مشاريع التدريب والتطوير وبناء الكفاءات، ومدرب تجارة إلكترونية وعمل حر ومرشد مهني معتمد CCSP، بخبرة منذ 2018 في تمكين الشباب.",

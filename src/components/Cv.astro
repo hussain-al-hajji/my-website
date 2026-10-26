@@ -26,6 +26,7 @@ const p = pages.bio;
 const pe = (en && p.en) || p;
 const S = (en && site.en) || {};
 const sName = S.name || site.name, sRole = S.role || site.role, sFocus = S.focus || site.focus;
+const cvHead = ((en && S.cvHead) || site.cvHead || [sRole, sFocus]).filter(Boolean);
 const c = site.contact;
 const by = (s) => bio.filter((x) => x.section === s);
 const kits = getKits();
@@ -56,14 +57,13 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
       <header class="pf-head" data-cover>
         <div class="pf-id">
           <h1>{sName}</h1>
-          <p class="pf-role">{sRole}</p>
-          {sFocus && <p class="pf-focus">{sFocus}</p>}
-          <p class="pf-lead">{pe.lead}</p>
-          <p class="pf-contact">
-            <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>
-          </p>
+          <p class="pf-role">{cvHead[0]}</p>
+          {cvHead[1] && <p class="pf-focus">{cvHead[1]}</p>}
         </div>
         <img class="pf-photo" src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694">
+        <p class="pf-contact">
+          <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>
+        </p>
       </header>
 
       <section class="pf-sec" data-cover>

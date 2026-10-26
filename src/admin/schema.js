@@ -303,6 +303,8 @@ export const SECTIONS = [
       { k: 'description', label: 'وصف الموقع: الرئيسية ونتائج البحث ومعاينة المشاركة وبقية الصفحات (نحو 150 حرفاً)', type: 'textarea', rows: 3, help: 'يظهر تحت عنوان الموقع في قوقل وعند مشاركة الرابط، ويُستخدم وصفاً لأي صفحة بلا وصف خاص، وفي بيانات الموقع المنظّمة وllms.txt وبطاقة الاتصال.' },
       { k: 'hero.headline', label: 'الاسم (نص بديل للمخطوطة)', type: 'text' },
       { k: 'focus', label: 'عبارة التخصص تحت الدور (بطاقتي، السيرة PDF، البورتفوليو، عرض الأسعار)', type: 'text' },
+      { k: 'cvHead', label: 'سطرا التعريف تحت الاسم في السيرة الذاتية PDF (سطر لكل خانة)', type: 'lines', help: 'الأول للألقاب والثاني للتخصص والجائزة. يُستخدم الرمز | بين الألقاب.' },
+      { k: 'en.cvHead', label: 'English: the two CV header lines', type: 'lines', ltr: true, tr: 'cvHead' },
       { k: 'en.name', label: 'English: name (for the English CV)', type: 'text', ltr: true, tr: 'name' },
       { k: 'en.role', label: 'English: role line (for the English CV)', type: 'text', ltr: true, tr: 'role' },
       { k: 'en.focus', label: 'English: specialization line', type: 'text', ltr: true, tr: 'focus' },

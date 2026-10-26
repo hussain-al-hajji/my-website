@@ -5,12 +5,13 @@
 .pf{width:210mm;max-width:100%;margin:0 auto;background:#fff;padding:14mm 15mm 16mm;color:#1b1b1a;font-size:9.2pt;line-height:1.62;box-shadow:0 10px 40px rgba(0,0,0,.1)}
 .pf *{box-sizing:border-box}
 
-.pf-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;padding-bottom:5mm;border-bottom:2px solid #1b1b1a;position:relative}
+.pf-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3mm 8mm;padding-bottom:5mm;border-bottom:2px solid #1b1b1a;position:relative}
 .pf-head::after{content:"";position:absolute;inset-inline-start:0;bottom:-2px;width:34mm;height:2px;background:#835410}
 .pf-id h1{font-size:25pt;line-height:1.15;font-weight:800;letter-spacing:-.01em}
 .pf-role{font-size:12pt;font-weight:700;color:#835410;margin-top:1.5mm}
 .pf-lead{color:#4a4943;margin-top:2mm;max-width:110mm;font-size:9.4pt}
-.pf-contact{display:flex;flex-wrap:wrap;gap:1mm 5mm;margin-top:3.5mm;font-size:8.8pt;color:#1b1b1a;direction:rtl}
+.pf-id{flex:1;min-width:0}
+.pf-contact{flex:1 0 100%;display:flex;flex-wrap:nowrap;justify-content:space-between;gap:4mm;margin-top:1mm;padding-top:3mm;border-top:.2mm solid #d9d6cc;font-size:8.4pt;color:#1b1b1a;direction:rtl;white-space:nowrap}
 .pf-contact span{direction:ltr;unicode-bidi:isolate}
 .pf-photo{display:block;height:36mm;width:auto;flex:none}
 
@@ -129,3 +130,4 @@
 .pf[dir=ltr] .pf-tagrow li{font-size:7.9pt;padding:.4mm 2.2mm;line-height:1.5}
 .pf[dir=ltr] .pf-tagrow ul{gap:1mm 1.4mm}
 .pf[dir=ltr] .pf-nums{margin-top:2mm;padding:1.8mm 3mm}
+.pf[dir=ltr] .pf-role{font-size:10.4pt}
