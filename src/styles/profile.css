@@ -131,3 +131,8 @@
 .pf[dir=ltr] .pf-tagrow ul{gap:1mm 1.4mm}
 .pf[dir=ltr] .pf-nums{margin-top:2mm;padding:1.8mm 3mm}
 .pf[dir=ltr] .pf-role{font-size:10.4pt}
+
+/* شريط شعارات الجهات تحت الترويسة */
+.pf-logos{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:2mm;margin-top:4mm}
+.pf-logos li{flex:1 1 0;display:flex;align-items:center;justify-content:center;height:12mm}
+.pf-logos img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}

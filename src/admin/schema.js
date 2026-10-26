@@ -304,6 +304,7 @@ export const SECTIONS = [
       { k: 'hero.headline', label: 'الاسم (نص بديل للمخطوطة)', type: 'text' },
       { k: 'focus', label: 'عبارة التخصص تحت الدور (بطاقتي، السيرة PDF، البورتفوليو، عرض الأسعار)', type: 'text' },
       { k: 'cvHead', label: 'سطرا التعريف تحت الاسم في السيرة الذاتية PDF (سطر لكل خانة)', type: 'lines', help: 'الأول للألقاب والثاني للتخصص والجائزة. يُستخدم الرمز | بين الألقاب.' },
+      { k: 'cvLogos', label: 'شعارات الجهات تحت ترويسة السيرة الذاتية PDF (بالترتيب)', type: 'objects', fields: [{ k: 'logo', label: 'الشعار', type: 'image' }, { k: 'name', label: 'الاسم (نص بديل)', type: 'text' }, { k: 'en', label: 'English name', type: 'text', ltr: true }] },
       { k: 'en.cvHead', label: 'English: the two CV header lines', type: 'lines', ltr: true, tr: 'cvHead' },
       { k: 'en.name', label: 'English: name (for the English CV)', type: 'text', ltr: true, tr: 'name' },
       { k: 'en.role', label: 'English: role line (for the English CV)', type: 'text', ltr: true, tr: 'role' },

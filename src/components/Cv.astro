@@ -65,6 +65,11 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
           <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>
         </p>
       </header>
+      {(site.cvLogos || []).length > 0 && (
+        <ul class="pf-logos" data-cover>
+          {site.cvLogos.map((l) => <li><img src={href(l.logo)} alt={(en && l.en) || l.name} loading="eager"></li>)}
+        </ul>
+      )}
 
       <section class="pf-sec" data-cover>
         <h2>{T.summary}</h2>

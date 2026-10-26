@@ -7,6 +7,48 @@
     "مؤسس مشاريع رقمية | مدرب أعمال | مرشد مهني معتمد.",
     "متخصص في العمل مع الشباب - حاصل على جائزة رواد الشباب العربي (2025)."
   ],
+  "cvLogos": [
+    {
+      "logo": "/img/bio/noon.webp",
+      "name": "نون",
+      "en": "Noon"
+    },
+    {
+      "logo": "/img/partners/l02.webp",
+      "name": "مسك",
+      "en": "Misk"
+    },
+    {
+      "logo": "/img/partners/l04.webp",
+      "name": "منشآت",
+      "en": "Monsha'at"
+    },
+    {
+      "logo": "/img/partners/l11.webp",
+      "name": "نيوم",
+      "en": "NEOM"
+    },
+    {
+      "logo": "/img/partners/l05.webp",
+      "name": "بنك التنمية الاجتماعية",
+      "en": "Social Development Bank"
+    },
+    {
+      "logo": "/img/partners/l25.webp",
+      "name": "مركز الشباب العربي",
+      "en": "Arab Youth Center"
+    },
+    {
+      "logo": "/img/uploads/1791485748475-mvnoqy8z.webp",
+      "name": "جائزة هولت",
+      "en": "Hult Prize"
+    },
+    {
+      "logo": "/img/uploads/images-mvnrz2u3.webp",
+      "name": "بنك قطر للتنمية",
+      "en": "Qatar Development Bank"
+    }
+  ],
   "en": {
     "name": "Hussain Al-Hajji",
     "tagline": "Empowering Youth",
