@@ -4,6 +4,7 @@ import { commitFiles, readFile } from './github.js';
 import { Stats, BOT_RE } from './stats.js';
 import { searchConsole, analytics4 } from './google.js';
 import { bing } from './bing.js';
+import { translateTexts, TranslateError } from './translate.js';
 
 export { Stats };
 
@@ -81,6 +82,12 @@ export async function handle(req, env, deps = {}) {
       const entries = await Promise.all(names.map(async (n) => [n, JSON.parse(await readFile(env, `src/data/${n}.json`, deps.fetch))]));
       return reply(env, req, 200, Object.fromEntries(entries));
     }
+    if (url.pathname === '/api/translate' && req.method === 'POST') {
+      await authorize(req, env, deps.auth);
+      const b = await req.json().catch(() => null);
+      const texts = await translateTexts(env, b && b.texts, deps);
+      return reply(env, req, 200, { texts });
+    }
     if (url.pathname === '/api/publish' && req.method === 'POST') {
       const who = await authorize(req, env, deps.auth);
       const { files, message } = validatePublish(await req.json().catch(() => null));
@@ -90,6 +97,7 @@ export async function handle(req, env, deps = {}) {
     return reply(env, req, 404, { error: 'not-found' });
   } catch (e) {
     if (e instanceof AuthError) return reply(env, req, e.message === 'forbidden' ? 403 : 401, { error: e.message });
+    if (e instanceof TranslateError) return reply(env, req, e.message === 'not-configured' ? 501 : e.message === 'bad-request' || e.message === 'too-long' ? 400 : 502, { error: e.message });
     if (e instanceof ValidationError) return reply(env, req, 400, { error: 'invalid', message: e.message });
     console.error(e.message);
     return reply(env, req, 502, { error: 'upstream' });

@@ -24,6 +24,10 @@ const JOBS = [
     format: 'A4', preferCSSPageSize: false, margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' }, displayHeaderFooter: true, headerTemplate: '<span></span>',
     footerTemplate: '<div style="width:100%;font-size:8px;color:#8d8c85;text-align:center;font-family:Arial,sans-serif"><span class="pageNumber"></span> / <span class="totalPages"></span></div>',
   } },
+  { page: '/profile-en', file: 'hussain-al-hajji-profile-en.pdf', pdf: {
+    format: 'A4', preferCSSPageSize: false, margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' }, displayHeaderFooter: true, headerTemplate: '<span></span>',
+    footerTemplate: '<div style="width:100%;font-size:8px;color:#8d8c85;text-align:center;font-family:Arial,sans-serif"><span class="pageNumber"></span> / <span class="totalPages"></span></div>',
+  } },
   { page: '/portfolio', file: 'hussain-al-hajji-portfolio.pdf', pdf: { width: '297mm', height: '210mm', preferCSSPageSize: true } },
 ];
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2', '.json': 'application/json' };
@@ -84,21 +88,25 @@ try {
     const ids = await probe.evaluate(() => [...document.querySelectorAll('[data-sec]')].map((e) => e.dataset.sec));
     await probe.close();
     // الغلاف بمقاس A4 كاملاً؛ وكل قسم والخاتمة صفحة واحدة طويلة بعرض 180mm، مع إحداثيات نقاط القصّ (بداية كل عنصر) ليرصّها المتصفح متصلة حسب اختيار الزائر
+    // المفاتيح: [en-][s-]id لكل لغة (عربي/إنجليزي) ونمط (كامل/مختصر)
     let total = 0;
-    const cover = await browser.newPage();
-    await cover.goto(`http://127.0.0.1:${port}${base}/profile?part=cover`, { waitUntil: 'networkidle' });
-    await cover.evaluate(() => document.fonts.ready);
-    await cover.emulateMedia({ media: 'print' });
-    await cover.pdf({ path: path.join(parts, 'cover.pdf'), printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
-    await cover.close();
     const manifest = {};
     const plan = [];
-    for (const [pre, mode] of [['', ''], ['s-', '&mode=short']]) {
-      plan.push(...ids.map((id) => [pre + id, `part=sec&s=${encodeURIComponent(id)}&pack=1${mode}`, false]), [pre + 'tail', `part=tail&pack=1${mode}`, true]);
+    for (const [lp, route] of [['', '/profile'], ['en-', '/profile-en']]) {
+      const cover = await browser.newPage();
+      await cover.goto(`http://127.0.0.1:${port}${base}${route}?part=cover`, { waitUntil: 'networkidle' });
+      await cover.evaluate(() => document.fonts.ready);
+      await cover.emulateMedia({ media: 'print' });
+      await cover.pdf({ path: path.join(parts, lp + 'cover.pdf'), printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
+      await cover.close();
+      for (const [pre, mode] of [['', ''], ['s-', '&mode=short']]) {
+        plan.push(...ids.map((id) => [lp + pre + id, route, `part=sec&s=${encodeURIComponent(id)}&pack=1${mode}`, false]), [lp + pre + 'tail', route, `part=tail&pack=1${mode}`, true]);
+      }
     }
-    for (const [name, qs, tail] of plan) {
+    // أجزاء متوازية (4 صفحات معاً) لتقصير زمن البناء
+    const one = async ([name, route, qs, tail]) => {
       const page = await browser.newPage({ viewport: { width: 680, height: 900 } });
-      await page.goto(`http://127.0.0.1:${port}${base}/profile?${qs}`, { waitUntil: 'networkidle' });
+      await page.goto(`http://127.0.0.1:${port}${base}${route}?${qs}`, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
       await page.emulateMedia({ media: 'print' });
       const info = await page.evaluate((isTail) => {
@@ -117,9 +125,11 @@ try {
       await page.close();
       manifest[name] = { w: info.w, top: info.top, h: info.h, pageH: Math.ceil(info.top + info.h) + 2, brk: info.brk, thead: info.thead };
       total += fs.statSync(out).size;
-    }
+    };
+    const queue = [...plan];
+    await Promise.all(Array.from({ length: 4 }, async () => { for (let it = queue.shift(); it; it = queue.shift()) await one(it); }));
     fs.writeFileSync(path.join(root, 'manifest.json'), JSON.stringify({ v: ver, parts: manifest }));
-    console.log(`[pdf] dist/cv-parts · ${plan.length + 1} جزءاً · ${(total / 1024).toFixed(0)} KB`);
+    console.log(`[pdf] dist/cv-parts · ${plan.length + 2} جزءاً · ${(total / 1024).toFixed(0)} KB`);
   }
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);

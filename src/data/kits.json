@@ -47,7 +47,11 @@
     "goals": [
       "ai",
       "ecom"
-    ]
+    ],
+    "en": {
+      "short": "AI Applications in E-Commerce",
+      "duration": "5 sessions, 10 hours, 16 topics"
+    }
   },
   {
     "id": "b2b",
@@ -93,7 +97,11 @@
     "priority": 2,
     "goals": [
       "sales"
-    ]
+    ],
+    "en": {
+      "short": "Excellence in B2B Relationship Management",
+      "duration": "2 days, 10 hours, 15 topics"
+    }
   },
   {
     "id": "phone",
@@ -144,7 +152,11 @@
     "goals": [
       "ecom",
       "sales"
-    ]
+    ],
+    "en": {
+      "short": "Commerce Transformation via Mobile",
+      "duration": "5 units, 25 hours, 16 topics"
+    }
   },
   {
     "id": "project-management",
@@ -192,7 +204,11 @@
     "priority": 4,
     "goals": [
       "leadership"
-    ]
+    ],
+    "en": {
+      "short": "Interactive Project Management",
+      "duration": "5 stations, 1 hour, 5 topics"
+    }
   },
   {
     "id": "sales-intelligence",
@@ -237,7 +253,11 @@
     "priority": 5,
     "goals": [
       "sales"
-    ]
+    ],
+    "en": {
+      "short": "Sales Intelligence in Retail",
+      "duration": "3 days, 9 hours, 17 topics"
+    }
   },
   {
     "id": "trainer-journey",
@@ -279,7 +299,11 @@
     "priority": 6,
     "goals": [
       "training"
-    ]
+    ],
+    "en": {
+      "short": "The Skilled Trainer's Kit",
+      "duration": "2 days, 8 hours, 12 topics"
+    }
   },
   {
     "id": "empowered-leader",
@@ -323,7 +347,11 @@
     "priority": 7,
     "goals": [
       "leadership"
-    ]
+    ],
+    "en": {
+      "short": "The Empowered Leader",
+      "duration": "3 days, 16 hours, 20 topics"
+    }
   },
   {
     "id": "digital-marketing",
@@ -371,7 +399,11 @@
     "goals": [
       "sales",
       "ecom"
-    ]
+    ],
+    "en": {
+      "short": "Digital Marketing",
+      "duration": "5 units, 32.5 hours, 15 topics"
+    }
   },
   {
     "id": "exit-queue",
@@ -417,7 +449,11 @@
     "priority": 9,
     "goals": [
       "career"
-    ]
+    ],
+    "en": {
+      "short": "Escaping the Queue",
+      "duration": "4 sessions, 11 hours, 12 topics"
+    }
   },
   {
     "id": "digital-entrepreneurship",
@@ -464,7 +500,11 @@
     "goals": [
       "ecom",
       "career"
-    ]
+    ],
+    "en": {
+      "short": "Digital Entrepreneurship & E-Commerce",
+      "duration": "5 sessions, 24 hours, 10 topics"
+    }
   },
   {
     "id": "ai-systems",
@@ -517,7 +557,11 @@
     "priority": 11,
     "goals": [
       "ai"
-    ]
+    ],
+    "en": {
+      "short": "AI: From Conversation to Systems",
+      "duration": "3 sessions, 12 hours, 9 topics"
+    }
   },
   {
     "id": "ai-leadership",
@@ -569,6 +613,10 @@
     "goals": [
       "ai",
       "leadership"
-    ]
+    ],
+    "en": {
+      "short": "AI for Strategic Leadership",
+      "duration": "7 sessions, 14 hours, 7 topics"
+    }
   }
 ]

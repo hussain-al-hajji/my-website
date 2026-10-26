@@ -44,8 +44,8 @@ const person = personSchema();
 // نافذة تخصيص السيرة الذاتية: الأقسام المتاحة للاختيار، أما النبذة والوسوم (المهارات والخبرة والقيم) فثابتة في الملف
 const cvAll = getGroups('bio', bioData);
 const cvCount = (id) => bioData.filter((x) => x.section === id).length;
-const cvPick = cvAll.filter((g) => !g.block && g.style !== 'chips' && cvCount(g.id)).map((g) => ({ id: g.id, title: g.title, n: cvCount(g.id), on: (pagesData.bio.pdf || []).includes(g.id) }));
-const cvFixed = [cvAll.find((g) => g.block === 'intro')?.title || 'نبذة', ...cvAll.filter((g) => g.style === 'chips' && cvCount(g.id)).map((g) => g.title)];
+const cvPick = cvAll.filter((g) => !g.block && g.style !== 'chips' && cvCount(g.id)).map((g) => ({ id: g.id, title: g.title, en: g.titleEn || g.title, n: cvCount(g.id), on: (pagesData.bio.pdf || []).includes(g.id) }));
+const cvFixed = [cvAll.find((g) => g.block === 'intro'), ...cvAll.filter((g) => g.style === 'chips' && cvCount(g.id))].filter(Boolean).map((g) => ({ ar: g.title, en: g.titleEn || g.title }));
 const crumbs = breadcrumbSchema(cleanPath, title);
 ---
 <!doctype html>
@@ -191,19 +191,23 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   {!bare && (
     <dialog id="cvDialog" class="cv-dlg" aria-labelledby="cvT" data-parts={href('/cv-parts')}>
       <form method="dialog" class="cv-box">
-        <h2 id="cvT" tabindex="-1">خصّص سيرتي الذاتية</h2>
-        <p class="cv-sub">اختر الأقسام التي تريد تضمينها في الملف. الأقسام التالية تُضمَّن دائماً:</p>
-        <ul class="cv-fixed">{cvFixed.map((t) => <li>{t}</li>)}</ul>
-        <div class="cv-head"><b>الأقسام الاختيارية</b><span><button type="button" data-cv-all="1">تحديد الكل</button><button type="button" data-cv-all="0">إلغاء الكل</button></span></div>
-        <div class="cv-list">
-          {cvPick.map((g) => <label class="cv-opt"><input type="checkbox" value={g.id} checked={g.on} /><span>{g.title}</span><em>{g.n}</em></label>)}
+        <h2 id="cvT" tabindex="-1" data-ar="خصّص سيرتي الذاتية" data-en="Customize my CV">خصّص سيرتي الذاتية</h2>
+        <div class="cv-lang" role="radiogroup" aria-label="لغة الملف / File language">
+          <label><input type="radio" name="cvlang" value="ar" checked /><span>عربي</span></label>
+          <label><input type="radio" name="cvlang" value="en" /><span>English</span></label>
         </div>
-        <p class="cv-note">يُنزَّل الملف مباشرة بمقاس A4. الكاملة بكل التفاصيل، والمختصرة بملخص قصير لكل عنصر وسطور موجزة للأقسام الطويلة.</p>
+        <p class="cv-sub" data-ar="اختر الأقسام التي تريد تضمينها في الملف. الأقسام التالية تُضمَّن دائماً:" data-en="Choose the sections to include in the file. These sections are always included:">اختر الأقسام التي تريد تضمينها في الملف. الأقسام التالية تُضمَّن دائماً:</p>
+        <ul class="cv-fixed">{cvFixed.map((t) => <li data-ar={t.ar} data-en={t.en}>{t.ar}</li>)}</ul>
+        <div class="cv-head"><b data-ar="الأقسام الاختيارية" data-en="Optional sections">الأقسام الاختيارية</b><span><button type="button" data-cv-all="1" data-ar="تحديد الكل" data-en="Select all">تحديد الكل</button><button type="button" data-cv-all="0" data-ar="إلغاء الكل" data-en="Clear all">إلغاء الكل</button></span></div>
+        <div class="cv-list">
+          {cvPick.map((g) => <label class="cv-opt"><input type="checkbox" value={g.id} checked={g.on} /><span data-ar={g.title} data-en={g.en}>{g.title}</span><em>{g.n}</em></label>)}
+        </div>
+        <p class="cv-note" data-ar="يُنزَّل الملف مباشرة بمقاس A4. الكاملة بكل التفاصيل، والمختصرة بملخص قصير لكل عنصر وسطور موجزة للأقسام الطويلة." data-en="The file downloads directly in A4. The full CV has every detail; the short CV has a brief summary per item and compact lines for long sections.">يُنزَّل الملف مباشرة بمقاس A4. الكاملة بكل التفاصيل، والمختصرة بملخص قصير لكل عنصر وسطور موجزة للأقسام الطويلة.</p>
         <div class="cv-act">
-          <button type="button" class="pill" data-cv-go="full">استخراج السيرة كاملة</button>
-          <button type="button" class="pill ghost" data-cv-go="short">استخراج السيرة المختصرة</button>
-          <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download>النسخة الكاملة الجاهزة</a>
-          <button type="submit" class="cv-x" value="close">إلغاء</button>
+          <button type="button" class="pill" data-cv-go="full" data-ar="استخراج السيرة كاملة" data-en="Export full CV">استخراج السيرة كاملة</button>
+          <button type="button" class="pill ghost" data-cv-go="short" data-ar="استخراج السيرة المختصرة" data-en="Export short CV">استخراج السيرة المختصرة</button>
+          <a class="more" href={href('/hussain-al-hajji-profile.pdf')} download data-ar="النسخة الكاملة الجاهزة" data-en="Ready-made full CV" data-href-ar={href('/hussain-al-hajji-profile.pdf')} data-href-en={href('/hussain-al-hajji-profile-en.pdf')}>النسخة الكاملة الجاهزة</a>
+          <button type="submit" class="cv-x" value="close" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
         </div>
       </form>
     </dialog>

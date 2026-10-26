@@ -183,3 +183,36 @@ test('رمز حساب خدمة Google يُوقَّع ويُطلب', async () => 
   const r = ranges(Date.UTC(2026, 5, 29));
   assert.equal(r.end, '2026-06-28'); assert.equal(r.start, '2026-06-01');
 });
+
+// ---------- الترجمة ----------
+test('الترجمة: تتطلب دخولاً مسموحاً وتتحقق من المدخلات', async () => {
+  const body = JSON.stringify({ texts: ['مرحبا'] });
+  assert.equal((await handle(req('/api/translate', { method: 'POST', body }), env, { auth: { getKeys } })).status, 401);
+  const bad = await mint({ email: 'intruder@example.com' });
+  assert.equal((await handle(req('/api/translate', { method: 'POST', body, headers: { Authorization: 'Bearer ' + bad } }), env, { auth: { getKeys } })).status, 403);
+  const good = { Authorization: 'Bearer ' + (await mint()) };
+  const noCfg = await handle(req('/api/translate', { method: 'POST', body, headers: good }), env, { auth: { getKeys } });
+  assert.equal(noCfg.status, 501);
+  const empty = await handle(req('/api/translate', { method: 'POST', body: JSON.stringify({ texts: [] }), headers: good }), { ...env, ANTHROPIC_API_KEY: 'k' }, { auth: { getKeys } });
+  assert.equal(empty.status, 400);
+});
+test('الترجمة عبر Claude: تعيد مصفوفة بالطول نفسه وترفض ناتجاً مشوّهاً', async () => {
+  const good = { Authorization: 'Bearer ' + (await mint()) };
+  const calls = [];
+  const claude = (reply) => async (url, init) => { calls.push([String(url), JSON.parse(init.body)]); return new Response(JSON.stringify({ content: [{ type: 'text', text: reply }] }), { status: 200 }); };
+  const body = JSON.stringify({ texts: ['مدرب أعمال', 'خبرة منذ {since}'] });
+  const e2 = { ...env, ANTHROPIC_API_KEY: 'k' };
+  const ok = await handle(req('/api/translate', { method: 'POST', body, headers: good }), e2, { auth: { getKeys }, fetch: claude('["Business trainer","Experience since {since}"]') });
+  assert.equal(ok.status, 200);
+  assert.deepEqual((await ok.json()).texts, ['Business trainer', 'Experience since {since}']);
+  assert.equal(calls[0][0], 'https://api.anthropic.com/v1/messages');
+  const bad = await handle(req('/api/translate', { method: 'POST', body, headers: good }), e2, { auth: { getKeys }, fetch: claude('["only one"]') });
+  assert.equal(bad.status, 502);
+});
+test('الترجمة عبر Workers AI: تحفظ بادئات القوائم والرموز', async () => {
+  const good = { Authorization: 'Bearer ' + (await mint()) };
+  const AI = { run: async (_m, { text }) => ({ translated_text: 'EN(' + text + ')' }) };
+  const r = await handle(req('/api/translate', { method: 'POST', body: JSON.stringify({ texts: ['عنوان:\n- مهمة منذ {since}'] }), headers: good }), { ...env, AI }, { auth: { getKeys } });
+  assert.equal(r.status, 200);
+  assert.deepEqual((await r.json()).texts, ['EN(عنوان:)\n- EN(مهمة منذ ZQ0X)'.replace('ZQ0X', '{since}')]);
+});

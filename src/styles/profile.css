@@ -113,3 +113,19 @@
 .pf-compact span{display:block;font-size:8pt;line-height:1.4;color:#835410}
 .pf-short .pf-sec{margin-top:4.5mm}
 .pf-focus{font-size:10.5pt;font-weight:600;color:#1b1b1a;margin-top:.6mm}
+
+/* النسخة الإنجليزية: اتجاه من اليسار، وتصحيح ما كُتب باتجاه فيزيائي */
+.pf[dir=ltr]{font-feature-settings:"kern","liga"}
+.pf[dir=ltr] .pf-sec h2{background:linear-gradient(to right,#f4ecd9,#faf6ec 70%,#fff)}
+.pf[dir=ltr] .pf-contact{direction:ltr}
+.pf[dir=ltr] .pf-foot b{text-align:left}
+.pf[dir=ltr] .pf-p,.pf[dir=ltr] .pf-desc,.pf[dir=ltr] .pf-brief,.pf[dir=ltr] .pf-det li{text-align:left}
+.pf[dir=ltr] .pf-lead{max-width:118mm}
+.pf[dir=ltr] .pf-org{letter-spacing:0}
+/* الإنجليزية أطول نصاً: ضغط الغلاف ليبقى في صفحة واحدة */
+.pf[dir=ltr] [data-cover] .pf-p{font-size:8.7pt;line-height:1.5}
+.pf[dir=ltr] .pf-tags{gap:1.8mm}
+.pf[dir=ltr] .pf-tagrow{padding:2mm 3mm;grid-template-columns:24mm 1fr}
+.pf[dir=ltr] .pf-tagrow li{font-size:7.9pt;padding:.4mm 2.2mm;line-height:1.5}
+.pf[dir=ltr] .pf-tagrow ul{gap:1mm 1.4mm}
+.pf[dir=ltr] .pf-nums{margin-top:2mm;padding:1.8mm 3mm}

@@ -18,7 +18,13 @@ export function extract(text, max = MAX) {
   return cut.replace(/[،,:؛]$/, '') + '…';
 }
 
-export function briefOf(item, max = MAX) {
+export function briefOf(item, max = MAX, lang = 'ar') {
+  if (lang === 'en' && item.en && (item.en.brief || item.en.desc || item.en.details)) {
+    const e = item.en, eb = clean(e.brief);
+    if (eb) return eb;
+    const eBase = clean(e.desc) || clean(String(e.details || '').split('\n').find((l) => /^[-•\d]/.test(l.trim())) || '').replace(/^[-•\d.\s]+/, '');
+    return extract(eBase, max);
+  }
   const b = clean(item.brief);
   if (b) return b;
   const base = clean(item.desc) || clean(String(item.details || '').split('\n').find((l) => /^[-•\d]/.test(l.trim())) || '').replace(/^[-•\d.\s]+/, '');

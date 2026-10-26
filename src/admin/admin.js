@@ -98,6 +98,49 @@ async function addUpload(file) {
 }
 const imgSrc = (p) => (S.uploads[p]?.url || (p ? (p.startsWith('http') ? p : B + p) : ''));
 
+// ---------- الترجمة التلقائية (عربي ← إنجليزي) ----------
+// تمرّ عبر الـ Worker: Claude إن ضُبط مفتاحه وإلا Workers AI. تعمل بعد تسجيل الدخول فقط.
+async function translateTexts(texts) {
+  if (S.mode !== 'live') throw new Error('الترجمة التلقائية تعمل بعد تسجيل الدخول فقط.');
+  const r = await fetch(API + '/api/translate', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (await S.token()) }, body: JSON.stringify({ texts }) });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 501) throw new Error('خدمة الترجمة غير مفعّلة في الـ Worker بعد.');
+  if (!r.ok) throw new Error('تعذّرت الترجمة (' + (j.error || r.status) + ').');
+  return j.texts;
+}
+// يفرد قيمة (نص، أو قائمة نصوص، أو قائمة كائنات نصية) إلى نصوص مفردة ويعيد دالة تعيد بناء البنية نفسها بعد الترجمة
+function flatten(v) {
+  const out = [];
+  if (typeof v === 'string') { out.push(v); return { strings: out, build: (t) => t[0] }; }
+  const arr = Array.isArray(v) ? v : [];
+  const plan = arr.map((it) => (typeof it === 'string' ? (out.push(it), null) : Object.fromEntries(Object.entries(it || {}).map(([k, x]) => [k, typeof x === 'string' ? out.push(x) - 1 : null]))));
+  let n = 0;
+  return { strings: out, build: (t) => arr.map((it, i) => (typeof it === 'string' ? t[n++] ?? it : Object.fromEntries(Object.entries(it || {}).map(([k, x]) => [k, plan[i][k] != null ? t[plan[i][k]] ?? x : x])))) };
+}
+async function translateValue(v) {
+  const { strings, build } = flatten(v);
+  const idx = strings.map((s, i) => (String(s).trim() ? i : -1)).filter((i) => i >= 0);
+  if (!idx.length) return v;
+  const res = await translateTexts(idx.map((i) => strings[i]));
+  const full = strings.slice(); idx.forEach((i, k) => { full[i] = res[k]; });
+  return build(full);
+}
+const hasVal = (v) => (Array.isArray(v) ? v.some((x) => (typeof x === 'string' ? x.trim() : Object.values(x || {}).some((y) => String(y || '').trim()))) : v != null && String(v).trim() !== '');
+// عند الحفظ: يترجم الحقول الإنجليزية الفارغة، أو التي تغيّر مصدرها العربي دون أن يعدّلها المستخدم يدوياً
+async function autoTranslate(fields, get, set, orig) {
+  const jobs = fields.filter((f) => {
+    if (!f.tr) return false;
+    const ar = get(f.tr), en = get(f.k);
+    if (!hasVal(ar)) return false;
+    const changed = JSON.stringify(ar) !== JSON.stringify(getPath(orig, f.tr)), untouched = JSON.stringify(en) === JSON.stringify(getPath(orig, f.k));
+    return !hasVal(en) || (changed && untouched);
+  });
+  if (!jobs.length) return 0;
+  const vals = await Promise.all(jobs.map((f) => translateValue(get(f.tr))));
+  jobs.forEach((f, i) => set(f.k, vals[i]));
+  return jobs.length;
+}
+
 // ---------- حقول النموذج ----------
 // خيارات الأقسام لصفحة مقسّمة، بأسمائها الحالية كما عدّلتها في عرض الأقسام (وقيمة قديمة غير معرّفة تبقى ظاهرة)
 function groupOptions(page, cur) {
@@ -197,14 +240,29 @@ function field(f, get, set, ctx) {
       };
       const mv = (i, d) => { const a = arr(); const j = i + d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; upd(a); draw(); };
       if (!Array.isArray(get(f.k))) set(f.k, []);
+      wrap._redraw = draw;
       draw(); input = box; break;
     }
     default:
       input = h('input', { id, type: 'text', onInput: (e) => upd(e.target.value) }); input.value = val ?? '';
   }
   if (f.ltr && input.tagName !== 'DIV') { input.dir = 'ltr'; input.style.textAlign = 'left'; } else if (f.ltr) input.dir = 'ltr';
+  if (f.tr && f.type !== 'bool') {
+    const tb = h('button', { type: 'button', class: 'btn sm ghost tr-btn', dir: 'rtl', onClick: async () => {
+      const src = get(f.tr);
+      if (!hasVal(src)) return say('لا يوجد نص عربي لترجمته.', 'bad');
+      tb.disabled = true; const t0 = tb.textContent; tb.textContent = 'جارٍ الترجمة…';
+      try {
+        const v = await translateValue(src); upd(v);
+        if (f.type === 'lines') input.value = v.join('\n'); else if (f.type === 'objects') wrap._redraw && wrap._redraw(); else input.value = v;
+        say('تُرجم النص. راجعه ثم احفظ.', 'ok');
+      } catch (e) { say(e.message, 'bad'); }
+      tb.disabled = false; tb.textContent = t0;
+    } }, 'ترجمة تلقائية من العربية');
+    wrap._tr = tb;
+  }
   if (f.type === 'bool') wrap.append(...[h('label', { class: 'chk' }, input, ' ', f.label), help, err].filter(Boolean));
-  else wrap.append(...[label, input, help, err].filter(Boolean));
+  else wrap.append(...[label, input, help, wrap._tr, err].filter(Boolean));
   return wrap;
 }
 function validateForm(form) {
@@ -299,7 +357,7 @@ function render() {
             S.mode === 'demo' && h('button', { class: 'btn ghost', onClick: resetDemo }, 'مسح المعاينة'),
             dirty.length > 0 && h('button', { class: 'btn ghost', onClick: exportJson }, 'تنزيل JSON'),
             h('button', { class: 'btn primary', disabled: S.busy || !dirty.length, onClick: publish }, S.busy ? 'جارٍ النشر…' : 'نشر التغييرات'))),
-        h('section', { class: S.section === STATS ? 'panel wide' : 'panel' }, S.section === STATS ? statsPanel({ h, S, reload: (soft) => (soft === true ? render() : loadStats(true)) }) : S.editing ? editor(sec) : sec.grouped ? groupedView({ h, S, sec, field, say, render, save: refreshCount, openEditor, clone, getPath, setPath, touch: refreshCount }) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
+        h('section', { class: S.section === STATS ? 'panel wide' : 'panel' }, S.section === STATS ? statsPanel({ h, S, reload: (soft) => (soft === true ? render() : loadStats(true)) }) : S.editing ? editor(sec) : sec.grouped ? groupedView({ h, S, sec, field, say, render, save: refreshCount, openEditor, clone, getPath, setPath, touch: refreshCount, translateValue, autoTranslate }) : sec.kind === 'list' ? listView(sec) : objectView(sec))),
     ));
 }
 
@@ -329,14 +387,21 @@ function move(a, i, d) { const j = i + d; if (j < 0 || j >= a.length) return; [a
 
 function editor(sec) {
   const { i, draft } = S.editing;
-  const form = h('form', { class: 'form', novalidate: true, onSubmit: (e) => {
+  const orig = (S.editing.orig ??= clone(draft));
+  const form = h('form', { class: 'form', novalidate: true, onSubmit: async (e) => {
     e.preventDefault();
     if (!validateForm(form)) { say('راجع الحقول المطلوبة.', 'bad'); form.querySelector('.err:not(:empty)')?.scrollIntoView({ block: 'center' }); return; }
     const list = listOf(sec);
     if (sec.id === 'kits' && list.some((k, n) => k.id === draft.id && n !== i)) return say('المعرّف مستخدم في حقيبة أخرى.', 'bad');
     if (sec.id === 'posts' && draft.slug && list.some((k, n) => k.slug === draft.slug && n !== i)) return say('هذا المعرّف مستخدم في مقال آخر.', 'bad');
+    let note = '';
+    if (S.mode === 'live' && sec.fields.some((f) => f.tr)) {
+      const btn = form.querySelector('button[type=submit]'); btn.disabled = true; const t0 = btn.textContent; btn.textContent = 'جارٍ الترجمة…';
+      try { const n = await autoTranslate(sec.fields, (k) => getPath(draft, k), (k, v) => setPath(draft, k, v), orig); if (n) note = ` وتُرجم ${n} من الحقول إلى الإنجليزية.`; } catch (err) { note = ' تعذّرت الترجمة التلقائية: ' + err.message; }
+      btn.disabled = false; btn.textContent = t0;
+    }
     if (i < 0) list.unshift(draft); else list[i] = draft;
-    S.editing = null; saveDemoIfNeeded(); render(); say('حُفظ محلياً. اضغط «نشر التغييرات» ليظهر على الموقع.', 'ok');
+    S.editing = null; saveDemoIfNeeded(); render(); say('حُفظ محلياً.' + note + ' اضغط «نشر التغييرات» ليظهر على الموقع.', 'ok');
   } },
     ...sec.fields.map((f) => field(f, (k) => getPath(draft, k), (k, v) => setPath(draft, k, v), {})),
     h('div', { class: 'row-btns sticky' },

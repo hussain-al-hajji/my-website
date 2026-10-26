@@ -1235,3 +1235,10 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .ringstage .sub,.ringstage .for-line{-webkit-user-select:text;user-select:text;cursor:text}
 .card-focus{font-size:var(--t-small);font-weight:600;color:var(--action);margin-top:4px}
 .pr-focus{color:#835410;margin-top:2px}
+.cv-lang{display:inline-flex;gap:4px;padding:4px;border-radius:99px;background:color-mix(in srgb,var(--ink) 6%,#fff);width:fit-content}
+.cv-lang label{cursor:pointer}
+.cv-lang input{position:absolute;opacity:0;pointer-events:none}
+.cv-lang span{display:block;padding:6px 20px;border-radius:99px;font-size:.9rem;font-weight:600;color:var(--ink-2);transition:background .2s,color .2s}
+.cv-lang input:checked+span{background:#fff;color:var(--action);box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.cv-lang input:focus-visible+span{outline:2px solid var(--action);outline-offset:2px}
+.cv-box[dir=ltr] .cv-act,.cv-box[dir=ltr] .cv-head{direction:ltr}

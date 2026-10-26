@@ -1,0 +1,183 @@
+---
+import Base from '../layouts/Base.astro';
+import QRCode from 'qrcode';
+import bio from '../data/bio.json';
+import pages from '../data/pages.json';
+import partners from '../data/partners.json';
+import { site, href, abs, getKits, detailsHtml, getGroups } from '../lib/site.js';
+import '../styles/profile.css';
+import { fillTokens } from '../lib/faq.js';
+import { briefOf } from '../lib/brief.js';
+
+const { lang = 'ar' } = Astro.props;
+const en = lang === 'en';
+const T = en ? {
+  title: 'Curriculum Vitae', summary: 'Professional Summary', th: ['Organization', 'Title', 'Description', 'Date'], kits: 'Training Kits', orgs: 'Organizations I Have Worked With', foot: ['Website', 'Email', 'Mobile', 'LinkedIn'],
+  nums: ['programs & events', 'partner organizations', 'beneficiaries', 'years of professional experience', 'years of training experience'], dl: 'Download CV (PDF)', print: 'Print', sep: ', ', file: '/hussain-al-hajji-profile-en.pdf',
+} : {
+  title: 'السيرة الذاتية', summary: 'الملخص المهني', th: ['الجهة', 'المسمى أو العنوان', 'الوصف', 'التاريخ'], kits: 'الحقائب التدريبية', orgs: 'من الجهات التي عملتُ معها', foot: ['الموقع', 'البريد', 'الجوال', 'لينكدإن'],
+  nums: ['برنامج وفعالية', 'جهة شريكة', 'مستفيد', 'سنوات خبرة مهنية', 'سنوات خبرة تدريبية'], dl: 'حمّل السيرة الذاتية (PDF)', print: 'طباعة', sep: '، ', file: '/hussain-al-hajji-profile.pdf',
+};
+// حقل بالإنجليزية إن وُجد وإلا العربي (للعناصر التي لم تُترجم بعد)
+const tx = (x, k) => (en && x.en && x.en[k]) || x[k];
+const gTitle = (g) => (en && g.titleEn) || g.title;
+
+const p = pages.bio;
+const pe = (en && p.en) || p;
+const S = (en && site.en) || {};
+const sName = S.name || site.name, sRole = S.role || site.role, sFocus = S.focus || site.focus;
+const c = site.contact;
+const by = (s) => bio.filter((x) => x.section === s);
+const kits = getKits();
+const orgs = partners.filter((x) => x.marquee).map((x) => (en && x.en && x.en.name) || x.name);
+const qr = await QRCode.toString(abs('/card'), { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#1b1b1a', light: '#ffffff' } });
+const nums = [
+  [site.stats.programs, T.nums[0]],
+  [site.stats.partners, T.nums[1]],
+  [site.stats.beneficiaries, T.nums[2]],
+  [site.stats.proYears, T.nums[3]],
+  [site.stats.trainYears, T.nums[4]],
+];
+const fmt = (n) => (n >= 1000 ? n.toLocaleString('en-US') : String(n));
+const plus = () => '+';
+// أقسام الملف: ما اختير في لوحة التحكم (حتى المخفية عن الصفحة) وبترتيب أقسام صفحة «عنّي»؛ أقسام الوسوم (المهارات...) لا تُدرج
+const want = new Set(p.pdf || ['career', 'achievements', 'credentials', 'leadership', 'committees']);
+const secs = getGroups('bio', bio).filter((g) => !g.block && g.style !== 'chips' && by(g.id).length).map((g) => [g.id, gTitle(g), g.style, want.has(g.id)]);
+const firstOn = secs.findIndex((x) => x[3]);
+// أقسام الوسوم (المهارات ومجالات الخبرة والقيم) تُعرض في الصفحة الأولى تحت الملخص بترتيبها في لوحة التحكم
+const tagSecs = getGroups('bio', bio).filter((g) => !g.block && g.style === 'chips' && by(g.id).length);
+const siteShort = abs('/').replace(/^https?:\/\//, '').replace(/\/$/, '');
+const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+<Base title={T.title} description={pe.lead} noindex cta={null} bare>
+  <main class="pf-page" id="main">
+    <p class="no-print pf-bar"><a class="pill" href={href(T.file)} download>{T.dl}</a><button type="button" class="more" onclick="print()">{T.print}</button></p>
+    <article class="pf" dir={en ? 'ltr' : undefined} lang={en ? 'en' : undefined}>
+      <header class="pf-head" data-cover>
+        <div class="pf-id">
+          <h1>{sName}</h1>
+          <p class="pf-role">{sRole}</p>
+          {sFocus && <p class="pf-focus">{sFocus}</p>}
+          <p class="pf-lead">{pe.lead}</p>
+          <p class="pf-contact">
+            <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>
+          </p>
+        </div>
+        <img class="pf-photo" src={href('/img/brand/portrait-composite-840.webp')} alt="" width="560" height="694">
+      </header>
+
+      <section class="pf-sec" data-cover>
+        <h2>{T.summary}</h2>
+        {pe.intro.slice(0, 2).map((t) => <p class="pf-p">{fillTokens(t)}</p>)}
+        <ul class="pf-nums">
+          {nums.map(([n, t]) => <li><b>{fmt(n)}{plus(n)}</b> {t}</li>)}
+        </ul>
+      </section>
+
+      {tagSecs.length > 0 && (
+        <section class="pf-sec pf-tags" data-cover>
+          {tagSecs.map((g) => (
+            <div class="pf-tagrow">
+              <h2>{gTitle(g)}</h2>
+              <ul>{by(g.id).map((x) => <li>{tx(x, 'title')}</li>)}</ul>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {secs.map(([s, title, style, on], i) => (
+        <section class={'pf-sec' + (i === firstOn && tagSecs.length ? ' pf-newpage' : '') + (on ? '' : ' pf-off')} data-sec={s}>
+          <h2>{title}</h2>
+          {style === 'table' && (
+            <ul class="pf-compact pf-shortonly">
+              {by(s).map((x) => (
+                <li>
+                  {x.logo ? <img src={href(x.logo)} alt="" width="24" height="24"> : <span class="pf-cl ph"></span>}
+                  <div><b>{tx(x, 'title')}</b><span>{[tx(x, 'subtitle'), tx(x, 'period')].filter(Boolean).join(' · ')}</span></div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {style === 'table' ? (
+            <table class="pf-tbl pf-fullonly">
+              <thead><tr><th class="c-logo"></th><th class="c-org">{T.th[0]}</th><th class="c-title">{T.th[1]}</th>{by(s).some((x) => tx(x, 'desc') || tx(x, 'details')) && <th class="c-desc">{T.th[2]}</th>}{by(s).some((x) => tx(x, 'period')) && <th class="c-date">{T.th[3]}</th>}</tr></thead>
+              <tbody>
+                {by(s).map((x) => (
+                  <tr data-brk>
+                    <td class="c-logo">{x.logo ? <img src={href(x.logo)} alt="" width="32" height="32"> : null}</td>
+                    <td class="c-org">{tx(x, 'subtitle')}</td>
+                    <td class="c-title">{tx(x, 'title')}</td>
+                    {by(s).some((y) => tx(y, 'desc') || tx(y, 'details')) && <td class="c-desc">{tx(x, 'desc') && <p>{tx(x, 'desc')}</p>}{tx(x, 'details') && <div class="pf-det" set:html={detailsHtml(tx(x, 'details'))}></div>}</td>}
+                    {by(s).some((y) => tx(y, 'period')) && <td class="c-date">{tx(x, 'period')}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+          <ul class="pf-list">
+            {by(s).map((x) => (
+              <li class="pf-item" data-brk>
+                {x.logo ? <img class="pf-logo" src={href(x.logo)} alt="" width="32" height="32"> : by(s).some((y) => y.logo) ? <span class="pf-logo ph"></span> : null}
+                <div class="pf-body">
+                  <div class="pf-row"><h3>{tx(x, 'title')}</h3></div>
+                  {tx(x, 'subtitle') && <p class="pf-org">{tx(x, 'subtitle')}</p>}
+                  {tx(x, 'desc') && <p class="pf-desc pf-fullonly">{tx(x, 'desc')}</p>}
+                  {tx(x, 'details') && <div class="pf-det pf-fullonly" set:html={detailsHtml(tx(x, 'details'))}></div>}
+                  {briefOf(x, undefined, lang) && <p class="pf-brief pf-shortonly">{briefOf(x, undefined, lang)}</p>}
+                </div>
+                {tx(x, 'period') ? <span class="pf-date">{tx(x, 'period')}</span> : <span></span>}
+              </li>
+            ))}
+          </ul>
+          )}
+        </section>
+      ))}
+
+      <section class="pf-sec pf-fullonly" data-tail>
+        <h2>{T.kits}</h2>
+        <ul class="pf-kits">
+          {kits.map((k) => <li data-brk><b>{(en && k.en && k.en.short) || k.short}</b> <span>{(en && k.en && k.en.duration) || k.duration}</span></li>)}
+        </ul>
+      </section>
+
+      <section class="pf-sec" data-tail data-brk>
+        <h2>{T.orgs}</h2>
+        <p class="pf-p">{orgs.join(T.sep)}.</p>
+      </section>
+
+      <footer class="pf-foot" data-tail data-brk>
+        <ul>
+          <li><span>{T.foot[0]}</span><b class="ltr">{siteShort}</b></li>
+          <li><span>{T.foot[1]}</span><b class="ltr">{c.email}</b></li>
+          <li><span>{T.foot[2]}</span><b class="ltr">{c.phone}</b></li>
+          <li><span>{T.foot[3]}</span><b class="ltr">{inShort}</b></li>
+        </ul>
+        <div class="pf-qr" aria-hidden="true" set:html={qr}></div>
+      </footer>
+    </article>
+  </main>
+  <script>
+    // ‎/profile?s=career,committees: يُبقي الأقسام المختارة فقط؛ و part=cover|sec|tail يولّد أجزاء الملف (الغلاف، الأقسام، الخاتمة) التي تُدمج في المتصفح
+    const q = new URLSearchParams(location.search);
+    const off = (el, v) => el.classList.toggle('pf-off', v);
+    const part = q.get('part');
+    if (q.get('pack') === '1') document.body.classList.add('pf-pack');
+    if (q.get('mode') === 'short') document.body.classList.add('pf-short');
+    const secs = [...document.querySelectorAll('[data-sec]')];
+    if (q.has('s')) {
+      const want = new Set(q.get('s').split(',').filter(Boolean));
+      secs.forEach((el) => { off(el, !want.has(el.dataset.sec)); el.classList.remove('pf-newpage'); });
+      if (!part) secs.find((el) => !el.classList.contains('pf-off'))?.classList.add('pf-newpage');
+    }
+    if (part) {
+      document.querySelectorAll('[data-cover]').forEach((el) => off(el, part !== 'cover'));
+      document.querySelectorAll('[data-tail]').forEach((el) => off(el, part !== 'tail'));
+      if (part !== 'sec') secs.forEach((el) => off(el, true));
+      secs.forEach((el) => el.classList.remove('pf-newpage'));
+    }
+    if (q.get('print') === '1') {
+      const go = () => setTimeout(() => print(), 300);
+      Promise.all([document.fonts?.ready, ...[...document.images].map((i) => (i.complete ? 1 : new Promise((r) => { i.onload = i.onerror = r; })))]).then(go, go);
+    }
+  </script>
+</Base>

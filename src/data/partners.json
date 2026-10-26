@@ -5,7 +5,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l02.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Mohammed bin Salman Foundation (Misk)"
+    }
   },
   {
     "id": "p002",
@@ -13,7 +16,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l03.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Ministry of Tourism"
+    }
   },
   {
     "id": "p003",
@@ -21,7 +27,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l04.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Small and Medium Enterprises General Authority (Monsha'at)"
+    }
   },
   {
     "id": "p004",
@@ -29,7 +38,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l05.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Social Development Bank"
+    }
   },
   {
     "id": "p005",
@@ -51,7 +63,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l08.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Ministry of Culture"
+    }
   },
   {
     "id": "p008",
@@ -59,7 +74,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l09.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Digital Entrepreneurship Center (CODE)"
+    }
   },
   {
     "id": "p009",
@@ -67,7 +85,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l10.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Red Sea Global"
+    }
   },
   {
     "id": "p010",
@@ -75,7 +96,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l11.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "NEOM"
+    }
   },
   {
     "id": "p011",
@@ -83,7 +107,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l12.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Capital Market Authority"
+    }
   },
   {
     "id": "p012",
@@ -112,7 +139,10 @@
     "group": "gov",
     "country": "",
     "logo": "/img/partners/l16.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Ministry of Human Resources and Social Development"
+    }
   },
   {
     "id": "p016",
@@ -127,7 +157,10 @@
     "group": "intl",
     "country": "",
     "logo": "/img/partners/l18.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "ITC ecomConnect E-Commerce Community Platform"
+    }
   },
   {
     "id": "p018",
@@ -135,7 +168,10 @@
     "group": "intl",
     "country": "",
     "logo": "/img/partners/l19.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Google for Education"
+    }
   },
   {
     "id": "p019",
@@ -143,7 +179,10 @@
     "group": "intl",
     "country": "",
     "logo": "/img/partners/l20.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Harvard Business Review Arabia"
+    }
   },
   {
     "id": "p020",
@@ -151,7 +190,10 @@
     "group": "intl",
     "country": "",
     "logo": "/img/partners/l21.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "TikTok"
+    }
   },
   {
     "id": "p021",
@@ -180,7 +222,10 @@
     "group": "gulf",
     "country": "الإمارات العربية المتحدة",
     "logo": "/img/partners/l25.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Arab Youth Center"
+    }
   },
   {
     "id": "p025",
@@ -279,7 +324,10 @@
     "group": "edu",
     "country": "",
     "logo": "/img/partners/l39.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Technical and Vocational Training Corporation"
+    }
   },
   {
     "id": "p039",
@@ -371,7 +419,10 @@
     "group": "private",
     "country": "",
     "logo": "/img/partners/l52.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Udacity"
+    }
   },
   {
     "id": "p052",
@@ -554,7 +605,10 @@
     "group": "nonprofit",
     "country": "",
     "logo": "/img/partners/l78.webp",
-    "marquee": true
+    "marquee": true,
+    "en": {
+      "name": "Abdul Latif Jameel Community Services (Jameel Community)"
+    }
   },
   {
     "id": "p078",

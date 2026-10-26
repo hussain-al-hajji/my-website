@@ -5,7 +5,7 @@ const dlg = document.getElementById('cvDialog');
 const PT = 0.75, MM = 72 / 25.4;                       // بكسل CSS إلى نقطة، وملم إلى نقطة
 const A4 = [595.28, 841.89], TOP = 14 * MM, BOTTOM = 17 * MM, LEFT = 15 * MM, GAP = 6 * MM;
 
-async function build(ids, short) {
+async function build(ids, short, lang) {
   const { PDFDocument, StandardFonts, rgb, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } = await import('pdf-lib');
   const root = dlg.dataset.parts;
   // manifest يحدّد إصدار الأجزاء؛ إن كان قديماً (مخزَّناً) فتغيب أجزاؤه، فيُعاد جلبه بلاحقة جديدة
@@ -15,17 +15,17 @@ async function build(ids, short) {
   if (!head || !head.ok) data = await fetchManifest(true);
   const manifest = data.parts, base = `${root}/${data.v}`;
   const load = async (name) => { const r = await fetch(`${base}/${name}.pdf`); if (!r.ok) throw new Error(name); return PDFDocument.load(await r.arrayBuffer()); };
+  const lp = lang === 'en' ? 'en-' : '', pre = lp + (short ? 's-' : '');
   const out = await PDFDocument.create();
 
-  const cover = await load('cover');
-  out.addPage((await out.copyPages(cover, [0]))[0]);
+  const cover = await load(lp + 'cover');
+  (await out.copyPages(cover, cover.getPageIndices())).forEach((pg) => out.addPage(pg));
 
   let page = null, y = 0;
   const fresh = () => { page = out.addPage(A4); y = A4[1] - TOP; };
   const room = () => y - BOTTOM;
   fresh(); // الخبرات تبدأ من الصفحة الثانية
 
-  const pre = short ? 's-' : '';
   for (const key of [...ids, 'tail']) {
     const name = pre + key, m = manifest[name]; if (!m) continue;
     const src = await load(name);
@@ -78,7 +78,18 @@ async function build(ids, short) {
 }
 
 if (dlg && typeof dlg.showModal === 'function') {
-  const KEY = 'cv-sections';
+  const KEY = 'cv-sections', LKEY = 'cv-lang';
+  const radios = [...dlg.querySelectorAll('input[name=cvlang]')];
+  const lang = () => (radios.find((r) => r.checked) || {}).value || 'ar';
+  const paint = () => {
+    const l = lang();
+    dlg.querySelectorAll('[data-ar]').forEach((el) => { el.textContent = el.dataset[l]; });
+    const a = dlg.querySelector('a[download]'); if (a) a.href = a.dataset['href' + (l === 'en' ? 'En' : 'Ar')];
+    dlg.querySelector('.cv-box').dir = l === 'en' ? 'ltr' : 'rtl';
+  };
+  try { const sl = localStorage.getItem(LKEY); if (sl) radios.forEach((r) => { r.checked = r.value === sl; }); } catch { /* تجاهل */ }
+  radios.forEach((r) => r.addEventListener('change', () => { try { localStorage.setItem(LKEY, lang()); } catch { /* تجاهل */ } paint(); }));
+  paint();
   const boxes = [...dlg.querySelectorAll('.cv-opt input')];
   try { const saved = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(saved)) boxes.forEach((b) => { b.checked = saved.includes(b.value); }); } catch { /* تجاهل */ }
   document.addEventListener('click', (e) => {
@@ -94,12 +105,12 @@ if (dlg && typeof dlg.showModal === 'function') {
     all.forEach((b) => { b.disabled = true; });
     go.textContent = 'جارٍ إنشاء الملف…';
     try {
-      const url = URL.createObjectURL(new Blob([await build(ids, go.dataset.cvGo === 'short')], { type: 'application/pdf' }));
-      const a = Object.assign(document.createElement('a'), { href: url, download: go.dataset.cvGo === 'short' ? 'hussain-al-hajji-cv-short.pdf' : 'hussain-al-hajji-cv.pdf' });
+      const url = URL.createObjectURL(new Blob([await build(ids, go.dataset.cvGo === 'short', lang())], { type: 'application/pdf' }));
+      const a = Object.assign(document.createElement('a'), { href: url, download: `hussain-al-hajji-cv${lang() === 'en' ? '-en' : ''}${go.dataset.cvGo === 'short' ? '-short' : ''}.pdf` });
       document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
       dlg.close();
     } catch (err) {
-      console.error(err);
+      console.error(err); try { sessionStorage.setItem('cvErr', String(err && err.message || err)); } catch { /* تجاهل */ }
       location.href = dlg.querySelector('a[download]').href; // تعذّر الدمج: تُنزَّل النسخة الكاملة
     } finally { all.forEach((b, i) => { b.disabled = false; b.textContent = labels[i]; }); }
   }));

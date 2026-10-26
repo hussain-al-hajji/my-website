@@ -7,7 +7,7 @@ const STYLES = [['', 'قائمة زمنية'], ['table', 'جدول'], ['chips', 
 let drag = null; // { kind: 'group'|'item', id|index }
 
 export function groupedView(c) {
-  const { h, S, sec, field, say, render, save, openEditor, clone, getPath, setPath, touch } = c;
+  const { h, S, sec, field, say, render, save, openEditor, clone, getPath, setPath, touch, translateValue, autoTranslate } = c;
   const cfg = sec.grouped, page = cfg.page, key = GROUP_PAGES[page].key, file = sec.file;
   const pages = S.data.pages, list = S.data[file];
   const st = (S.gv ||= {})[sec.id] ||= { open: new Set(), filter: '', adding: false };
@@ -44,7 +44,15 @@ export function groupedView(c) {
 
   const blockBody = (g) => {
     const fields = (cfg.blocks || {})[g.block] || [];
-    return h('form', { class: 'form gv-form', novalidate: true, onSubmit: (e) => { e.preventDefault(); save(); say('حُفظ محلياً. اضغط «نشر التغييرات» ليظهر على الموقع.', 'ok'); } },
+    const orig = clone(pages);
+    return h('form', { class: 'form gv-form', novalidate: true, onSubmit: async (e) => {
+      e.preventDefault();
+      let note = '';
+      if (S.mode === 'live') {
+        try { const n = await autoTranslate(fields, (k) => getPath(pages, k), (k, v) => setPath(pages, k, v), orig); if (n) { note = ` وتُرجم ${n} من الحقول إلى الإنجليزية.`; render(); } } catch (err) { note = ' تعذّرت الترجمة التلقائية: ' + err.message; }
+      }
+      save(); say('حُفظ محلياً.' + note + ' اضغط «نشر التغييرات» ليظهر على الموقع.', 'ok');
+    } },
       ...fields.map((f) => field(f, (k) => getPath(pages, k), (k, v) => setPath(pages, k, v), { touch })),
       h('div', { class: 'row-btns' }, h('button', { class: 'btn primary', type: 'submit' }, 'حفظ')));
   };
@@ -52,7 +60,12 @@ export function groupedView(c) {
   const settings = (g) => {
     const row = h('div', { class: 'gv-set' });
     const name = h('input', { class: 'gv-name', type: 'text', value: g.title, 'aria-label': 'اسم القسم' });
-    const commit = () => { const v = name.value.trim(); if (v && v !== g.title) mutate(g.id, (x) => { x.title = v; }); };
+    const commit = async () => {
+      const v = name.value.trim(); if (!v || v === g.title) return;
+      let en = '';
+      if (cfg.en && S.mode === 'live' && !g.titleEn) { try { en = await translateValue(v); } catch { /* تبقى الإنجليزية فارغة */ } }
+      mutate(g.id, (x) => { x.title = v; if (en) x.titleEn = en; });
+    };
     name.addEventListener('change', commit); name.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
     row.append(h('label', { class: 'gv-lbl' }, 'اسم القسم', name));
     if (cfg.en) {
