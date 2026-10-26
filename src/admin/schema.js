@@ -290,6 +290,7 @@ export const SECTIONS = [
       { k: 'description', label: 'وصف الموقع (لمحركات البحث)', type: 'textarea', rows: 3 },
       { k: 'hero.headline', label: 'الاسم (نص بديل للمخطوطة)', type: 'text' },
       { k: 'hero.sub', label: 'النبذة تحت الاسم', type: 'textarea', rows: 5 },
+      { k: 'hero.metaDescription', label: 'وصف الصفحة الرئيسية في نتائج البحث ومعاينة المشاركة (نحو 150 حرفاً)', type: 'textarea', rows: 3, help: 'يظهر تحت عنوان الموقع في قوقل وعند مشاركة الرابط. إن تُرك فارغاً تُستخدم النبذة أعلاه.' },
       { k: 'stats.programs', label: 'عدد البرامج', type: 'number' },
       { k: 'stats.partners', label: 'عدد الجهات', type: 'number' },
       { k: 'stats.beneficiaries', label: 'عدد المستفيدين', type: 'number' },
