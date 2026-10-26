@@ -10,7 +10,7 @@ const qr = await QRCode.toString(abs('/collaborate'), { type: 'svg', margin: 0, 
 const data = {
   kits: kits.map((k) => ({ id: k.id, title: k.title, short: k.short, duration: k.duration, headline: k.headline || '', summary: k.summary, audience: k.audience || [], axes: k.axes || [], outcomes: k.outcomes || [] })),
   audiences: AUDIENCES,
-  site: { name: site.name, role: site.role, email: c.email, phone: c.phone, wa: c.whatsapp, web: abs('/').replace(/^https?:\/\//, '').replace(/\/$/, ''), programs: site.stats.programs, partners: site.stats.partners, since: site.stats.since },
+  site: { name: site.name, role: site.role, focus: site.focus, email: c.email, phone: c.phone, wa: c.whatsapp, web: abs('/').replace(/^https?:\/\//, '').replace(/\/$/, ''), programs: site.stats.programs, partners: site.stats.partners, since: site.stats.since },
   logo: href('/brand/logo-full-black.svg'),
   qr,
 };

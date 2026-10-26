@@ -33,7 +33,7 @@ function render() {
   const st = data.site;
   sheet.innerHTML = `
     <header class="pr-head">
-      <div><img src="${esc(data.logo)}" alt="${esc(st.name)}" width="2600" height="961"><p class="pr-role">${esc(st.role)}</p></div>
+      <div><img src="${esc(data.logo)}" alt="${esc(st.name)}" width="2600" height="961"><p class="pr-role">${esc(st.role)}</p>${st.focus ? `<p class="pr-role pr-focus">${esc(st.focus)}</p>` : ''}</div>
       <div class="pr-meta"><h2>عرض مقترح</h2><p>${esc(date)}</p>${s.org ? `<p>مقدَّم إلى: <b>${esc(s.org)}</b></p>` : ''}${s.who ? `<p>بطلب من: ${esc(s.who)}</p>` : ''}</div>
     </header>
     <p class="pr-intro">يسرّني أن أقدّم ${s.org ? `لـ${esc(s.org)} ` : ''}هذا العرض المقترح للبرامج التدريبية التالية. نفّذتُ أكثر من ${num(st.programs)} برنامجاً مع أكثر من ${num(st.partners)} جهة منذ ${esc(st.since)}، وأخصّص المحتوى والأمثلة والتمارين لقطاعكم وجمهوركم قبل التنفيذ.</p>

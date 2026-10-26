@@ -101,6 +101,7 @@ const sec = Object.fromEntries(order.map((k, i) => [k, String(i + 1).padStart(2,
         <p class="pp-kicker">ملف الأعمال · Portfolio</p>
         <h1><img src={href('/brand/logo-full-white.svg')} alt={site.name + '، ' + site.tagline} width="2600" height="961"></h1>
         <p class="pp-cover-role">{site.role}</p>
+        {site.focus && <p class="pp-cover-focus">{site.focus}</p>}
         <p class="pp-cover-years"><b>{y0}</b><i></i><b>{y1}</b></p>
       </div>
     </section>

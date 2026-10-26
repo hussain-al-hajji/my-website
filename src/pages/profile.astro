@@ -41,6 +41,7 @@ const inShort = c.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''
         <div class="pf-id">
           <h1>{site.name}</h1>
           <p class="pf-role">{site.role}</p>
+          {site.focus && <p class="pf-focus">{site.focus}</p>}
           <p class="pf-lead">{p.lead}</p>
           <p class="pf-contact">
             <span>{c.email}</span><span>{c.phone}</span><span>{siteShort}</span><span>{inShort}</span>

@@ -1233,3 +1233,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .card-links .card-pair span{color:var(--hair);font-weight:300}
 /* نبذة الصفحة الرئيسية داخل منصّة الحلقة: قابلة للتحديد والنسخ (السحب للدوران يقتصر على الحلقة نفسها) */
 .ringstage .sub,.ringstage .for-line{-webkit-user-select:text;user-select:text;cursor:text}
+.card-focus{font-size:var(--t-small);font-weight:600;color:var(--action);margin-top:4px}
+.pr-focus{color:#835410;margin-top:2px}

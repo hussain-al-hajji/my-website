@@ -289,6 +289,7 @@ export const SECTIONS = [
       { k: 'role', label: 'الوصف المهني', type: 'text' },
       { k: 'description', label: 'وصف الموقع (لمحركات البحث)', type: 'textarea', rows: 3 },
       { k: 'hero.headline', label: 'الاسم (نص بديل للمخطوطة)', type: 'text' },
+      { k: 'focus', label: 'عبارة التخصص تحت الدور (بطاقتي، السيرة PDF، البورتفوليو، عرض الأسعار)', type: 'text' },
       { k: 'hero.sub', label: 'النبذة تحت الاسم', type: 'textarea', rows: 5 },
       { k: 'hero.metaDescription', label: 'وصف الصفحة الرئيسية في نتائج البحث ومعاينة المشاركة (نحو 150 حرفاً)', type: 'textarea', rows: 3, help: 'يظهر تحت عنوان الموقع في قوقل وعند مشاركة الرابط. إن تُرك فارغاً تُستخدم النبذة أعلاه.' },
       { k: 'hero.ogLines', label: 'سطرا التعريف تحت الاسم في صورة معاينة المشاركة (سطر لكل خانة)', type: 'lines', help: 'يظهران تحت مخطوطة الاسم في صورة الرابط عند مشاركته. سطران كحد أقصى.' },

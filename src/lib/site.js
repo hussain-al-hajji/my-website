@@ -153,7 +153,7 @@ export const GNAV = [
   { label: 'مركز المستندات', key: 'docs', children: [
     { label: 'السيرة الذاتية PDF', href: '/hussain-al-hajji-profile.pdf', download: true },
     { label: 'ملف الأعمال PDF', href: '/hussain-al-hajji-portfolio.pdf', download: true },
-    { label: 'بطاقة التواصل', href: '/hussain-al-hajji.vcf', download: true, icon: 'contact' },
+    { label: 'بطاقتي الرقمية', href: '/card', icon: 'contact' },
   ] },
 ];
 export const FOOT_DIR = [
