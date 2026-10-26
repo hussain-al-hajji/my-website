@@ -1,6 +1,8 @@
 name = "hussain-site-admin"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
+# يحفظ المتغيّرات المضافة من لوحة Cloudflare (مثل GSC_SITE وGA4_PROPERTY_ID) فلا يمسحها النشر
+keep_vars = true
 
 # القيم غير السرية. الأسرار (GITHUB_TOKEN وغيره) تُضاف بـ: wrangler secret put
 [vars]
