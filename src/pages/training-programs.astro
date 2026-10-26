@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { records, href, stats, site, norm, isRemote } from '../lib/site.js';
+import { records, href, stats, site, norm } from '../lib/site.js';
 
 const st = stats();
 const list = [...records].sort((a, b) => b.year - a.year || String(b.id).localeCompare(String(a.id)));
@@ -11,12 +11,11 @@ const EARLY = 2019;
 const yearKey = (y) => (y <= EARLY ? 'early' : String(y));
 const yearLabel = (k) => (k === 'early' ? `${st.years[0]} & ${EARLY}` : k);
 const years = [...new Set(st.years.map(yearKey))].reverse();
-const remoteN = records.filter(isRemote).length;
 ---
 <Base title="سجل الأثر" description={`سجل منشور بجميع البرامج والورش والمعسكرات والجلسات منذ ${st.years[0]}، قابل للبحث والتصفية.`} active="training-programs"
   local={[{ label: 'السجل', href: '#log' }]} >
   <PageHead title="سجل الأثر." lead={`${st.entries} مشاركة موثّقة منذ ${st.years[0]}. ابحث عن برنامج أو جهة أو مدينة.`}
-    facts={[{ value: st.entries, label: 'قيداً في السجل' }, { value: site.stats.partners + '+', label: 'جهة' }, { value: remoteN, label: 'مشاركة عن بُعد' }, { value: st.inLastYear, label: `في ${st.lastYear}` }]} />
+    facts={[{ value: st.entries, label: 'قيداً في السجل' }, { value: site.stats.partners + '+', label: 'جهة' }, { value: st.inLastYear, label: `في ${st.lastYear}` }]} />
 
   <section class="sec tight flush" id="log">
     <div class="wide" data-filter-root>
