@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
+import { site } from './site.js';
 
 const root = process.cwd();
 const fontFiles = ['src/fonts/og/arabic-bold.ttf', 'src/fonts/og/latin-bold.ttf'].map((f) => path.join(root, f));
@@ -48,6 +49,26 @@ ${k}${body}
 // صورة مشاركة الصفحة الرئيسية: رسم الرصاص بجانب الاسم والسلوقن بالمخطوطة السوداء
 const portraitB64 = fs.readFileSync(path.join(root, 'src/assets/og-portrait.png')).toString('base64');
 
+
+// سطرا التعريف تحت الاسم؛ الخط العربي المضمَّن بلا رمز «|» فيُرسم الفاصل خطاً، وتُقاس القطع لتُرصّ من اليمين إلى اليسار
+const fontOpts = { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Arabic' } };
+const textW = (t, size) => new Resvg(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="200"><text x="10" y="100" font-family="OG Arabic" font-size="${size}" font-weight="700" direction="rtl">${esc(t)}</text></svg>`, fontOpts).getBBox()?.width || t.length * size * 0.5;
+function ogLines(cx, y0) {
+  return (site.hero.ogLines || []).slice(0, 2).map((line, i) => {
+    const size = i ? 30 : 24, fill = i ? '#835410' : '#3a3a37', y = y0 + i * 52;
+    const parts = line.split('|').map((t) => t.trim()).filter(Boolean), gap = 22;
+    const ws = parts.map((t) => textW(t, size));
+    let x = cx + (ws.reduce((a, b) => a + b, 0) + gap * (parts.length - 1)) / 2, out = '';
+    parts.forEach((t, k) => {
+      out += `<text x="${(x - ws[k] / 2).toFixed(1)}" y="${y.toFixed(0)}" font-family="OG Arabic" font-size="${size}" font-weight="700" fill="${fill}" direction="rtl" text-anchor="middle">${esc(t)}</text>`;
+      x -= ws[k];
+      if (k < parts.length - 1) out += `<rect x="${(x - gap / 2 - 1).toFixed(1)}" y="${y - size * 0.8}" width="2" height="${size * 0.95}" fill="#b9b8b1"/>`;
+      x -= gap;
+    });
+    return out;
+  }).join('');
+}
+
 export function renderHomeOg() {
   const lw = 590, sc = lw / 2600, lh = 961 * sc;
   const ph = 590, pw = Math.round(ph * 620 / 768);
@@ -56,6 +77,7 @@ export function renderHomeOg() {
 <rect width="1200" height="630" fill="#f5f5f2"/>
 <image x="64" y="30" width="${pw}" height="${ph - 20}" preserveAspectRatio="xMidYMax slice" xlink:href="data:image/png;base64,${portraitB64}"/>
 <g transform="translate(${lx} ${ly.toFixed(0)}) scale(${sc})" fill="#161615" fill-rule="evenodd">${fullPaths.map((d) => `<path d="${d}"/>`).join('')}</g>
+${ogLines(lx + lw / 2, ly + lh + 62)}
 <text x="1160" y="592" font-family="OG Latin" font-size="26" font-weight="700" fill="#8a8984" text-anchor="end">hussain-al-hajji.com</text>
 </svg>`;
   return new Resvg(svg, { font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'OG Latin' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
