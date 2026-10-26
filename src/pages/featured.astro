@@ -9,7 +9,7 @@ const groups = getGroups('featured', featured).filter((g) => !g.hidden && featur
 <Base title="مشاريع ومشاركات مميزة" description="مختارات من المشاريع والبرامج والمعسكرات التي شاركتُ فيها، مع شعارات الجهات الشريكة في كل منها." active="bio"
   local={[{ label: 'المشاركات', href: '#top' }, { label: 'السجل الكامل', href: '/training-programs' }]}>
   <PageHead title="مشاريع ومشاركات مميزة." lead="مختارات من البرامج والمعسكرات والمبادرات التي شاركتُ فيها، مع الجهات الشريكة في كل منها.">
-    <div class="ctas" style="margin-top:24px"><a class="more" href={href('/training-programs')}>سجل الأثر الكامل</a></div>
+    <div class="ctas" style="margin-top:24px"><a class="pill" href={href('/bio')}>السيرة والإنجازات</a><a class="more" href={href('/training-programs')}>جميع برامج التدريب والفعاليات</a></div>
   </PageHead>
   <div id="top">
     {groups.map((gr, gi) => (
