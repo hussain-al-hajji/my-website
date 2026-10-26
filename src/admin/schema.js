@@ -258,14 +258,18 @@ export const SECTIONS = [
     ],
   },
   {
-    id: 'bio', label: 'عنّي', file: 'bio', kind: 'list', group: 'المحتوى', grouped: { page: 'bio', pdf: true, styles: true, blocks: {
+    id: 'bio', label: 'عنّي', file: 'bio', kind: 'list', group: 'المحتوى', grouped: { page: 'bio', pdf: true, styles: true, en: true, blocks: {
       intro: [
         { k: 'bio.title', label: 'عنوان الصفحة', type: 'text' }, { k: 'bio.lead', label: 'المقدمة تحت العنوان', type: 'text' },
         { k: 'bio.intro', label: 'الفقرات (فقرة لكل سطر)', type: 'lines' },
+        { k: 'bio.en.title', label: 'English: page title', type: 'text', ltr: true }, { k: 'bio.en.lead', label: 'English: lead line', type: 'text', ltr: true },
+        { k: 'bio.en.intro', label: 'English: paragraphs (one paragraph per line)', type: 'lines', ltr: true },
       ],
       tracks: [
         { k: 'bio.tracks', label: 'المسارات', type: 'objects', fields: [{ k: 'title', label: 'العنوان', type: 'text' }, { k: 'text', label: 'النص', type: 'textarea', rows: 3 }] },
         { k: 'bio.closing', label: 'الخاتمة', type: 'textarea', rows: 3 },
+        { k: 'bio.en.tracks', label: 'English: work tracks', type: 'objects', ltr: true, fields: [{ k: 'title', label: 'Title', type: 'text', ltr: true }, { k: 'text', label: 'Text', type: 'textarea', rows: 3, ltr: true }] },
+        { k: 'bio.en.closing', label: 'English: closing paragraph', type: 'textarea', rows: 3, ltr: true },
       ],
     } },
     title: (x) => x.title, meta: (x) => [x.subtitle, x.period].filter(Boolean).join(' · '),
@@ -280,6 +284,12 @@ export const SECTIONS = [
       { k: 'brief', label: 'ملخص قصير للسيرة المختصرة (سطر أو سطران)', type: 'textarea', rows: 2, help: 'يظهر في «استخراج السيرة المختصرة» بدل الوصف. إن تُرك فارغاً يُقتطع تلقائياً من بداية الوصف.' },
       { k: 'details', label: 'التفاصيل (المهام والإنجازات)', type: 'textarea', rows: 10, help: 'اختياري. يظهر بعد النبذة بزر «عرض المزيد» إن كان طويلاً، ويُصدَّر كاملاً في ملف السيرة PDF. اكتب كل مهمة في سطر يبدأ بـ «- »، وأي سطر ينتهي بنقطتين يصير عنواناً فرعياً (مثل: التدريب وتطوير المحتوى:).' },
       { k: 'link', label: 'رابط', type: 'url' },
+      { k: 'en.title', label: 'English: title', type: 'text', ltr: true },
+      { k: 'en.subtitle', label: 'English: organization', type: 'text', ltr: true },
+      { k: 'en.period', label: 'English: period', type: 'text', ltr: true },
+      { k: 'en.desc', label: 'English: description', type: 'textarea', rows: 4, ltr: true },
+      { k: 'en.details', label: 'English: details (tasks and achievements)', type: 'textarea', rows: 10, ltr: true, help: 'Same format as the Arabic details: one task per line starting with "- ", and a line ending with a colon becomes a subheading.' },
+      { k: 'en.brief', label: 'English: short summary for the short CV', type: 'textarea', rows: 2, ltr: true },
     ],
   },
   {

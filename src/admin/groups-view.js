@@ -2,7 +2,7 @@
 // كل قسم عنوان جانبي مطوي يُفتح بالضغط، ويمكن تسميته وترتيبه (سحب أو أسهم) وإخفاؤه وإضافة أقسام جديدة ونقل العناصر بينها.
 import { resolveGroups, GROUP_PAGES } from '../lib/group-defaults.js';
 
-const strip = (g) => { const o = { id: g.id, title: g.title }; if (g.hidden) o.hidden = true; if (g.block) o.block = g.block; if (g.style) o.style = g.style; return o; };
+const strip = (g) => { const o = { id: g.id, title: g.title }; if (g.titleEn) o.titleEn = g.titleEn; if (g.hidden) o.hidden = true; if (g.block) o.block = g.block; if (g.style) o.style = g.style; return o; };
 const STYLES = [['', 'قائمة زمنية'], ['table', 'جدول'], ['chips', 'وسوم']];
 let drag = null; // { kind: 'group'|'item', id|index }
 
@@ -55,6 +55,12 @@ export function groupedView(c) {
     const commit = () => { const v = name.value.trim(); if (v && v !== g.title) mutate(g.id, (x) => { x.title = v; }); };
     name.addEventListener('change', commit); name.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
     row.append(h('label', { class: 'gv-lbl' }, 'اسم القسم', name));
+    if (cfg.en) {
+      const nameEn = h('input', { class: 'gv-name', type: 'text', value: g.titleEn || '', dir: 'ltr', 'aria-label': 'Section name in English', placeholder: 'English name' });
+      const commitEn = () => { const v = nameEn.value.trim(); if (v !== (g.titleEn || '')) mutate(g.id, (x) => { x.titleEn = v; }); };
+      nameEn.addEventListener('change', commitEn); nameEn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commitEn(); } });
+      row.append(h('label', { class: 'gv-lbl' }, 'الاسم بالإنجليزية', nameEn));
+    }
     if (!(cfg.fixed || []).includes(g.id)) row.append(h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: !g.hidden, onChange: (e) => mutate(g.id, (x) => { x.hidden = !e.target.checked; }) }), ' يظهر في الصفحة'));
     if (cfg.pdf && !g.block && g.style !== 'chips') {
       const pdf = pages.bio.pdf || [];

@@ -202,6 +202,7 @@ function field(f, get, set, ctx) {
     default:
       input = h('input', { id, type: 'text', onInput: (e) => upd(e.target.value) }); input.value = val ?? '';
   }
+  if (f.ltr && input.tagName !== 'DIV') { input.dir = 'ltr'; input.style.textAlign = 'left'; } else if (f.ltr) input.dir = 'ltr';
   if (f.type === 'bool') wrap.append(...[h('label', { class: 'chk' }, input, ' ', f.label), help, err].filter(Boolean));
   else wrap.append(...[label, input, help, err].filter(Boolean));
   return wrap;

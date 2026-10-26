@@ -69,7 +69,7 @@ export function resolveGroups(page, saved = [], items = []) {
   const out = [], seen = new Set();
   const push = (g) => { if (g.id && !seen.has(g.id)) { seen.add(g.id); out.push(g); } };
   for (const g of saved || []) {
-    push({ id: g.id, title: g.title || cfg.defaults[g.id] || (page === 'bio' && BIO_BLOCKS[g.id]) || g.id, hidden: !!g.hidden, block: g.block || (page === 'bio' && BIO_BLOCKS[g.id] ? g.id : ''), style: g.style || '', custom: !(g.id in cfg.defaults) && !(page === 'bio' && g.id in BIO_BLOCKS) });
+    push({ id: g.id, title: g.title || cfg.defaults[g.id] || (page === 'bio' && BIO_BLOCKS[g.id]) || g.id, hidden: !!g.hidden, titleEn: g.titleEn || '', block: g.block || (page === 'bio' && BIO_BLOCKS[g.id] ? g.id : ''), style: g.style || '', custom: !(g.id in cfg.defaults) && !(page === 'bio' && g.id in BIO_BLOCKS) });
   }
   for (const id of Object.keys(cfg.defaults)) push({ id, title: cfg.defaults[id], hidden: false, block: '', style: '', custom: false });
   // قيم قديمة غير معرّفة (مثل عناوين نصية في «المميزة»): تُضاف بعنوانها نفسه

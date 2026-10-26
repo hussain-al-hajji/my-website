@@ -8,7 +8,14 @@
     "period": "ديسمبر 2026",
     "desc": "برنامج تطبيقي مكثّف يأخذ مشروعك من اختيار المنصة المناسبة إلى متجر إلكتروني يبيع داخل قطر وخارجها — بالدفع الآمن، والتوصيل الذكي، والتسويق المبني على البيانات، والعمليات القابلة للتوسع.",
     "details": "صُمّم البرنامج لأصحاب المشاريع الصغيرة والمتوسطة في مختلف مراحل نضجهم الرقمي. يركّز على التطبيق قبل النظرية: كل مفهوم يتحول إلى تمرين حي أو محاكاة أو قرار على مشروعك الحقيقي، لتخرج بأدوات عملية وخارطة طريق واضحة لتسريع مبيعاتك الإلكترونية.\n\n",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Trainer, E-Commerce Acceleration Program for Small and Medium Businesses",
+      "subtitle": "Qatar Development Bank",
+      "period": "Dec 2026",
+      "desc": "An intensive, hands-on program that takes your business from choosing the right platform to an online store selling inside and outside Qatar, with secure payment, smart delivery, data-driven marketing and scalable operations.",
+      "details": "The program is designed for owners of small and medium businesses at different stages of digital maturity. It focuses on practice before theory: every concept becomes a live exercise, a simulation or a decision on your real business, so you leave with practical tools and a clear roadmap to accelerate your online sales."
+    }
   },
   {
     "id": "bmvnqsq5my6",
@@ -19,7 +26,13 @@
     "period": "ديسمبر 2024",
     "desc": "مدرب التجارة الإلكترونية والتسويق الرقمي والعمل الحر في معسكر ريادة الأعمال الرقمية ضمن مبادرة همّة الرقمية، مركز بديّة الثقافي بسلطنة عمان (12 يوماً، 50 ساعة تدريبية واستشارية)",
     "details": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce, Digital Marketing & Freelancing Trainer",
+      "subtitle": "Badiyah Cultural Center, Sultanate of Oman",
+      "period": "Dec 2024",
+      "desc": "E-commerce, digital marketing and freelancing trainer at the Digital Entrepreneurship Bootcamp within the Digital Himma initiative, Badiyah Cultural Center, Sultanate of Oman (12 days, 50 hours of training and consulting)."
+    }
   },
   {
     "id": "bmvnqp4b4z8",
@@ -30,7 +43,13 @@
     "period": "أكتوبر 2024",
     "desc": "مدرب التهيئة المهنية للباحثين عن عمل في برنامج «التمكين والتوظيف» لمتدربي شركة البحر الأحمر الدولية، بالتعاون مع منظمة التعليم من أجل التوظيف efe",
     "details": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Career Orientation Trainer & Mentor",
+      "subtitle": "Red Sea Global",
+      "period": "Oct 2024",
+      "desc": "Career orientation trainer for job seekers in the \"Empowerment & Employment\" program for Red Sea Global trainees, in cooperation with Education For Employment (efe)."
+    }
   },
   {
     "id": "bmvnouumv7k",
@@ -41,7 +60,13 @@
     "period": "سبتمبر 2026 - الآن",
     "desc": "الشبكة العالمية للشباب في الجودة والتميز مبادرة دولية رائدة أطلقها مركز اليونسكو الإقليمي للجودة والتميز في التعليم؛ لتكون منصة عالمية مستدامة يقودها الشباب، وتجمع الشباب والقيادات الشبابية والباحثين والمبتكرين ورواد الأعمال والمهنيين من مختلف الدول والثقافات والسياقات، بهدف تمكينهم من الإسهام الفاعل في نشر ثقافة الجودة والتميز، واستشراف مستقبلها، وإنتاج المعرفة، وتطوير المبادرات المبتكرة.",
     "details": "",
-    "link": "https://gynqe.unesco.rcqe.org/programs"
+    "link": "https://gynqe.unesco.rcqe.org/programs",
+    "en": {
+      "title": "Founding Member, Global Youth Network for Quality and Excellence – Saudi Arabia",
+      "subtitle": "UNESCO Regional Center for Quality and Excellence in Education",
+      "period": "Sep 2026 – Present",
+      "desc": "The Global Youth Network for Quality and Excellence is a pioneering international initiative launched by the UNESCO Regional Center for Quality and Excellence in Education as a sustainable, youth-led global platform that brings together young people, youth leaders, researchers, innovators, entrepreneurs and professionals from different countries, cultures and contexts, to enable them to contribute effectively to spreading a culture of quality and excellence, anticipating its future, producing knowledge and developing innovative initiatives."
+    }
   },
   {
     "id": "b001",
@@ -52,7 +77,16 @@
     "period": "مايو 2019 إلى يوليو 2026",
     "desc": "إعداد وتقديم المحتوى التدريبي لتمكين رواد الأعمال في إنشاء وتشغيل المتاجر الإلكترونية على منصة نون، ضمن برنامج «نون محلي» الموجه لتمكين رواد الأعمال المحليين للتحول إلى التجارة الإلكترونية.",
     "details": "التدريب وتطوير المحتوى:\n- إعداد خطط تدريبية سنوية تغطي التجارة الإلكترونية والتسويق الرقمي وأفضل ممارسات الأسواق الإلكترونية.\n- تطوير أدلة البائعين والمواد التدريبية والمحتوى التعليمي المكتوب والمرئي.\n- تقديم ورش العمل والندوات الإلكترونية والجلسات الاستشارية الفردية لرواد الأعمال والمنشآت الصغيرة والمتوسطة في السعودية والإمارات.\n- تأسيس «معسكر محلّي للتجارة الإلكترونية» وإدارته: برنامج تجريبي لثلاثة أيام لطلاب الجامعات يجمع بين التعلم الصفي والتعرض الميداني.\n- تأسيس «ديوان محلّي» وإدارته: لقاء دوري للتواصل وتبادل المعرفة بين بائعي محلّي.\nتطوير الأعمال وإدارة الحسابات:\n- دعم فريق تطوير الأعمال في السعودية في استقطاب بائعين جدد: تحديد العملاء المحتملين المؤهلين، والتواصل معهم، وعرض القيمة التي تقدمها محلّي، ومرافقتهم خلال التسجيل.\n- إدارة علاقات البائعين طوال رحلة التسجيل والتهيئة والجاهزية لضمان تفعيل حساباتهم على المنصة.\n- العمل مع الفرق المتعددة التخصصات لرفع تفاعل البائعين ونجاحهم على المدى البعيد.\nالشراكات الاستراتيجية والمشاريع الخاصة:\n- المبادرة بمشاريع الشراكة مع جهات حكومية وداعمة للأعمال وتطويرها وإدارتها، ومنها: بنك التنمية الاجتماعية، ومنشآت، وهيئة تنمية الصادرات السعودية (صُنع في السعودية)، وصندوق الاستثمارات العامة، ووزارة الصناعة والثروة المعدنية، ووزارة التجارة وأكثر من 15 غرفة تجارية، وعدد من الجامعات في المملكة.\nتمثيل العلامة:\n- تمثيل نون ومحلّي في كبرى المعارض والمؤتمرات وفعاليات الأعمال الوطنية، ومنها معرض بيبان ومنتدى القطاع الخاص لصندوق الاستثمارات العامة وبنان، للتعريف بالمنصة وبناء الشراكات واستقطاب الشركاء المحتملين.\n\nبالإضافة إلى ثمانية عشر شهراً مع فريق اللوجستيات وإدارة العمليات المركزي في المملكة: تخطيط وتنفيذ تدريب موظفي العمليات واللوجستيات (الموظفون وسائقو التوصيل) حضورياً وافتراضياً، والتنقل بين فروع نون لتنفيذ التدريب في أكثر من 20 مدينة، وتدريب أكثر من 500 موظف بالعربية والإنجليزية، والعمل مشرفاً إدارياً لشؤون السائقين المستقلين.",
-    "link": "https://www.noon.com"
+    "link": "https://www.noon.com",
+    "brief": "إعداد وتقديم المحتوى التدريبي لتمكين رواد الأعمال من إنشاء متاجرهم الإلكترونية وتشغيلها على منصة نون، ضمن برنامج «نون محلي».",
+    "en": {
+      "title": "E-Commerce Trainer & Mentor for Sellers",
+      "subtitle": "Noon",
+      "period": "May 2019 – Jul 2026",
+      "desc": "Preparing and delivering training content that empowers entrepreneurs to set up and run online stores on the Noon platform, as part of the \"Noon Mahalli\" program, which helps local entrepreneurs move into e-commerce.",
+      "details": "Training & Content Development:\n- Prepared annual training plans covering e-commerce, digital marketing and marketplace best practices.\n- Developed seller guides, training materials and written and video learning content.\n- Delivered workshops, webinars and one-on-one advisory sessions for entrepreneurs and small and medium enterprises in Saudi Arabia and the UAE.\n- Founded and ran the \"Mahalli E-Commerce Bootcamp\": a three-day pilot program for university students combining classroom learning with field exposure.\n- Founded and ran the \"Mahalli Diwan\": a recurring meetup for networking and knowledge exchange among Mahalli sellers.\nBusiness Development & Account Management:\n- Supported the Saudi business development team in attracting new sellers: identifying qualified leads, contacting them, presenting Mahalli's value proposition and accompanying them through registration.\n- Managed seller relationships throughout the registration, onboarding and readiness journey to ensure their accounts were activated on the platform.\n- Worked with cross-functional teams to increase seller engagement and long-term success.\nStrategic Partnerships & Special Projects:\n- Initiated, developed and managed partnership projects with government and business-support entities, including: the Social Development Bank, Monsha'at, the Saudi Export Development Authority (Made in Saudi), the Public Investment Fund, the Ministry of Industry and Mineral Resources, the Ministry of Commerce, more than 15 chambers of commerce, and a number of universities in the Kingdom.\nBrand Representation:\n- Represented Noon and Mahalli at major national exhibitions, conferences and business events, including the Biban exhibition, the PIF private sector forum and Banan, to promote the platform, build partnerships and attract potential partners.\n\nIn addition, eighteen months with the central logistics and operations team in the Kingdom: planning and delivering training for operations and logistics staff (employees and delivery drivers), in person and virtually, traveling between Noon branches to deliver training in more than 20 cities, training more than 500 employees in Arabic and English, and serving as an administrative supervisor for independent drivers' affairs.",
+      "brief": "Preparing and delivering training content that helps entrepreneurs set up and run their online stores on Noon, as part of the \"Noon Mahalli\" program."
+    }
   },
   {
     "id": "bmvnol1dbni",
@@ -63,7 +97,16 @@
     "period": "أكتوبر 2026 - الآن",
     "desc": "يتولى قائد التدريب (Training Lead) تصميم وتقديم الركيزة التعليمية لبرنامج \" جائزة هولت العالمية\" (Hult Prize) في المملكة العربية السعودية. يعمل هذا الدور على تحويل أطر تطوير الشركات الناشئة، ومنهجيات التفكير التصميمي، ومقاييس الأثر الاجتماعي إلى برامج تدريبية مكثفة (Bootcamps) وورش عمل متخصصة (Masterclasses)، تهدف إلى الارتقاء بمستوى الطلاب المؤسسين المشاركين ليصلوا إلى معايير المنافسة الدولية.",
     "details": "\nالمسؤوليات:\n- تصميم المناهج وتطوير المحتوى: إعداد مناهج تدريبية شاملة، وورش عمل متخصصة، وحقائب أدوات تغطي جوانب متنوعة؛ بدءاً من توليد الأفكار، والتحقق من ملاءمة السوق، وبناء نماذج الأعمال، والتوقعات المالية، وصولاً إلى مهارات سرد القصص (Storytelling).\n- استقطاب المدربين وتيسير ورش العمل: اختيار وتوجيه وجدولة خبراء متخصصين في القطاع، ومستشارين في مجالات محددة، ومدربين تنفيذيين (Executive Coaches) لقيادة الجلسات التدريبية، سواء كانت افتراضية أو حضورية.\n- تنفيذ البرامج التدريبية الوطنية (Bootcamps): الإشراف على تقديم المحتوى التعليمي خلال البرامج التدريبية الوطنية، وضمان سير العمليات التعليمية بسلاسة وتحقيق تفاعل عالٍ من قِبل المشاركين.\n- تقييم مهارات المؤسسين: إجراء تقييمات قبل وبعد التدريب لقياس مدى اكتساب المعرفة، والجاهزية لتقديم العروض التقديمية (Pitching)، والتحقق من ملاءمة الحلول للمشكلات المطروحة لدى الفرق المشاركة.\n- إدارة مركز الموارد: إنشاء وتنظيم مستودع رقمي مركزي يضم أدلة للشركات الناشئة، ونماذج عمل جاهزة، ومواد تعليمية مسجلة، لتكون متاحة للطلاب المشاركين في جميع أنحاء المملكة.\n\nالأهداف:\n- تقديم برامج تدريبية شاملة: تنفيذ ورش عمل متخصصة على مستوى المملكة، بالإضافة إلى برنامج تدريبي مكثف (Bootcamp) يمتد لعدة أيام لتهيئة الفرق المتأهلة للمرحلة الوطنية.\n- تحقيق مستوى عالٍ من الرضا التعليمي: ضمان حصول البرامج التدريبية على تقييم رضا وقيمة إجمالية تزيد عن 90% من قِبل المشاركين في جميع الوحدات التعليمية.\n- تحقيق نمو ملموس لدى المؤسسين: ضمان خروج جميع الفرق المشاركة من البرنامج التدريبي وهي تمتلك حلولاً مُتحققاً من ملاءمتها للمشكلات، ونماذج عمل أولية (Lean Canvases) مكتملة، ونماذج تجريبية (Prototypes) خضعت للاختبار.",
-    "link": ""
+    "link": "",
+    "brief": "تصميم وتقديم الركيزة التعليمية لبرنامج «جائزة هولت العالمية» في المملكة، عبر معسكرات تدريبية وورش متخصصة ترفع جاهزية الطلاب المؤسسين للمنافسة الدولية.",
+    "en": {
+      "title": "Training Lead",
+      "subtitle": "Hult Prize Saudi Arabia",
+      "period": "Oct 2026 – Present",
+      "desc": "The Training Lead designs and delivers the learning pillar of the \"Hult Prize\" program in Saudi Arabia. The role turns startup development frameworks, design-thinking methodologies and social-impact metrics into intensive bootcamps and specialized masterclasses, aiming to raise the level of participating student founders to international competition standards.",
+      "details": "\nResponsibilities:\n- Curriculum design and content development: preparing comprehensive training curricula, specialized workshops and toolkits covering a range of topics, from idea generation, market validation, business model building and financial projections to storytelling skills.\n- Recruiting trainers and facilitating workshops: selecting, briefing and scheduling industry experts, specialist consultants and executive coaches to lead training sessions, whether virtual or in person.\n- Delivering the national bootcamps: overseeing the delivery of learning content during the national training programs and ensuring smooth learning operations and high participant engagement.\n- Assessing founders' skills: conducting pre- and post-training assessments to measure knowledge gained, pitching readiness, and the fit of solutions to the problems raised by participating teams.\n- Managing the resource center: creating and organizing a central digital repository with startup guides, ready-made templates and recorded learning materials, available to participating students across the Kingdom.\n\nObjectives:\n- Delivering comprehensive training programs: running specialized workshops across the Kingdom, plus a multi-day intensive bootcamp to prepare qualifying teams for the national stage.\n- Achieving a high level of learning satisfaction: ensuring the training programs receive an overall satisfaction and value rating above 90% from participants across all learning units.\n- Achieving tangible founder growth: ensuring all participating teams leave the training program with validated problem-solution fit, completed Lean Canvases and tested prototypes.",
+      "brief": "Designing and delivering the learning pillar of the \"Hult Prize\" program in the Kingdom through intensive bootcamps and specialized workshops that prepare student founders for international competition."
+    }
   },
   {
     "id": "bmvno50yfjb",
@@ -74,7 +117,16 @@
     "period": "أغسطس 2026 - الآن",
     "desc": "أنفذ الدورات التدريبية التابعة لمسار قطاع التجزئة في مسرعة المهارات الوطنية برعاية وزارة الموارد البشرية والتنمية الاجتماعية وشركة تكامل القابضة.",
     "details": "1- الربط الذكي بين تخطيط الموارد وإدارة الشحن.\n2- التميز في العمليات والكفاءة التشغيلية.\n3- نحو تجزئة أكثر نزاهة ومسؤولية \n4- بناء الكفاءة التشغيلية عبر سلاسل الإمداد.\n5- إدارة المنتجات التسويقية.\n6- التمكين المهني في قطاع التجزئة.\n7- ذكاء سوق العمل وصناعة القرار التوظيفي.\n8- التميز في الدعم الافتراضي.\n9- الهيمنة التفاوضية وإدارة العقود التجارية.\n10 - المستودعات الذكية.\n11- التحول التشغيلي نحو سلاسل الإمداد الدائرية.\n12 - التميز في إدارة علاقات الأعمال بين الشركات.\n13 - التحول التجاري عبر الهاتف المحمول.\n14 - ذكاء المبيعات.\n15 - الريادة الخضراء في قطاع التجزئة.",
-    "link": ""
+    "link": "",
+    "brief": "تنفيذ دورات مسار قطاع التجزئة في مسرعة المهارات الوطنية برعاية وزارة الموارد البشرية والتنمية الاجتماعية وشركة تكامل القابضة.",
+    "en": {
+      "title": "Retail & Digital Retail Trainer",
+      "subtitle": "National Skills Accelerator, Ministry of Human Resources and Social Development",
+      "period": "Aug 2026 – Present",
+      "desc": "I deliver the training courses of the retail track at the National Skills Accelerator, sponsored by the Ministry of Human Resources and Social Development and Takamol Holding.",
+      "details": "1- Smart integration of resource planning and shipping management.\n2- Excellence in operations and operational efficiency.\n3- Towards fairer and more responsible retail.\n4- Building operational efficiency across supply chains.\n5- Marketing product management.\n6- Career empowerment in the retail sector.\n7- Labor market intelligence and hiring decision-making.\n8- Excellence in virtual support.\n9- Negotiation dominance and commercial contract management.\n10- Smart warehouses.\n11- Operational transformation towards circular supply chains.\n12- Excellence in business-to-business relationship management.\n13- Commerce transformation via mobile.\n14- Sales intelligence.\n15- Green leadership in the retail sector.",
+      "brief": "Delivering the retail-track courses at the National Skills Accelerator, sponsored by the Ministry of Human Resources and Social Development and Takamol Holding."
+    }
   },
   {
     "id": "b007",
@@ -85,7 +137,16 @@
     "period": "أكتوبر 2018 إلى أكتوبر 2022",
     "desc": "مشرف تعليمي ومراجع مشاريع في دورة التسويق الرقمي للإشراف على المتدربين ضمن الشراكة بين مسك ويوداستي.",
     "details": "قائد جلسات أول (مرشد أول)، أكتوبر 2020 – ديسمبر 2021:\n- استقبال القادة الجدد (المرشدين) وتهيئتهم وتدريبهم، ومتابعتهم دورياً لمعالجة المشكلات وتقييم أداء المقرر.\nقائد جلسات (مرشد)، سبتمبر 2018 – سبتمبر 2020:\n- عقد جلسات أسبوعية مع مجموعات الطلاب، حضورياً وافتراضياً، لشرح محتوى المقرر وتقديم الدعم التقني في متطلبات المشاريع وأدواتها.\n- استقبال أسئلة الطلاب عبر Slack وتقديم الدعم المطلوب يومياً.\n- حتى نهاية 2020: 6 دفعات وأكثر من 600 طالب في 20 شعبة (بمتوسط 30 طالباً للشعبة)، ومتوسط نسبة تخرج 85%، ومتوسط تقييم 4.8 من 5.\nمراجع مشاريع، مارس 2019 – ديسمبر 2020:\n- مراجعة مشاريع الطلاب وتقديم ملاحظات تفصيلية عليها وكتابة تعليقات محفّزة تشجعهم على الاستمرار.\nمدرب مهني، مايو 2020 – ديسمبر 2021:\n- التواصل مع أصحاب العمل الرائدين والطلاب الطموحين لتوظيف خريجي برنامج مسك–يوداستي (علاقات بين الشركات).",
-    "link": ""
+    "link": "",
+    "brief": "إشراف تعليمي ومراجعة مشاريع المتدربين في دورة التسويق الرقمي ضمن شراكة مسك ويوداستي، مع تدريب المرشدين الجدد ومتابعة أدائهم.",
+    "en": {
+      "title": "Academic Supervisor & Student Mentor, Digital Marketing Course",
+      "subtitle": "Udacity and Misk Foundation",
+      "period": "Oct 2018 – Oct 2022",
+      "desc": "Academic supervisor and project reviewer in the Digital Marketing course, supervising trainees within the Misk and Udacity partnership.",
+      "details": "Lead Session Leader (Senior Mentor), Oct 2020 – Dec 2021:\n- Welcoming, onboarding and training new session leaders (mentors), and following up with them regularly to resolve issues and assess course performance.\nSession Leader (Mentor), Sep 2018 – Sep 2020:\n- Holding weekly sessions with student groups, in person and virtually, to explain the course content and provide technical support on project requirements and tools.\n- Receiving student questions via Slack and providing the required support daily.\n- Through the end of 2020: 6 cohorts and more than 600 students in 20 sections (an average of 30 students per section), an average graduation rate of 85%, and an average rating of 4.8 out of 5.\nProject Reviewer, Mar 2019 – Dec 2020:\n- Reviewing student projects, giving detailed feedback and writing encouraging comments that motivate them to continue.\nCareer Coach, May 2020 – Dec 2021:\n- Connecting with leading employers and ambitious students to hire graduates of the Misk–Udacity program (business-to-business relations).",
+      "brief": "Academic supervision and review of trainees' projects in the Digital Marketing course within the Misk–Udacity partnership, plus training new mentors and following their performance."
+    }
   },
   {
     "id": "b003",
@@ -95,7 +156,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "نوفمبر 2024 إلى الآن",
     "desc": "مبادرة من مسك تربط المنظمات الشبابية بخبراء في مجالات مختلفة لدعمها في النمو والتطور، بتقديم خدمات استشارية لأعضاء مجلس أثر الشباب من المنظمات الشبابية غير الربحية بحسب واقعها وتحدياتها.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Expert Member, Youth Impact Council",
+      "subtitle": "Mohammed bin Salman Foundation (Misk)",
+      "period": "Nov 2024 – Present",
+      "desc": "A Misk initiative connecting youth organizations with experts in various fields to support their growth and development, providing advisory services to Youth Impact Council members from non-profit youth organizations according to their circumstances and challenges."
+    }
   },
   {
     "id": "b004",
@@ -105,7 +172,13 @@
     "logo": "/img/partners/l66.webp",
     "period": "سبتمبر 2023 إلى الآن",
     "desc": "عضو مؤسس في أول فريق لقطاع التجارة الإلكترونية تابع للغرفة. أشرفت على إقامة العديد من الملتقيات وورش العمل المتخصصة في مجال التجارة الإلكترونية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Member, Communications and Information Technology Committee (E-Commerce Team)",
+      "subtitle": "Al-Ahsa Chamber of Commerce and Industry",
+      "period": "Sep 2023 – Present",
+      "desc": "Founding member of the chamber's first e-commerce sector team. Oversaw numerous forums and specialized workshops in e-commerce."
+    }
   },
   {
     "id": "b123",
@@ -116,7 +189,16 @@
     "period": "أبريل 2025 إلى نوفمبر 2025",
     "desc": "في مسرّعة نيوم سفن سينسز: العمل مع الشركات الناشئة لضمان تقدمها الملموس خلال البرنامج، بتقديم الاستشارات الاستراتيجية في تطوير المنتج والتسعير واكتساب العملاء وتحديد الموقع في السوق، ومتابعة مؤشرات الأداء، وجلسات إرشاد فردية أسبوعية، وبناء شبكات تربط الشركات الناشئة بالمستثمرين والشركاء.",
     "details": "- تقديم الاستشارات الاستراتيجية في تطوير المنتج والتسعير واكتساب العملاء وتحديد الموقع في السوق.\n- متابعة مؤشرات الأداء الرئيسية وضمان تحقيقها بالمتابعة المستمرة والدعم الموجّه.\n- عقد جلسات إرشاد فردية أسبوعية لمعالجة التحديات التشغيلية وتسريع النمو.\n- بناء شبكة علاقات تيسّر الشراكات بين الشركات الناشئة والمستثمرين والمتعاونين المحتملين.\n- إعداد تقارير تقدم أسبوعية تبرز الإنجازات والتحديات والخطوات التالية.\n- تنظيم اجتماعات جماعية أسبوعية قصيرة لتعزيز مجتمع ريادي داعم ومتعاون.\n- ترسيخ المساءلة بمراجعة أداء الشركات الناشئة دورياً وتقديم حلول مخصصة لها.",
-    "link": ""
+    "link": "",
+    "brief": "عمل مع الشركات الناشئة في مسرّعة نيوم بالاستشارات الاستراتيجية (المنتج والتسعير واكتساب العملاء)، وجلسات إرشاد فردية أسبوعية وربط بالمستثمرين.",
+    "en": {
+      "title": "Entrepreneur in Residence (Expert & Mentor)",
+      "subtitle": "NEOM (and Blossom), seasonal contract",
+      "period": "Apr 2025 – Nov 2025",
+      "desc": "At the NEOM Seven Senses accelerator: working with startups to ensure tangible progress during the program, by providing strategic advice on product development, pricing, customer acquisition and market positioning, tracking performance indicators, holding weekly one-on-one mentoring sessions, and building networks that connect startups with investors and partners.",
+      "details": "- Providing strategic advice on product development, pricing, customer acquisition and market positioning.\n- Tracking key performance indicators and ensuring they are met through continuous follow-up and targeted support.\n- Holding weekly one-on-one mentoring sessions to address operational challenges and accelerate growth.\n- Building a relationship network that facilitates partnerships between startups and potential investors and collaborators.\n- Preparing weekly progress reports highlighting achievements, challenges and next steps.\n- Organizing short weekly group meetings to strengthen a supportive and collaborative entrepreneurial community.\n- Reinforcing accountability by reviewing startups' performance regularly and providing tailored solutions.",
+      "brief": "Worked with startups at the NEOM accelerator through strategic advice (product, pricing, customer acquisition), weekly one-on-one mentoring, and connections to investors."
+    }
   },
   {
     "id": "b006",
@@ -126,7 +208,13 @@
     "logo": "/img/partners/l72.webp",
     "period": "يونيو 2022 إلى ديسمبر 2022",
     "desc": "إشراف على ابتكار البرامج التدريبية وعقد الشراكات مع الجهات المتعاونة في تقديم البرامج التدريبية لشباب المنطقة الشرقية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Member, Community Development Committee, Executive Management",
+      "subtitle": "Eastern Province Youth Council (Eastern Province Emirate)",
+      "period": "Jun 2022 – Dec 2022",
+      "desc": "Oversaw the creation of training programs and the building of partnerships with collaborating entities to deliver training programs for the youth of the Eastern Province."
+    }
   },
   {
     "id": "b124",
@@ -137,7 +225,16 @@
     "period": "أكتوبر 2024 إلى يونيو 2026",
     "desc": "مستشار خبير في مشروع تحسين مقرر ريادة الأعمال المقدَّم في الكليات التقنية التابعة للمؤسسة العامة للتدريب التقني والمهني: زيارة الكليات وإعداد أعضاء هيئة التدريب وتنفيذ الأنشطة التدريبية، وتنمية مهارات المتدربين في ريادة الأعمال، وبناء العلاقات مع جهات التمويل لدعم المشاريع الريادية، وتنفيذ برنامج تدريب المدربين لمدربي المقرر.",
     "details": "- الفئات المستهدفة: أعضاء هيئة التدريب والمتدربون في مقرر ريادة الأعمال.\n- زيارة الكليات التقنية لتبادل الخبرات مع أعضاء هيئة التدريب وإعدادهم بتصميم الأنشطة التدريبية وتخطيطها وتنفيذها: ورش، ومحاضرات، وجلسات، ولقاءات، واستقطاب رواد أعمال.\n- تنمية مهارات المتدربين في ريادة الأعمال، وتعزيز روح الابتكار والقيادة والمبادرة لديهم.\n- رفع جودة التدريب بالتدريب التشاركي مع أعضاء هيئة التدريب.\n- استطلاع الإمكانات الريادية لدى المتدربين.\n- بناء العلاقات مع جهات التمويل لدعم المشاريع الريادية في المقرر.\n- تقديم برنامج تدريب المدربين لإعداد مدربي مقرر ريادة الأعمال في المؤسسة.",
-    "link": ""
+    "link": "",
+    "brief": "مستشار ومدرب في مشروع تحسين مقرر ريادة الأعمال بالكليات التقنية: إعداد المدربين وتنفيذ الأنشطة وبرنامج تدريب المدربين وربط المشاريع بجهات التمويل.",
+    "en": {
+      "title": "Program Expert (Consultant & Trainer)",
+      "subtitle": "Colleges of Excellence, seasonal contract",
+      "period": "Oct 2024 – Jun 2026",
+      "desc": "Expert consultant on the project to improve the entrepreneurship course taught at the technical colleges of the Technical and Vocational Training Corporation: visiting colleges, preparing faculty members, delivering training activities, developing trainees' entrepreneurship skills, building relationships with funding entities to support entrepreneurial projects, and delivering a train-the-trainer program for the course's instructors.",
+      "details": "- Target groups: faculty members and trainees in the entrepreneurship course.\n- Visiting technical colleges to exchange experience with faculty members and prepare them to design, plan and deliver training activities: workshops, lectures, sessions, meetups and attracting entrepreneurs.\n- Developing trainees' entrepreneurship skills and strengthening their spirit of innovation, leadership and initiative.\n- Raising training quality through participatory training with faculty members.\n- Surveying trainees' entrepreneurial potential.\n- Building relationships with funding entities to support entrepreneurial projects in the course.\n- Delivering a train-the-trainer program to prepare the entrepreneurship course's instructors at the Corporation.",
+      "brief": "Consultant and trainer on the entrepreneurship course improvement project at the technical colleges: preparing instructors, delivering activities and train-the-trainer, and linking projects with funders."
+    }
   },
   {
     "id": "b008",
@@ -147,7 +244,11 @@
     "logo": "/img/uploads/ncc-ccsp-notm-mvnnoz21.webp",
     "period": "",
     "desc": "",
-    "link": "https://www.ncda.org/aws/NCDA/pt/sp/credentialing_ccsp"
+    "link": "https://www.ncda.org/aws/NCDA/pt/sp/credentialing_ccsp",
+    "en": {
+      "title": "CCSP",
+      "subtitle": "Certified Career Services Provider, NCDA"
+    }
   },
   {
     "id": "b009",
@@ -157,7 +258,12 @@
     "logo": "/img/uploads/2-mvnnq4x4.webp",
     "period": "",
     "desc": "الشهادة الاحترافية الدولية في إدارة المشاريع التنموية.",
-    "link": "https://pm4ngos.org/methodologies-guides/project-dpro"
+    "link": "https://pm4ngos.org/methodologies-guides/project-dpro",
+    "en": {
+      "title": "PMD Pro",
+      "subtitle": "Project Management for Development Professionals, PM4NGOs",
+      "desc": "The international professional certification in development project management."
+    }
   },
   {
     "id": "b010",
@@ -167,7 +273,11 @@
     "logo": "/img/uploads/ibta-logo-mvnns73o.webp",
     "period": "",
     "desc": "",
-    "link": "https://www.ibtalearning.com/cybp.html"
+    "link": "https://www.ibtalearning.com/cybp.html",
+    "en": {
+      "title": "CYBP",
+      "subtitle": "Certified Youth Business Professional, Ibta"
+    }
   },
   {
     "id": "b011",
@@ -177,7 +287,12 @@
     "logo": "/img/partners/l19.webp",
     "period": "منذ 2021",
     "desc": "",
-    "link": "https://edudirectory.withgoogle.com/profiles/5793917799759872"
+    "link": "https://edudirectory.withgoogle.com/profiles/5793917799759872",
+    "en": {
+      "title": "Google Certified Trainer",
+      "subtitle": "Google for Education",
+      "period": "Since 2021"
+    }
   },
   {
     "id": "b012",
@@ -187,7 +302,11 @@
     "logo": "/img/uploads/screenshot-2026-10-25-at-1-03--mvnnu25w.webp",
     "period": "",
     "desc": "",
-    "link": "https://www.saip.gov.sa/academy/2500/"
+    "link": "https://www.saip.gov.sa/academy/2500/",
+    "en": {
+      "title": "Certified Intellectual Property Enforcement Officer",
+      "subtitle": "Saudi Authority for Intellectual Property"
+    }
   },
   {
     "id": "b013",
@@ -197,7 +316,11 @@
     "logo": "/img/partners/l16.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "License for Management & Entrepreneurship Consulting",
+      "subtitle": "Ministry of Human Resources and Social Development"
+    }
   },
   {
     "id": "b014",
@@ -207,7 +330,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "منذ 2025",
     "desc": "مرشحاً من مجلس أثر الشباب التابع لمؤسسة مسك، أشارك ضمن لجنة تحكيم المشاريع المرشحة للفوز بجائزة (تحدي نحو الأثر) بالتعاون بين مؤسسة مسك ومؤسسة بيل قيتس.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Project Judging Committee Member, \"Challenge Toward Impact\" Project",
+      "subtitle": "Mohammed bin Salman Foundation (Misk) in partnership with the Bill & Melinda Gates Foundation",
+      "period": "Since 2025",
+      "desc": "Nominated by the Misk Foundation's Youth Impact Council, I serve on the committee judging the projects nominated for the \"Challenge Toward Impact\" award, a collaboration between the Misk Foundation and the Gates Foundation."
+    }
   },
   {
     "id": "b015",
@@ -217,7 +346,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "منذ 2024",
     "desc": "أشارك كمرشد وخبير في مجلس أثر الشباب التابع لمؤسسة محمد بن سلمان (مسك) والمتخصص في دعم مشاريع القطاع غير الربحي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Expert Member, Youth Impact Council",
+      "subtitle": "Mohammed bin Salman Foundation (Misk)",
+      "period": "Since 2024",
+      "desc": "I serve as a mentor and expert on the Youth Impact Council of the Mohammed bin Salman Foundation (Misk), which specializes in supporting non-profit sector projects."
+    }
   },
   {
     "id": "b016",
@@ -227,7 +362,13 @@
     "logo": "/img/partners/l18.webp",
     "period": "منذ 2023",
     "desc": "تم اختياري سفيراً لمنصة مجتمع التجارة الإلكترونية (ecomConnect.org) التابعة لمركز التجارة الدولي، في السعودية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Ambassador, E-Commerce Community Platform (ecomconnect.org)",
+      "subtitle": "International Trade Centre (ITC), Geneva",
+      "period": "Since 2023",
+      "desc": "I was selected as the Saudi Arabia ambassador of the International Trade Centre's e-commerce community platform (ecomConnect.org)."
+    }
   },
   {
     "id": "b017",
@@ -237,7 +378,13 @@
     "logo": "/img/uploads/logo-mvoe9ohg.webp",
     "period": "2023",
     "desc": "بترشيح من مؤسسة محمد بن سلمان (مسك) ومركز الشباب العربي بالإمارات، شاركت في الاجتماع العربي للقيادات الشابة لعام 2023 والمنعقد ضمن فعاليات القمة العالمية للحكومات.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Member, Arab Young Leaders Meeting",
+      "subtitle": "World Government Summit, Dubai",
+      "period": "2023",
+      "desc": "Nominated by the Mohammed bin Salman Foundation (Misk) and the Arab Youth Center in the UAE, I took part in the 2023 Arab Young Leaders Meeting held within the World Government Summit."
+    }
   },
   {
     "id": "b018",
@@ -247,7 +394,13 @@
     "logo": "/img/partners/l16.webp",
     "period": "2024",
     "desc": "تم ترشيحي للمشاركة ضمن خبراء التدريب في قطاع التجزئة للمساهمة في تصميم البرامج التدريبية المقدمة للشباب السعودي عبر منصة مبادرة مسرعة المهارات الوطنية التابعة لوزارة الموارد البشرية. والتي أصبحت أحد مدربيها لاحقاً.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Member, Retail Sector Experts Committee",
+      "subtitle": "National Skills Accelerator Initiative, Ministry of Human Resources and Social Development",
+      "period": "2024",
+      "desc": "I was nominated to join the retail-sector training experts to contribute to designing the training programs offered to Saudi youth through the Ministry of Human Resources' National Skills Accelerator platform, and later became one of its trainers."
+    }
   },
   {
     "id": "b021",
@@ -257,7 +410,13 @@
     "logo": "/img/partners/l36.webp",
     "period": "2025",
     "desc": "عضو لجنة تحكيم المرشحين لجائزة الشيخ عبدالله صالح كامل للخريجين المبدعين، من خريجي جامعة الأمير مقرن (مسار التميز المهني)",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Project Judging Committee Member",
+      "subtitle": "Sheikh Abdullah Saleh Kamel Award for Creative Graduates, Prince Mugrin University (Professional Excellence Track)",
+      "period": "2025",
+      "desc": "Member of the committee judging candidates for the Sheikh Abdullah Saleh Kamel Award for Creative Graduates, from Prince Mugrin University graduates (Professional Excellence Track)."
+    }
   },
   {
     "id": "b022",
@@ -267,7 +426,13 @@
     "logo": "/img/uploads/1675366429800-mvoej7qm.webp",
     "period": "2026",
     "desc": "عضو لجنة تحكيم المشاريع في مبادرة طويق لتأهيل القيادات، التابعة لجامعة الملك سعود.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Project Judging Committee Member",
+      "subtitle": "Tuwaiq Leadership Development Initiative, King Saud University",
+      "period": "2026",
+      "desc": "Member of the project judging committee of the Tuwaiq Leadership Development Initiative at King Saud University."
+    }
   },
   {
     "id": "b025",
@@ -277,7 +442,13 @@
     "logo": "/img/partners/l55.webp",
     "period": "2023",
     "desc": "عضو لجنة تحكيم المشاريع الحرفية المشاركة في مسرعة أبعاد للأعمال الحرفية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Project Judging Committee Member",
+      "subtitle": "Abaad Accelerator",
+      "period": "2023",
+      "desc": "Member of the committee judging the craft projects participating in the Abaad accelerator for craft businesses."
+    }
   },
   {
     "id": "b027",
@@ -287,7 +458,13 @@
     "logo": "/img/uploads/screenshot-2026-10-25-at-2-01--mvnpwlzb.webp",
     "period": "مارس 2025",
     "desc": "مرشد المشاركين (Mentor)",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Participant Mentor, Volathon Challenge",
+      "subtitle": "Saudi Aramco in cooperation with Alfozan Academy",
+      "period": "Mar 2025",
+      "desc": "Participant mentor."
+    }
   },
   {
     "id": "b030",
@@ -297,7 +474,13 @@
     "logo": "/img/uploads/gflboaywmaa06m-mvnpyfa6.webp",
     "period": "أبريل 2024 - الآن",
     "desc": "تقديم خدمة الإرشاد المهني الفردي ضمن برنامج الإرشاد المهني (3 جلسات إرشادية للمستفيد في كل دفعة).",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "One-on-One Career Mentor, Impact Makers Program",
+      "subtitle": "Career Guidance Association (Athar)",
+      "period": "Apr 2024 – Present",
+      "desc": "Providing one-on-one career mentoring within the Career Mentoring Program (3 mentoring sessions per beneficiary in each cohort)."
+    }
   },
   {
     "id": "b032",
@@ -307,7 +490,13 @@
     "logo": "/img/partners/l09.webp",
     "period": "سبتمبر 2024 – مارس 2026",
     "desc": "موجّه ومقيّم للمشاريع والفرق في أربع نسخ من معسكر Tech Founders Bootcamp (أربع دفعات لكل نسخة)",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Trainer, Mentor & Project Judge, Tech Founders Accelerator",
+      "subtitle": "Digital Entrepreneurship Center (CODE) and the Ministry of Communications and Information Technology",
+      "period": "Sep 2024 – Mar 2026",
+      "desc": "Guide and evaluator of projects and teams in four editions of the Tech Founders Bootcamp (four cohorts per edition)."
+    }
   },
   {
     "id": "b026",
@@ -318,7 +507,14 @@
     "period": "نسخة عام 2025",
     "desc": "مدرب أعمال ومرشد المشاركين (Mentor) في مسار الحرفيّين والمبدعين، مسؤول عن العمل بشكل وثيق مع المشاريع الناشئة لضمان تحقيقها تقدماً ملموساً طوال فترة البرنامج.",
     "link": "",
-    "details": "مسؤول عن العمل بشكل وثيق مع المشاريع الناشئة لضمان تحقيقها تقدماً ملموساً طوال فترة البرنامج.\nالأدوار والمسؤوليات:\n- تقديم استشارات استراتيجية حول تطوير المنتجات، والتسعير، واكتساب العملاء، وتحديد التموضع في السوق.\n- متابعة مؤشرات الأداء الرئيسية (KPIs) وضمان تحقيقها من خلال المتابعة المستمرة والدعم الموجه.\n- تقديم جلسات توجيه فردية أسبوعية لمعالجة التحديات التشغيلية وتسريع وتيرة النمو.\n- بناء شبكات علاقات والاستفادة منها لتسهيل عقد شراكات بين الشركات الناشئة والمستثمرين المحتملين أو الجهات المتعاونة.\n- إعداد تقارير دورية أسبوعية شاملة حول التقدم المحرز، مع تسليط الضوء على الإنجازات والتحديات والخطوات المستقبلية.\n- تنظيم اجتماعات دورية أسبوعية (لقاءات موجزة) لتعزيز روح التعاون ودعم مجتمع الشركات الناشئة.\n- تعزيز مبدأ المساءلة من خلال المراجعة الدورية لأداء الشركات الناشئة وتقديم حلول مخصصة تلبي احتياجاتها."
+    "details": "مسؤول عن العمل بشكل وثيق مع المشاريع الناشئة لضمان تحقيقها تقدماً ملموساً طوال فترة البرنامج.\nالأدوار والمسؤوليات:\n- تقديم استشارات استراتيجية حول تطوير المنتجات، والتسعير، واكتساب العملاء، وتحديد التموضع في السوق.\n- متابعة مؤشرات الأداء الرئيسية (KPIs) وضمان تحقيقها من خلال المتابعة المستمرة والدعم الموجه.\n- تقديم جلسات توجيه فردية أسبوعية لمعالجة التحديات التشغيلية وتسريع وتيرة النمو.\n- بناء شبكات علاقات والاستفادة منها لتسهيل عقد شراكات بين الشركات الناشئة والمستثمرين المحتملين أو الجهات المتعاونة.\n- إعداد تقارير دورية أسبوعية شاملة حول التقدم المحرز، مع تسليط الضوء على الإنجازات والتحديات والخطوات المستقبلية.\n- تنظيم اجتماعات دورية أسبوعية (لقاءات موجزة) لتعزيز روح التعاون ودعم مجتمع الشركات الناشئة.\n- تعزيز مبدأ المساءلة من خلال المراجعة الدورية لأداء الشركات الناشئة وتقديم حلول مخصصة تلبي احتياجاتها.",
+    "en": {
+      "title": "Trainer, Mentor & Track Supervisor (Artisans & Creatives), NEOM 7 Senses Accelerator",
+      "subtitle": "NEOM",
+      "period": "2025 edition",
+      "desc": "Business trainer and participant mentor in the Artisans & Creatives track, responsible for working closely with startups to ensure tangible progress throughout the program.",
+      "details": "Responsible for working closely with startups to ensure tangible progress throughout the program.\nRoles and responsibilities:\n- Providing strategic advice on product development, pricing, customer acquisition and market positioning.\n- Tracking key performance indicators (KPIs) and ensuring they are met through continuous follow-up and targeted support.\n- Holding weekly one-on-one coaching sessions to address operational challenges and accelerate growth.\n- Building relationship networks and leveraging them to facilitate partnerships between startups and potential investors or collaborating entities.\n- Preparing comprehensive weekly progress reports highlighting achievements, challenges and next steps.\n- Organizing regular weekly meetings (brief check-ins) to strengthen collaboration and support the startup community.\n- Reinforcing accountability through regular review of startups' performance and providing tailored solutions that meet their needs."
+    }
   },
   {
     "id": "b029",
@@ -329,7 +525,14 @@
     "period": "يوليو 2025",
     "desc": "انضممت إلى برنامج \"10X Leaders\" بصفتي موجِّهاً (Mentor) من قِبل \"مجلس تأثير الشباب\" (Youth Impact Council) التابع لمجتمع \"مسك\" (Misk Community)، وذلك لمشاركة خبراتي ورؤاي مع المشاركين من قطاع المنظمات غير الربحية.",
     "link": "",
-    "details": "انضممت إلى برنامج \"10X Leaders\" بصفتي موجِّهاً (Mentor) من قِبل \"مجلس تأثير الشباب\" (Youth Impact Council) التابع لمجتمع \"مسك\" (Misk Community)، وذلك لمشاركة خبراتي ورؤاي مع المشاركين من قطاع المنظمات غير الربحية.\nدور الموجه:\nالجلسة الأولى\n▪ التحقق من تحديد التحديات.\n▪ التحقق من الأفكار الأولية، وتقديم رؤى حول القطاع ومشورة استراتيجية.\nالجلسة الثانية\n▪ مراجعة تصميم الحلول وتقديم الملاحظات.\n▪ التأكد من أن الحلول تلبي الاحتياجات الفعلية في سوق المنظمات غير الربحية.\nالجلسة الثالثة\n▪ تقديم المشورة بشأن التدرب على العرض النهائي وتوفير الملاحظات.\n▪ تقديم المشورة حول وثائق المشروع النهائية قبل تسليمها."
+    "details": "انضممت إلى برنامج \"10X Leaders\" بصفتي موجِّهاً (Mentor) من قِبل \"مجلس تأثير الشباب\" (Youth Impact Council) التابع لمجتمع \"مسك\" (Misk Community)، وذلك لمشاركة خبراتي ورؤاي مع المشاركين من قطاع المنظمات غير الربحية.\nدور الموجه:\nالجلسة الأولى\n▪ التحقق من تحديد التحديات.\n▪ التحقق من الأفكار الأولية، وتقديم رؤى حول القطاع ومشورة استراتيجية.\nالجلسة الثانية\n▪ مراجعة تصميم الحلول وتقديم الملاحظات.\n▪ التأكد من أن الحلول تلبي الاحتياجات الفعلية في سوق المنظمات غير الربحية.\nالجلسة الثالثة\n▪ تقديم المشورة بشأن التدرب على العرض النهائي وتوفير الملاحظات.\n▪ تقديم المشورة حول وثائق المشروع النهائية قبل تسليمها.",
+    "en": {
+      "title": "Participant Mentor, 10X Leaders Program",
+      "subtitle": "Mohammed bin Salman Foundation (Misk)",
+      "period": "Jul 2025",
+      "desc": "I joined the \"10X Leaders\" program as a mentor, nominated by the Youth Impact Council of the Misk Community, to share my experience and insights with participants from the non-profit sector.",
+      "details": "I joined the \"10X Leaders\" program as a mentor, nominated by the Youth Impact Council of the Misk Community, to share my experience and insights with participants from the non-profit sector.\nMentor's role:\nFirst session\n▪ Validating the definition of challenges.\n▪ Validating initial ideas and providing sector insights and strategic advice.\nSecond session\n▪ Reviewing solution designs and giving feedback.\n▪ Ensuring the solutions meet real needs in the non-profit market.\nThird session\n▪ Advising on rehearsing the final presentation and providing feedback.\n▪ Advising on the final project documents before submission."
+    }
   },
   {
     "id": "b033",
@@ -339,7 +542,13 @@
     "logo": "/img/uploads/screenshot-2026-10-26-at-12-53-mvod6y55.webp",
     "period": "أبريل 2026",
     "desc": "مدرب ومرشد المشاركين (Mentor) في هاكاثون المدن الذكية الذي تقيمه كلية الموسى الصحية ضمن فعاليات الشرقية تبدع. لتطوير حلول مبتكرة باستخدام الذكاء الاصطناعي في مجالات: التعليم • الصحة • خدمة المجتمع",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Trainer & Participant Mentor, Smart Cities Hackathon",
+      "subtitle": "Al-Mousa Health Academy, within the Sharqia Creates Festival",
+      "period": "Apr 2026",
+      "desc": "Trainer and participant mentor (Mentor) at the Smart Cities Hackathon hosted by Al-Mousa College of Health Sciences within Sharqia Creates, to develop innovative AI-powered solutions in education, health and community service."
+    }
   },
   {
     "id": "b034",
@@ -349,7 +558,12 @@
     "logo": "/img/partners/l05.webp",
     "period": "",
     "desc": "مدرب ومرشد لدعم المشاريع الصغيرة المشاركة في برنامج تجسير من بنك التنمية الاجتماعية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Tajseer Program",
+      "subtitle": "Social Development Bank, Productive Families",
+      "desc": "Trainer and mentor supporting the small businesses participating in the Social Development Bank's Tajseer program."
+    }
   },
   {
     "id": "b035",
@@ -359,7 +573,13 @@
     "logo": "/img/partners/l03.webp",
     "period": "نوفمبر 2024",
     "desc": "مطوّر أعمال ومرشد ومدرب للمشاريع الناشئة المشاركة في برنامج «رواد السياحة»، برعاية وزارة السياحة والتعاون مع شركة بياك.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Tourism Pioneers Hackathon",
+      "subtitle": "Ministry of Tourism",
+      "period": "Nov 2024",
+      "desc": "Business developer, mentor and trainer for the startups participating in the \"Tourism Pioneers\" program, sponsored by the Ministry of Tourism in cooperation with Biac."
+    }
   },
   {
     "id": "b036",
@@ -369,7 +589,13 @@
     "logo": "/img/partners/l05.webp",
     "period": "أغسطس 2026",
     "desc": "مدرب ومرشد المشاركين (Mentor) في جادة-ثون ،  سلسلة هاكاثونات قصيرة ينظمها بنك التنمية الاجتماعية عبر مراكز «جادة 30» في مدن مختلفة، يرتبط كلٌّ منها بتحديات محلية مثل تجربة الزائر في مكة المكرمة أو التمويل التنموي، وأُقيم عدد منها في ٢٠٢٦.\n\n",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Jadah-thon Hackathon",
+      "subtitle": "Jadah 30 in Dammam, Social Development Bank",
+      "period": "Aug 2026",
+      "desc": "Trainer and participant mentor (Mentor) at Jadah-thon, a series of short hackathons organized by the Social Development Bank through its \"Jadah 30\" centers in different cities, each tied to local challenges such as the visitor experience in Makkah or development finance; several were held in 2026."
+    }
   },
   {
     "id": "b037",
@@ -379,7 +605,12 @@
     "logo": "/img/partners/l78.webp",
     "period": "",
     "desc": "مرشد المشاركين في ستارت سمارت السعودية  المتخصصة في تمكين رواد الأعمال والشركات الناشئة وتعزيز منظومة الابتكار في المملكة العربية السعودية. بدعم من مؤسسة مجتمع جميل السعودية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Participant Mentor, Start Smart Program",
+      "subtitle": "Abdul Latif Jameel Community Services (Jameel Community)",
+      "desc": "Participant mentor at Start Smart Saudi Arabia, which specializes in empowering entrepreneurs and startups and strengthening the innovation ecosystem in the Kingdom of Saudi Arabia, supported by the Jameel Community Saudi Arabia foundation."
+    }
   },
   {
     "id": "b038",
@@ -389,7 +620,13 @@
     "logo": "/img/partners/l25.webp",
     "period": "2022",
     "desc": "الفائز ضمن أفضل 10 برامج على مستوى المشاركين من العالم العربي في النسخة الثانية من «بودكاست الشباب العربي» برعاية مركز الشباب العربي في أبوظبي. يوعّي البرنامج الشباب بمهارات القرن الحادي والعشرين: المهارات التقنية وتطبيقاتها في التجارة الإلكترونية والعمل الحر والتسويق الرقمي والتعليم الإلكتروني والعلامة الشخصية.",
-    "link": "https://linktr.ee/podcaste"
+    "link": "https://linktr.ee/podcaste",
+    "en": {
+      "title": "Best Podcast Program",
+      "subtitle": "My Podcast | PodcastE",
+      "period": "2022",
+      "desc": "Winner among the top 10 programs from participants across the Arab world in the second edition of the \"Arab Youth Podcast\", sponsored by the Arab Youth Center in Abu Dhabi. The program raises young people's awareness of 21st-century skills: technical skills and their applications in e-commerce, freelancing, digital marketing, e-learning and personal branding."
+    }
   },
   {
     "id": "b039",
@@ -399,7 +636,13 @@
     "logo": "/img/bio/mckinsey.webp",
     "period": "2021، 2022، 2023",
     "desc": "ضمن أعلى 10 مؤثرين على مستوى الشرق الأوسط في استقطاب المتدربين إلى برنامج Forward من ماكنزي، لثلاث سنوات متتالية. الرحلة التعليمية المجانية عبر الإنترنت مدتها خمسة أشهر وتزود المواهب الشابة بمهارات القيادة والأعمال والمهارات الرقمية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Top Referrals for the Forward Program",
+      "subtitle": "McKinsey",
+      "period": "2021, 2022, 2023",
+      "desc": "Among the top 10 influencers in the Middle East in attracting trainees to McKinsey's Forward program, for three consecutive years. The free five-month online learning journey equips young talent with leadership, business and digital skills."
+    }
   },
   {
     "id": "b040",
@@ -409,7 +652,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "2018 إلى 2021",
     "desc": "كمشرف تعليمي على طلاب التسويق الرقمي، تحققت أعلى نسب تخرج للمتدربين بين جميع برامج الشراكة، لأربع سنوات متتالية، بمتابعة أسبوعية وتواصل يومي ودعم في المشاريع التطبيقية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Highest Trainee Graduation Rates",
+      "subtitle": "Misk × Udacity",
+      "period": "2018 – 2021",
+      "desc": "As academic supervisor of digital marketing students, achieved the highest trainee graduation rates among all partnership programs for four consecutive years, through weekly follow-up, daily communication and support on applied projects."
+    }
   },
   {
     "id": "b041",
@@ -419,7 +668,13 @@
     "logo": "/img/bio/alanoud.webp",
     "period": "2021",
     "desc": "تسلّمه في الحفل السنوي لتكريم المتطوعين بحضور الأمين العام للمؤسسة الدكتور يوسف الخزيم.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Volunteer Excellence Medal",
+      "subtitle": "Princess Al-Anoud Foundation",
+      "period": "2021",
+      "desc": "Received at the annual volunteers' appreciation ceremony in the presence of the Foundation's Secretary-General, Dr. Yousef Al-Khuzaim."
+    }
   },
   {
     "id": "b042",
@@ -429,7 +684,12 @@
     "logo": "",
     "period": "",
     "desc": "دورة «العمل الحر عبر الإنترنت» التي أعدّها وسجّلها حققت الأعلى مبيعاً بين دورات المنصة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Best-Selling Course",
+      "subtitle": "Aqdim Platform",
+      "desc": "The \"Online Freelancing\" course I prepared and recorded achieved the highest sales among the platform's courses."
+    }
   },
   {
     "id": "b043",
@@ -439,7 +699,12 @@
     "logo": "/img/partners/l51.webp",
     "period": "",
     "desc": "دورة «التجارة الإلكترونية» التي أعدّها وسجّلها حققت الأعلى مبيعاً بين دورات المنصة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Best-Selling Course",
+      "subtitle": "eYouth Platform",
+      "desc": "The \"E-Commerce\" course I prepared and recorded achieved the highest sales among the platform's courses."
+    }
   },
   {
     "id": "b044",
@@ -449,7 +714,12 @@
     "logo": "/img/bio/bahr.webp",
     "period": "نوفمبر 2018",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Best Freelancer on the Bahr Platform",
+      "subtitle": "Human Resources Development Fund (HRDF)",
+      "period": "Nov 2018"
+    }
   },
   {
     "id": "b125",
@@ -459,7 +729,13 @@
     "logo": "/img/bio/noon.webp",
     "period": "ديسمبر 2019",
     "desc": "الإعلان عن اختياري «بانديدو اليوم» لدى نون في أكبر موسم مبيعات سنوي «الجمعة الصفراء».",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Hero of the Day",
+      "subtitle": "Noon",
+      "period": "Dec 2019",
+      "desc": "Announced as Noon's \"Bandido of the Day\" during the largest annual sales season, \"Yellow Friday\"."
+    }
   },
   {
     "id": "b126",
@@ -469,7 +745,13 @@
     "logo": "/img/bio/fullbridge.webp",
     "period": "2019 و2020",
     "desc": "الحصول على الشهادة الماسية تقديراً لجهود الإرشاد في دعم برنامج مسك–فلبريدج، مرتين.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Diamond Mentor Certificate",
+      "subtitle": "Misk × Fullbridge",
+      "period": "2019 & 2020",
+      "desc": "Earned the Diamond certificate, twice, in recognition of mentoring efforts supporting the Misk–Fullbridge program."
+    }
   },
   {
     "id": "b045",
@@ -479,7 +761,12 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "خريج الدفعة الثانية. برنامج لتمكين نخبة من القيادات السعودية الواعدة الراغبة في مضاعفة تأثيرها وتسريع مسيرتها المهنية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Saudi 10X Leaders",
+      "subtitle": "Mohammed bin Salman Foundation (Misk) in cooperation with PwC Academy",
+      "desc": "Second cohort graduate. A program to empower an elite group of promising Saudi leaders seeking to multiply their impact and accelerate their careers."
+    }
   },
   {
     "id": "b046",
@@ -489,7 +776,13 @@
     "logo": "/img/bio/arabmeet.webp",
     "period": "2023",
     "desc": "بترشيح من مسك ومركز الشباب العربي، مشارك في النسخة الثانية، بحضور وزراء الشباب في عدة دول عربية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Arab Young Leaders Meeting",
+      "subtitle": "World Government Summit, Dubai",
+      "period": "2023",
+      "desc": "Nominated by Misk and the Arab Youth Center; participant in the second edition, attended by youth ministers from several Arab countries."
+    }
   },
   {
     "id": "b047",
@@ -499,7 +792,13 @@
     "logo": "/img/bio/undp.webp",
     "period": "أغسطس 2021 – نوفمبر 2021",
     "desc": "خريج الدفعة الخامسة. برنامج مكثف مدته ثلاثة أشهر لتنمية المهارات القيادية لصناع التغيير الشباب العاملين على أهداف التنمية المستدامة 2030.",
-    "link": "https://unite2030.com"
+    "link": "https://unite2030.com",
+    "en": {
+      "title": "Youth Delegates Program",
+      "subtitle": "Unite 2030, New York, in cooperation with the United Nations",
+      "period": "Aug 2021 – Nov 2021",
+      "desc": "Fifth cohort graduate. An intensive three-month program developing the leadership skills of young change-makers working on the 2030 Sustainable Development Goals."
+    }
   },
   {
     "id": "b048",
@@ -509,7 +808,13 @@
     "logo": "/img/bio/cranfield.webp",
     "period": "2020",
     "desc": "خريج الدفعة السادسة بترشيح ودعم من هدف. يعدّ قيادات المستقبل الوطنية من منسوبي القطاع الخاص.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "HRDF iLEAD Leadership Academy",
+      "subtitle": "Human Resources Development Fund (HRDF) in partnership with the UK's Cranfield School of Management",
+      "period": "2020",
+      "desc": "Sixth cohort graduate, nominated and supported by HRDF. Prepares the nation's future leaders from the private sector."
+    }
   },
   {
     "id": "b049",
@@ -519,7 +824,13 @@
     "logo": "/img/partners/l77.webp",
     "period": "2021",
     "desc": "خريج الدفعة الأولى. يزود العاملين مع الشباب بالمعارف والمهارات الأساسية للعمل مع الشباب بصورة احترافية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Empowering Youth Workers",
+      "subtitle": "Shabab Mojtamaai Endowment",
+      "period": "2021",
+      "desc": "First cohort graduate. Equips youth workers with the essential knowledge and skills to work with young people professionally."
+    }
   },
   {
     "id": "b050",
@@ -529,7 +840,13 @@
     "logo": "/img/bio/nelc.webp",
     "period": "2021",
     "desc": "معسكر 4 أيام (20 ساعة) لابتكار حلول لتحسين خدمات التعلم الإلكتروني في المملكة، ينتهي بمشروع قابل للتنفيذ. برعاية المركز الوطني للتعليم الإلكتروني.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Innovation in E-Learning",
+      "subtitle": "National eLearning Center",
+      "period": "2021",
+      "desc": "A 4-day (20-hour) bootcamp to innovate solutions that improve e-learning services in the Kingdom, ending with an actionable project. Sponsored by the National eLearning Center."
+    }
   },
   {
     "id": "b051",
@@ -540,7 +857,14 @@
     "period": "2021",
     "desc": "رحلة تعلم 6 أشهر في المستويين التأسيسي والمتقدم على المهارات العملية والتفكير المنظم والإبداعي.",
     "details": "- المستوى التأسيسي (2021) والمستوى المتقدم (2022).\n- رحلة تعلّم من ستة أشهر تحوّل التحديات المعقدة في الأعمال إلى فرص بالتفكير المنظم والإبداعي، من تقديم ماكنزي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "McKinsey Forward Program",
+      "subtitle": "McKinsey",
+      "period": "2021",
+      "desc": "A 6-month learning journey in the foundation and advanced levels on practical skills and structured, creative thinking.",
+      "details": "- Foundation level (2021) and advanced level (2022).\n- A six-month learning journey that turns complex business challenges into opportunities through structured and creative thinking, delivered by McKinsey."
+    }
   },
   {
     "id": "b052",
@@ -551,7 +875,14 @@
     "period": "2021",
     "desc": "4 أسابيع من التدريب والاستشارات لابتكار مبادرة تعالج ضعف جاهزية الشباب لسوق العمل. برعاية مؤسسة الأميرة العنود الخيرية (مركز وارف للشباب).",
     "details": "- تحدينا: معالجة ضعف جاهزية الشباب لسوق العمل.\n- ينتهي المعسكر بمشروع قابل للتنفيذ.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Social Innovation Lab",
+      "subtitle": "Princess Al-Anoud Foundation (Warf Youth Center)",
+      "period": "2021",
+      "desc": "4 weeks of training and consulting to innovate an initiative addressing young people's weak readiness for the job market. Sponsored by the Princess Al-Anoud Foundation (Warf Youth Center).",
+      "details": "- Our challenge: addressing young people's weak readiness for the job market.\n- The bootcamp ends with an actionable project."
+    }
   },
   {
     "id": "b053",
@@ -561,7 +892,13 @@
     "logo": "/img/partners/l04.webp",
     "period": "2022",
     "desc": "6 أيام (30 ساعة) لتأسيس مشروع اجتماعي ذي أثر، برعاية منشآت.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Social Entrepreneurship",
+      "subtitle": "Monsha'at",
+      "period": "2022",
+      "desc": "6 days (30 hours) to launch an impactful social project, sponsored by Monsha'at."
+    }
   },
   {
     "id": "b054",
@@ -572,7 +909,14 @@
     "period": "2022",
     "desc": "3 أيام (25 ساعة) محاكاة لحالة حقيقية، برعاية مجلس شباب المنطقة الشرقية.",
     "details": "- محاكاة لحالة حقيقية لاختبار الكفاءات وصقل المهارات والتعرّض لمواقف واقعية قد تواجه الرؤساء التنفيذيين.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "CEO Training",
+      "subtitle": "Eastern Province Youth Council",
+      "period": "2022",
+      "desc": "3 days (25 hours) simulating a real case, sponsored by the Eastern Province Youth Council.",
+      "details": "- A simulation of a real case to test competencies, sharpen skills and face realistic situations that CEOs may encounter."
+    }
   },
   {
     "id": "b055",
@@ -583,7 +927,14 @@
     "period": "2022",
     "desc": "10 أيام نظرية (50 ساعة) وشهر عملي (20 جلسة) حول منهجية اتخاذ القرار.",
     "details": "- تهدف المنهجية إلى مساعدة الشباب، وهم المستفيد النهائي، على اتخاذ أهم قراراتهم باتباع أسلوب مهني منظم.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "ACIP Decision-Making Methodology for Youth",
+      "subtitle": "Bena Group",
+      "period": "2022",
+      "desc": "10 theoretical days (50 hours) and a practical month (20 sessions) on a decision-making methodology.",
+      "details": "- The methodology aims to help young people, the ultimate beneficiaries, make their most important decisions using an organized, professional approach."
+    }
   },
   {
     "id": "b056",
@@ -594,7 +945,14 @@
     "period": "2022",
     "desc": "10 أسابيع من التدريب النظري والعملي على إطلاق المشاريع التجارية، برعاية مسك، ينتهي بمشروع.",
     "details": "- العمل على مشروعي (مايل إكس أكاديمي) وفق متطلبات التخرج، ضمن النسخة الثانية من البرنامج.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Misk Launch",
+      "subtitle": "Misk",
+      "period": "2022",
+      "desc": "10 weeks of theoretical and practical training on launching business ventures, sponsored by Misk, ending with a project.",
+      "details": "- Working on my project (Mile X Academy) to meet graduation requirements, in the second edition of the program."
+    }
   },
   {
     "id": "b057",
@@ -604,7 +962,13 @@
     "logo": "/img/bio/taqat.webp",
     "period": "2022",
     "desc": "3 أيام حول أفضل الممارسات لإنشاء المبادرات الموجهة للشباب.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Designing Youth Initiatives",
+      "subtitle": "Taqat Al-Shabab",
+      "period": "2022",
+      "desc": "3 days on best practices for creating youth-oriented initiatives."
+    }
   },
   {
     "id": "b058",
@@ -615,7 +979,14 @@
     "period": "2022",
     "desc": "5 أيام (30 ساعة) برعاية أكاديمية منشآت لتدريب المرشدين المعتمدين في مراكز دعم المنشآت.",
     "details": "- قدّمه الدكتور محمد العمري، خبير تدريب المدربين لأكثر من 20 عاماً.\n- معسكر حضوري شامل برعاية منشآت.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Training of Trainers (TOT)",
+      "subtitle": "Monsha'at",
+      "period": "2022",
+      "desc": "5 days (30 hours) sponsored by the Monsha'at Academy to train certified mentors at the business support centers.",
+      "details": "- Delivered by Dr. Mohammed Al-Omari, a train-the-trainer expert with more than 20 years of experience.\n- A comprehensive in-person bootcamp sponsored by Monsha'at."
+    }
   },
   {
     "id": "b059",
@@ -626,7 +997,13 @@
     "period": "2023",
     "desc": "4 أيام من التدريب المكثف في الاستشارات التجارية والإدارية وفق منهجيات كبرى الشركات الاستشارية.",
     "details": "- أربعة أيام من التدريب المكثف على مهارات الاستشارات التجارية والإدارية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Consultant Accelerator",
+      "period": "2023",
+      "desc": "4 days of intensive training in business and management consulting following the methodologies of leading consulting firms.",
+      "details": "- Four days of intensive training in business and management consulting skills."
+    }
   },
   {
     "id": "b127",
@@ -636,7 +1013,13 @@
     "logo": "/img/partners/l25.webp",
     "period": "2022",
     "desc": "شهران من التدريب على إطلاق بودكاست. اختير ضمن أفضل 100 متقدم للمرحلة التأسيسية الأولى، ثم ضمن أفضل 30 للمرحلة المتقدمة، ثم ضمن أفضل 10 في قائمة الشرف (أفضل 10 برامج بودكاست في النسخة الثانية من البرنامج).",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Arab Youth Podcast Training",
+      "subtitle": "Arab Youth Center, UAE",
+      "period": "2022",
+      "desc": "Two months of training on launching a podcast. Selected among the top 100 applicants for the first foundation stage, then among the top 30 for the advanced stage, then among the top 10 on the honor list (the top 10 podcast programs in the second edition of the program)."
+    }
   },
   {
     "id": "b060",
@@ -646,7 +1029,13 @@
     "logo": "/img/partners/l04.webp",
     "period": "فبراير 2020 إلى الآن",
     "desc": "مناقشة أسئلة المستفيدين ومساعدتهم في حل التحديات ودعم اتخاذ القرار.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Mentor",
+      "subtitle": "Business Support Center, Monsha'at (Small and Medium Enterprises General Authority)",
+      "period": "Feb 2020 – Present",
+      "desc": "Answering beneficiaries' questions, helping them solve challenges and supporting decision-making."
+    }
   },
   {
     "id": "b061",
@@ -656,7 +1045,13 @@
     "logo": "",
     "period": "مايو 2020 إلى يناير 2022",
     "desc": "مساعدة الشباب على الاستعداد والتسجيل في البرامج الوطنية لتنمية الشباب.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Youth Development Programs Advisor",
+      "subtitle": "Maseera Team (Maseera.org)",
+      "period": "May 2020 – Jan 2022",
+      "desc": "Helping young people prepare for and register in national youth development programs."
+    }
   },
   {
     "id": "b062",
@@ -666,7 +1061,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "أكتوبر 2019 إلى ديسمبر 2021",
     "desc": "دعم المتدربين وإبقاؤهم متفاعلين حتى التخرج.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Community Moderator",
+      "subtitle": "Future Track Program, Misk and Fullbridge Platform",
+      "period": "Oct 2019 – Dec 2021",
+      "desc": "Supporting trainees and keeping them engaged through graduation."
+    }
   },
   {
     "id": "b063",
@@ -676,7 +1077,12 @@
     "logo": "",
     "period": "مارس 2020",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Youth Programs Developer",
+      "subtitle": "Princess Al-Anoud Foundation",
+      "period": "Mar 2020"
+    }
   },
   {
     "id": "b064",
@@ -686,7 +1092,13 @@
     "logo": "",
     "period": "مارس 2021 إلى ديسمبر 2022",
     "desc": "عضو فريق كتابة المحتوى لجميع المنشورات.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Content Writer",
+      "subtitle": "Seen Charitable Foundation",
+      "period": "Mar 2021 – Dec 2022",
+      "desc": "Member of the content writing team for all publications."
+    }
   },
   {
     "id": "b081",
@@ -696,7 +1108,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": "https://hub.misk.org.sa/ar/insights/author/hussain-al-hajji/"
+    "link": "https://hub.misk.org.sa/ar/insights/author/hussain-al-hajji/",
+    "en": {
+      "title": "Misk Place",
+      "subtitle": "Mohammed bin Salman Foundation (Misk)"
+    }
   },
   {
     "id": "b082",
@@ -706,7 +1122,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": "https://hbrarabic.com/%D8%B4%D8%AE%D8%B5%D9%8A%D8%A7%D8%AA/%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A/"
+    "link": "https://hbrarabic.com/%D8%B4%D8%AE%D8%B5%D9%8A%D8%A7%D8%AA/%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A/",
+    "en": {
+      "title": "Harvard Business Review Arabia"
+    }
   },
   {
     "id": "b083",
@@ -716,7 +1135,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": "https://technologyreview.ae/%D8%B4%D8%AE%D8%B5%D9%8A%D8%A7%D8%AA/%d8%ad%d8%b3%d9%8a%d9%86-%d8%a7%d9%84%d8%ad%d8%a7%d8%ac%d9%8a/"
+    "link": "https://technologyreview.ae/%D8%B4%D8%AE%D8%B5%D9%8A%D8%A7%D8%AA/%d8%ad%d8%b3%d9%8a%d9%86-%d8%a7%d9%84%d8%ad%d8%a7%d8%ac%d9%8a/",
+    "en": {
+      "title": "MIT Technology Review Arabia"
+    }
   },
   {
     "id": "b084",
@@ -726,7 +1148,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": "https://fortunearabia.com/%D9%83%D8%A7%D8%AA%D8%A8/%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A"
+    "link": "https://fortunearabia.com/%D9%83%D8%A7%D8%AA%D8%A8/%D8%AD%D8%B3%D9%8A%D9%86-%D8%A7%D9%84%D8%AD%D8%A7%D8%AC%D9%8A",
+    "en": {
+      "title": "Fortune Arabia"
+    }
   },
   {
     "id": "b085",
@@ -737,7 +1162,12 @@
     "period": "",
     "desc": "",
     "details": "- المدة: 6 أشهر (2021).\n- المحاور: الأساسيات، والبدء، والتخطيط، والتنفيذ، والمنهجيات الرشيقة (Agile)، ومشروع ختامي لتطبيق إدارة المشاريع في الواقع العملي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Google Project Management Professional Program",
+      "subtitle": "Google Courses",
+      "details": "- Duration: 6 months (2021).\n- Topics: fundamentals, initiation, planning, execution, Agile methodologies, and a capstone project applying project management in practice."
+    }
   },
   {
     "id": "b086",
@@ -747,7 +1177,11 @@
     "logo": "/img/partners/l19.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Google Digital Marketing Skills Program",
+      "subtitle": "Google Courses"
+    }
   },
   {
     "id": "b087",
@@ -757,7 +1191,11 @@
     "logo": "/img/partners/l19.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Google Certified Educator Program (Level 1 and Level 2)",
+      "subtitle": "Google Courses"
+    }
   },
   {
     "id": "b088",
@@ -767,7 +1205,11 @@
     "logo": "/img/partners/l19.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Google Certified Trainer Program",
+      "subtitle": "Google Courses"
+    }
   },
   {
     "id": "b089",
@@ -778,7 +1220,12 @@
     "period": "",
     "desc": "",
     "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2018.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Digital Marketing (Misk & Udacity)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Nanodegree, 4 months, project-based, 2018."
+    }
   },
   {
     "id": "b090",
@@ -789,7 +1236,12 @@
     "period": "",
     "desc": "",
     "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2019.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Business Analytics (Misk & Udacity)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Nanodegree, 4 months, project-based, 2019."
+    }
   },
   {
     "id": "b091",
@@ -800,7 +1252,12 @@
     "period": "",
     "desc": "",
     "details": "- درجة النانو (Nanodegree)، 4 أشهر، قائمة على المشاريع، 2019.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Predictive Analytics (Misk & Udacity)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Nanodegree, 4 months, project-based, 2019."
+    }
   },
   {
     "id": "b092",
@@ -810,7 +1267,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Future Makers Program (Misk & Udacity)",
+      "subtitle": "Misk Courses & Programs"
+    }
   },
   {
     "id": "b093",
@@ -821,7 +1282,12 @@
     "period": "",
     "desc": "",
     "details": "- مسار تخصصي من 4 مقررات خلال 4 أشهر، 2020.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Six Sigma Yellow Belt (Misk & Coursera)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- A specialization of 4 courses over 4 months, 2020."
+    }
   },
   {
     "id": "b094",
@@ -832,7 +1298,12 @@
     "period": "",
     "desc": "",
     "details": "- مسار تخصصي من 4 مقررات خلال 4 أشهر، 2020.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Leading Work in the Modern Era (Misk & Coursera)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- A specialization of 4 courses over 4 months, 2020."
+    }
   },
   {
     "id": "b095",
@@ -843,7 +1314,12 @@
     "period": "",
     "desc": "",
     "details": "- 6 أسابيع من التدريب المكثف القائم على المشاريع في ريادة الأعمال بالشراكة مع نيوم، 2020.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Spark Program (Misk & NEOM)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- 6 weeks of intensive, project-based entrepreneurship training in partnership with NEOM, 2020."
+    }
   },
   {
     "id": "b096",
@@ -854,7 +1330,12 @@
     "period": "",
     "desc": "",
     "details": "- استضافه مكتب بلومبيرغ في دبي، 2019.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Financial Journalism (Misk & Bloomberg)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Hosted by Bloomberg's Dubai office, 2019."
+    }
   },
   {
     "id": "b097",
@@ -865,7 +1346,12 @@
     "period": "",
     "desc": "",
     "details": "- دورة مكثفة في التسويق الرقمي، 2019.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Digital Marketing (Misk & General Assembly)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- An intensive digital marketing course, 2019."
+    }
   },
   {
     "id": "b098",
@@ -876,7 +1362,12 @@
     "period": "",
     "desc": "",
     "details": "- تدريب إلكتروني على مهارات الجاهزية الوظيفية، 2019.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Path to the Future (Misk & Fullbridge)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Online training in job-readiness skills, 2019."
+    }
   },
   {
     "id": "b099",
@@ -886,7 +1377,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Virtual Work Experience Program (Misk)",
+      "subtitle": "Misk Courses & Programs"
+    }
   },
   {
     "id": "b100",
@@ -897,7 +1392,12 @@
     "period": "",
     "desc": "",
     "details": "- مهارات الحوار والتفكير الناقد والإقناع التواصلي، 2021.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Youth Voice (Misk)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Dialogue, critical thinking and persuasive communication skills, 2021."
+    }
   },
   {
     "id": "b101",
@@ -907,7 +1407,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Saudi Leaders (Misk & PwC Academy)",
+      "subtitle": "Misk Courses & Programs"
+    }
   },
   {
     "id": "b102",
@@ -917,7 +1421,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Misk Launch (Misk & Rise Up)",
+      "subtitle": "Misk Courses & Programs"
+    }
   },
   {
     "id": "b103",
@@ -928,7 +1436,12 @@
     "period": "",
     "desc": "",
     "details": "- دورات إلكترونية قصيرة للمبتدئين في البرمجة: Python وJava وMake-Code، 2018.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Saudi Codes (Misk)",
+      "subtitle": "Misk Courses & Programs",
+      "details": "- Short online courses for beginners in programming: Python, Java and Make-Code, 2018."
+    }
   },
   {
     "id": "b104",
@@ -938,7 +1451,11 @@
     "logo": "/img/partners/l02.webp",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Youth Impact Council Annual Gathering",
+      "subtitle": "Misk Courses & Programs"
+    }
   },
   {
     "id": "b128",
@@ -948,7 +1465,13 @@
     "logo": "/img/bio/ef.webp",
     "period": "2014",
     "desc": "شهادة المستوى المتقدم في اللغة الإنجليزية عبر التدريب الإلكتروني.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Advanced English Certificate",
+      "subtitle": "EF Education First",
+      "period": "2014",
+      "desc": "Advanced-level certificate in English through online training."
+    }
   },
   {
     "id": "b129",
@@ -958,7 +1481,13 @@
     "logo": "",
     "period": "2021",
     "desc": "34 ساعة تدريبية عبر الإنترنت.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Train the Trainer (TOT)",
+      "subtitle": "Udemy",
+      "period": "2021",
+      "desc": "34 training hours online."
+    }
   },
   {
     "id": "b130",
@@ -968,7 +1497,13 @@
     "logo": "/img/bio/linkedin.webp",
     "period": "2021",
     "desc": "12 ساعة تدريبية عبر الإنترنت في أهم مهارات إدارة المشاريع، موصى بها من لينكدإن.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Project Management Skills (Become a Project Manager)",
+      "subtitle": "LinkedIn Learning",
+      "period": "2021",
+      "desc": "12 training hours online covering the most important project management skills, recommended by LinkedIn."
+    }
   },
   {
     "id": "b131",
@@ -978,7 +1513,13 @@
     "logo": "/img/bio/happiness.webp",
     "period": "2021",
     "desc": "ثلاثة أيام (12 ساعة) في إدارة السعادة في بيئة العمل وتطوير تجربة الموظف.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Certified Happiness Manager",
+      "subtitle": "Happiness Business School",
+      "period": "2021",
+      "desc": "Three days (12 hours) on managing happiness in the workplace and developing the employee experience."
+    }
   },
   {
     "id": "b132",
@@ -988,7 +1529,13 @@
     "logo": "/img/partners/l02.webp",
     "period": "2022",
     "desc": "أساسيات دعم الطلاب في اختيار مساراتهم المهنية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Discover Your Path (Teachers Track)",
+      "subtitle": "Misk",
+      "period": "2022",
+      "desc": "Fundamentals of supporting students in choosing their career paths."
+    }
   },
   {
     "id": "b105",
@@ -998,7 +1545,11 @@
     "logo": "",
     "period": "",
     "desc": "أركز على تطوير وتنمية الشباب السعودي والعربي عبر برامج ومبادرات تبني قدراتهم وكفاءاتهم المهنية والشخصية ليكونوا فاعلين في المجتمع، بالتعاون مع أكثر من 70 جهة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Youth Empowerment & Development",
+      "desc": "I focus on developing Saudi and Arab youth through programs and initiatives that build their professional and personal capabilities so they become active members of society, in collaboration with more than 70 organizations."
+    }
   },
   {
     "id": "b106",
@@ -1008,7 +1559,11 @@
     "logo": "",
     "period": "",
     "desc": "أؤمن بأن التحول الرقمي يتيح فرصاً كبيرة للشباب عبر التدريب والإرشاد في التجارة الإلكترونية والعمل الحر والتسويق الرقمي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Seizing Digital Transformation Opportunities",
+      "desc": "I believe digital transformation offers major opportunities for young people through training and mentoring in e-commerce, freelancing and digital marketing."
+    }
   },
   {
     "id": "b107",
@@ -1018,7 +1573,11 @@
     "logo": "",
     "period": "",
     "desc": "عبر صناعة المحتوى، وبالذات سلسلة الكتيبات والمقالات ونشرة «محتوى مضيء»، أسعى لتقديم محتوى عميق ومتجدد يحدث تغييراً عميقاً وأثراً فعلياً لدى الشباب.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Professional Awareness & Community Building",
+      "desc": "Through content creation, especially the booklet series, articles and the «Muhtawa Mudee» newsletter, I strive to offer deep, renewed content that makes a real and lasting difference for young people."
+    }
   },
   {
     "id": "b108",
@@ -1028,7 +1587,11 @@
     "logo": "",
     "period": "",
     "desc": "عبر المؤهلات والاعتمادات المرموقة، والمنهجية المنظمة، والمحتوى الشامل، والشراكات مع الجهات الموثوقة، والنتائج الملموسة في كل نشاط.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Professionalism & Quality",
+      "desc": "Through prestigious qualifications and credentials, a structured methodology, comprehensive content, partnerships with trusted organizations, and tangible results in every activity."
+    }
   },
   {
     "id": "b109",
@@ -1038,7 +1601,11 @@
     "logo": "",
     "period": "",
     "desc": "العناية بأكثر مهارات القرن الحادي والعشرين طلباً في سوق العمل، وتتبع الفرص المتجددة، وعكس ذلك على الحقائب التدريبية والجلسات الإرشادية والمحتوى الرقمي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Renewal & Staying Current",
+      "desc": "Attention to the most in-demand 21st-century skills in the job market and tracking emerging opportunities, reflected in training kits, mentoring sessions and digital content."
+    }
   },
   {
     "id": "b110",
@@ -1048,7 +1615,11 @@
     "logo": "",
     "period": "",
     "desc": "تحفيز الأفراد والفرق وإطلاق طاقاتهم الكامنة عبر برامج تبني الثقة الذاتية وروح المبادرة وتربط المهارات الشخصية بأهداف مهنية قابلة للتحقيق.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Empowerment-Driven Motivational Leadership",
+      "desc": "Motivating individuals and teams and unlocking their potential through programs that build self-confidence and initiative and link personal skills to achievable career goals."
+    }
   },
   {
     "id": "b111",
@@ -1058,7 +1629,11 @@
     "logo": "",
     "period": "",
     "desc": "التفاعل بكفاءة مع فئات متنوعة في خلفياتها الثقافية والمهنية، حضورياً وإلكترونياً، بأساليب تناسب السياق المحلي والإقليمي والدولي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Cultural Intelligence & Multi-Environment Communication",
+      "desc": "Engaging effectively with audiences of diverse cultural and professional backgrounds, in person and online, in ways suited to local, regional and international contexts."
+    }
   },
   {
     "id": "b112",
@@ -1068,7 +1643,11 @@
     "logo": "",
     "period": "",
     "desc": "صناعة المحتوى بأساليب غير تقليدية تدمج بين السرد القصصي والتفاعل الرقمي والأمثلة الواقعية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Innovation in Designing & Delivering Training Content",
+      "desc": "Creating content in unconventional ways that blend storytelling, digital interaction and real-world examples."
+    }
   },
   {
     "id": "b113",
@@ -1078,7 +1657,11 @@
     "logo": "",
     "period": "",
     "desc": "تصميم البرامج وتعديلها بما يوافق مستوى المشاركين واحتياجاتهم، سواء كانوا موظفين جدداً أو طلاباً أو رواد أعمال.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Flexibility & Adaptation to the Target Audience",
+      "desc": "Designing and adjusting programs to match participants' level and needs, whether they are new employees, students or entrepreneurs."
+    }
   },
   {
     "id": "b114",
@@ -1088,7 +1671,11 @@
     "logo": "",
     "period": "",
     "desc": "بناء علاقات مهنية قائمة على الثقة والتكامل مع الجهات والمؤسسات، وتطوير شراكات تركز على تمكين الفئات المستهدفة بنتائج واقعية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Building Partnerships & Creating Shared Value",
+      "desc": "Building professional relationships based on trust and complementarity with organizations and institutions, and developing partnerships focused on empowering target groups with real results."
+    }
   },
   {
     "id": "b115",
@@ -1098,7 +1685,11 @@
     "logo": "",
     "period": "",
     "desc": "نهج قائم على التقييم والتطوير المستمر للبرامج، مستفيداً من التغذية الراجعة والتحليل النوعي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Continuous Improvement & Performance Quality",
+      "desc": "An approach based on evaluation and continuous development of programs, drawing on feedback and qualitative analysis."
+    }
   },
   {
     "id": "b133",
@@ -1108,7 +1699,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Public Speaking & On-Camera Presence"
+    }
   },
   {
     "id": "b134",
@@ -1118,7 +1712,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Leadership & Project Management"
+    }
   },
   {
     "id": "b135",
@@ -1128,7 +1725,10 @@
     "logo": "",
     "period": "",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Business Development & Strategic Planning"
+    }
   },
   {
     "id": "b116",
@@ -1138,7 +1738,11 @@
     "logo": "",
     "period": "",
     "desc": "برامج تدريبية عملية تحقق أثراً ملموساً ومستداماً لدى المشاركين.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Career Empowerment & Capacity Development",
+      "desc": "Practical training programs that achieve tangible and lasting impact for participants."
+    }
   },
   {
     "id": "b117",
@@ -1148,7 +1752,11 @@
     "logo": "",
     "period": "",
     "desc": "مهارات رقمية، وتفكير تصميمي، وعمل حر، وتسويق رقمي، وتجارة إلكترونية، وعلامة شخصية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Interactive In-Person & Remote Workshops",
+      "desc": "Digital skills, design thinking, freelancing, digital marketing, e-commerce and personal branding."
+    }
   },
   {
     "id": "b118",
@@ -1158,7 +1766,11 @@
     "logo": "",
     "period": "",
     "desc": "ربط المهارات بسوق العمل وريادة الأعمال الرقمية لتطوير الكفاءات.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Training & Strategy Consulting",
+      "desc": "Linking skills to the job market and digital entrepreneurship to develop competencies."
+    }
   },
   {
     "id": "b119",
@@ -1168,7 +1780,11 @@
     "logo": "",
     "period": "",
     "desc": "للموظفين الجدد ورواد الأعمال، تدمج التجربة العملية بالتعلم النظري.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Customized Learning Journeys",
+      "desc": "For new employees and entrepreneurs, combining hands-on experience with theoretical learning."
+    }
   },
   {
     "id": "b120",
@@ -1178,7 +1794,11 @@
     "logo": "",
     "period": "",
     "desc": "تدريب وإرشاد وتحكيم الفرق في مسرّعات الأعمال الرقمية والهاكاثونات.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Accelerator Mentoring & Judging",
+      "desc": "Training, mentoring and judging teams in digital business accelerators and hackathons."
+    }
   },
   {
     "id": "b121",
@@ -1188,7 +1808,11 @@
     "logo": "",
     "period": "",
     "desc": "للبرامج والمبادرات والتقارير الرسمية للجهات الحكومية والخاصة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Professional Content Writing",
+      "desc": "For programs, initiatives and official reports for government and private organizations."
+    }
   },
   {
     "id": "b136",
@@ -1198,7 +1822,13 @@
     "logo": "/img/bio/sda.webp",
     "period": "مايو 2025",
     "desc": "عشرة أيام من التدريب الجماعي وجلسات الإرشاد المهني الفردية لطلاب معسكرات الأكاديمية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Career Development Trainer & Mentor",
+      "subtitle": "Saudi Digital Academy (SDA)",
+      "period": "May 2025",
+      "desc": "Ten days of group training and one-on-one career mentoring sessions for the academy's bootcamp students."
+    }
   },
   {
     "id": "b137",
@@ -1208,7 +1838,13 @@
     "logo": "/img/bio/deep.webp",
     "period": "مايو – أغسطس 2023",
     "desc": "اختياري مدرباً للتجارة الإلكترونية لتمكين المنشآت الصغيرة في دول آسيان من التصدير الرقمي، بشراكة بين قوقل وغرفة التجارة الدولية (ICC) ومركز التجارة الدولي (ITC).",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Trainer",
+      "subtitle": "Digital Export Enablement Program (DEEP)",
+      "period": "May – Aug 2023",
+      "desc": "Selected as an e-commerce trainer to enable small businesses in ASEAN countries to export digitally, in a partnership between Google, the International Chamber of Commerce (ICC) and the International Trade Centre (ITC)."
+    }
   },
   {
     "id": "b138",
@@ -1218,7 +1854,13 @@
     "logo": "/img/partners/l06.webp",
     "period": "يونيو 2021 – يناير 2022",
     "desc": "ورش حضورية مدتها خمس ساعات (مرتين أو ثلاثاً أسبوعياً مساءً) لتأهيل المتطوعين الصحيين التابعين لوزارة الصحة وبناء قدراتهم، وتمكين قادة التطوع من إدارة المتطوعين في القطاع الصحي.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Volunteer Qualification Trainer",
+      "subtitle": "Nomu Program, Health Volunteering (GrowthVolunteer.org)",
+      "period": "Jun 2021 – Jan 2022",
+      "desc": "Five-hour in-person workshops (two or three evenings a week) to qualify the Ministry of Health's health volunteers and build their capabilities, and to enable volunteering leaders to manage volunteers in the health sector."
+    }
   },
   {
     "id": "b139",
@@ -1228,7 +1870,13 @@
     "logo": "/img/partners/l03.webp",
     "period": "سبتمبر 2022 – يناير 2023",
     "desc": "خدمات واستشارات في تطوير الأعمال ضمن معسكر رواد السياحة، أحد مشاريع الوزارة لدعم رواد الأعمال وتحفيزهم وتحويل أفكارهم إلى أعمال رائدة تخدم قطاع السياحة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Business Development Trainer & Consultant",
+      "subtitle": "Ministry of Tourism (and Bayan BIAC)",
+      "period": "Sep 2022 – Jan 2023",
+      "desc": "Business development services and consulting within the Tourism Pioneers bootcamp, one of the Ministry's projects to support and motivate entrepreneurs and turn their ideas into pioneering businesses serving the tourism sector."
+    }
   },
   {
     "id": "b140",
@@ -1238,7 +1886,13 @@
     "logo": "/img/partners/l05.webp",
     "period": "أغسطس – سبتمبر 2022",
     "desc": "معسكر «تجسير» لتطوير المشاريع متناهية الصغر للأسر المنتجة وتحويلها إلى منشآت رسمية: تيسير محتوى المعسكر وأنشطته، ومتابعة استيفاء متطلبات إتمامه، ومساعدة المشاركين على إعداد دراسة الجدوى المطلوبة للتمويل.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Business Trainer & Mentor for Small Businesses",
+      "subtitle": "Social Development Bank (and HUED)",
+      "period": "Aug – Sep 2022",
+      "desc": "The \"Tajseer\" bootcamp for developing micro-businesses of productive families and turning them into formal enterprises: facilitating the bootcamp's content and activities, following up on completion requirements, and helping participants prepare the feasibility study required for financing."
+    }
   },
   {
     "id": "b141",
@@ -1248,7 +1902,13 @@
     "logo": "/img/partners/l04.webp",
     "period": "أكتوبر 2022 – أكتوبر 2023",
     "desc": "تدريب 10 معسكرات للتجارة الإلكترونية في مدن عدة بالمملكة: الرياض والمدينة المنورة وجدة وحفر الباطن وحائل وتبوك وأبها وجازان وعن بُعد (12 ساعة لكل معسكر).",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Trainer & Mentor",
+      "subtitle": "Monsha'at",
+      "period": "Oct 2022 – Oct 2023",
+      "desc": "Trained 10 e-commerce bootcamps in several cities across the Kingdom: Riyadh, Madinah, Jeddah, Hafar Al-Batin, Hail, Tabuk, Abha, Jazan and remotely (12 hours per bootcamp)."
+    }
   },
   {
     "id": "b142",
@@ -1258,7 +1918,13 @@
     "logo": "/img/partners/l56.webp",
     "period": "نوفمبر 2021 إلى نوفمبر 2022",
     "desc": "تسجيل فيديوهات تدريبية وتقديم استشارات مباشرة في التجارة الإلكترونية.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Incubator Trainer & Consultant",
+      "subtitle": "Astrolabs (Astrolabs.com)",
+      "period": "Nov 2021 – Nov 2022",
+      "desc": "Recording training videos and providing direct consulting in e-commerce."
+    }
   },
   {
     "id": "b143",
@@ -1268,7 +1934,13 @@
     "logo": "/img/partners/l78.webp",
     "period": "ديسمبر 2022 – فبراير 2023",
     "desc": "في معسكر «همم جميل» لدعم ذوي الاحتياجات الخاصة، ضمن برنامج شراكة بين مجتمع جميل وأكاديمية نفيسة شمس، إحدى مبادرات مؤسسة عبداللطيف جميل (15 ساعة لكل معسكر).",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Trainer & Consultant",
+      "subtitle": "Himam Jameel",
+      "period": "Dec 2022 – Feb 2023",
+      "desc": "At the \"Himam Jameel\" bootcamp supporting people with special needs, within a partnership program between Jameel Community and the Nafisa Shams Academy, one of the Abdul Latif Jameel Foundation's initiatives (15 hours per bootcamp)."
+    }
   },
   {
     "id": "b144",
@@ -1278,7 +1950,13 @@
     "logo": "/img/bio/biban.webp",
     "period": "سبتمبر – نوفمبر 2024",
     "desc": "15 ورشة ضمن الأنشطة التدريبية لمعرض بيبان العالمي من منشآت، لأكثر من 450 متدرباً.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-Commerce Trainer",
+      "subtitle": "Biban Global Exhibition (Monsha'at)",
+      "period": "Sep – Nov 2024",
+      "desc": "15 workshops within the training activities of Monsha'at's Biban Global Exhibition, for more than 450 trainees."
+    }
   },
   {
     "id": "b145",
@@ -1288,7 +1966,13 @@
     "logo": "/img/bio/sys.webp",
     "period": "يوليو 2022 إلى الآن",
     "desc": "مبادرة برعاية جامعة الملك عبدالله للعلوم والتقنية (كاوست) لنشر الوعي بالتنمية المستدامة ودعم مبادراتها.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Member, Saudi Youth for Sustainability",
+      "subtitle": "Saudi Youth for Sustainability",
+      "period": "Jul 2022 – Present",
+      "desc": "An initiative sponsored by King Abdullah University of Science and Technology (KAUST) to raise awareness of sustainable development and support its initiatives."
+    }
   },
   {
     "id": "b146",
@@ -1298,7 +1982,13 @@
     "logo": "/img/bio/unite2030.webp",
     "period": "يناير 2022 – أبريل 2022",
     "desc": "قيادة الجلسات الأسبوعية عبر الإنترنت مع الدفعة السادسة من برنامج مندوبي الشباب (مسار البنّائين) لمناقشة أهداف التنمية المستدامة.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Builders Track Leader",
+      "subtitle": "Unite2030, Youth Delegates Program",
+      "period": "Jan 2022 – Apr 2022",
+      "desc": "Leading weekly online sessions with the sixth cohort of the Youth Delegates Program (Builders Track) to discuss the Sustainable Development Goals."
+    }
   },
   {
     "id": "b147",
@@ -1308,7 +1998,12 @@
     "logo": "/img/partners/l31.webp",
     "period": "يناير 2021 – ديسمبر 2021",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Master's in Project Management",
+      "subtitle": "Midocean University & the International Project Management Association (IPMA)",
+      "period": "Jan 2021 – Dec 2021"
+    }
   },
   {
     "id": "b148",
@@ -1318,7 +2013,12 @@
     "logo": "/img/bio/seu.webp",
     "period": "2014 – 2018",
     "desc": "",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Bachelor's in E-Commerce",
+      "subtitle": "Saudi Electronic University, College of Business Administration",
+      "period": "2014 – 2018"
+    }
   },
   {
     "id": "b149",
@@ -1328,7 +2028,11 @@
     "logo": "",
     "period": "",
     "desc": "معدل الثانوية العامة (علمي): 98%. اختبار القدرات العامة: 90 من 100. الاختبار التحصيلي: 82 من 100. اختبار القدرات للدراسات العليا (جامعين): 92 من 100.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Standardized Tests",
+      "desc": "High school GPA (science track): 98%. General Aptitude Test (Qudurat): 90/100. Achievement Test (Tahsili): 82/100. Graduate Aptitude Test (Jame'een): 92/100."
+    }
   },
   {
     "id": "b150",
@@ -1338,6 +2042,10 @@
     "logo": "",
     "period": "",
     "desc": "دولينغو: 95 (ما يعادل 6 في الآيلتس، فوق المتوسط). ستيب (قياس): 81 من 100. إي إف: المستوى المتقدم.",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "English Language Tests",
+      "desc": "Duolingo: 95 (equivalent to IELTS 6, upper-intermediate). STEP (Qiyas): 81/100. EF: Advanced level."
+    }
   }
 ]

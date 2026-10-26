@@ -61,91 +61,134 @@
       "education",
       "projects",
       "volunteer"
-    ]
+    ],
+    "en": {
+      "title": "Biography & Achievements",
+      "lead": "Arab Youth Pioneers Award 2025 Winner | Initiative Leader & Impact Maker | Strategic Partnerships & Growth | Learning & Development",
+      "intro": [
+        "I am Hussain Al-Hajji, a specialist in project management and strategic partnerships. I work to create tangible social and economic impact through high-value programs, capacity-building initiatives and cross-sector collaboration. Since {since}, I have taken part in more than {programs} national programs, initiatives and events with more than {partners} organizations across Saudi Arabia, the Gulf and international markets, helping the organizations I work with turn ideas into measurable results.",
+        "As an independent business project manager and training consultant, I specialize in project and program management, strategic partnerships, workforce development, entrepreneurship, digital transformation and institutional capacity building. My work includes designing and delivering training bootcamps, accelerators, leadership programs, mentoring initiatives and advisory services that strengthen organizations and empower entrepreneurs, professionals and future leaders. Beyond project delivery, I contribute actively to the regional innovation ecosystem through advisory roles, digital content creation and participation in prestigious initiatives that advance entrepreneurship, youth development and sustainable growth.",
+        "I hold a master's degree in project management and rely on international credentials, including Google Certified Trainer, Certified Professional Service Provider, and licenses in management consulting and entrepreneurship consulting. I combine strategic thinking with hands-on execution to help organizations build impactful partnerships and achieve long-term success. As a winner of the Arab Youth Pioneers Award 2025, I continue to champion innovation, leadership, lifelong learning and community development, working on initiatives that create lasting value for individuals, institutions and society.",
+        "Get in touch to explore project management, strategic partnerships, entrepreneurship, workforce development, leadership training, digital transformation, social impact and organizational growth."
+      ],
+      "tracks": [
+        {
+          "title": "Human Development",
+          "text": "Skills building, leadership, career guidance and job-market readiness."
+        },
+        {
+          "title": "Project & Initiative Development",
+          "text": "Project management, program design, idea development and building workable implementation models."
+        },
+        {
+          "title": "Building Partnerships & Creating Impact",
+          "text": "Connecting organizations, talent and opportunities, and developing initiatives that deliver lasting value to beneficiaries and society."
+        }
+      ],
+      "closing": "I combine operational and field work, training and advisory expertise, and work on initiatives and projects, which allows me to move from developing an idea and designing a program to delivery, mentoring, measuring results and improving the experience."
+    }
   },
   "groups": {
     "bio": [
       {
         "id": "intro",
         "title": "نبذة",
-        "block": "intro"
+        "block": "intro",
+        "titleEn": "About"
       },
       {
         "id": "skills",
         "title": "المهارات",
-        "style": "chips"
+        "style": "chips",
+        "titleEn": "Skills"
       },
       {
         "id": "expertise",
         "title": "مجالات الخبرة",
-        "style": "chips"
+        "style": "chips",
+        "titleEn": "Areas of Expertise"
       },
       {
         "id": "values",
         "title": "القيم",
-        "style": "chips"
+        "style": "chips",
+        "titleEn": "Values"
       },
       {
         "id": "tracks",
         "title": "مسارات العمل",
-        "block": "tracks"
+        "block": "tracks",
+        "titleEn": "Work Tracks"
       },
       {
         "id": "education",
         "title": "التعليم والدرجات الأكاديمية",
-        "hidden": true
+        "hidden": true,
+        "titleEn": "Education & Academic Degrees"
       },
       {
         "id": "leadership",
-        "title": "خريج برامج قيادية مرموقة"
+        "title": "خريج برامج قيادية مرموقة",
+        "titleEn": "Prestigious Leadership Programs Graduate"
       },
       {
         "id": "bootcamps",
-        "title": "خريج معسكرات مهنية"
+        "title": "خريج معسكرات مهنية",
+        "titleEn": "Professional Bootcamps Graduate"
       },
       {
         "id": "career",
-        "title": "المسيرة المهنية"
+        "title": "المسيرة المهنية",
+        "titleEn": "Professional Experience"
       },
       {
         "id": "learning",
         "title": "الدورات التدريبية",
-        "style": "table"
+        "style": "table",
+        "titleEn": "Training Courses"
       },
       {
         "id": "projects",
         "title": "مشاركات ومشاريع تدريب مميزة",
-        "style": "table"
+        "style": "table",
+        "titleEn": "Selected Training Engagements & Projects"
       },
       {
         "id": "achievements",
-        "title": "الإنجازات"
+        "title": "الإنجازات",
+        "titleEn": "Achievements"
       },
       {
         "id": "credentials",
-        "title": "الاعتمادات"
+        "title": "الاعتمادات",
+        "titleEn": "Certifications & Licenses"
       },
       {
         "id": "committees",
         "title": "اللجان والعضويات",
-        "style": "table"
+        "style": "table",
+        "titleEn": "Committees & Memberships"
       },
       {
         "id": "sdgs",
-        "title": "أهداف التنمية المستدامة"
+        "title": "أهداف التنمية المستدامة",
+        "titleEn": "Sustainable Development Goals"
       },
       {
         "id": "writing",
-        "title": "كاتب وصانع محتوى لدى كل من:"
+        "title": "كاتب وصانع محتوى لدى كل من:",
+        "titleEn": "Writer & Content Creator for:"
       },
       {
         "id": "volunteer",
-        "title": "العمل التطوعي"
+        "title": "العمل التطوعي",
+        "titleEn": "Volunteering"
       },
       {
         "id": "mentoring",
         "title": "الإرشاد والمسرّعات",
-        "hidden": true
+        "hidden": true,
+        "titleEn": "Mentoring & Accelerators"
       }
     ],
     "partners": [
