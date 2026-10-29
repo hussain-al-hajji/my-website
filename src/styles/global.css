@@ -1247,3 +1247,5 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .mq-projects .mq-track a{display:flex;align-items:center;height:56px}
 .mq-projects .mq-track img{max-height:48px;max-width:190px;width:auto;height:auto;object-fit:contain;filter:none;opacity:1;transition:transform .3s}
 .mq-projects .mq-track a:hover img,.mq-projects .mq-track a:focus-visible img{transform:scale(1.06)}
+.mq-projects .mq-track{animation-duration:22s}
+@media (max-width:820px){.mq-projects .mq-track{animation-duration:18s}}
