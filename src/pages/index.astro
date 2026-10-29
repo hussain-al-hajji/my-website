@@ -8,6 +8,9 @@ import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
 import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
 import projects from '../data/projects.json';
+import ring from '../data/ring.json';
+import fs from 'node:fs';
+import path from 'node:path';
 import pagesData from '../data/pages.json';
 import bioData from '../data/bio.json';
 import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
@@ -74,6 +77,14 @@ const homeData = {
 };
 const wheel = wheelItems();
 
+// شرائح الصورة الرئيسية: صور البرامج قبل صورة الاستوديو وبعدها، وتظهر صورة الاستوديو أولاً
+const half = Math.ceil(ring.length / 2);
+// صورة الشريحة بدقة كاملة (photos/pNN) إن وُجدت، والمصغّرة (ring/rNN) خلفية ضبابية خفيفة تملأ جانبي الصور الرأسية
+const slideOf = (r) => {
+  const full = r.image.replace(/\/ring\/r(\d+)\.webp$/, '/photos/p$1.webp');
+  return { ...r, thumb: r.image, image: fs.existsSync(path.join(process.cwd(), 'public', full)) ? full : r.image };
+};
+const slidesBefore = ring.slice(0, half).map(slideOf), slidesAfter = ring.slice(half).map(slideOf);
 const stripLogos = projects.filter((p) => !p.noLogo && (p.logo || p.image));
 const STATE = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
 const jsonld = [
@@ -112,7 +123,22 @@ const jsonld = [
       <div class="ctas hero-cta" data-in style="--d:3"><a class="pill" href={href('/hussain-al-hajji-portfolio.pdf')} download><svg class="pill-dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>حمّل البورتفليو</a><a class="more" href={href('/featured')}>مشاريع تدريب مميزة</a></div>
     </div></div>
   </div>
-  <figure id="heroFig"><div class="win"><img src={href('/img/photos/p29.webp')} alt="أنا في استوديو التسجيل" width="1536" height="1024" fetchpriority="high"></div></figure>
+  <figure id="heroFig">
+    <div class="win">
+      <!-- الترتيب البصري من اليمين: صور قبل ← صورة الاستوديو ← صور بعد؛ الحاوية ltr لسهولة تموضع الشريحة الأولى -->
+      <div class="hslides" id="heroSlides" dir="ltr" tabindex="0" role="region" aria-roledescription="شرائح" aria-label="صور من البرامج والفعاليات">
+        {[...slidesAfter].reverse().map((r) => (
+          <div class="hslide" role="group" aria-label={r.title} style={`--bg:url(${href(r.thumb)})`}><img src={href(r.image)} alt={r.title} loading="lazy"><div class="hcap" dir="rtl"><b>{r.title}</b><span>{r.caption}</span></div></div>
+        ))}
+        <div class="hslide main" id="heroMain" role="group" aria-label="أنا في استوديو التسجيل"><img src={href('/img/photos/p29.webp')} alt="أنا في استوديو التسجيل" width="1536" height="1024" fetchpriority="high"></div>
+        {[...slidesBefore].reverse().map((r) => (
+          <div class="hslide" role="group" aria-label={r.title} style={`--bg:url(${href(r.thumb)})`}><img src={href(r.image)} alt={r.title} loading="lazy"><div class="hcap" dir="rtl"><b>{r.title}</b><span>{r.caption}</span></div></div>
+        ))}
+      </div>
+      <button type="button" class="sl-btn sl-prev" id="slPrev" aria-label="الصورة السابقة"></button>
+      <button type="button" class="sl-btn sl-next" id="slNext" aria-label="الصورة التالية"></button>
+    </div>
+  </figure>
 </header>
 
 {stripLogos.length > 2 && (

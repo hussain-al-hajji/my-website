@@ -18,6 +18,20 @@ if (g) {
   $('#prev').addEventListener('click', () => step(1));
 }
 
+// شرائح الصورة الرئيسية: تبدأ بصورة الاستوديو، وقبلها وبعدها صور البرامج (سحب أو أسهم أو لوحة المفاتيح)
+{
+  const sl = $('#heroSlides'), main = $('#heroMain');
+  if (sl && main) {
+    const w = () => sl.clientWidth;
+    sl.scrollLeft = main.offsetLeft - sl.offsetLeft;                  // الابتداء بصورة الاستوديو دون تحريك الصفحة
+    addEventListener('resize', () => { sl.scrollLeft = main.offsetLeft - sl.offsetLeft; });
+    const go = (d) => sl.scrollBy({ left: d * w(), behavior: reduce ? 'auto' : 'smooth' });
+    $('#slNext').addEventListener('click', () => go(-1));              // التالي نحو اليسار (اتجاه القراءة العربي)
+    $('#slPrev').addEventListener('click', () => go(1));
+    sl.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } });
+  }
+}
+
 // اللحظة 1: الصورة تنفتح من نافذة إلى العرض الكامل
 const fig = $('#heroFig');
 function opening() {
