@@ -1279,3 +1279,4 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .hslide:not(.main){background:#1d1d1b}
 .hslide:not(.main)::before{content:"";position:absolute;inset:-30px;background:var(--bg) center/cover;filter:blur(22px) brightness(.78);transform:scale(1.1)}
 .hero figure .hslide:not(.main) img{position:relative;object-fit:contain;object-position:50% 50%}
+.mq-projects .mq-track span{font-size:clamp(1.05rem,.95rem + .4vw,1.3rem);font-weight:700;color:#8d8c85;white-space:nowrap}

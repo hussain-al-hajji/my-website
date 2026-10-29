@@ -8,6 +8,7 @@ import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
 import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
 import projects from '../data/projects.json';
+import media from '../data/media.json';
 import ring from '../data/ring.json';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -85,7 +86,11 @@ const slideOf = (r) => {
   return { ...r, thumb: r.image, image: fs.existsSync(path.join(process.cwd(), 'public', full)) ? full : r.image };
 };
 const slidesBefore = ring.slice(0, half).map(slideOf), slidesAfter = ring.slice(half).map(slideOf);
-const stripLogos = projects.filter((p) => !p.noLogo && (p.logo || p.image));
+// شريط الاستضافات الإعلامية: جهات صفحة الإعلام (بلا أقسام التكريم) المعلَّمة للشريط، بشعارها إن وُجد وإلا باسمها، دون تكرار
+const seenM = new Set();
+const mediaStrip = media.filter((m) => m.strip && !String(m.section).startsWith('award-'))
+  .map((m) => ({ name: (m.short || m.outlet.split('،')[0]).trim(), logo: m.logo || m.pdfLogo || '' }))
+  .filter((o) => { const k = o.logo || o.name; if (seenM.has(k)) return false; seenM.add(k); return true; });
 const STATE = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
 const jsonld = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar' },
@@ -141,18 +146,18 @@ const jsonld = [
   </figure>
 </header>
 
-{stripLogos.length > 2 && (
-<section class="sec appear" aria-label="مبادرات مبتكرة">
+{mediaStrip.length > 2 && (
+<section class="sec appear" aria-label="استضافات إعلامية">
   <div class="wide">
-    <p class="appear-h">مبادرات مبتكرة</p>
+    <p class="appear-h">استضافات إعلامية</p>
     <div class="mq mq-names mq-projects">
       <ul class="mq-track">
-        {[0, 1].map((rep) => stripLogos.map((o) => (
-          <li aria-hidden={rep ? 'true' : undefined}><a href={href('/my-projects')} tabindex={rep ? -1 : undefined} aria-label={o.name}><img src={href(o.logo || o.image)} alt={rep ? '' : o.name} loading="lazy"></a></li>
+        {[0, 1].map((rep) => mediaStrip.map((o) => (
+          <li aria-hidden={rep ? 'true' : undefined}><a href={href('/media')} tabindex={rep ? -1 : undefined} aria-label={o.name}>{o.logo ? <img src={href(o.logo)} alt={rep ? '' : o.name} loading="lazy"> : <span dir="auto">{o.name}</span>}</a></li>
         )))}
       </ul>
     </div>
-    <a class="more appear-more" href={href('/my-projects')}>كل المبادرات المبتكرة</a>
+    <a class="more appear-more" href={href('/media')}>كل الظهور الإعلامي</a>
   </div>
 </section>
 )}
