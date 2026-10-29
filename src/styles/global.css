@@ -1242,3 +1242,8 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .cv-lang input:checked+span{background:#fff;color:var(--action);box-shadow:0 1px 6px rgba(0,0,0,.1)}
 .cv-lang input:focus-visible+span{outline:2px solid var(--action);outline-offset:2px}
 .cv-box[dir=ltr] .cv-act,.cv-box[dir=ltr] .cv-head{direction:ltr}
+/* شريط «مبادرات مبتكرة» في الرئيسية: شعارات المبادرات المنشورة، وكل شعار يفتح صفحة المبادرات */
+.mq-projects .mq-track{gap:52px}
+.mq-projects .mq-track a{display:flex;align-items:center;height:56px}
+.mq-projects .mq-track img{max-height:48px;max-width:190px;width:auto;height:auto;object-fit:contain;filter:grayscale(1);opacity:.72;transition:filter .3s,opacity .3s}
+.mq-projects .mq-track a:hover img,.mq-projects .mq-track a:focus-visible img{filter:none;opacity:1}

@@ -8,7 +8,7 @@ import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
 import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
-import media from '../data/media.json';
+import projects from '../data/projects.json';
 import pagesData from '../data/pages.json';
 import bioData from '../data/bio.json';
 import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
@@ -73,10 +73,6 @@ const homeData = {
 };
 const wheel = wheelItems();
 
-// شريط «ظهرتُ في»: جهة واحدة لكل عنصر معلَّم في قسم الإعلام
-const seenOut = new Set();
-const appeared = media.filter((m) => m.strip).map((m) => ({ name: (m.short || m.outlet.split('،')[0]).trim(), logo: m.logo }))
-  .filter((o) => (seenOut.has(o.name) ? false : seenOut.add(o.name)));
 const STATE = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
 const jsonld = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar' },
@@ -117,18 +113,18 @@ const jsonld = [
   <figure id="heroFig"><div class="win"><img src={href('/img/photos/p29.webp')} alt="أنا في استوديو التسجيل" width="1536" height="1024" fetchpriority="high"></div></figure>
 </header>
 
-{appeared.length > 2 && (
-<section class="sec appear" aria-label="ظهرتُ في">
+{projects.length > 2 && (
+<section class="sec appear" aria-label="مبادرات مبتكرة">
   <div class="wide">
-    <p class="appear-h">ظهرتُ في</p>
-    <div class="mq mq-names">
+    <p class="appear-h">مبادرات مبتكرة</p>
+    <div class="mq mq-names mq-projects">
       <ul class="mq-track">
-        {[0, 1].map((rep) => appeared.map((o) => (
-          <li aria-hidden={rep ? 'true' : undefined}>{o.logo ? <img src={href(o.logo)} alt={rep ? '' : o.name} loading="lazy"> : <span dir="auto">{o.name}</span>}</li>
+        {[0, 1].map((rep) => projects.map((o) => (
+          <li aria-hidden={rep ? 'true' : undefined}><a href={href('/my-projects')} tabindex={rep ? -1 : undefined} aria-label={o.name}>{o.image ? <img src={href(o.image)} alt={rep ? '' : o.name} loading="lazy"> : <span dir="auto">{o.name}</span>}</a></li>
         )))}
       </ul>
     </div>
-    <a class="more appear-more" href={href('/media')}>كل الظهور الإعلامي</a>
+    <a class="more appear-more" href={href('/my-projects')}>كل المبادرات المبتكرة</a>
   </div>
 </section>
 )}
