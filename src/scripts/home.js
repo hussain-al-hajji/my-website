@@ -104,51 +104,50 @@ $$('.seg').forEach((grp) => $$('button', grp).forEach((b) => b.addEventListener(
 })));
 render();
 
-// اللحظة 0: حلقة صور البرامج
-const ring = $('#ring'), stage = $('#ringStage'), sub = $('#sub');
+// اللحظة 0: هالة شعارات المبادرات حول الرأس
+// الشعار يخرج من خلف الكتف، يصعد ويكبر ويكتمل لونه فوق الرأس، ثم يتضاءل ويخبو وهو يغيب خلف الكتف الآخر.
+const ring = $('#ring'), stage = $('#ringStage'), sub = $('#sub'), head = $('#pfig');
 const subBase = sub.innerHTML;
-const frames = []; let spin = 0, vel = 0, rxNow = 500, dragging = false, paused = false, visible = true, last = performance.now();
-data.ring.forEach((f, k) => {
+const frames = []; let spin = 0, vel = 0, rxNow = 300, cyNow = 300, dragging = false, paused = false, visible = true, last = performance.now();
+// تُكرَّر الشعارات لتبلغ 12 على المدار فيمتلئ بلا تزاحم
+const haloBase = data.halo || [], haloList = haloBase.length ? Array.from({ length: Math.max(12, haloBase.length) }, (_, i) => haloBase[i % haloBase.length]) : [];
+haloList.forEach((f, k) => {
   const a = document.createElement('a');
-  a.className = 'frame'; a.draggable = false; a.href = data.recordsUrl; a.setAttribute('aria-label', `${f.title}، ${f.caption}`);
-  const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.draggable = false; im.decoding = 'async'; im.loading = k < 8 ? 'eager' : 'lazy';
-  const fr = { el: a, k, ar: f.ratio || 1.5 };
-  const setAr = () => { if (im.naturalWidth) fr.ar = Math.min(2.2, Math.max(0.6, im.naturalWidth / im.naturalHeight)); };
-  im.addEventListener('load', setAr); setAr();
+  a.className = 'frame logo'; a.draggable = false; a.href = data.projectsUrl; a.setAttribute('aria-label', f.name);
+  const im = document.createElement('img'); im.src = f.image; im.alt = ''; im.draggable = false; im.decoding = 'async'; im.loading = 'eager';
   a.append(im);
-  const on = () => { if (dragging) return; paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.title)}</b>${esc(f.caption)}`; };
+  const on = () => { if (dragging) return; paused = true; ring.classList.add('focus'); frames.forEach((x) => x.el.classList.remove('on')); a.classList.add('on'); sub.innerHTML = `<b>${esc(f.name)}</b>${esc(f.caption)}`; };
   const off = () => { paused = false; ring.classList.remove('focus'); a.classList.remove('on'); sub.innerHTML = subBase; };
   a.addEventListener('mouseenter', on); a.addEventListener('focus', on); a.addEventListener('mouseleave', off); a.addEventListener('blur', off);
-  ring.appendChild(a); frames.push(fr);
+  ring.appendChild(a); frames.push({ el: a, k });
 });
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
 function drawRing() {
-  const W = ring.clientWidth, H = ring.clientHeight, phone = W < 760, n = phone ? 12 : frames.length;
-  const r = stage.getBoundingClientRect(), c = reduce ? 0 : Math.min(1, Math.max(0, -r.top / (H * 0.55)));
-  const cx = W / 2, cy = H / 2;
-  const rx = (phone ? W * 0.62 : Math.min(600, W * 0.42)) * (1 - c * 0.85); rxNow = rx;
-  const ry = (phone ? W * 0.74 : Math.min(450, H * 0.45)) * (1 - c * 0.85);
+  const n = frames.length; if (!n) return;
+  const W = ring.clientWidth, H = ring.clientHeight, phone = W < 760;
+  const rr = ring.getBoundingClientRect(), pr = head.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+  const c = reduce ? 0 : clamp01(-sr.top / (H * 0.55));            // عند التمرير تنطوي الهالة نحو الرأس وتخبو
+  const cx = pr.left - rr.left + pr.width / 2, top = pr.top - rr.top, cy = top + pr.height * 0.28;
+  const k = 1 - c * 0.85, gap = phone ? 52 : 68;
+  const ry = (cy - (top - gap)) * k, rx = Math.max(pr.width * (phone ? 1.0 : 1.25), phone ? 150 : 250) * k;
+  rxNow = rx; cyNow = cy + sr.top;
+  const bw = phone ? 100 : 160, bh = phone ? 62 : 96;               // أكبر مقاس للشعار (فوق الرأس)
   frames.forEach((f, i) => {
-    if (i >= n) { f.el.hidden = true; return; }
-    f.el.hidden = false;
-    const t = -Math.PI / 2 + (i / n) * Math.PI * 2 + spin, x = cx + rx * Math.cos(t), y = cy + ry * Math.sin(t), depth = (Math.sin(t) + 1) / 2;
-    // الصورة الواصلة أسفل الأزرار تكبر تدريجياً، وتعود لحجمها حين تبتعد
-    const bot = Math.max(0, Math.min(1, (Math.sin(t) - 0.84) / 0.16)), grow = 1 + (phone ? 0.5 : 0.7) * bot * bot * (3 - 2 * bot);
-    const base = phone ? 60 + 26 * depth : 96 + 58 * depth, area = base * base * 0.75;
-    const w = Math.sqrt(area * f.ar), hgt = Math.sqrt(area / f.ar);
-    const ang = Math.max(-24, Math.min(24, Math.cos(t) * -18)) * (1 - Math.min(1, (grow - 1) * 3));
-    f.el.style.width = w + 'px'; f.el.style.height = hgt + 'px'; f.el.style.zIndex = depth > 0.5 ? 2 : 1;
-    let sc = (f.el.classList.contains('on') ? 1.25 : 1) * grow * (1 - c * 0.55);
-    // النمو يمتد إلى الأسفل: تبقى الحافة العلوية مكانها فلا تغطي الأزرار
-    const yy = y + (grow > 1 ? hgt * (sc - (1 - c * 0.55)) / 2 : 0);
-    f.el.style.transform = `translate(${x - w / 2}px,${yy - hgt / 2}px) rotate(${ang.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
-    if (!ring.classList.contains('focus')) f.el.style.opacity = (1 - c).toFixed(3);
+    const t = spin + (i / n) * Math.PI * 2, sn = Math.sin(t), u = (sn + 1) / 2;
+    const x = cx + rx * Math.cos(t), y = cy - ry * sn;
+    const sc = (0.36 + 0.64 * Math.pow(u, 1.7)) * (f.el.classList.contains('on') ? 1.12 : 1);
+    const op = Math.pow(clamp01((sn + 0.25) / 1.25), 0.6) * (1 - c);
+    f.el.style.width = bw + 'px'; f.el.style.height = bh + 'px'; f.el.style.zIndex = String(Math.round(u * 10));
+    f.el.style.transform = `translate(${(x - bw / 2).toFixed(1)}px,${(y - bh / 2).toFixed(1)}px) scale(${sc.toFixed(3)})`;
+    f.el.style.pointerEvents = op > 0.4 ? 'auto' : 'none';
+    if (!ring.classList.contains('focus')) f.el.style.opacity = op.toFixed(3);
   });
 }
 function loop(t) {
   const dt = Math.min(64, t - last); last = t;
   if (!dragging) {
     if (Math.abs(vel) > 1e-6) { spin += vel * dt; vel *= Math.pow(0.94, dt / 16); } else vel = 0;
-    if (!paused && !reduce && visible) spin += dt * 0.000045;
+    if (!paused && !reduce && visible) spin += dt * 0.00019;
   }
   if (visible) drawRing();
   requestAnimationFrame(loop);
@@ -157,7 +156,7 @@ new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(st
 // سحب الحلقة باليد يميناً ويساراً مع قصور ذاتي، وتستأنف حركتها الآلية بعد الإفلات
 {
   let down = null, moved = 0, lx = 0, lt = 0, wasPaused = false;
-  const cyOf = () => stage.getBoundingClientRect().top + ring.clientHeight / 2;
+  const cyOf = () => cyNow;
   stage.addEventListener('pointerdown', (e) => {
     if (e.button > 0 || e.target.closest('.core > div')) return;
     down = { id: e.pointerId, x: e.clientX, y: e.clientY, top: e.clientY < cyOf() }; moved = 0; lx = e.clientX; lt = performance.now(); vel = 0;
@@ -168,7 +167,7 @@ new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(st
     moved += Math.abs(dx);
     if (!dragging && moved > 6) { dragging = true; wasPaused = paused; paused = true; ring.classList.add('dragging'); ring.classList.remove('focus'); frames.forEach((x) => x.el.classList.remove('on')); stage.setPointerCapture(e.pointerId); }
     if (!dragging) return;
-    const dth = (down.top ? 1 : -1) * dx / Math.max(200, rxNow);
+    const dth = (down.top ? -1 : 1) * dx / Math.max(200, rxNow);
     spin += dth; vel = 0.8 * vel + 0.2 * (dth / dtm); lx = e.clientX; lt = now;
   });
   const end = (e) => {
@@ -181,7 +180,7 @@ new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(st
   stage.addEventListener('click', (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
   // لوحة اللمس: التمرير الأفقي يحرّك الحلقة
   stage.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 2) { e.preventDefault(); spin -= e.deltaX / Math.max(200, rxNow); }
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 2) { e.preventDefault(); spin += e.deltaX / Math.max(200, rxNow); }
   }, { passive: false });
 }
 
@@ -321,7 +320,7 @@ if (deckEl) {
 }
 
 // ذوبان الرسم إلى الصورة: بالمؤشر على الحاسوب، وباللمس على الجوال
-const pfig = $('#pfig');
+const pfig = head;
 if (pfig) {
   let off = 0;
   const at = (e) => {

@@ -11,7 +11,7 @@ import { href } from '../lib/site.js';
       <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(340px,1fr))">
         {projects.map((p) => (
           <article class="ccard" data-in>
-            <div class="ph contain"><img src={href(p.image)} alt={p.name} loading="lazy"></div>
+            <div class="ph contain"><img src={href(p.logo || p.image)} alt={p.name} loading="lazy"></div>
             <div class="body">
               <span class="meta"><span class="tag">{p.status}</span> {p.nameEn}</span>
               <h3>{p.name}</h3>

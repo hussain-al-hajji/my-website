@@ -194,6 +194,8 @@ export const SECTIONS = [
       { k: 'desc', label: 'الوصف', type: 'textarea', rows: 5 },
       { k: 'link', label: 'الرابط', type: 'url' },
       { k: 'image', label: 'الشعار أو الصورة', type: 'image' },
+      { k: 'logo', label: 'شعار شفاف للشريط والهالة في الرئيسية (اختياري)', type: 'image', help: 'يُستخدم في شريط «مبادرات مبتكرة» وهالة الشعارات حول الصورة الرئيسية. الأفضل PNG أو WebP بخلفية شفافة. إن تُرك فارغاً تُستخدم الصورة أعلاه.' },
+      { k: 'noLogo', label: 'لا يظهر في الشريط والهالة بالرئيسية', type: 'bool' },
       { k: 'status', label: 'الحالة', type: 'combo', from: 'projects.status' },
     ],
   },

@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import geo from '../assets/gulf-geo.html?raw';
 import { CITIES } from '../lib/impactmap.js';
-import ring from '../data/ring.json';
 import highlights from '../data/highlights.json';
 import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
@@ -49,7 +48,9 @@ const homeData = {
   log: logForClient(),
   recordsUrl: href('/training-programs'),
   collabUrl: href('/collaborate'),
-  ring: ring.map((r) => ({ ...r, image: href(r.image) })),
+  // هالة الشعارات حول الصورة الرئيسية: شعارات المبادرات المنشورة (بلا ما أُخفي منها)
+  projectsUrl: href('/my-projects'),
+  halo: projects.filter((p) => !p.noLogo && (p.logo || p.image)).map((p) => ({ name: p.name, image: href(p.logo || p.image), caption: (p.desc || '').split(/[.؟!]/)[0].trim().slice(0, 110) })),
   kits: kits.map((k) => ({
     short: k.short,
     duration: k.duration,
@@ -73,6 +74,7 @@ const homeData = {
 };
 const wheel = wheelItems();
 
+const stripLogos = projects.filter((p) => !p.noLogo && (p.logo || p.image));
 const STATE = { past: 'منجز', now: 'جارٍ الآن', next: 'قادم' };
 const jsonld = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: href('/'), inLanguage: 'ar' },
@@ -97,7 +99,7 @@ const jsonld = [
 </div>
 <header class="hero" id="top">
   <div class="ringstage" id="ringStage">
-    <div class="ring" id="ring" aria-label="صور من البرامج"></div>
+    <div class="ring" id="ring" aria-label="شعارات مبادرات مبتكرة"></div>
     <div class="core"><div class="center">
       <div class="pfig" id="pfig" data-in>
         <img class="portrait" src={href('/img/brand/portrait-sketch-560.webp')} srcset={`${href('/img/brand/portrait-sketch-560.webp')} 560w, ${href('/img/brand/portrait-sketch-840.webp')} 840w`} sizes="(max-width: 820px) 40vw, 240px" width="560" height="694" alt="رسم بالرصاص لي وأنا أحمل درع رواد الشباب العربي" fetchpriority="high">
@@ -113,14 +115,14 @@ const jsonld = [
   <figure id="heroFig"><div class="win"><img src={href('/img/photos/p29.webp')} alt="أنا في استوديو التسجيل" width="1536" height="1024" fetchpriority="high"></div></figure>
 </header>
 
-{projects.length > 2 && (
+{stripLogos.length > 2 && (
 <section class="sec appear" aria-label="مبادرات مبتكرة">
   <div class="wide">
     <p class="appear-h">مبادرات مبتكرة</p>
     <div class="mq mq-names mq-projects">
       <ul class="mq-track">
-        {[0, 1].map((rep) => projects.map((o) => (
-          <li aria-hidden={rep ? 'true' : undefined}><a href={href('/my-projects')} tabindex={rep ? -1 : undefined} aria-label={o.name}>{o.image ? <img src={href(o.image)} alt={rep ? '' : o.name} loading="lazy"> : <span dir="auto">{o.name}</span>}</a></li>
+        {[0, 1].map((rep) => stripLogos.map((o) => (
+          <li aria-hidden={rep ? 'true' : undefined}><a href={href('/my-projects')} tabindex={rep ? -1 : undefined} aria-label={o.name}><img src={href(o.logo || o.image)} alt={rep ? '' : o.name} loading="lazy"></a></li>
         )))}
       </ul>
     </div>
