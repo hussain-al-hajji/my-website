@@ -36,3 +36,26 @@ export async function readFile(env, path, f = fetch) {
   const r = await gh(env, f, `/repos/${env.GITHUB_REPO}/contents/${path}?ref=${branch}`, { headers: { Accept: 'application/vnd.github.raw+json' } });
   return r.text();
 }
+
+// SHA-256 لنص (يُقارَن به أصل الملف الذي فتحته اللوحة بما في المستودع الآن لمنع محو تعديل أحدث)
+export async function sha256(text) {
+  const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+export const canonical = (jsonText) => JSON.stringify(JSON.parse(jsonText));
+
+/** حالة بناء الموقع للإيداع المنشور: يُعدّ بناء أحدث ناجح يشمل الإيداع منشوراً أيضاً (الأقدم قد يُستبدل ببناء أحدث) */
+export async function deployStatus(env, sha, f = fetch) {
+  const branch = env.GITHUB_BRANCH || 'main';
+  const r = await gh(env, f, `/repos/${env.GITHUB_REPO}/actions/workflows/deploy.yml/runs?branch=${branch}&event=push&per_page=15`);
+  const runs = ((await r.json()).workflow_runs || []).map((x) => ({ sha: x.head_sha, status: x.status, conclusion: x.conclusion, at: Date.parse(x.created_at), url: x.html_url }));
+  const target = runs.find((x) => x.sha === sha);
+  if (!target) return { state: 'queued' };
+  const later = runs.filter((x) => x.at >= target.at);
+  const ok = later.find((x) => x.conclusion === 'success');
+  if (ok) return { state: 'success', url: ok.url };
+  const live = later.find((x) => x.status !== 'completed');
+  if (live) return { state: 'running', url: live.url };
+  const last = later.sort((a, b) => b.at - a.at)[0];
+  return { state: last.conclusion === 'cancelled' ? 'cancelled' : 'failure', url: last.url };
+}

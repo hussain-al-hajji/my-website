@@ -12,10 +12,12 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
+# لا يُلغى بناء جارٍ عند وصول تعديل جديد (كان يُلغى فيضيع نشر أحدهما)؛ يُكمل الجاري ثم يعمل الأحدث وحده فيشمل كل ما قبله
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -59,3 +61,17 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # فشل البناء أو النشر لا يمرّ بصمت: يُفتح بلاغ في المستودع (يصلك إشعار GitHub) برابط التشغيل الفاشل
+  alert:
+    needs: [build, deploy]
+    if: ${{ always() && (needs.build.result == 'failure' || needs.deploy.result == 'failure') }}
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "فشل نشر الموقع: التحديثات الأخيرة لم تظهر بعد" \
+            --body "فشل بناء الموقع أو نشره بعد آخر تعديل، فبقي المنشور على النسخة السابقة. تفاصيل الخطأ: $RUN_URL"

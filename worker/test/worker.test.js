@@ -216,3 +216,29 @@ test('الترجمة عبر Workers AI: تحفظ بادئات القوائم و�
   assert.equal(r.status, 200);
   assert.deepEqual((await r.json()).texts, ['EN(عنوان:)\n- EN(مهمة منذ ZQ0X)'.replace('ZQ0X', '{since}')]);
 });
+
+// ---------- منع محو التعديلات الأحدث، وحالة البناء ----------
+import { sha256, deployStatus } from '../src/github.js';
+
+test('النشر يُرفض بـ 409 إن تغيّر الملف في المستودع منذ فتحته اللوحة، ويمرّ إن لم يتغيّر', async () => {
+  const gh = fakeGithub();   // يعيد [] لقراءة أي ملف
+  const deps = { auth: { getKeys }, fetch: gh.f };
+  const headers = { Authorization: 'Bearer ' + (await mint()) };
+  const files = [{ path: 'src/data/news.json', content: '[{"a":1}]' }];
+  const stale = await handle(req('/api/publish', { method: 'POST', headers, body: JSON.stringify({ files, bases: { 'src/data/news.json': await sha256('[{"x":0}]') } }) }), env, deps);
+  assert.equal(stale.status, 409);
+  assert.deepEqual((await stale.json()).files, ['src/data/news.json']);
+  assert.ok(!gh.calls.some((c) => c[0] === 'POST'), 'لا إيداع عند التعارض');
+  const fresh = await handle(req('/api/publish', { method: 'POST', headers, body: JSON.stringify({ files, bases: { 'src/data/news.json': await sha256('[]') } }) }), env, deps);
+  assert.equal(fresh.status, 200);
+});
+test('حالة البناء: الإيداع الملغى بإيداع أحدث ناجح يُعدّ منشوراً', async () => {
+  const run = (sha, status, conclusion, at) => ({ head_sha: sha, status, conclusion, created_at: at, html_url: 'u-' + sha });
+  const f = (runs) => async () => new Response(JSON.stringify({ workflow_runs: runs }), { status: 200 });
+  const e = { GITHUB_TOKEN: 't', GITHUB_REPO: 'o/r' };
+  const newest = [run('b', 'completed', 'success', '2026-01-01T00:02:00Z'), run('a', 'completed', 'cancelled', '2026-01-01T00:01:00Z')];
+  assert.equal((await deployStatus(e, 'a', f(newest))).state, 'success');
+  assert.equal((await deployStatus(e, 'a', f([run('a', 'in_progress', null, '2026-01-01T00:01:00Z')]))).state, 'running');
+  assert.equal((await deployStatus(e, 'a', f([run('a', 'completed', 'failure', '2026-01-01T00:01:00Z')]))).state, 'failure');
+  assert.equal((await deployStatus(e, 'zz', f(newest))).state, 'queued');
+});

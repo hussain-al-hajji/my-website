@@ -295,13 +295,50 @@ async function publish() {
     const used = JSON.stringify(files.map((f) => S.data[f]));
     Object.entries(S.uploads).forEach(([p, u]) => { if (used.includes(p)) payload.push({ path: 'public' + p, content: u.b64, encoding: 'base64' }); });
     const msg = 'تحديث: ' + files.map((f) => secOfFile(f)).join('، ');
-    const r = await fetch(API + '/api/publish', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (await S.token()) }, body: JSON.stringify({ files: payload, message: msg }) });
+    // أصل كل ملف كما فتحته اللوحة: إن تغيّر في المستودع منذئذ (تعديل من جهاز آخر أو من المطوّر) يرفض الـ Worker النشر بدل أن يمحوه
+    const bases = {};
+    for (const f of files) bases[`src/data/${f}.json`] = await sha256Hex(S.base[f]);
+    const r = await fetch(API + '/api/publish', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (await S.token()) }, body: JSON.stringify({ files: payload, message: msg, bases }) });
     const j = await r.json().catch(() => ({}));
+    if (r.status === 409) {
+      const names = (j.files || []).map((p) => secOfFile(p.replace(/^src\/data\/|\.json$/g, ''))).join('، ');
+      S.busy = false; render();
+      if (confirm(`تغيّر محتوى «${names}» على الموقع منذ فتحتَ اللوحة، فلم يُنشر شيء حتى لا يُمحى التعديل الأحدث.\n\nهل تعيد تحميل المحتوى الآن؟ (ستُفقد تعديلاتك غير المنشورة، وأعد كتابتها بعد التحميل.)`)) await reloadLive();
+      return;
+    }
     if (!r.ok) throw new Error(r.status === 403 ? 'حسابك غير مسموح له بالنشر.' : j.message || 'تعذّر النشر (' + r.status + ').');
     files.forEach((f) => (S.base[f] = JSON.stringify(S.data[f])));
     S.uploads = {};
-    say('تم النشر. يظهر التحديث على الموقع خلال دقيقتين تقريباً.', 'ok');
+    say('تم الإيداع. يجري الآن بناء الموقع، ويظهر التحديث خلال دقيقتين تقريباً.', 'ok');
+    if (j.sha) watchDeploy(j.sha);
   } catch (e) { say(e.message, 'bad'); }
+  S.busy = false; render();
+}
+// ---------- متابعة بناء الموقع بعد النشر ----------
+const sha256Hex = async (t) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)))].map((b) => b.toString(16).padStart(2, '0')).join('');
+async function watchDeploy(sha) {
+  S.deploy = { sha, state: 'running' }; render();
+  const t0 = Date.now();
+  while (S.deploy && S.deploy.sha === sha && Date.now() - t0 < 12 * 60_000) {
+    await new Promise((r) => setTimeout(r, 15_000));
+    try {
+      const r = await fetch(API + '/api/deploy?sha=' + sha, { headers: { Authorization: 'Bearer ' + (await S.token()) } });
+      if (!r.ok) { S.deploy = { sha, state: 'unknown' }; return render(); }   // الـ Worker أقدم من هذه الميزة أو لا يملك صلاحية القراءة
+      const j = await r.json();
+      S.deploy = { sha, state: j.state, url: j.url }; render();
+      if (j.state === 'success') return say('نُشر التحديث على الموقع.', 'ok');
+      if (j.state === 'failure' || j.state === 'cancelled') return say('فشل بناء الموقع، فلم يظهر التحديث. التفاصيل في GitHub Actions.', 'bad');
+    } catch { /* محاولة لاحقة */ }
+  }
+}
+async function reloadLive() {
+  S.busy = true; render();
+  try {
+    const r = await fetch(API + '/api/content', { headers: { Authorization: 'Bearer ' + (await S.token()) } });
+    if (!r.ok) throw new Error(r.status);
+    load(await r.json()); S.editing = null; S.uploads = {};
+    say('أُعيد تحميل آخر محتوى من الموقع.', 'ok');
+  } catch { say('تعذّر إعادة التحميل. حدّث الصفحة.', 'bad'); }
   S.busy = false; render();
 }
 const secOfFile = (f) => SECTIONS.filter((s) => s.file === f).map((s) => s.label)[0] || f;
@@ -353,6 +390,7 @@ function render() {
         h('header', { class: 'top' },
           S.mode === 'demo' && h('p', { class: 'demo' }, 'وضع المعاينة: ما تكتبه يُحفظ في هذا المتصفح فقط ولا يصل إلى الموقع.'),
           h('div', { class: 'actions' },
+            S.deploy && h('span', { class: 'dep ' + S.deploy.state }, S.deploy.state === 'running' ? 'جارٍ بناء الموقع…' : S.deploy.state === 'success' ? 'نُشر على الموقع' : S.deploy.state === 'unknown' ? 'أُرسل. يظهر خلال دقائق' : S.deploy.state === 'queued' ? 'بانتظار البناء…' : h('a', { href: S.deploy.url || '#', target: '_blank', rel: 'noopener' }, 'فشل بناء الموقع')),
             h('span', { class: 'cnt' }, dirty.length ? `${dirty.length} ملفات معدّلة` : 'لا تغييرات'),
             S.mode === 'demo' && h('button', { class: 'btn ghost', onClick: resetDemo }, 'مسح المعاينة'),
             dirty.length > 0 && h('button', { class: 'btn ghost', onClick: exportJson }, 'تنزيل JSON'),

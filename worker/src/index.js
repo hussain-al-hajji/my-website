@@ -1,6 +1,6 @@
 import { verifyIdToken, isAllowed, AuthError } from './auth.js';
 import { validatePublish, ValidationError, LIST_FILES, OBJECT_FILES } from './validate.js';
-import { commitFiles, readFile } from './github.js';
+import { commitFiles, readFile, sha256, canonical, deployStatus } from './github.js';
 import { Stats, BOT_RE } from './stats.js';
 import { searchConsole, analytics4 } from './google.js';
 import { bing } from './bing.js';
@@ -88,9 +88,26 @@ export async function handle(req, env, deps = {}) {
       const texts = await translateTexts(env, b && b.texts, deps);
       return reply(env, req, 200, { texts });
     }
+    if (url.pathname === '/api/deploy' && req.method === 'GET') {
+      await authorize(req, env, deps.auth);
+      const sha = url.searchParams.get('sha') || '';
+      if (!/^[0-9a-f]{7,40}$/.test(sha)) return reply(env, req, 400, { error: 'bad-request' });
+      return reply(env, req, 200, await deployStatus(env, sha, deps.fetch));
+    }
     if (url.pathname === '/api/publish' && req.method === 'POST') {
       const who = await authorize(req, env, deps.auth);
-      const { files, message } = validatePublish(await req.json().catch(() => null));
+      const body = await req.json().catch(() => null);
+      const { files, message } = validatePublish(body);
+      // منع محو تعديل أحدث: إن تغيّر ملف بيانات في المستودع منذ فتحته اللوحة يُرفض النشر
+      const bases = body && body.bases && typeof body.bases === 'object' ? body.bases : {};
+      const conflicts = [];
+      for (const f of files) {
+        if (!/^src\/data\/[a-z0-9-]+\.json$/.test(f.path) || typeof bases[f.path] !== 'string') continue;
+        let cur = null;
+        try { cur = await sha256(canonical(await readFile(env, f.path, deps.fetch))); } catch { continue; }   // ملف جديد غير موجود
+        if (cur !== bases[f.path]) conflicts.push(f.path);
+      }
+      if (conflicts.length) return reply(env, req, 409, { error: 'conflict', files: conflicts });
       const res = await commitFiles(env, files, `${message}\n\nبواسطة لوحة التحكم (${who.sub.slice(0, 8)})`, deps.fetch);
       return reply(env, req, 200, { ok: true, ...res });
     }
