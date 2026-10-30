@@ -84,28 +84,30 @@
   {
     "id": "m006",
     "section": "tv",
-    "outlet": "القناة الإخبارية، برنامج اليوم",
+    "outlet": "القناة الإخبارية",
     "title": "تقرير هيئة المنشآت الصغيرة والمتوسطة (منشآت) عن التجارة الإلكترونية في السعودية",
     "date": "2024-08",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/hSLLNM6Oqgo",
+    "image": "/img/uploads/mqdefault-2-mvv7oxm6.webp",
     "note": "استضافة تلفزيونية.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv7p1i0.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv7p47j.webp"
   },
   {
     "id": "m007",
     "section": "tv",
-    "outlet": "القناة الإخبارية، برنامج أسواق السعودية",
+    "outlet": "القناة الإخبارية",
     "title": "نمو سجلات التجارة الإلكترونية في السعودية",
     "date": "2024-07",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/CmwZiY9f2gs",
+    "image": "/img/uploads/mqdefault-3-mvv7qu7b.webp",
     "note": "استضافة تلفزيونية.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv7qxuc.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv7r07z.webp"
   },
   {
     "id": "m008",
