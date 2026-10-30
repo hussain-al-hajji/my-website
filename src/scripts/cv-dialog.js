@@ -29,40 +29,44 @@ async function build(ids, short, lang) {
   for (const key of [...ids, 'tail']) {
     const name = pre + key, m = manifest[name]; if (!m) continue;
     const src = await load(name);
-    const [emb] = await out.embedPdf(src, [0]);
+    // لكل جزء بين نقطتي قصّ صفحة نصها وحده (والرسم كاملاً)، ولرأس الجدول صفحة خاصة؛ فلا يتكرر نص القسم في كل صفحة A4
+    const embs = await out.embedPdf(src, src.getPageIndices());
+    const emb = embs[0];
     // حماية من اختلاط الإصدارات: مقاس الصفحة الفعلي يجب أن يطابق ما سُجّل وقت التوليد وإلا نعود للنسخة الكاملة
     if (Math.abs(emb.width - m.w * PT) > 3 || Math.abs(emb.height - m.pageH * PT) > 3) throw new Error('size mismatch ' + name);
+    if (m.chunks && embs.length < m.chunks) throw new Error('chunks mismatch ' + name);
     const W = m.w * PT, H = (m.h + m.top) * PT;
     // مقطع من الصفحة الطويلة من a إلى b (بكسل من أعلاها) يُرسم أعلاه عند y
-    const draw = (a, b, yTop) => {
+    const draw = (a, b, yTop, src = emb) => {
       const hh = (b - a) * PT;
       page.pushOperators(pushGraphicsState(), rectangle(LEFT, yTop - hh, W, hh), clip(), endPath());
-      page.drawPage(emb, { x: LEFT, y: yTop - H + (a + m.top) * PT, width: W, height: H });
+      page.drawPage(src, { x: LEFT, y: yTop - H + (a + m.top) * PT, width: W, height: H });
       page.pushOperators(popGraphicsState());
       return hh;
     };
     const cuts = [0, ...m.brk, m.h], cap = A4[1] - TOP - BOTTOM, rule = rgb(0.514, 0.329, 0.063);
     for (let k = 0; k < cuts.length - 1; k++) {
       let a = cuts[k];
+      const part = m.chunks ? embs[k] : emb;
       const b = cuts[k + 1], atTop = () => y >= A4[1] - TOP - 0.5;
       const th = m.thead && k > 0 ? (m.thead[1] - m.thead[0]) * PT + 1.4 : 0;   // رأس الجدول يتكرر أعلى الصفحة التي يستمر فيها
       const startPage = () => {
         fresh();
-        if (th) { page.drawRectangle({ x: LEFT, y: y - 1.4, width: W, height: 1.4, color: rule }); y -= 1.4; y -= draw(m.thead[0], m.thead[1], y); }
+        if (th) { page.drawRectangle({ x: LEFT, y: y - 1.4, width: W, height: 1.4, color: rule }); y -= 1.4; y -= draw(m.thead[0], m.thead[1], y, m.headPage >= 0 ? embs[m.headPage] : emb); }
       };
       const need = (b - a) * PT;
       if (need + th <= cap) {
         let gap = k === 0 && !atTop() ? GAP : 0;
         if (y - gap - need < BOTTOM) { startPage(); gap = 0; }
         y -= gap;
-        y -= draw(a, b, y);
+        y -= draw(a, b, y, part);
       } else {
         // قطعة أطول من صفحة كاملة (نادرة): تُقصّ على حدود الصفحات
         if (k === 0 && !atTop()) y -= GAP;
         while (b - a > 0.5) {
           if (y - BOTTOM < 60) startPage();
           const take = Math.min(b - a, (y - BOTTOM) / PT);
-          y -= draw(a, a + take, y); a += take;
+          y -= draw(a, a + take, y, part); a += take;
         }
       }
     }

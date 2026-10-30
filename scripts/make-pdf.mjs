@@ -4,6 +4,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
+import { fixPdf, splitPdf, pageCount } from './pdf-text.mjs';
 
 // يحوّل Chrome صور webp إلى PNG ضخمة داخل الملف، فنقدّم له نسخاً مصغّرة: JPEG للصور، وPNG للصور الشفافة
 let sharp = null;
@@ -43,8 +44,35 @@ function fail(msg) {
 if (!fs.existsSync(path.join(dist, 'profile.html'))) fail('dist/profile.html غير موجود');
 if (!exe) fail('لا يوجد متصفح لتوليد PDF');
 
+// الخط المتغيّر يُضمَّن في PDF بصيغة Type3 فيتشوّه النص العربي عند النسخ والبحث؛ فنقدّم للمتصفح نسخاً ثابتة الوزن منه (scripts/pdf-fonts)
+const fontDir = path.resolve('scripts/pdf-fonts');
+const ranges = {
+  ar: 'U+0600-06FF,U+0750-077F,U+0870-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC',
+  lat: 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD',
+};
+const staticCss = ['ar', 'lat'].flatMap((t) => [300, 400, 500, 600, 700, 800].map((w) =>
+  `@font-face{font-family:"NSA PDF";font-weight:${w};src:url("/__pdf-fonts/nsa-${t}-${w}.woff2") format("woff2");unicode-range:${ranges[t]}}`)).join('') +
+  ':root{--font:"NSA PDF","Noto Sans Arabic",system-ui,sans-serif}';
+const hasStatic = fs.existsSync(path.join(fontDir, 'nsa-ar-400.woff2'));
+async function settle(page) {
+  if (hasStatic) await page.addStyleTag({ content: staticCss });
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(60);
+  await page.evaluate(() => document.fonts.ready);
+}
+
+// إصلاح النص العربي ليُنسخ ويُبحث فيه؛ إن تعذّر يبقى الملف كما ولّده المتصفح
+async function safe(fn, bytes, ...rest) {
+  try { return (await fn(bytes, ...rest)) || bytes; } catch (e) { console.warn(`[pdf] تعذّر إصلاح نص الملف: ${e.message}`); return bytes; }
+}
+
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  if (p.startsWith('/__pdf-fonts/')) {
+    const f = path.join(fontDir, path.basename(p));
+    if (!fs.existsSync(f)) { res.writeHead(404); res.end(); return; }
+    res.writeHead(200, { 'Content-Type': 'font/woff2' }); fs.createReadStream(f).pipe(res); return;
+  }
   if (base && p.startsWith(base)) p = p.slice(base.length) || '/';
   const tries = [p, p + '.html', path.join(p, 'index.html')];
   const file = tries.map((t) => path.join(dist, t)).find((f) => f.startsWith(dist) && fs.existsSync(f) && fs.statSync(f).isFile());
@@ -68,11 +96,12 @@ try {
     const out = path.join(dist, job.file);
     const page = await browser.newPage();
     await page.goto(`http://127.0.0.1:${port}${base}${job.page}`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => document.fonts.ready);
+    await settle(page);
     await page.emulateMedia({ media: 'print' });
     await page.pdf({ path: out, printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 }, ...job.pdf });
     await page.close();
-    const pages = (fs.readFileSync(out, 'latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+    fs.writeFileSync(out, await safe(fixPdf, fs.readFileSync(out)));      // نص عربي قابل للنسخ والبحث
+    const pages = await pageCount(fs.readFileSync(out));
     console.log(`[pdf] ${path.relative(process.cwd(), out)} · ${pages} صفحة · ${(fs.statSync(out).size / 1024).toFixed(0)} KB`);
   }
   // أجزاء السيرة (الغلاف، كل قسم، الخاتمة) تُدمج في متصفح الزائر لتصدير النسخة المخصّصة بمقاس A4 مباشرة
@@ -95,10 +124,12 @@ try {
     for (const [lp, route] of [['', '/profile'], ['en-', '/profile-en']]) {
       const cover = await browser.newPage();
       await cover.goto(`http://127.0.0.1:${port}${base}${route}?part=cover`, { waitUntil: 'networkidle' });
-      await cover.evaluate(() => document.fonts.ready);
+      await settle(cover);
       await cover.emulateMedia({ media: 'print' });
-      await cover.pdf({ path: path.join(parts, lp + 'cover.pdf'), printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
+      const coverFile = path.join(parts, lp + 'cover.pdf');
+      await cover.pdf({ path: coverFile, printBackground: true, format: 'A4', margin: { top: '14mm', right: '15mm', bottom: '17mm', left: '15mm' } });
       await cover.close();
+      fs.writeFileSync(coverFile, await safe(fixPdf, fs.readFileSync(coverFile)));
       for (const [pre, mode] of [['', ''], ['s-', '&mode=short']]) {
         plan.push(...ids.map((id) => [lp + pre + id, route, `part=sec&s=${encodeURIComponent(id)}&pack=1${mode}`, false]), [lp + pre + 'tail', route, `part=tail&pack=1${mode}`, true]);
       }
@@ -107,7 +138,7 @@ try {
     const one = async ([name, route, qs, tail]) => {
       const page = await browser.newPage({ viewport: { width: 680, height: 900 } });
       await page.goto(`http://127.0.0.1:${port}${base}${route}?${qs}`, { waitUntil: 'networkidle' });
-      await page.evaluate(() => document.fonts.ready);
+      await settle(page);
       await page.emulateMedia({ media: 'print' });
       const info = await page.evaluate((isTail) => {
         const shown = (e) => e.getClientRects().length > 0;
@@ -121,9 +152,18 @@ try {
       const out = path.join(parts, name + '.pdf');
       // يُقصّ أعلى الصفحة عند بداية القسم، فتبدأ الصفحة الطويلة من الحافة العليا للقسم
       await page.addStyleTag({ content: `@page{size:${info.w}px ${Math.ceil(info.top + info.h) + 2}px;margin:0}html,body{margin:0}` });
-      await page.pdf({ path: out, printBackground: true, width: `${info.w}px`, height: `${Math.ceil(info.top + info.h) + 2}px`, margin: { top: 0, right: 0, bottom: 0, left: 0 }, pageRanges: '1' });
+      const pageH = Math.ceil(info.top + info.h) + 2;
+      await page.pdf({ path: out, printBackground: true, width: `${info.w}px`, height: `${pageH}px`, margin: { top: 0, right: 0, bottom: 0, left: 0 }, pageRanges: '1' });
       await page.close();
-      manifest[name] = { w: info.w, top: info.top, h: info.h, pageH: Math.ceil(info.top + info.h) + 2, brk: info.brk, thead: info.thead };
+      // الصفحة الطويلة تُرسم في المتصفح مقصوصة على عدة صفحات A4، فلكل جزء (بين نقطتي قصّ) صفحة يحوي نصه وحده، ولرأس الجدول صفحة خاصة؛ كي لا يتكرر نص القسم كله في كل صفحة
+      const PT = 0.75, cut = [0, ...info.brk.map((b) => (info.top + b) * PT), pageH * PT];
+      const ranges = cut.slice(1).map((c, i) => [cut[i], c]);
+      if (info.thead) ranges.push([(info.top + info.thead[0]) * PT - 1, (info.top + info.thead[1]) * PT + 1]);
+      const bytes = fs.readFileSync(out);
+      let split = null;
+      try { split = await splitPdf(bytes, ranges); } catch (e) { console.warn(`[pdf] تعذّر توزيع نص ${name}: ${e.message}`); }
+      fs.writeFileSync(out, split || await safe(fixPdf, bytes));
+      manifest[name] = { w: info.w, top: info.top, h: info.h, pageH, brk: info.brk, thead: info.thead, ...(split ? { chunks: cut.length - 1, headPage: info.thead ? cut.length - 1 : -1 } : {}) };
       total += fs.statSync(out).size;
     };
     const queue = [...plan];
