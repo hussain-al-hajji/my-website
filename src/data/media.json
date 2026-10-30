@@ -194,15 +194,16 @@
   {
     "id": "m014",
     "section": "event",
-    "outlet": "مؤسسة مسك، الرياض",
+    "outlet": "مؤسسة محمد بن سلمان (مسك)",
     "title": "ضيف حوار في حفل ختام برنامج صنّاع المستقبل",
     "date": "2022",
-    "link": "",
+    "link": "https://www.youtube.com/watch?v=ZyOcyJLYvsQ",
     "image": "",
     "note": "بحضور شركاء البرنامج في مقر المؤسسة.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/misk-21-logo-light-ar-mvv81i40.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/misk-21-logo-light-ar-mvv81kdy.webp"
   },
   {
     "id": "m015",
