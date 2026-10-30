@@ -30,13 +30,13 @@
     "id": "m002",
     "section": "radio",
     "outlet": "راديو الإخبارية",
-    "title": "المعرض السعودي الدولي للتسويق الإلكتروني والتجارة الإلكترونية 2025",
+    "title": "المعرض السعودي الدولي للتسويق الإلكتروني والتجارة الإلكترونية",
     "date": "2025-05",
-    "link": "",
-    "image": "/img/media/m02.webp",
+    "link": "https://www.youtube.com/watch?v=sOECLtNHjRk",
+    "image": "",
     "note": "استضافة هاتفية ظهر الخميس 15 مايو للحديث عن المعرض المقام في جامعة الملك سعود بالرياض.",
     "short": "إذاعة الإخبارية",
-    "logo": "",
+    "logo": "/img/uploads/ekhbariya-mvv9ogjq.webp",
     "strip": true,
     "pdfLogo": "/img/media/logos/ekhbariya.webp"
   },
@@ -71,15 +71,16 @@
   {
     "id": "m005",
     "section": "radio",
-    "outlet": "إذاعة الإخبارية، برنامج الظهيرة",
+    "outlet": "إذاعة الإخبارية",
     "title": "تقرير مدى حول مبيعات التجارة الإلكترونية في السعودية",
     "date": "2025-01",
     "link": "https://x.com/alekhbariyaFM/status/1879317579623285169",
     "image": "/img/media/m03.webp",
     "note": "استضافة هاتفية.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv9p12y.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv9p3m6.webp"
   },
   {
     "id": "m006",
@@ -133,8 +134,9 @@
     "image": "",
     "note": "استضافة هاتفية.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv9r6rt.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv9r3ij.webp"
   },
   {
     "id": "m010",
@@ -156,11 +158,11 @@
     "outlet": "إذاعة بانوراما إف إم، برنامج إفطارك علينا",
     "title": "العائد على التطوع",
     "date": "2023-04",
-    "link": "",
+    "link": "www.youtube.com/watch?v=F6qJFFGpWSo",
     "image": "",
     "note": "استضافة هاتفية مع المذيع محمد الكردي، رمضان 1444 هـ.",
     "short": "إذاعة بانوراما إف إم",
-    "logo": "",
+    "logo": "/img/uploads/panorama-mvv9qor8.webp",
     "strip": true,
     "pdfLogo": "/img/media/logos/panorama.webp"
   },
