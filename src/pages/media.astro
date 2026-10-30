@@ -27,7 +27,7 @@ const items = media.filter((m) => secs.includes(m.section)).sort((a, b) => Strin
           const img = mediaImage(m);
           const inner = (<>
             <span class="mph">
-              {img ? <img src={href(img)} alt="" width="720" height="720" loading="lazy" decoding="async">
+              {img ? <img src={href(img)} alt="" width="720" height="450" loading="lazy" decoding="async">
                 : <span class="mph-ph"><span>{m.short || m.outlet}</span></span>}
               <span class="mtag">{MEDIA_SECTION[m.section]}</span>
             </span>

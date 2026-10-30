@@ -384,10 +384,10 @@ a.ccard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.09)}
 
 /* صفوف */
 /* صفحة الإعلام: مربعات متجاورة، لكل مشاركة صورتها أو معاينة رابط الخبر */
-.mgrid{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.mgrid{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
 .mcard{display:grid;grid-template-rows:auto 1fr;height:100%;background:#fff;border:1px solid var(--hair);border-radius:var(--r-card);overflow:clip;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.09)}
-.mph{position:relative;display:block;aspect-ratio:1;background:var(--tile-dark);overflow:clip}
+.mph{position:relative;display:block;aspect-ratio:16/10;background:var(--tile-dark);overflow:clip}
 .mph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
 a.mcard:hover .mph img{transform:scale(1.04)}
 .mph-ph{position:absolute;inset:0;display:grid;place-items:center;padding:22px;text-align:center;background:radial-gradient(120% 90% at 50% 0%,#2a2923,var(--tile-dark));color:var(--action-on-dark);font-weight:700;font-size:1.25rem;line-height:1.5}
