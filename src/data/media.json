@@ -200,12 +200,13 @@
     "outlet": "جولة مسك، الدمام",
     "title": "ضيف حوار على مسرح جولة مسك",
     "date": "2023",
-    "link": "",
+    "link": "https://www.youtube.com/watch?v=aNNCE8NkQBA",
     "image": "",
     "note": "مشاركة كضيف حوار بمناسبة مرور 10 سنوات على تأسيس مسك.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/misk-21-logo-light-ar-mvva3mig.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/misk-21-logo-light-ar-mvva3p1d.webp"
   },
   {
     "id": "m014",
