@@ -18,12 +18,13 @@
     "outlet": "بودكاست تبيان، جامعة الإمام محمد بن سعود الإسلامية",
     "title": "تطورك المهني تحت سقف واحد",
     "date": "2025-04",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/X2fwi78uk1o",
+    "image": "/img/uploads/20250521-101944-mvv7hj6o.webp",
     "note": "استضافة حوارية في بودكاست تبيان برعاية جامعة الإمام محمد بن سعود الإسلامية.",
     "short": "بودكاست تبيان",
-    "logo": "",
-    "strip": true
+    "logo": "/img/uploads/wctz-xby-400x400-mvv7jq56.webp",
+    "strip": true,
+    "pdfLogo": "/img/uploads/wctz-xby-400x400-mvv7jtuz.webp"
   },
   {
     "id": "m002",
@@ -45,11 +46,11 @@
     "outlet": "القناة الإخبارية، برنامج 120",
     "title": "أرقام الاقتصاد الرقمي والمعرفي في تقرير منجزات رؤية السعودية 2030 لعام 2024",
     "date": "2025-05",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/8ilVyXryg_o",
+    "image": "/img/uploads/mqdefault-mvv7lpn4.webp",
     "note": "استضافة مباشرة ضمن فقرات برنامج 120.",
     "short": "القناة الإخبارية",
-    "logo": "",
+    "logo": "/img/uploads/ekhbariya-mvv7kltw.webp",
     "strip": true,
     "pdfLogo": "/img/media/logos/ekhbariya.webp"
   },
@@ -59,12 +60,13 @@
     "outlet": "القناة الإخبارية، برنامج 120",
     "title": "حملة «اطلب بدري» من الهيئة العامة للنقل",
     "date": "2025-03",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/A3C2MGLCcnk",
+    "image": "/img/uploads/mqdefault-1-mvv7n0gn.webp",
     "note": "استضافة مباشرة ضمن فقرات برنامج 120.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv7n4ay.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv7n6lp.webp"
   },
   {
     "id": "m005",
