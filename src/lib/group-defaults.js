@@ -13,8 +13,9 @@ export const PROMPT_CAT = {
 export const MEDIA_SECTION = {
   tv: 'تلفزيون',
   radio: 'إذاعة',
-  press: 'صحافة ومقالات',
-  event: 'فعاليات',
+  press: 'صحف',
+  event: 'فعاليات، معارض، مؤتمرات',
+  podcast: 'بودكاست',
   'award-press': 'الصحافة عن التكريم',
   'award-tv': 'التلفزيون عن التكريم',
 };

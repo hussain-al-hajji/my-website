@@ -232,11 +232,15 @@
       },
       {
         "id": "press",
-        "title": "صحافة ومقالات"
+        "title": "صحف"
       },
       {
         "id": "event",
-        "title": "فعاليات"
+        "title": "فعاليات، معارض، مؤتمرات"
+      },
+      {
+        "id": "podcast",
+        "title": "بودكاست"
       },
       {
         "id": "award-press",
