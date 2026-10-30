@@ -140,14 +140,15 @@
     "id": "m010",
     "section": "tv",
     "outlet": "قناة أبوظبي",
-    "title": "على هامش القمة العالمية للحكومات والاجتماع العربي للقيادات الشابة في دبي",
+    "title": "لقاء تلفزيوني على هامش القمة العالمية للحكومات والاجتماع العربي للقيادات الشابة في دبي",
     "date": "2023-02",
-    "link": "",
+    "link": "https://www.youtube.com/watch?v=3ltIwBKclyA",
     "image": "",
     "note": "مقابلة بالبث المباشر.",
     "short": "قناة أبوظبي",
-    "logo": "",
-    "strip": true
+    "logo": "/img/uploads/images-mvv7z1h9.webp",
+    "strip": true,
+    "pdfLogo": "/img/uploads/images-mvv7z3ow.webp"
   },
   {
     "id": "m011",
