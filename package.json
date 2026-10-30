@@ -5,11 +5,11 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/seo-audit.mjs && node scripts/make-pdf.mjs",
+    "build": "node scripts/link-previews.mjs && astro build && node scripts/seo-audit.mjs && node scripts/make-pdf.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test \"worker/test/*.test.js\"",
-    "build:site": "astro build && node scripts/seo-audit.mjs"
+    "build:site": "node scripts/link-previews.mjs && astro build && node scripts/seo-audit.mjs"
   },
   "dependencies": {
     "astro": "6.4.8",

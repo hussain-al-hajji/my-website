@@ -8,7 +8,11 @@ import { PROMPT_CAT, MEDIA_SECTION, PARTNER_GROUP, BIO_SECTION, resolveGroups, g
 import rawRecords from '../data/records.json';
 import { archivedRecords } from './calendar.js';
 import media from '../data/media.json';
+import linkPreviews from '../data/link-previews.json';
 import courses from '../data/courses.json';
+
+/** صورة المشاركة الإعلامية: المرفقة، وإلا صورة معاينة رابط الخبر (تُجلب عند البناء). */
+export const mediaImage = (m) => m.image || (m.link && linkPreviews[m.link]) || '';
 
 const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 export const SITE_URL = (import.meta.env.SITE || 'https://hussain-al-hajji.com').replace(/\/$/, '');

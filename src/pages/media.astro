@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import media from '../data/media.json';
-import { href, dateAr, norm, getGroups, groupTitle } from '../lib/site.js';
+import { href, dateAr, norm, getGroups, groupTitle, mediaImage } from '../lib/site.js';
 
 // أقسام الصفحة من لوحة التحكم؛ أقسام «التكريم» (award-*) تُعرض في صفحة رواد الشباب العربي
 const allGroups = getGroups('media', media);
@@ -22,18 +22,26 @@ const items = media.filter((m) => secs.includes(m.section)).sort((a, b) => Strin
         </div>
       </div>
       <p class="result-count" data-count-out aria-live="polite"></p>
-      <ul class="rows">
+      <ul class="mgrid">
         {items.map((m) => {
+          const img = mediaImage(m);
           const inner = (<>
-            <span class="y">{dateAr(m.date, false) || ''}</span>
-            <div><b>{m.title}</b><span class="sub">{m.outlet}</span>{m.note && <span class="sub">{m.note}</span>}</div>
-            <span class="tag">{MEDIA_SECTION[m.section]}</span>
+            <span class="mph">
+              {img ? <img src={href(img)} alt="" width="720" height="720" loading="lazy" decoding="async">
+                : <span class="mph-ph"><span>{m.short || m.outlet}</span></span>}
+              <span class="mtag">{MEDIA_SECTION[m.section]}</span>
+            </span>
+            <span class="mbody">
+              <span class="mdate">{dateAr(m.date, false) || ''}</span>
+              <b>{m.title}</b>
+              <span class="sub">{m.outlet}</span>
+            </span>
           </>);
           return (
             <li data-item data-sec={m.section} data-text={norm([m.title, m.outlet, m.note].join(' '))}>
               {m.link
-                ? <a class="row" href={m.link} rel="noopener" style="grid-template-columns:120px 1fr auto">{inner}</a>
-                : <div class="row" style="grid-template-columns:120px 1fr auto">{inner}</div>}
+                ? <a class="mcard" href={m.link} rel="noopener">{inner}</a>
+                : <div class="mcard">{inner}</div>}
             </li>
           );
         })}
