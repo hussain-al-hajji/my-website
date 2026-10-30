@@ -50,9 +50,9 @@
     "image": "",
     "note": "استضافة هاتفية ظهر الخميس 15 مايو للحديث عن المعرض المقام في جامعة الملك سعود بالرياض.",
     "short": "إذاعة الإخبارية",
-    "logo": "/img/uploads/ekhbariya-mvv9ogjq.webp",
+    "logo": "",
     "strip": true,
-    "pdfLogo": "/img/media/logos/ekhbariya.webp"
+    "pdfLogo": ""
   },
   {
     "id": "m003",
@@ -92,9 +92,9 @@
     "image": "/img/media/m03.webp",
     "note": "استضافة هاتفية.",
     "short": "",
-    "logo": "/img/uploads/ekhbariya-mvv9p12y.webp",
+    "logo": "",
     "strip": false,
-    "pdfLogo": "/img/uploads/ekhbariya-mvv9p3m6.webp"
+    "pdfLogo": ""
   },
   {
     "id": "m006",
@@ -148,9 +148,9 @@
     "image": "",
     "note": "استضافة هاتفية.",
     "short": "",
-    "logo": "/img/uploads/ekhbariya-mvv9r6rt.webp",
+    "logo": "",
     "strip": false,
-    "pdfLogo": "/img/uploads/ekhbariya-mvv9r3ij.webp"
+    "pdfLogo": ""
   },
   {
     "id": "m010",
