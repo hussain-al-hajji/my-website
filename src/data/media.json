@@ -166,14 +166,14 @@
   {
     "id": "m012",
     "section": "tv",
-    "outlet": "روتانا خليجية، برنامج يا هلا",
-    "title": "التجارة الإلكترونية",
+    "outlet": "روتانا خليجية",
+    "title": "التجارة الإلكترونية ما بين التنظيم والتحايل",
     "date": "2022-10",
-    "link": "",
+    "link": "https://www.youtube.com/watch?v=Xcb6MxXnthA",
     "image": "",
     "note": "مقابلة تلفزيونية.",
     "short": "روتانا خليجية",
-    "logo": "",
+    "logo": "/img/uploads/rotana-khalejia-mvv7xm25.webp",
     "strip": true,
     "pdfLogo": "/img/media/logos/rotana.webp"
   },
