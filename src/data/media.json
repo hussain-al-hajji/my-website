@@ -112,15 +112,16 @@
   {
     "id": "m008",
     "section": "tv",
-    "outlet": "القناة الإخبارية، برنامج 120",
+    "outlet": "القناة الإخبارية",
     "title": "تصنيف المملكة ضمن الدول العشر الأعلى نمواً في قطاع التجارة الإلكترونية",
     "date": "2024-01",
-    "link": "",
-    "image": "",
+    "link": "https://youtu.be/hbAVhMrDYz8",
+    "image": "/img/uploads/mqdefault-4-mvv7s6m7.webp",
     "note": "استضافة مباشرة.",
     "short": "",
-    "logo": "",
-    "strip": false
+    "logo": "/img/uploads/ekhbariya-mvv7sar1.webp",
+    "strip": false,
+    "pdfLogo": "/img/uploads/ekhbariya-mvv7scyg.webp"
   },
   {
     "id": "m009",
