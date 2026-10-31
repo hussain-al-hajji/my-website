@@ -193,8 +193,7 @@ const jsonld = [
   </div>
 </section>
 
-<section class="sec pring-sec" aria-labelledby="pr-h">
-  <div class="wide sec-head"><h2 id="pr-h" data-in>إعلانات البرامج.</h2><a class="more" href={href('/gallery#posters')}>كل الإعلانات في المعرض</a></div>
+<section class="sec pring-sec" aria-label="إعلانات البرامج">
   <div class="pring" id="pring" dir="ltr" aria-label="إعلانات البرامج: اسحب للتحريك">
     <div class="pring-ring">
       {ringPosters.map((p) => (
@@ -204,6 +203,7 @@ const jsonld = [
       ))}
     </div>
   </div>
+  <div class="wide pring-more"><a class="more" href={href('/gallery#posters')}>جميع إعلانات البرامج والدورات</a></div>
 </section>
 
 <section class="sec" aria-labelledby="hl">

@@ -1294,7 +1294,8 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .mq-projects .mq-track span{font-size:clamp(1.05rem,.95rem + .4vw,1.3rem);font-weight:700;color:#8d8c85;white-space:nowrap}
 
 /* حلقة إعلانات البرامج: صور مصطفة على دائرة ثلاثية الأبعاد، والمقدّمة بألوانها وما بعدها يبهت */
-.pring-sec{padding-block:24px 72px;overflow:clip}
+.pring-sec{padding-block:8px 64px;overflow:clip}
+.pring-more{margin-top:20px}
 .pring{--ph:400px;position:relative;height:calc(var(--ph) + 56px);perspective:1000px;perspective-origin:50% 45%;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;margin-top:8px}
 .pring.grab{cursor:grabbing}
 .pring-ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}

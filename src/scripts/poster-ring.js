@@ -6,10 +6,10 @@ if (box) {
   const items = [...ring.children];
   const GAP = 34, AUTO = 46;                      // فراغ بين الإعلانات (بكسل)، وسرعة الدوران التلقائي (بكسل/ثانية على المقدّمة)
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let R = 800, angles = [], rot = 0, started = false, vel = 0, drag = null, moved = 0, idleAt = 0, raf = 0, visible = true;
+  let R = 800, widths = [], angles = [], rot = 0, started = false, vel = 0, drag = null, moved = 0, idleAt = 0, raf = 0, visible = true;
 
   const layout = () => {
-    const ws = items.map((el) => el.offsetWidth || 240);
+    const ws = widths = items.map((el) => el.offsetWidth || 240);
     const total = ws.reduce((a, w) => a + w + GAP, 0);
     R = total / (2 * Math.PI);
     let pos = 0;
@@ -26,7 +26,7 @@ if (box) {
     items.forEach((el, i) => {
       const d = Math.abs(norm(angles[i] - rot));                       // بُعد الإعلان عن المقدّمة بالدرجات
       const px = (d * Math.PI / 180) * R;                               // وبالبكسل على محيط الدائرة
-      const e = Math.max(0, 1 - px / (Math.min(box.clientWidth, 1100) * 0.62));   // 1 في المقدّمة وتتناقص حتى 0
+      const e = Math.max(0, Math.min(1, 1 - Math.max(0, px - widths[i] * 0.14) / (Math.min(box.clientWidth, 1100) * 0.5 + widths[i] * 0.4)));   // 1 في المقدّمة وتتناقص حتى 0
       el.style.opacity = d > 105 ? 0 : (0.22 + 0.78 * e * e).toFixed(3);
       el.style.filter = `saturate(${(0.08 + 0.92 * e * e).toFixed(3)}) brightness(${(0.82 + 0.18 * e).toFixed(3)})`;
       el.style.visibility = d > 105 ? 'hidden' : 'visible';
@@ -72,6 +72,12 @@ if (box) {
   box.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { vel += (e.key === 'ArrowLeft' ? 1 : -1) * 90; idleAt = performance.now() + 2500; e.preventDefault(); } });
 
   new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { threshold: 0.05 }).observe(box);
+  // الصور خلف الحلقة أو على جانبيها لا يعدّها المتصفح (خاصة سفاري) ظاهرة فلا يحمّل الكسول منها؛ فتُحمَّل كلها عند الاقتراب من القسم
+  new IntersectionObserver(([en], obs) => {
+    if (!en.isIntersecting) return;
+    items.forEach((el) => { const im = el.querySelector('img'); if (im) im.loading = 'eager'; });
+    obs.disconnect();
+  }, { rootMargin: '800px 0px' }).observe(box);
   new ResizeObserver(layout).observe(box);
   items.forEach((el) => el.querySelector('img')?.addEventListener('load', layout));
   layout();
