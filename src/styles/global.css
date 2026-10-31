@@ -614,8 +614,6 @@ details.acc .in-acc{padding-bottom:28px}
 .xp-ico{color:var(--action);display:block;padding-top:6px}
 .xp-ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .xp-cols p{color:var(--ink-2);line-height:2;text-align:justify;text-justify:inter-word}
-.xp-tags{list-style:none;display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
-.xp-tags li{border:1px solid #e1d3b3;background:#fbf4e7;color:var(--action);padding:10px 22px;border-radius:6px;font-size:var(--t-small)}
 .xp-nav{display:none}
 @media (max-width:820px){
   .xp{padding-block:64px 52px}
@@ -626,7 +624,6 @@ details.acc .in-acc{padding-bottom:28px}
   .xp-cols p{font-size:var(--t-small);line-height:1.95}
   .xp-nav{display:flex;gap:12px;justify-content:center;margin-top:20px}
   .xp-nav button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--hair);background:#fff;font-size:22px;cursor:pointer;color:var(--ink)}
-  .xp-tags{margin-top:32px}
 }
 /* نصوص الفقرات متساوية الجوانب في كل الموقع */
 .prose p,.prose li,.lede,.ccard p,.kit p,.kit .bul li,.tl p,.rec details p,.ft-title,.notice,.subscribe p,.contact-box dd,.deflist span,.field small,.sec-sub p,.award-text p,.row .sub{text-align:justify;text-justify:inter-word}
@@ -1295,3 +1292,13 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .hslide:not(.main)::before{content:"";position:absolute;inset:-30px;background:var(--bg) center/cover;filter:blur(22px) brightness(.78);transform:scale(1.1)}
 .hero figure .hslide:not(.main) img{position:relative;object-fit:contain;object-position:50% 50%}
 .mq-projects .mq-track span{font-size:clamp(1.05rem,.95rem + .4vw,1.3rem);font-weight:700;color:#8d8c85;white-space:nowrap}
+
+/* حلقة إعلانات البرامج: صور مصطفة على دائرة ثلاثية الأبعاد، والمقدّمة بألوانها وما بعدها يبهت */
+.pring-sec{padding-block:24px 72px;overflow:clip}
+.pring{--ph:400px;position:relative;height:calc(var(--ph) + 56px);perspective:1000px;perspective-origin:50% 45%;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;margin-top:8px}
+.pring.grab{cursor:grabbing}
+.pring-ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.pring-it{position:absolute;top:50%;left:50%;padding:0;border:0;background:#e9e8e3;--w:min(calc(var(--ph) * var(--ar)),84vw);width:var(--w);aspect-ratio:var(--ar);margin:calc(var(--w) / var(--ar) / -2) 0 0 calc(var(--w) / -2);border-radius:22px;overflow:clip;box-shadow:0 14px 34px rgba(0,0,0,.14);backface-visibility:hidden;-webkit-backface-visibility:hidden;cursor:inherit;will-change:opacity,filter}
+.pring-it img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+@media (max-width:700px){.pring{--ph:300px}.pring-it{border-radius:18px}}
+@media (prefers-reduced-motion:reduce){.pring-ring{will-change:auto}}

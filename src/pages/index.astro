@@ -10,6 +10,8 @@ import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
 import projects from '../data/projects.json';
 import media from '../data/media.json';
 import ring from '../data/ring.json';
+import posters from '../data/posters.json';
+import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 import pagesData from '../data/pages.json';
@@ -18,6 +20,13 @@ import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, r
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
+// حلقة إعلانات البرامج: أحدث الإعلانات من صفحة المعرض، وكل إعلان بنسبة أبعاده الحقيقية (عريض يبقى عريضاً وطولي يبقى طولياً)
+const POSTER_COUNT = 20;
+const ringPosters = await Promise.all([...posters].sort((a, b) => b.year - a.year).slice(0, POSTER_COUNT).map(async (p) => {
+  let r = 1;
+  try { const m = await sharp(path.join('public', p.image)).metadata(); r = m.width / m.height; } catch { /* تبقى مربعة */ }
+  return { ...p, r: Math.round(r * 1000) / 1000 };
+}));
 const xpItems = site.experience.items;
 const xpSplit = Math.ceil(xpItems.length / 2);
 const xpA = xpItems.slice(0, xpSplit), xpB = xpItems.slice(xpSplit);
@@ -181,7 +190,19 @@ const jsonld = [
       <button type="button" id="xpPrev" aria-label="السابق">›</button>
       <button type="button" id="xpNext" aria-label="التالي">‹</button>
     </div>
-    <ul class="xp-tags">{site.experience.tags.map((t) => <li>{t}</li>)}</ul>
+  </div>
+</section>
+
+<section class="sec pring-sec" aria-labelledby="pr-h">
+  <div class="wide sec-head"><h2 id="pr-h" data-in>إعلانات البرامج.</h2><a class="more" href={href('/gallery#posters')}>كل الإعلانات في المعرض</a></div>
+  <div class="pring" id="pring" dir="ltr" aria-label="إعلانات البرامج: اسحب للتحريك">
+    <div class="pring-ring">
+      {ringPosters.map((p) => (
+        <button class="pring-it" type="button" style={`--ar:${p.r}`} data-lightbox data-group="home-posters" data-full={href(p.image)} data-cap={p.caption || `إعلان برنامج ${p.year}`}>
+          <img src={href(p.image)} alt={p.caption || `إعلان برنامج ${p.year}`} loading="lazy" decoding="async" draggable="false">
+        </button>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -447,5 +468,6 @@ const jsonld = [
 
 <script type="application/json" id="homeData" set:html={JSON.stringify(homeData)}></script>
 <script>import '../scripts/home.js';</script>
+<script>import '../scripts/poster-ring.js';</script>
 <script>import '../scripts/wow.js';</script>
 </Base>
