@@ -11,6 +11,13 @@ export const CITIES = [
   ['البحرين', ['البحرين'], 26.23, 50.59], ['الكويت', ['الكويت'], 29.37, 47.98],
 ];
 
+/** أسماء المدن بالإنجليزية (لملف البورتفوليو الإنجليزي) */
+export const CITY_EN = {
+  'الأحساء': 'Al-Ahsa', 'الرياض': 'Riyadh', 'الدمام والخبر': 'Dammam & Khobar', 'العلا': 'AlUla', 'القصيم': 'Qassim', 'المدينة المنورة': 'Madinah', 'تبوك': 'Tabuk',
+  'أبها': 'Abha', 'مكة': 'Makkah', 'جدة': 'Jeddah', 'حائل': 'Hail', 'نجران': 'Najran', 'الجوف': 'Al-Jouf', 'الطائف': 'Taif', 'ينبع': 'Yanbu', 'جازان': 'Jazan',
+  'حفر الباطن': 'Hafar Al-Batin', 'عُمان': 'Oman', 'الإمارات': 'UAE', 'قطر': 'Qatar', 'البحرين': 'Bahrain', 'الكويت': 'Kuwait',
+};
+
 /** إسقاط خط العرض والطول على مساحة الخريطة 1000×600 */
 export const P = (lat, lon) => [((lon - 35) / (60 - 35)) * 1000, ((31 - lat) / (31 - 15.8)) * 600];
 
@@ -27,7 +34,7 @@ export function cityCounts(records) {
 }
 
 /** عناصر الخريطة جاهزة للرسم: أقواس من الأحساء، ودوائر بحجم المشاركات، وأسماء المدن الكبيرة */
-export function mapShapes(records) {
+export function mapShapes(records, wideLabels = false) {
   const counts = cityCounts(records);
   const home = P(25.38, 49.59);
   const POS = { 'الأحساء': 'd', 'الدمام والخبر': 'u', 'الإمارات': 'r', 'قطر': 'r', 'البحرين': 'u', 'المدينة المنورة': 'u' };
@@ -40,7 +47,7 @@ export function mapShapes(records) {
     }
     let label = null;
     if (n >= 3 || isHome) {
-      const pos = POS[c[0]] || (x < 110 ? 'r' : 'l');
+      const pos = POS[c[0]] || (x < (wideLabels ? 190 : 110) ? 'r' : 'l');
       let lx = x, ly = y + 5, an = 'middle';
       if (pos === 'l') { lx = x - rad - 8; an = 'start'; } else if (pos === 'r') { lx = x + rad + 8; an = 'end'; } else if (pos === 'u') { ly = y - rad - 30; } else { ly = y + rad + 20; }
       label = { x: lx, y: ly, anchor: an };

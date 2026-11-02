@@ -1303,3 +1303,10 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .pring-it img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 @media (max-width:700px){.pring{--ph:300px}.pring-it{border-radius:18px}}
 @media (prefers-reduced-motion:reduce){.pring-ring{will-change:auto}}
+
+/* نافذة لغة البورتفوليو */
+.pf-dlg .pf-en{display:block;font-size:var(--t-small);font-weight:500;color:var(--ink-2);margin-top:2px}
+.pf-dlg .cv-sub .pf-en{margin-top:4px}
+.pf-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-block:6px 14px}
+.pf-opts .pill{display:grid;justify-items:center;gap:0;padding:16px 12px;line-height:1.35;font-size:1.0625rem}
+.pf-opts .pill small{font-size:var(--t-fine);font-weight:500;opacity:.8}

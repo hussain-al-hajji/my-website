@@ -5,7 +5,11 @@
     "title": "مدرب التهيئة المهنية للباحثين عن عمل في برنامج «التمكين والتوظيف» لمتدربي شركة البحر الأحمر الدولية، بالتعاون مع منظمة التعليم من أجل التوظيف efe",
     "orgs": "البحر الأحمر الدولية، منظمة التعليم من أجل التوظيف (efe)",
     "logo": "/img/featured/f01.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Career readiness trainer for job seekers in the \"Empowerment and Employment\" program for Red Sea International trainees, in cooperation with Education For Employment (efe)",
+      "orgs": "Red Sea International, Education For Employment (efe)"
+    }
   },
   {
     "id": "ft02",
@@ -13,7 +17,11 @@
     "title": "مرشد مهني معتمد (Career Coach) لدى الأكاديمية السعودية الرقمية للمشاركين في معسكرات همة الرقمية",
     "orgs": "الأكاديمية السعودية الرقمية، Ironhack",
     "logo": "/img/featured/f02.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Certified Career Coach at the Saudi Digital Academy for participants in the Hemma Digital bootcamps",
+      "orgs": "Saudi Digital Academy, Ironhack"
+    }
   },
   {
     "id": "ft03",
@@ -21,7 +29,11 @@
     "title": "مدرب ومرشد ريادة الأعمال والتجارة الإلكترونية للمشاريع الناشئة في مسرّعة نيوم، ثلاثة أشهر لكل دفعة",
     "orgs": "نيوم، Blossom Accelerator",
     "logo": "/img/featured/f03.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-commerce and entrepreneurship trainer and mentor for startups at the NEOM accelerator, three months per cohort",
+      "orgs": "NEOM, Blossom Accelerator"
+    }
   },
   {
     "id": "ft04",
@@ -29,7 +41,11 @@
     "title": "موجّه ومقيّم للمشاريع والفرق في النسختين الثانية والثالثة من معسكر Tech Founders Bootcamp، أربع دفعات لكل نسخة",
     "orgs": "وزارة الاتصالات وتقنية المعلومات، مركز ريادة الأعمال الرقمية (كود)",
     "logo": "/img/featured/f04.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Mentor and evaluator for projects and teams in the second and third editions of the Tech Founders Bootcamp, four cohorts per edition",
+      "orgs": "Ministry of Communications and Information Technology, Digital Entrepreneurship Center (Code)"
+    }
   },
   {
     "id": "ft05",
@@ -37,7 +53,11 @@
     "title": "خبير ومدرب للمدربين ومدرّس مقرر ريادة الأعمال في الكليات التقنية التابعة للمؤسسة العامة للتدريب التقني والمهني بالتعاون مع كليات التميز",
     "orgs": "المؤسسة العامة للتدريب التقني والمهني، كليات التميز",
     "logo": "/img/featured/f05.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Expert, trainer of trainers, and instructor of the entrepreneurship course at the technical colleges of the Technical and Vocational Training Corporation, in cooperation with the Colleges of Excellence",
+      "orgs": "Technical and Vocational Training Corporation, Colleges of Excellence"
+    }
   },
   {
     "id": "ft06",
@@ -45,7 +65,11 @@
     "title": "ميسّر لدعم المشاريع المشاركة في برنامج تجسير، بنك التنمية الاجتماعية",
     "orgs": "بنك التنمية الاجتماعية، برنامج تجسير",
     "logo": "/img/featured/f06.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Facilitator supporting the projects in the Tajseer program, Social Development Bank",
+      "orgs": "Social Development Bank, Tajseer Program"
+    }
   },
   {
     "id": "ft07",
@@ -53,7 +77,11 @@
     "title": "مدرب ورش تأهيل المتطوع الصحي، برنامج التطور الصحي بوزارة الصحة",
     "orgs": "برنامج التطوع الصحي، وزارة الصحة",
     "logo": "/img/featured/f07.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Trainer of health volunteer qualification workshops, Health Development Program, Ministry of Health",
+      "orgs": "Health Volunteering Program, Ministry of Health"
+    }
   },
   {
     "id": "ft08",
@@ -61,7 +89,11 @@
     "title": "مدرب التجارة الإلكترونية والتسويق الرقمي والعمل الحر في معسكر ريادة الأعمال الرقمية ضمن مبادرة همّة الرقمية، مركز بديّة الثقافي بسلطنة عمان (12 يوماً، 50 ساعة تدريبية واستشارية)",
     "orgs": "الشركة العمانية للغاز الطبيعي المسال، وزارة النقل والاتصالات وتقنية المعلومات (عُمان)، مركز بدية الثقافي",
     "logo": "/img/featured/f08.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-commerce, digital marketing, and freelancing trainer at the Digital Entrepreneurship Bootcamp within the Hemma Digital initiative, Badiyah Cultural Center, Sultanate of Oman (12 days, 50 training and consulting hours)",
+      "orgs": "Oman LNG, Ministry of Transport, Communications and Information Technology (Oman), Badiyah Cultural Center"
+    }
   },
   {
     "id": "ft09",
@@ -69,7 +101,11 @@
     "title": "مدرب صناعة العلامة التجارية الشخصية في المخيم الصيفي برعاية وزارة الثقافة والشباب بالإمارات، 2023 و2024",
     "orgs": "وزارة الثقافة والشباب (الإمارات)، المخيم الصيفي",
     "logo": "/img/featured/f09.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Personal branding trainer at the summer camp sponsored by the UAE Ministry of Culture and Youth, 2023 and 2024",
+      "orgs": "Ministry of Culture and Youth (UAE), Summer Camp"
+    }
   },
   {
     "id": "ft10",
@@ -77,7 +113,11 @@
     "title": "مشرف تعليمي لدعم المتدربين في دورة التسويق الرقمي، شراكة مسك ويوداستي",
     "orgs": "مؤسسة مسك، Udacity",
     "logo": "/img/featured/f10.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Learning supervisor supporting trainees in the digital marketing course, a Misk and Udacity partnership",
+      "orgs": "Misk Foundation, Udacity"
+    }
   },
   {
     "id": "ft11",
@@ -85,7 +125,11 @@
     "title": "مدرب معسكر إدارة المتاجر الإلكترونية لأصحاب المنشآت، منشآت وشركة الخليج للتدريب، في عدة مدن بالمملكة",
     "orgs": "منشآت، شركة الخليج للتدريب",
     "logo": "/img/featured/f11.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Trainer at the e-store management bootcamp for business owners, by Monsha'at and Gulf Training Company, in several cities across the Kingdom",
+      "orgs": "Monsha'at, Gulf Training Company"
+    }
   },
   {
     "id": "ft12",
@@ -93,7 +137,11 @@
     "title": "مدرب التجارة الإلكترونية والتسويق الرقمي في برنامج «قادر» لتمكين ذوي الإعاقة البصرية، جمعية إبصار الخيرية ومشروع همم جميل",
     "orgs": "جمعية إبصار الخيرية، همم جميل",
     "logo": "/img/featured/f12.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-commerce and digital marketing trainer in the \"Qader\" program empowering people with visual impairment, Ebsar Charity Association and the Humam Jameel project",
+      "orgs": "Ebsar Charity Association, Humam Jameel"
+    }
   },
   {
     "id": "ft13",
@@ -101,7 +149,11 @@
     "title": "مطوّر أعمال ومرشد ومدرب في برنامج «رواد السياحة»، وزارة السياحة وشركة بياك",
     "orgs": "وزارة السياحة، بياك",
     "logo": "/img/featured/f13.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Business developer, mentor, and trainer in the \"Tourism Pioneers\" program, Ministry of Tourism and Biac",
+      "orgs": "Ministry of Tourism, Biac"
+    }
   },
   {
     "id": "ft14",
@@ -109,7 +161,11 @@
     "title": "مدرب ومستشار التجارة الإلكترونية والعمل الحر في معسكر «همم جميل» لأصحاب الاحتياجات الخاصة، مجتمع جميل وأكاديمية نفيسة شمس",
     "orgs": "مجتمع جميل، أكاديمية نفيسة شمس",
     "logo": "/img/featured/f14.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "E-commerce and freelancing trainer and consultant at the \"Humam Jameel\" bootcamp for people with special needs, Jameel Community and Nafisa Shams Academy",
+      "orgs": "Jameel Community, Nafisa Shams Academy"
+    }
   },
   {
     "id": "ft15",
@@ -117,7 +173,11 @@
     "title": "كاتب محتوى لكتيبات «ثمين» لرفع الوعي بأساسيات الاستثمار والتداول، برعاية هيئة السوق المالية",
     "orgs": "هيئة السوق المالية، ثمين",
     "logo": "/img/featured/f15.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Content writer for the \"Thameen\" booklets that raise awareness of investment and trading basics, sponsored by the Capital Market Authority",
+      "orgs": "Capital Market Authority, Thameen"
+    }
   },
   {
     "id": "ft16",
@@ -125,6 +185,10 @@
     "title": "كاتب محتوى الأدلة الإرشادية في التجارة الإلكترونية لموقع منشآت",
     "orgs": "منشآت",
     "logo": "/img/partners/l04.webp",
-    "link": ""
+    "link": "",
+    "en": {
+      "title": "Content writer for the e-commerce guides on the Monsha'at website",
+      "orgs": "Monsha'at"
+    }
   }
 ]

@@ -120,3 +120,15 @@ if (dlg && typeof dlg.showModal === 'function') {
   }));
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 }
+
+// البورتفوليو: أي رابط إلى ملف الأعمال PDF يفتح نافذة اختيار اللغة (عربي أو إنجليزي) ثم يُنزَّل الملف المختار
+const pf = document.getElementById('pfDialog');
+if (pf && typeof pf.showModal === 'function') {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[href$="hussain-al-hajji-portfolio.pdf"]');
+    if (!a || a.closest('dialog') || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault(); pf.showModal(); pf.querySelector('h2').focus();
+  });
+  pf.querySelectorAll('a[data-pf]').forEach((l) => l.addEventListener('click', () => setTimeout(() => pf.close(), 150)));
+  pf.addEventListener('click', (e) => { if (e.target === pf) pf.close(); });
+}

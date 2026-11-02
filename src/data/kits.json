@@ -50,7 +50,8 @@
     ],
     "en": {
       "short": "AI Applications in E-Commerce",
-      "duration": "5 sessions, 10 hours, 16 topics"
+      "duration": "5 sessions, 10 hours, 16 topics",
+      "headline": "From using the tool to building value"
     }
   },
   {
@@ -100,7 +101,8 @@
     ],
     "en": {
       "short": "Excellence in B2B Relationship Management",
-      "duration": "2 days, 10 hours, 15 topics"
+      "duration": "2 days, 10 hours, 15 topics",
+      "headline": "From a single client to a complete system"
     }
   },
   {
@@ -155,7 +157,8 @@
     ],
     "en": {
       "short": "Commerce Transformation via Mobile",
-      "duration": "5 units, 25 hours, 16 topics"
+      "duration": "5 units, 25 hours, 16 topics",
+      "headline": "From a store idea to scalable growth"
     }
   },
   {
@@ -207,7 +210,8 @@
     ],
     "en": {
       "short": "Interactive Project Management",
-      "duration": "5 stations, 1 hour, 5 topics"
+      "duration": "5 stations, 1 hour, 5 topics",
+      "headline": "From an idea to reality in one hour"
     }
   },
   {
@@ -256,7 +260,8 @@
     ],
     "en": {
       "short": "Sales Intelligence in Retail",
-      "duration": "3 days, 9 hours, 17 topics"
+      "duration": "3 days, 9 hours, 17 topics",
+      "headline": "From numbers to a decision system"
     }
   },
   {
@@ -302,7 +307,8 @@
     ],
     "en": {
       "short": "The Skilled Trainer's Kit",
-      "duration": "2 days, 8 hours, 12 topics"
+      "duration": "2 days, 8 hours, 12 topics",
+      "headline": "From experience to influence"
     }
   },
   {
@@ -350,7 +356,8 @@
     ],
     "en": {
       "short": "The Empowered Leader",
-      "duration": "3 days, 16 hours, 20 topics"
+      "duration": "3 days, 16 hours, 20 topics",
+      "headline": "From the appointment decision to effective leadership"
     }
   },
   {
@@ -402,7 +409,8 @@
     ],
     "en": {
       "short": "Digital Marketing",
-      "duration": "5 units, 32.5 hours, 15 topics"
+      "duration": "5 units, 32.5 hours, 15 topics",
+      "headline": "From a random post to a campaign that creates demand"
     }
   },
   {
@@ -452,7 +460,8 @@
     ],
     "en": {
       "short": "Escaping the Queue",
-      "duration": "4 sessions, 11 hours, 12 topics"
+      "duration": "4 sessions, 11 hours, 12 topics",
+      "headline": "From waiting to taking the initiative"
     }
   },
   {
@@ -503,7 +512,8 @@
     ],
     "en": {
       "short": "Digital Entrepreneurship & E-Commerce",
-      "duration": "5 sessions, 24 hours, 10 topics"
+      "duration": "5 sessions, 24 hours, 10 topics",
+      "headline": "From an idea to a project you can launch"
     }
   },
   {
@@ -560,7 +570,8 @@
     ],
     "en": {
       "short": "AI: From Conversation to Systems",
-      "duration": "3 sessions, 12 hours, 9 topics"
+      "duration": "3 sessions, 12 hours, 9 topics",
+      "headline": "From a question in a chat to a system that serves your work"
     }
   },
   {
@@ -616,7 +627,8 @@
     ],
     "en": {
       "short": "AI for Strategic Leadership",
-      "duration": "7 sessions, 14 hours, 7 topics"
+      "duration": "7 sessions, 14 hours, 7 topics",
+      "headline": "From the noise to the decision, and from experimenting to value"
     }
   }
 ]

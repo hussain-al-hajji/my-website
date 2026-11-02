@@ -24,7 +24,32 @@
         "title": "الاستفادة من التكنولوجيا",
         "text": "أستخدم أدوات ومنصات حديثة لتقديم محتوى تدريبي متنوع يشمل الدورات الإلكترونية والبودكاست والمحتوى الرقمي المرئي والمسموع، ليصل المتدربون إلى المعلومات بطرق متعددة ومناسبة."
       }
-    ]
+    ],
+    "en": {
+      "title": "My Training Methodology",
+      "pillars": [
+        {
+          "title": "Empowerment before instruction",
+          "text": "The trainer's role is not limited to delivering information; it extends to empowering trainees to discover and develop their abilities. I aim to create a learning environment that encourages critical thinking and independence, helping trainees apply what they learn in their own contexts."
+        },
+        {
+          "title": "Interaction and hands-on practice",
+          "text": "I make sure courses are interactive, integrating practical activities and case studies that reflect real challenges, which deepens trainees' understanding and their ability to apply skills in real situations."
+        },
+        {
+          "title": "Customization to needs",
+          "text": "Every training group has its own needs, so I tailor the content and training methods to the trainees' backgrounds and goals, to get the most out of the program."
+        },
+        {
+          "title": "Continuity and support after training",
+          "text": "Learning does not end when the course ends. I provide ongoing support to trainees through mentoring sessions and follow-up on their progress, helping them overcome challenges in applying the skills they gained."
+        },
+        {
+          "title": "Making use of technology",
+          "text": "I use modern tools and platforms to deliver diverse training content, including e-courses, podcasts, and visual and audio digital content, so trainees can reach information in multiple suitable ways."
+        }
+      ]
+    }
   },
   "bio": {
     "title": "السيرة والإنجازات",
@@ -284,15 +309,18 @@
     "featured": [
       {
         "id": "g1",
-        "title": "الإرشاد المهني والتطوير الوظيفي"
+        "title": "الإرشاد المهني والتطوير الوظيفي",
+        "titleEn": "Career Counseling & Professional Development"
       },
       {
         "id": "g2",
-        "title": "التدريب والتيسير والتحكيم"
+        "title": "التدريب والتيسير والتحكيم",
+        "titleEn": "Training, Facilitation & Judging"
       },
       {
         "id": "g3",
-        "title": "كتابة المحتوى"
+        "title": "كتابة المحتوى",
+        "titleEn": "Content Writing"
       }
     ]
   }

@@ -58,6 +58,43 @@
     "cvHead": [
       "Digital Projects Founder | Business Trainer | Certified Career Counselor.",
       "Specialized in working with youth - Arab Youth Pioneers Award Winner (2025)."
+    ],
+    "portfolioRoles": [
+      "Business Trainer",
+      "Career Counselor",
+      "Youth Programs Consultant",
+      "Initiative Developer",
+      "Project Manager",
+      "Judge",
+      "Writer & Content Creator"
+    ],
+    "portfolioTopicExamples": [
+      "Project management fundamentals",
+      "Innovation in designing youth initiatives and programs",
+      "Developing young leaders",
+      "AI applications in business"
+    ],
+    "topics": [
+      {
+        "ar": "التجارة الإلكترونية",
+        "en": "E-commerce"
+      },
+      {
+        "ar": "المسار المهني",
+        "en": "Career path"
+      },
+      {
+        "ar": "العمل الحر",
+        "en": "Freelancing"
+      },
+      {
+        "ar": "ريادة الأعمال",
+        "en": "Entrepreneurship"
+      },
+      {
+        "ar": "مواضيع أخرى",
+        "en": "Other topics"
+      }
     ]
   },
   "title": "حسين الحاجي | أمكّن الشباب",

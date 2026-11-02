@@ -212,6 +212,19 @@ const crumbs = breadcrumbSchema(cleanPath, title);
       </form>
     </dialog>
   )}
+  {(!bare || cleanPath === '/card') && (
+    <dialog id="pfDialog" class="cv-dlg pf-dlg" aria-labelledby="pfT">
+      <form method="dialog" class="cv-box">
+        <h2 id="pfT" tabindex="-1">حمّل البورتفليو <span class="pf-en" dir="ltr">Download the portfolio</span></h2>
+        <p class="cv-sub">اختر لغة الملف. النسخة الإنجليزية مترجمة من المحتوى العربي نفسه. <span class="pf-en" dir="ltr">Choose the file language. The English version is translated from the same content.</span></p>
+        <div class="pf-opts">
+          <a class="pill" href={href('/hussain-al-hajji-portfolio.pdf')} download data-pf>العربية <small>Arabic</small></a>
+          <a class="pill" href={href('/hussain-al-hajji-portfolio-en.pdf')} download data-pf>English <small>الإنجليزية</small></a>
+        </div>
+        <div class="cv-act"><button type="submit" class="cv-x" value="close">إلغاء / Cancel</button></div>
+      </form>
+    </dialog>
+  )}
 
   <div id="gt-el" class="notranslate" aria-hidden="true"></div>
   {!bare && site.seasons?.enabled !== false && <script type="application/json" id="seasons-data" set:html={JSON.stringify(site.seasons || {})}></script>}

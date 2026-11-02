@@ -97,5 +97,37 @@
   ],
   "certificate": "/img/award/a03.webp",
   "poster": "/img/award/a04.webp",
-  "track": "/img/award/a05.webp"
+  "track": "/img/award/a05.webp",
+  "en": {
+    "title": "Arab Youth Pioneers",
+    "edition": "Fourth Edition, 2025",
+    "sponsor": "Under the patronage of the Arab Youth Center, Abu Dhabi, UAE",
+    "dates": "14 to 19 September 2025",
+    "lead": "Among 40 pioneers from 13 Arab countries across 10 specialized tracks, I received the Arab Youth Pioneers shield in the entrepreneurship track, in recognition of my achievements in empowering young people and raising their awareness of e-commerce and freelancing opportunities online.",
+    "story": [
+      "The Arab Youth Center held the honoring ceremony for the members of the fourth edition of the Arab Youth Pioneers initiative, within enrichment events and programs spanning six days (14 to 19 September 2025) in Abu Dhabi, under the patronage of Sheikh Diab bin Mohammed bin Zayed Al Nahyan, Chairman of the Arab Youth Center, and attended by Sheikh Rashid bin Humaid Al Nuaimi and His Excellency Dr. Sultan Al Neyadi, Minister of State for Youth Affairs, Deputy Chairmen of the Center."
+    ],
+    "facts": [
+      {
+        "value": "40",
+        "label": "honorees in the fourth edition"
+      },
+      {
+        "value": "13",
+        "label": "Arab countries"
+      },
+      {
+        "value": "10",
+        "label": "specialized tracks"
+      },
+      {
+        "value": "4",
+        "label": "honorees from the Kingdom"
+      },
+      {
+        "value": "6",
+        "label": "days of events"
+      }
+    ]
+  }
 }

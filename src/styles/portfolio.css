@@ -213,3 +213,36 @@
 .pp-method #bd-h .hl{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 64%22 preserveAspectRatio=%22none%22%3E%3Cfilter id=%22f%22 x=%22-2%25%22 y=%22-10%25%22 width=%22104%25%22 height=%22120%25%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.012 0.85%22 numOctaves=%223%22 seed=%223%22 result=%22n%22/%3E%3CfeColorMatrix in=%22n%22 type=%22matrix%22 values=%220 0 0 0 0.98 0 0 0 0 0.9 0 0 0 0 0.62 0 0 0 -2.6 1.55%22 result=%22grain%22/%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.06 0.5%22 numOctaves=%222%22 seed=%228%22 result=%22e%22/%3E%3CfeDisplacementMap in=%22SourceGraphic%22 in2=%22e%22 scale=%229%22 xChannelSelector=%22R%22 yChannelSelector=%22G%22 result=%22rough%22/%3E%3CfeComposite in=%22grain%22 in2=%22rough%22 operator=%22in%22/%3E%3C/filter%3E%3Cpath d=%22M3 22 L297 15 L293 50 L6 56Z%22 fill=%22%23fff%22 filter=%22url(%23f)%22 opacity=%220.95%22/%3E%3C/svg%3E");background-size:100% 60%;background-position:50% 92%}
 .pp-method .bd-step h3 .hl{background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 64%22 preserveAspectRatio=%22none%22%3E%3Cfilter id=%22f%22 x=%22-2%25%22 y=%22-10%25%22 width=%22104%25%22 height=%22120%25%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.012 0.85%22 numOctaves=%223%22 seed=%2211%22 result=%22n%22/%3E%3CfeColorMatrix in=%22n%22 type=%22matrix%22 values=%220 0 0 0 0.97 0 0 0 0 0.96 0 0 0 0 0.9 0 0 0 -2.6 1.55%22 result=%22grain%22/%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.06 0.5%22 numOctaves=%222%22 seed=%2216%22 result=%22e%22/%3E%3CfeDisplacementMap in=%22SourceGraphic%22 in2=%22e%22 scale=%229%22 xChannelSelector=%22R%22 yChannelSelector=%22G%22 result=%22rough%22/%3E%3CfeComposite in=%22grain%22 in2=%22rough%22 operator=%22in%22/%3E%3C/filter%3E%3Cpath d=%22M3 22 L297 15 L293 50 L6 56Z%22 fill=%22%23fff%22 filter=%22url(%23f)%22 opacity=%220.8%22/%3E%3C/svg%3E")}
 .pp-cover-focus{font-size:12pt;color:#e7c98a;font-weight:600;line-height:1.6}
+
+/* النسخة الإنجليزية: تخطيط معكوس (من اليسار إلى اليمين) */
+.pp-doc[dir=ltr]{direction:ltr}
+.pp-doc[dir=ltr] .pp-foot{direction:ltr}
+.pp-doc[dir=ltr] .pp-cover .pp-galaxy{left:auto;right:-18mm}
+.pp-doc[dir=ltr] .pp-cover-photo{left:auto;right:38mm}
+.pp-doc[dir=ltr] .pp-cover-txt{right:auto;left:20mm}
+.pp-doc[dir=ltr] .pp-cover-note{right:auto;left:20mm}
+.pp-doc[dir=ltr] .pp-topics i{background:linear-gradient(to right,var(--gold) var(--w),rgba(255,255,255,.08) var(--w))}
+.pp-doc[dir=ltr] .pp-proj h3 small{text-align:left}
+.pp-doc[dir=ltr] .pp-award-img{left:auto;right:0}
+.pp-doc[dir=ltr] .pp-award-txt{right:auto;left:16mm}
+.pp-doc[dir=ltr] .pp-back .pp-galaxy{left:auto;right:-60mm}
+.pp-doc[dir=ltr] .pp-back-txt{right:auto;left:20mm}
+.pp-doc[dir=ltr] .pp-contact b{text-align:left}
+.pp-doc[dir=ltr] .pp-qr{left:auto;right:24mm}
+.pp-doc[dir=ltr] .pp-back-logo{right:auto;left:20mm}
+.pp-doc[dir=ltr] .pp-group{right:auto;left:16mm}
+.pp-doc[dir=ltr] .pp-method .bd-arrow{transform:scaleX(-1)}
+.pp-name{display:grid;gap:3mm;margin:0}
+.pp-name span{font-size:44pt;font-weight:800;line-height:1.05;color:#f5f5f2;letter-spacing:-.01em}
+.pp-name em{font-style:normal;font-size:19pt;font-weight:500;color:var(--gold)}
+.pp-mark-t{width:auto;font-size:10.5pt;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-d);opacity:.95;white-space:nowrap}
+.pp-dark .pp-mark-t{color:var(--gold)}
+.pp-back-logo.pp-mark-t{width:auto;font-size:15pt;color:var(--gold)}
+.pp-doc[dir=ltr] .pp-me-txt .pp-lead{font-size:12pt;line-height:1.5}
+.pp-doc[dir=ltr] .pp-me .pp-just{font-size:9.3pt;line-height:1.55}
+.pp-doc[dir=ltr] .pp-roles b{font-size:9pt}
+.pp-doc[dir=ltr] .pp-award-txt .pp-lead{font-size:11.5pt;line-height:1.5}
+.pp-doc[dir=ltr] .pp-story{font-size:9pt;line-height:1.55;-webkit-line-clamp:6}
+.pp-doc[dir=ltr] .pp-voices p{font-size:8.6pt;line-height:1.55}
+.pp-doc[dir=ltr] .pp-method .bd-step p{font-size:8.5pt;line-height:1.5}
+.pp-doc[dir=ltr] .pp-method .bd-step h3{font-size:11.5pt}

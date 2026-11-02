@@ -7,7 +7,11 @@
     "link": "https://dokkan.hussain-al-hajji.com/",
     "image": "/img/uploads/screenshot-2026-10-28-at-11-56-mvta3igl.webp",
     "status": "مستمر",
-    "logo": "/img/projects/dokkan-clear.webp"
+    "logo": "/img/projects/dokkan-clear.webp",
+    "en": {
+      "status": "Ongoing",
+      "desc": "Dokkan Al-Hay is a Saudi platform that maps online stores by location, so you can find the stores near your city and neighborhood. We support local projects, freelancers, and productive families, and bring stores closer to their customers."
+    }
   },
   {
     "id": "j001",
@@ -17,7 +21,11 @@
     "link": "https://linktr.ee/podcaste",
     "image": "/img/projects/j02.webp",
     "status": "مستمر",
-    "logo": "/img/projects/podcast-clear.webp"
+    "logo": "/img/projects/podcast-clear.webp",
+    "en": {
+      "status": "Ongoing",
+      "desc": "A podcast dedicated to empowering and developing young people in 21st-century skills: technical skills and their applications in e-commerce, freelancing, and personal branding. One of the projects that graduated from the Arab Youth Podcast Bootcamp, sponsored by the Arab Youth Center in Abu Dhabi, and a top-10 finalist in the second edition (2022)."
+    }
   },
   {
     "id": "j002",
@@ -26,7 +34,11 @@
     "desc": "أكاديمية افتراضية تمكّن الشباب وتحفّزهم لإطلاق مشاريعهم الفردية في العمل الحر عبر الإنترنت من خلال ورش تدريبية متخصصة. من المشاريع المتخرجة من برنامج «مسك الانطلاق» برعاية مسك، النسخة الثانية 2022.",
     "link": "https://milexac.com",
     "image": "/img/projects/j03.webp",
-    "status": "مستمر"
+    "status": "مستمر",
+    "en": {
+      "status": "Ongoing",
+      "desc": "A virtual academy that empowers and motivates young people to launch their own freelance projects online through specialized training workshops. One of the projects that graduated from the Misk Launch program, sponsored by Misk, second edition, 2022."
+    }
   },
   {
     "id": "j003",
@@ -36,7 +48,11 @@
     "link": "https://www.sauditrainers.sa",
     "image": "/img/projects/j04.webp",
     "status": "مستمر",
-    "logo": "/img/projects/trainers-clear.webp"
+    "logo": "/img/projects/trainers-clear.webp",
+    "en": {
+      "status": "Ongoing",
+      "desc": "An online destination that markets the expertise of Saudi trainers across many fields and makes it easy to connect them with interested training organizations, supplying training programs and initiatives with suitable Saudi talent."
+    }
   },
   {
     "id": "j004",
@@ -45,7 +61,11 @@
     "desc": "تطبيق متكامل متخصص في عرض وحجز وإدارة حجوزات قاعات وخدمات التدريب، بنظام الوساطة بين مزود الخدمة والمستفيد.",
     "link": "https://gareeb.sa/",
     "image": "/img/projects/j05.webp",
-    "status": "مستمر"
+    "status": "مستمر",
+    "en": {
+      "status": "Ongoing",
+      "desc": "An integrated app for listing, booking, and managing bookings of training halls and services, working as an intermediary between the service provider and the beneficiary."
+    }
   },
   {
     "id": "j006",
@@ -55,7 +75,11 @@
     "link": "https://ecommercetoolkit.hussain-al-hajji.com/",
     "image": "/img/uploads/logo-mvta3t4c.webp",
     "status": "مستمر",
-    "logo": "/img/projects/toolkit-clear.webp"
+    "logo": "/img/projects/toolkit-clear.webp",
+    "en": {
+      "status": "Ongoing",
+      "desc": "A free service for all e-commerce merchants that saves them the effort of searching for the tools and platforms they need on the journey of building, running, marketing, and managing online stores."
+    }
   },
   {
     "id": "j007",
@@ -65,7 +89,11 @@
     "link": "/blog",
     "image": "/img/projects/j08.webp",
     "status": "مستمر",
-    "logo": "/img/projects/j08-clear.webp"
+    "logo": "/img/projects/j08-clear.webp",
+    "en": {
+      "status": "Ongoing",
+      "desc": "A volunteer initiative that raises Saudi youth's awareness of the most prominent training and professional-development programs and initiatives. It includes a weekly newsletter on quality programs and a series of awareness e-booklets on professional skills, e-commerce, freelancing, and personal marketing."
+    }
   },
   {
     "id": "j008",
@@ -75,6 +103,10 @@
     "link": "https://linkedin.raqmi.store/p/linkedin",
     "image": "/img/projects/j09.webp",
     "status": "متاح",
-    "noLogo": true
+    "noLogo": true,
+    "en": {
+      "status": "Available",
+      "desc": "A comprehensive, practical, and direct e-guide of 70 self-assessment pages that saves you from paying for a review of your personal profile or for an expert consultation on developing it and preparing it to reach job opportunities."
+    }
   }
 ]
