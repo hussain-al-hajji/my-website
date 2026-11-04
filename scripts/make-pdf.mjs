@@ -3,6 +3,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { chromium } from 'playwright-core';
 import { fixPdf, splitPdf, pageCount } from './pdf-text.mjs';
 import { mergeCv } from '../src/scripts/cv-merge.js';
@@ -24,6 +25,11 @@ const CV_TIERS = [
   { max: 440, q: 50, pal: 55 }, { max: 340, q: 44, pal: 45 }, { max: 260, q: 40, pal: 40 },
 ];
 let tier = 0, TIERS = PF_TIERS;
+// آخر درجة جودة نجحت لكل ملف: يبدأ منها البناء فيكتفي بتوليد واحد بدل إعادة التوليد درجة بعد أخرى
+const tiersFile = path.resolve('scripts/pdf-tiers.json');
+let saved = {};
+try { saved = JSON.parse(fs.readFileSync(tiersFile, 'utf8')); } catch { /* أول تشغيل */ }
+const remember = (k, t) => { if (saved[k] !== t) { saved[k] = t; try { fs.writeFileSync(tiersFile, JSON.stringify(saved, null, 2) + '\n'); } catch { /* مجلد للقراءة فقط */ } } };
 async function slim(file) {
   const T = TIERS[tier];
   const img = sharp(file), meta = await img.metadata();
@@ -83,6 +89,35 @@ async function safe(fn, bytes, ...rest) {
   try { return (await fn(bytes, ...rest)) || bytes; } catch (e) { console.warn(`[pdf] تعذّر إصلاح نص الملف: ${e.message}`); return bytes; }
 }
 
+// ذاكرة مؤقتة: ملفات PDF لا تتغير إلا إذا تغيّر مصدرها (صفحات السيرة والبورتفوليو وأنماطها وصورها المستخدمة وأكواد التوليد).
+// تعديل أي صفحة أخرى (الإعلام، الأخبار...) لا يمسّها، فنعيد نسخها بدل ساعة من توليد جديد. تحفظ GitHub Actions المجلد .pdf-cache بين التشغيلات
+const cacheRoot = path.resolve('.pdf-cache');
+function fingerprint() {
+  const h = crypto.createHash('sha1');
+  const files = ['profile', 'profile-en', 'portfolio', 'portfolio-en'].map((n) => path.join(dist, n + '.html')).filter((f) => fs.existsSync(f));
+  const refs = new Set();
+  for (const f of files) {
+    const html = fs.readFileSync(f, 'utf8');
+    h.update(html);
+    for (const m of html.matchAll(/(?:src|href)="([^"]+\.css)"/g)) { const cf = path.join(dist, m[1].replace(base, '')); if (fs.existsSync(cf)) h.update(fs.readFileSync(cf)); }
+    for (const m of html.matchAll(/["'(](\/(?:img|brand)\/[^"')\s?#]+)/g)) refs.add(m[1]);
+  }
+  for (const r of [...refs].sort()) { const f = path.join(dist, r.replace(base, '')); try { const st = fs.statSync(f); h.update(r + st.size); } catch { h.update(r + 'x'); } }
+  for (const f of ['scripts/make-pdf.mjs', 'scripts/pdf-text.mjs', 'src/scripts/cv-merge.js']) { try { h.update(fs.readFileSync(f)); } catch { /* غير موجود */ } }
+  for (const f of fs.readdirSync(fontDir)) h.update(fs.readFileSync(path.join(fontDir, f)));
+  h.update(String(PF_BUDGET) + String(CV_BUDGET));
+  return h.digest('hex').slice(0, 16);
+}
+const fp = process.env.PDF_NO_CACHE ? null : fingerprint();
+const slot = fp ? path.join(cacheRoot, fp) : null;
+if (slot && fs.existsSync(path.join(slot, 'done'))) {
+  for (const j of JOBS) if (fs.existsSync(path.join(slot, j.file))) fs.copyFileSync(path.join(slot, j.file), path.join(dist, j.file));
+  fs.rmSync(path.join(dist, 'cv-parts'), { recursive: true, force: true });
+  if (fs.existsSync(path.join(slot, 'cv-parts'))) fs.cpSync(path.join(slot, 'cv-parts'), path.join(dist, 'cv-parts'), { recursive: true });
+  console.log(`[pdf] ملفات PDF لم يتغيّر مصدرها (${fp})، أُعيد استخدام النسخة المحفوظة`);
+  process.exit(0);
+}
+
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
   if (p.startsWith('/__pdf-fonts/')) {
@@ -105,7 +140,7 @@ const server = http.createServer((req, res) => {
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const port = server.address().port;
 
-let browser;
+let browser, okRun = false;
 try {
   browser = await chromium.launch({ executablePath: exe, args: ['--no-sandbox', '--font-render-hinting=none'] });
   for (const job of (process.env.PDF_SKIP_JOBS ? [] : JOBS.filter((j) => !process.env.PDF_ONLY_JOB || j.page === process.env.PDF_ONLY_JOB))) {
@@ -113,7 +148,7 @@ try {
     const out = path.join(dist, job.file);
     const isCv = /profile/.test(job.page), BUDGET = isCv ? CV_BUDGET : PF_BUDGET;
     TIERS = isCv ? CV_TIERS : PF_TIERS;
-    for (tier = 0; ; tier++) {
+    for (tier = Math.min(saved[job.file] || 0, TIERS.length - 1); ; tier++) {
       const page = await browser.newPage();
       await page.goto(`http://127.0.0.1:${port}${base}${job.page}`, { waitUntil: 'networkidle' });
       await settle(page);
@@ -124,6 +159,7 @@ try {
       if (fs.statSync(out).size <= BUDGET || tier >= TIERS.length - 1) break;
       console.log(`[pdf] ${job.file}: ${(fs.statSync(out).size / 1048576).toFixed(2)} MB فوق السقف، تُخفَّض جودة الصور`);
     }
+    remember(job.file, tier);
     const pages = await pageCount(fs.readFileSync(out));
     console.log(`[pdf] ${path.relative(process.cwd(), out)} · ${pages} صفحة · ${(fs.statSync(out).size / 1024).toFixed(0)} KB · جودة الصور ${tier + 1}/${TIERS.length}`);
     if (fs.statSync(out).size > BUDGET) console.warn(`[pdf] تحذير: ${job.file} ما زال فوق السقف (${(fs.statSync(out).size / 1048576).toFixed(2)} MB)`);
@@ -132,7 +168,7 @@ try {
   if (!process.env.PDF_SKIP_PARTS && fs.existsSync(path.join(dist, 'profile.html'))) {
     TIERS = CV_TIERS;
     const BUDGET = CV_BUDGET;
-    for (tier = Number(process.env.PDF_TIER) || 0; ; tier++) {
+    for (tier = Math.min(Number(process.env.PDF_TIER) || saved.parts || 0, TIERS.length - 1); ; tier++) {
     // كل بناء في مجلد بإصدار خاص، فلا يختلط جزء مخزَّن قديماً في المتصفح أو الشبكة بملف manifest جديد
     const ver = Date.now().toString(36);
     const root = path.join(dist, 'cv-parts');
@@ -204,13 +240,25 @@ try {
       const load = (n) => PDFLib.PDFDocument.load(fs.readFileSync(path.join(parts, n + '.pdf')));
       for (const lang of ['ar', 'en']) for (const short of [false, true]) worst = Math.max(worst, (await mergeCv({ PDFLib, load, manifest }, ids, short, lang)).length);
     } catch (e) { console.warn(`[pdf] تعذّر قياس حجم التصدير المخصّص: ${e.message}`); break; }
+    remember('parts', tier);
     console.log(`[pdf] أكبر ملف سيرة مخصّص ${(worst / 1048576).toFixed(2)} MB · جودة الصور ${tier + 1}/${TIERS.length}`);
     if (process.env.PDF_ONCE || worst <= BUDGET || tier >= TIERS.length - 1) { if (worst > BUDGET) console.warn('[pdf] تحذير: التصدير المخصّص فوق السقف'); break; }
     }
   }
+  okRun = true;
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);
 } finally {
   await browser?.close();
   server.close();
+  // حفظ النتيجة للتشغيل القادم (ما لم يفشل شيء): نسخة واحدة فقط، تُحذف ما قبلها
+  if (okRun && slot && !process.env.PDF_ONLY_JOB && !process.env.PDF_SKIP_PARTS && !process.env.PDF_NOFIX) {
+    try {
+      fs.rmSync(cacheRoot, { recursive: true, force: true });
+      fs.mkdirSync(slot, { recursive: true });
+      for (const j of JOBS) if (fs.existsSync(path.join(dist, j.file))) fs.copyFileSync(path.join(dist, j.file), path.join(slot, j.file));
+      if (fs.existsSync(path.join(dist, 'cv-parts'))) fs.cpSync(path.join(dist, 'cv-parts'), path.join(slot, 'cv-parts'), { recursive: true });
+      fs.writeFileSync(path.join(slot, 'done'), '1');
+    } catch (e) { console.warn(`[pdf] تعذّر حفظ النسخة المؤقتة: ${e.message}`); }
+  }
 }

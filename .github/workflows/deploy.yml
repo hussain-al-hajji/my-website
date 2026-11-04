@@ -39,6 +39,12 @@ jobs:
           d=$(tr -d '[:space:]' < public/CNAME 2>/dev/null || true)
           if [ -n "$d" ]; then u="https://$d"; b="/"; else u="https://hussain-al-hajji.github.io"; b="/my-website"; fi
           echo "u=$u" >> "$GITHUB_OUTPUT"; echo "b=$b" >> "$GITHUB_OUTPUT"
+      # ملفات PDF (السيرة والبورتفوليو وأجزاء التصدير) أبطأ ما في البناء؛ تُحفظ بين التشغيلات وتُعاد إن لم يتغيّر مصدرها
+      - uses: actions/cache@v4
+        with:
+          path: .pdf-cache
+          key: pdf-${{ github.run_id }}
+          restore-keys: pdf-
       - run: npm run build
         env:
           SITE_URL: ${{ vars.SITE_URL || steps.site.outputs.u }}

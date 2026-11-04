@@ -8,3 +8,4 @@ dist/
 !.env.example
 .taste-skill/*
 !.taste-skill/direction.json
+.pdf-cache/
