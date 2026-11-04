@@ -1,84 +1,20 @@
 // تخصيص السيرة الذاتية: أي رابط إلى ملف السيرة PDF يفتح نافذة اختيار الأقسام.
 // كل قسم مولَّد مسبقاً صفحةً طويلة واحدة مع نقاط القصّ بين عناصره؛ فيرصّها المتصفح متتابعة على صفحات A4 (قسم يبدأ بعد الذي قبله)
 // ثم يُنزَّل الملف مباشرة مع ترقيم الصفحات.
+import { mergeCv } from './cv-merge.js';
 const dlg = document.getElementById('cvDialog');
-const PT = 0.75, MM = 72 / 25.4;                       // بكسل CSS إلى نقطة، وملم إلى نقطة
-const A4 = [595.28, 841.89], TOP = 14 * MM, BOTTOM = 17 * MM, LEFT = 15 * MM, GAP = 6 * MM;
 
 async function build(ids, short, lang) {
-  const { PDFDocument, StandardFonts, rgb, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } = await import('pdf-lib');
+  const PDFLib = await import('pdf-lib');
   const root = dlg.dataset.parts;
   // manifest يحدّد إصدار الأجزاء؛ إن كان قديماً (مخزَّناً) فتغيب أجزاؤه، فيُعاد جلبه بلاحقة جديدة
   const fetchManifest = async (bust) => { const r = await fetch(`${root}/manifest.json${bust ? '?t=' + Date.now() : ''}`, { cache: 'no-store' }); if (!r.ok) throw new Error('manifest'); return r.json(); };
   let data = await fetchManifest(false);
   const head = await fetch(`${root}/${data.v}/cover.pdf`, { method: 'HEAD' }).catch(() => null);
   if (!head || !head.ok) data = await fetchManifest(true);
-  const manifest = data.parts, base = `${root}/${data.v}`;
-  const load = async (name) => { const r = await fetch(`${base}/${name}.pdf`); if (!r.ok) throw new Error(name); return PDFDocument.load(await r.arrayBuffer()); };
-  const lp = lang === 'en' ? 'en-' : '', pre = lp + (short ? 's-' : '');
-  const out = await PDFDocument.create();
-
-  const cover = await load(lp + 'cover');
-  (await out.copyPages(cover, cover.getPageIndices())).forEach((pg) => out.addPage(pg));
-
-  let page = null, y = 0;
-  const fresh = () => { page = out.addPage(A4); y = A4[1] - TOP; };
-  const room = () => y - BOTTOM;
-  fresh(); // الخبرات تبدأ من الصفحة الثانية
-
-  for (const key of [...ids, 'tail']) {
-    const name = pre + key, m = manifest[name]; if (!m) continue;
-    const src = await load(name);
-    // لكل جزء بين نقطتي قصّ صفحة نصها وحده (والرسم كاملاً)، ولرأس الجدول صفحة خاصة؛ فلا يتكرر نص القسم في كل صفحة A4
-    const embs = await out.embedPdf(src, src.getPageIndices());
-    const emb = embs[0];
-    // حماية من اختلاط الإصدارات: مقاس الصفحة الفعلي يجب أن يطابق ما سُجّل وقت التوليد وإلا نعود للنسخة الكاملة
-    if (Math.abs(emb.width - m.w * PT) > 3 || Math.abs(emb.height - m.pageH * PT) > 3) throw new Error('size mismatch ' + name);
-    if (m.chunks && embs.length < m.chunks) throw new Error('chunks mismatch ' + name);
-    const W = m.w * PT, H = (m.h + m.top) * PT;
-    // مقطع من الصفحة الطويلة من a إلى b (بكسل من أعلاها) يُرسم أعلاه عند y
-    const draw = (a, b, yTop, src = emb) => {
-      const hh = (b - a) * PT;
-      page.pushOperators(pushGraphicsState(), rectangle(LEFT, yTop - hh, W, hh), clip(), endPath());
-      page.drawPage(src, { x: LEFT, y: yTop - H + (a + m.top) * PT, width: W, height: H });
-      page.pushOperators(popGraphicsState());
-      return hh;
-    };
-    const cuts = [0, ...m.brk, m.h], cap = A4[1] - TOP - BOTTOM, rule = rgb(0.514, 0.329, 0.063);
-    for (let k = 0; k < cuts.length - 1; k++) {
-      let a = cuts[k];
-      const part = m.chunks ? embs[k] : emb;
-      const b = cuts[k + 1], atTop = () => y >= A4[1] - TOP - 0.5;
-      const th = m.thead && k > 0 ? (m.thead[1] - m.thead[0]) * PT + 1.4 : 0;   // رأس الجدول يتكرر أعلى الصفحة التي يستمر فيها
-      const startPage = () => {
-        fresh();
-        if (th) { page.drawRectangle({ x: LEFT, y: y - 1.4, width: W, height: 1.4, color: rule }); y -= 1.4; y -= draw(m.thead[0], m.thead[1], y, m.headPage >= 0 ? embs[m.headPage] : emb); }
-      };
-      const need = (b - a) * PT;
-      if (need + th <= cap) {
-        let gap = k === 0 && !atTop() ? GAP : 0;
-        if (y - gap - need < BOTTOM) { startPage(); gap = 0; }
-        y -= gap;
-        y -= draw(a, b, y, part);
-      } else {
-        // قطعة أطول من صفحة كاملة (نادرة): تُقصّ على حدود الصفحات
-        if (k === 0 && !atTop()) y -= GAP;
-        while (b - a > 0.5) {
-          if (y - BOTTOM < 60) startPage();
-          const take = Math.min(b - a, (y - BOTTOM) / PT);
-          y -= draw(a, a + take, y, part); a += take;
-        }
-      }
-    }
-  }
-
-  const font = await out.embedFont(StandardFonts.Helvetica), pages = out.getPages();
-  pages.forEach((p, i) => {
-    const t = `${i + 1} / ${pages.length}`, w = font.widthOfTextAtSize(t, 8);
-    p.drawText(t, { x: (p.getWidth() - w) / 2, y: 20, size: 8, font, color: rgb(0.55, 0.55, 0.52) });
-  });
-  out.setTitle('السيرة الذاتية - حسين الحاجي'); out.setLanguage('ar');
-  return out.save();
+  const base = `${root}/${data.v}`;
+  const load = async (name) => { const r = await fetch(`${base}/${name}.pdf`); if (!r.ok) throw new Error(name); return PDFLib.PDFDocument.load(await r.arrayBuffer()); };
+  return mergeCv({ PDFLib, load, manifest: data.parts }, ids, short, lang);
 }
 
 if (dlg && typeof dlg.showModal === 'function') {

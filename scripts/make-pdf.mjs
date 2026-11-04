@@ -5,17 +5,25 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
 import { fixPdf, splitPdf, pageCount } from './pdf-text.mjs';
+import { mergeCv } from '../src/scripts/cv-merge.js';
 
 // يحوّل Chrome صور webp إلى PNG ضخمة داخل الملف، فنقدّم له نسخاً مصغّرة: JPEG للصور، وPNG للصور الشفافة
 let sharp = null;
 try { sharp = (await import('sharp')).default; } catch { console.warn('[pdf] sharp غير متوفر، ستُستخدم الصور كما هي'); }
-const MAX = 1100;
+// سقف حجم أي ملف يستخرجه الزائر (5 ميجا)، بهامش أمان. تُبدأ الصور بأعلى جودة، وتُخفَّض درجة بعد أخرى حتى يدخل الملف تحت السقف؛ والنص يبقى متجهاً بلا أي تغيير
+const BUDGET = Number(process.env.PDF_MAX_BYTES) || 4_800_000;
+const TIERS = [
+  { max: 1100, q: 78, pal: 90 }, { max: 1000, q: 72, pal: 80 }, { max: 900, q: 66, pal: 70 },
+  { max: 800, q: 60, pal: 60 }, { max: 700, q: 54, pal: 50 }, { max: 600, q: 48, pal: 40 },
+];
+let tier = 0;
 async function slim(file) {
+  const T = TIERS[tier];
   const img = sharp(file), meta = await img.metadata();
-  const r = img.resize({ width: MAX, height: MAX, fit: 'inside', withoutEnlargement: true });
+  const r = img.resize({ width: T.max, height: T.max, fit: 'inside', withoutEnlargement: true });
   return meta.hasAlpha
-    ? { type: 'image/png', body: await r.png({ compressionLevel: 9, palette: true, quality: 90 }).toBuffer() }
-    : { type: 'image/jpeg', body: await r.flatten({ background: '#ffffff' }).jpeg({ quality: 78, mozjpeg: true }).toBuffer() };
+    ? { type: 'image/png', body: await r.png({ compressionLevel: 9, palette: true, quality: T.pal }).toBuffer() }
+    : { type: 'image/jpeg', body: await r.flatten({ background: '#ffffff' }).jpeg({ quality: T.q, mozjpeg: true }).toBuffer() };
 }
 
 const dist = path.resolve('dist');
@@ -95,18 +103,24 @@ try {
   for (const job of JOBS) {
     if (!fs.existsSync(path.join(dist, job.page.slice(1) + '.html'))) { console.warn(`[pdf] dist${job.page}.html غير موجود`); continue; }
     const out = path.join(dist, job.file);
-    const page = await browser.newPage();
-    await page.goto(`http://127.0.0.1:${port}${base}${job.page}`, { waitUntil: 'networkidle' });
-    await settle(page);
-    await page.emulateMedia({ media: 'print' });
-    await page.pdf({ path: out, printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 }, ...job.pdf });
-    await page.close();
-    fs.writeFileSync(out, await safe(fixPdf, fs.readFileSync(out)));      // نص عربي قابل للنسخ والبحث
+    for (tier = 0; ; tier++) {
+      const page = await browser.newPage();
+      await page.goto(`http://127.0.0.1:${port}${base}${job.page}`, { waitUntil: 'networkidle' });
+      await settle(page);
+      await page.emulateMedia({ media: 'print' });
+      await page.pdf({ path: out, printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 }, ...job.pdf });
+      await page.close();
+      fs.writeFileSync(out, await safe(fixPdf, fs.readFileSync(out)));      // نص عربي قابل للنسخ والبحث
+      if (fs.statSync(out).size <= BUDGET || tier >= TIERS.length - 1) break;
+      console.log(`[pdf] ${job.file}: ${(fs.statSync(out).size / 1048576).toFixed(2)} MB فوق السقف، تُخفَّض جودة الصور`);
+    }
     const pages = await pageCount(fs.readFileSync(out));
-    console.log(`[pdf] ${path.relative(process.cwd(), out)} · ${pages} صفحة · ${(fs.statSync(out).size / 1024).toFixed(0)} KB`);
+    console.log(`[pdf] ${path.relative(process.cwd(), out)} · ${pages} صفحة · ${(fs.statSync(out).size / 1024).toFixed(0)} KB · جودة الصور ${tier + 1}/${TIERS.length}`);
+    if (fs.statSync(out).size > BUDGET) console.warn(`[pdf] تحذير: ${job.file} ما زال فوق السقف (${(fs.statSync(out).size / 1048576).toFixed(2)} MB)`);
   }
   // أجزاء السيرة (الغلاف، كل قسم، الخاتمة) تُدمج في متصفح الزائر لتصدير النسخة المخصّصة بمقاس A4 مباشرة
   if (fs.existsSync(path.join(dist, 'profile.html'))) {
+    for (tier = 0; ; tier++) {
     // كل بناء في مجلد بإصدار خاص، فلا يختلط جزء مخزَّن قديماً في المتصفح أو الشبكة بملف manifest جديد
     const ver = Date.now().toString(36);
     const root = path.join(dist, 'cv-parts');
@@ -171,6 +185,16 @@ try {
     await Promise.all(Array.from({ length: 4 }, async () => { for (let it = queue.shift(); it; it = queue.shift()) await one(it); }));
     fs.writeFileSync(path.join(root, 'manifest.json'), JSON.stringify({ v: ver, parts: manifest }));
     console.log(`[pdf] dist/cv-parts · ${plan.length + 2} جزءاً · ${(total / 1024).toFixed(0)} KB`);
+    // أكبر ملف يستطيع الزائر استخراجه (كل الأقسام، بكل لغة ونمط) يُقاس بالدمج نفسه الذي يجري في المتصفح، فإن تجاوز السقف تُخفَّض الصور وتُعاد الأجزاء
+    let worst = 0;
+    try {
+      const PDFLib = await import('pdf-lib');
+      const load = (n) => PDFLib.PDFDocument.load(fs.readFileSync(path.join(parts, n + '.pdf')));
+      for (const lang of ['ar', 'en']) for (const short of [false, true]) worst = Math.max(worst, (await mergeCv({ PDFLib, load, manifest }, ids, short, lang)).length);
+    } catch (e) { console.warn(`[pdf] تعذّر قياس حجم التصدير المخصّص: ${e.message}`); break; }
+    console.log(`[pdf] أكبر ملف سيرة مخصّص ${(worst / 1048576).toFixed(2)} MB · جودة الصور ${tier + 1}/${TIERS.length}`);
+    if (worst <= BUDGET || tier >= TIERS.length - 1) { if (worst > BUDGET) console.warn('[pdf] تحذير: التصدير المخصّص فوق السقف'); break; }
+    }
   }
 } catch (e) {
   fail('تعذّر توليد PDF: ' + e.message);
