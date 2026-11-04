@@ -71,6 +71,48 @@ export async function mergeCv({ PDFLib, load, manifest }, ids, short, lang) {
     p.drawText(t, { x: (p.getWidth() - w) / 2, y: 20, size: 8, font, color: rgb(0.55, 0.55, 0.52) });
   });
   out.setTitle(lang === 'en' ? 'Curriculum Vitae - Hussain Al-Hajji' : 'السيرة الذاتية - حسين الحاجي'); out.setLanguage(lang === 'en' ? 'en' : 'ar');
+  try { await out.flush(); dedupeImages(PDFLib, out); } catch { /* يبقى الملف كما هو */ }
   return out.save();
 }
 
+// كل جزء يضمّن صوره وملفات ألوانه (ICC) بنفسه، فتتكرر الشعارات نفسها في عدة أجزاء؛ نُبقي نسخة واحدة من كل متطابق ونوجّه إليها المراجع،
+// ثم تُحذف الكائنات التي لم يعد يشير إليها شيء
+function dedupeImages({ PDFName, PDFRawStream, PDFRef, PDFDict, PDFArray }, doc) {
+  const ctx = doc.context, N = (k) => PDFName.of(k);
+  const sub = (o) => String(o.dict.get(N('Subtype')) ?? '');
+  const isImg = (o) => o instanceof PDFRawStream && sub(o) === '/Image';
+  const isIcc = (o) => o instanceof PDFRawStream && o.dict.has(N('N')) && !sub(o);
+  const hash = (u8) => { let a = 0x811c9dc5, b = 0x1b873593; for (let i = 0; i < u8.length; i++) { a = Math.imul(a ^ u8[i], 16777619); b = Math.imul(b + u8[i], 2246822519) ^ (b >>> 13); } return (a >>> 0).toString(36) + (b >>> 0).toString(36) + u8.length; };
+  const remap = new Map();
+  const str = (v) => (v instanceof PDFArray ? '[' + v.asArray().map(str).join(',') + ']' : v instanceof PDFRef ? (remap.get(v) || v).toString() : String(v ?? ''));
+  // فضاء اللون مصفوفة تشير إلى ملف ICC؛ نقارن بمحتوى الملف لا برقمه
+  const cs = (v) => (v instanceof PDFArray ? '[' + v.asArray().map((e) => { const t = e instanceof PDFRef ? ctx.lookup(e) : e; return t instanceof PDFRawStream ? 'S' + hash(t.contents) : String(t); }).join(',') + ']' : str(v));
+  const pass = (match, keyOf) => {
+    const seen = new Map();
+    for (const [ref, obj] of ctx.enumerateIndirectObjects()) {
+      if (remap.has(ref) || !match(obj)) continue;
+      const key = keyOf(obj);
+      if (seen.has(key)) remap.set(ref, seen.get(key)); else seen.set(key, ref);
+    }
+    if (!remap.size) return;
+    const fix = (v, set) => { if (v instanceof PDFRef && remap.has(v)) set(remap.get(v)); else if (v instanceof PDFDict) walkDict(v); else if (v instanceof PDFArray) walkArr(v); };
+    const walkDict = (d) => { for (const [k, v] of d.entries()) fix(v, (n) => d.set(k, n)); };
+    const walkArr = (a) => { a.asArray().forEach((v, i) => fix(v, (n) => a.set(i, n))); };
+    for (const [, obj] of ctx.enumerateIndirectObjects()) {
+      if (obj instanceof PDFDict) walkDict(obj);
+      else if (obj instanceof PDFArray) walkArr(obj);
+      else if (obj instanceof PDFRawStream) walkDict(obj.dict);
+    }
+  };
+  const g = (o, k) => String(o.dict.get(N(k)) ?? '');
+  pass(isIcc, (o) => 'icc|' + g(o, 'N') + '|' + hash(o.contents));
+  const imgKey = (o) => [g(o, 'Width'), g(o, 'Height'), g(o, 'BitsPerComponent'), cs(o.dict.get(N('ColorSpace'))), g(o, 'Filter'), g(o, 'Decode'), str(o.dict.get(N('SMask'))), str(o.dict.get(N('Mask'))), hash(o.contents)].join('|');
+  pass((o) => isImg(o) && !o.dict.has(N('SMask')), imgKey);       // الصور الرمادية (أقنعة الشفافية) أولاً، ثم الملوّنة بعد توحيد مراجع أقنعتها
+  pass((o) => isImg(o) && o.dict.has(N('SMask')), imgKey);
+  // كنس: كل كائن لا يمكن الوصول إليه من جذر الملف يُحذف
+  const live = new Set(), todo = [ctx.trailerInfo.Root];
+  const visit = (v) => { if (v instanceof PDFRef) { if (!live.has(v)) { live.add(v); todo.push(ctx.lookup(v)); } } else if (v instanceof PDFDict) { for (const [, x] of v.entries()) visit(x); } else if (v instanceof PDFArray) { v.asArray().forEach(visit); } else if (v instanceof PDFRawStream) { visit(v.dict); } };
+  while (todo.length) visit(todo.pop());
+  if (ctx.trailerInfo.Info) visit(ctx.trailerInfo.Info);
+  for (const [ref] of [...ctx.enumerateIndirectObjects()]) if (!live.has(ref)) ctx.delete(ref);
+}

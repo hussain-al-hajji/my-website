@@ -4,6 +4,7 @@
 // فيستعيد منه القارئ الكلمة كاملة. ولا نمسّ شيئاً من الرسم نفسه.
 // كما نوزّع نصوص الصفحة الطويلة على صفحات (splitPdf) كي لا يتكرر نص القسم كله عند قصّه على عدة صفحات A4.
 import { PDFDocument, PDFName, PDFDict, PDFArray, PDFRawStream, decodePDFRawStream } from 'pdf-lib';
+import pako from 'pako';
 
 const dec = new TextDecoder('latin1'), enc = new TextEncoder();
 const isWs = (c) => c === 32 || c === 10 || c === 13 || c === 9 || c === 12 || c === 0;
@@ -188,15 +189,59 @@ function mergeSpans(stmts, blocks) {
   return { drop, before, after };
 }
 
+// أرقام Chrome بسبع خانات عشرية تُضخّم المحتوى؛ نقرّبها إلى 0.01 نقطة لإزاحات النص (فرق لا يُرى) وإلى 0.001 لبقية الإحداثيات
+const ROUND2 = new Set(['Td', 'TD']), ROUND3 = new Set(['Tm', 'cm', 'm', 'l', 'c', 'v', 'y', 're', 'w']);
+const rnd = (v, d) => { const r = Math.round(v * 10 ** d) / 10 ** d; return Object.is(r, -0) ? '0' : String(r); };
+function compact(text, st) {
+  const d = ROUND2.has(st.op) ? 2 : ROUND3.has(st.op) ? 3 : 0;
+  const raw = text.slice(st.s, st.e);
+  if (!d || st.args.some((a) => a.k !== 'num')) return raw;
+  return `${st.args.map((a) => rnd(a.v, d)).join(' ')} ${st.op}`;
+}
+
 const pageStream = (doc, page) => {
   const c = page.node.Contents();
   const streams = c instanceof PDFArray ? c.asArray().map((r) => doc.context.lookup(r)) : [c];
   return streams.map((s) => dec.decode(decodePDFRawStream(s).decode())).join('\n');
 };
-const setContent = (doc, page, str) => page.node.set(PDFName.Contents, doc.context.register(doc.context.flateStream(enc.encode(str))));
+// ضغط محتوى الصفحة بأعلى مستوى (9) لتصغير الملف
+const setContent = (doc, page, str) => page.node.set(PDFName.Contents, doc.context.register(PDFRawStream.of(doc.context.obj({ Filter: 'FlateDecode' }), pako.deflate(enc.encode(str), { level: 9 }))));
 
 // يبني محتوى الصفحة. keep(block) اختياري: الكتل النصية المحذوفة لا يبقى منها إلا ضبط الحالة (الألوان والخطوط)
-function build(text, stmts, blocks, keep) {
+// عناصر الرسم (مسارات وصور) التي تقع خارج النطاق [a, b] (بالنقاط من أعلى الصفحة): تُحذف من صفحة ذلك الجزء كي لا تتكرر في كل الأجزاء.
+// مسارات القصّ تبقى دائماً، وكل ما يتقاطع مع النطاق يبقى
+function cullOutside(stmts, pageH, a, b) {
+  const drop = new Set(), M = 8;
+  let ctm = [1, 0, 0, 1, 0, 0]; const stack = [];
+  let path = [], lo = Infinity, hi = -Infinity, clip = false;
+  const dy = (x, y) => pageH - (ctm[1] * x + ctm[3] * y + ctm[5]);
+  const pt = (x, y) => { const v = dy(x, y); if (v < lo) lo = v; if (v > hi) hi = v; };
+  const reset = () => { path = []; lo = Infinity; hi = -Infinity; clip = false; };
+  const outside = () => lo === Infinity || hi < a - M || lo > b + M;
+  stmts.forEach((st, i) => {
+    const n = nums(st.args);
+    switch (st.op) {
+      case 'q': stack.push(ctm.slice()); break;
+      case 'Q': if (stack.length) ctm = stack.pop(); break;
+      case 'cm': if (n.length === 6) ctm = mul(n, ctm); break;
+      case 'm': case 'l': if (n.length >= 2) { path.push(i); pt(n[0], n[1]); } break;
+      case 'c': if (n.length >= 6) { path.push(i); pt(n[0], n[1]); pt(n[2], n[3]); pt(n[4], n[5]); } break;
+      case 'v': case 'y': if (n.length >= 4) { path.push(i); pt(n[0], n[1]); pt(n[2], n[3]); } break;
+      case 're': if (n.length >= 4) { path.push(i); pt(n[0], n[1]); pt(n[0] + n[2], n[1] + n[3]); } break;
+      case 'h': path.push(i); break;
+      case 'W': case 'W*': clip = true; break;
+      case 'f': case 'F': case 'f*': case 'S': case 's': case 'B': case 'B*': case 'b': case 'b*':
+        if (!clip && path.length && outside()) { path.forEach((k) => drop.add(k)); drop.add(i); }
+        reset(); break;
+      case 'n': reset(); break;
+      case 'Do': { lo = Infinity; hi = -Infinity; pt(0, 0); pt(1, 1); const o = outside(); lo = Infinity; hi = -Infinity; if (o) drop.add(i); break; }
+      default:
+    }
+  });
+  return drop;
+}
+
+function build(text, stmts, blocks, keep, cull) {
   const { drop, before, after } = mergeSpans(stmts, blocks);
   const blockAt = new Map(blocks.map((b) => [b.from, b]));
   const parts = [];
@@ -204,8 +249,9 @@ function build(text, stmts, blocks, keep) {
     const b = blockAt.get(i);
     const gone = b && keep && !keep(b);
     if (gone) { for (let k = b.from; k <= b.to; k++) if (KEEP_IN_DROPPED.has(stmts[k].op)) parts.push(text.slice(stmts[k].s, stmts[k].e)); i = b.to; continue; }
+    if (cull && cull.has(i)) continue;
     if (before.has(i)) parts.push(before.get(i));
-    if (!drop.has(i)) parts.push(text.slice(stmts[i].s, stmts[i].e));
+    if (!drop.has(i)) parts.push(compact(text, stmts[i]));
     if (after.has(i)) parts.push(after.get(i));
   }
   return parts.join('\n');
@@ -241,7 +287,7 @@ export async function splitPdf(bytes, ranges) {
     np.node.set(PDFName.Resources, base.node.get(PDFName.Resources));
     return np;
   });
-  ranges.forEach(([a, b], i) => setContent(doc, pages[i], build(text, stmts, blocks, (blk) => blk.baseY === null || (blk.baseY >= a - 0.01 && blk.baseY < b - 0.01))));
+  ranges.forEach(([a, b], i) => setContent(doc, pages[i], build(text, stmts, blocks, (blk) => blk.baseY === null || (blk.baseY >= a - 0.01 && blk.baseY < b - 0.01), cullOutside(stmts, base.getHeight(), a, b))));
   return doc.save();
 }
 
