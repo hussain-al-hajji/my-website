@@ -3,7 +3,7 @@
 // (تظهر مسافات داخل الكلمات، أو تنعكس الحروف في بعض القارئات). هنا نجمع حروف الكلمة الواحدة في وسم واحد بنصها كما يرسمها المتصفح،
 // فيستعيد منه القارئ الكلمة كاملة. ولا نمسّ شيئاً من الرسم نفسه.
 // كما نوزّع نصوص الصفحة الطويلة على صفحات (splitPdf) كي لا يتكرر نص القسم كله عند قصّه على عدة صفحات A4.
-import { PDFDocument, PDFName, PDFDict, PDFArray, PDFRawStream, decodePDFRawStream } from 'pdf-lib';
+import { PDFDocument, PDFName, PDFDict, PDFArray, PDFNumber, PDFRawStream, decodePDFRawStream } from 'pdf-lib';
 import pako from 'pako';
 
 const dec = new TextDecoder('latin1'), enc = new TextEncoder();
@@ -81,31 +81,97 @@ function fontInfos(doc, page, shared) {
     const tu = dict && dict.lookupMaybe(PDFName.of('ToUnicode'), PDFRawStream);
     let cm = { map: new Map(), len: 1 }, src = '';
     if (tu) { try { src = dec.decode(decodePDFRawStream(tu).decode()); cm = parseCMap(src); } catch { /* تجاهل */ } }
-    const info = { cm, dict, src, used: new Set(), hasTu: !!tu };
+    const info = { cm, dict, src, used: new Set(), hasTu: !!tu, marks: new Set(), newCids: new Map(), pairs: new Map() };
     shared.set(key, info);
     out.set(name.decodeText(), info);
   }
   return out;
 }
 
-// الرموز التي لا تعيين لها في ToUnicode (كنقاط الحروف المنفصلة) تُعيَّن إلى «ـ» (كشيدة، حرف عربي): فيعدّ قارئ Chrome الكتلة عربية
-// ويرتّب حروف الكلمة صحيحاً. هذه الرموز تقع دائماً داخل وسم ActualText فلا يظهر الحرف في النص المستخرج
-function patchToUnicode(doc, shared) {
-  const weak = (v) => v === '' || v === '\u0000' || /^\p{M}+$/u.test(v);          // لا تعيين، أو علامة تشكيل وحدها
-  for (const info of shared.values()) {
-    if (!info.hasTu) continue;
-    const missing = [...info.used].filter((c) => info.cm.map.get(c) === undefined);
-    const weakCodes = new Set([...info.cm.map].filter(([, v]) => weak(v)).map(([c]) => c));
-    if (!missing.length && !weakCodes.size) continue;
-    const w = info.cm.len * 2;
-    let add = '';
-    for (let i = 0; i < missing.length; i += 100) {
-      const chunk = missing.slice(i, i + 100);
-      add += `${chunk.length} beginbfchar\n${chunk.map((c) => `<${c.toString(16).toUpperCase().padStart(w, '0')}> <0640>`).join('\n')}\nendbfchar\n`;
+// قارئات تعتمد خريطة ToUnicode وحدها (Preview وقارئات الهاتف) تتجاهل وسوم ActualText، ومشكلة خط Noto Sans Arabic أن الحرف الواحد يُرسم برمزين:
+// جسم مشترك بين عدة حروف (جسم «ب» و«ت» و«ث» و«ن» و«ي» واحد) ونقاط منفصلة. فيخرج النسخ حروفاً بلا نقاط وأشكالاً مقطوعة (ٮ ں).
+// الحل: لكل زوج (جسم، حرف) رمز جديد يشير إلى الجسم نفسه عبر CIDToGIDMap، وخريطة ToUnicode تعيّن الرمز الجديد إلى الحرف الصحيح، والنقاط إلى لا شيء.
+const PF = /[ﭐ-﷿ﹰ-﻿ﬀ-ﬆ]/;
+const normPF = (v) => (PF.test(v) ? v.normalize('NFKC') : v);
+const MARK = process.env.PDF_MARK_MODE === 'tatweel' ? 'ـ' : process.env.PDF_MARK_MODE === 'zwsp' ? '​' : process.env.PDF_MARK_MODE === 'none' ? null : '';
+const hex4 = (n) => n.toString(16).toUpperCase().padStart(4, '0');
+const ustr = (str) => { let h = ''; for (let i = 0; i < str.length; i++) h += hex4(str.charCodeAt(i)); return h; };
+
+function widthsOf(fi) {
+  if (fi.w) return fi.w;
+  const arr = fi.dict.lookupMaybe(PDFName.of('DescendantFonts'), PDFArray);
+  const desc = arr && arr.lookupMaybe(0, PDFDict);
+  fi.desc = desc;
+  const map = new Map();
+  let dw = 1000;
+  if (desc) {
+    const d = desc.lookupMaybe(PDFName.of('DW'), PDFNumber); if (d) dw = d.asNumber();
+    const W = desc.lookupMaybe(PDFName.of('W'), PDFArray);
+    if (W) {
+      const a = W.asArray(); let i = 0;
+      while (i < a.length) {
+        const c = a[i].asNumber(), nx = desc.context.lookup(a[i + 1]);
+        if (nx instanceof PDFArray) { nx.asArray().forEach((v, k) => map.set(c + k, v.asNumber())); i += 2; }
+        else { const hi = nx.asNumber(), w = a[i + 2].asNumber(); for (let k = c; k <= hi; k++) map.set(k, w); i += 3; }
+      }
     }
-    let patched = info.src.replace(/<([0-9a-fA-F]+)>(\s*)<([0-9a-fA-F]{4})>/g, (m, code, sp, val) => (weakCodes.has(parseInt(code, 16)) ? `<${code}>${sp}<0640>` : m));
-    patched = patched.includes('endcmap') ? patched.replace('endcmap', add + 'endcmap') : patched + add;
-    info.dict.set(PDFName.of('ToUnicode'), doc.context.register(doc.context.flateStream(enc.encode(patched))));
+  }
+  fi.w = (c) => (map.has(c) ? map.get(c) : dw);
+  return fi.w;
+}
+
+// pagesBlocks: [{ blocks, repl }]. يملأ repl (رقم عبارة Tj إلى {رمز قديم إلى جديد}) ويعدّل خطوط الملف (ToUnicode وCIDToGIDMap وW)
+function remapFonts(doc, shared, pagesBlocks) {
+  const clusters = [];
+  for (const pb of pagesBlocks) for (const b of pb.blocks) for (const sp of b.spans) {
+    if (sp.plain || !sp.text || !sp.tjs || !sp.tjs.length) continue;
+    const fi = sp.tjs[0].fi;
+    if (sp.tjs.some((t) => t.fi !== fi) || fi.cm.len !== 2) continue;
+    const w = widthsOf(fi);
+    const codes = sp.tjs.flatMap((t) => t.codes);
+    codes.filter((c) => w(c) === 0).forEach((c) => fi.marks.add(c));
+    const bases = codes.filter((c) => w(c) > 0);
+    if (bases.length !== 1) continue;
+    const tj = sp.tjs.find((t) => t.codes.includes(bases[0]));
+    if (!fi.pairs.has(bases[0])) fi.pairs.set(bases[0], new Set());
+    fi.pairs.get(bases[0]).add(sp.text);
+    clusters.push({ pb, fi, base: bases[0], text: sp.text, idx: tj.idx });
+  }
+  for (const c of clusters) {
+    const { fi } = c;
+    const orig = normPF(fi.cm.map.get(c.base) || '');
+    if (fi.pairs.get(c.base).size === 1 && orig === c.text) continue;          // الرمز الحالي يعطي الحرف الصحيح أصلاً
+    if (fi.next === undefined) fi.next = Math.max(0, ...fi.used) + 1;
+    const key = `${c.base}|${c.text}`;
+    if (!fi.newCids.has(key)) fi.newCids.set(key, { cid: fi.next++, base: c.base, text: c.text });
+    const nc = fi.newCids.get(key).cid;
+    if (!c.pb.repl.has(c.idx)) c.pb.repl.set(c.idx, new Map());
+    c.pb.repl.get(c.idx).set(c.base, nc);
+  }
+  for (const fi of shared.values()) {
+    if (!fi.hasTu || fi.cm.len !== 2) continue;
+    const entries = new Map();
+    for (const [c, v] of fi.cm.map) if (v !== '\u0000') entries.set(c, normPF(v));
+    for (const c of fi.marks) { if (MARK === null) entries.delete(c); else entries.set(c, MARK); }
+    for (const { cid, text } of fi.newCids.values()) entries.set(cid, text);
+    const rows = [...entries].sort((x, y) => x[0] - y[0]);
+    let body = '';
+    for (let i = 0; i < rows.length; i += 100) {
+      const ch = rows.slice(i, i + 100);
+      body += `${ch.length} beginbfchar\n${ch.map(([c, v]) => `<${hex4(c)}> <${ustr(v)}>`).join('\n')}\nendbfchar\n`;
+    }
+    const cmap = `/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n/CMapName /Adobe-Identity-UCS def\n/CMapType 2 def\n1 begincodespacerange\n<0000> <FFFF>\nendcodespacerange\n${body}endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend`;
+    fi.dict.set(PDFName.of('ToUnicode'), doc.context.register(doc.context.flateStream(enc.encode(cmap))));
+    if (fi.newCids.size && fi.desc) {
+      const top = fi.next, map = new Uint8Array(top * 2);
+      for (let c = 0; c < top; c++) { map[c * 2] = c >> 8; map[c * 2 + 1] = c & 255; }
+      const W = fi.desc.lookupMaybe(PDFName.of('W'), PDFArray);
+      for (const { cid, base } of fi.newCids.values()) {
+        map[cid * 2] = base >> 8; map[cid * 2 + 1] = base & 255;
+        if (W) { W.push(PDFNumber.of(cid)); W.push(doc.context.obj([fi.w(base)])); }
+      }
+      fi.desc.set(PDFName.of('CIDToGIDMap'), doc.context.register(doc.context.flateStream(map)));
+    }
   }
 }
 
@@ -134,9 +200,9 @@ function analyse(stmts, pageH, fmaps) {
         const m = /\/ActualText\s*<([0-9a-fA-F\s]*)>/.exec(st.args[1]?.raw || '');
         let t = null;
         if (m) { const h = m[1].replace(/\s+/g, ''); t = ''; for (let i = 4; i < h.length; i += 4) t += String.fromCharCode(parseInt(h.slice(i, i + 4), 16)); }
-        marks.push({ bdc: idx, text: t, inRev: marks.some((x) => x.rev) });
+        marks.push({ bdc: idx, text: t, inRev: marks.some((x) => x.rev), tjs: [] });
       } break;
-      case 'EMC': if (cur) { const m = marks.pop(); if (m && m.text !== undefined && m.text !== null && m.inRev) cur.spans.push({ bdc: m.bdc, emc: idx, text: m.text }); } break;
+      case 'EMC': if (cur) { const m = marks.pop(); if (m && m.text !== undefined && m.text !== null && m.inRev) cur.spans.push({ bdc: m.bdc, emc: idx, text: m.text, tjs: m.tjs }); } break;
       case 'Tj': case 'TJ': {
         if (!cur) break;
         const fi = fmaps.get(font);
@@ -144,7 +210,10 @@ function analyse(stmts, pageH, fmaps) {
         const hx = st.args.find((x) => x.k === 'hex' || x.k === 'arr');
         const raws = !hx ? [] : hx.k === 'arr' ? [...hx.raw.matchAll(/<([0-9a-fA-F\s]*)>/g)].map((x) => x[1]) : [hx.raw.slice(1, -1)];
         let t = '';
-        for (const r of raws) { const h = r.replace(/\s+/g, ''); for (let i = 0; i + fm.len * 2 <= h.length; i += fm.len * 2) { const code = parseInt(h.slice(i, i + fm.len * 2), 16); if (fi) fi.used.add(code); t += fm.map.get(code) ?? ''; } }
+        const codes = [];
+        for (const r of raws) { const h = r.replace(/\s+/g, ''); for (let i = 0; i + fm.len * 2 <= h.length; i += fm.len * 2) { const code = parseInt(h.slice(i, i + fm.len * 2), 16); codes.push(code); if (fi) fi.used.add(code); t += fm.map.get(code) ?? ''; } }
+        const host = [...marks].reverse().find((m) => m.tjs && m.text && m.inRev);
+        if (host && fi && st.op === 'Tj') host.tjs.push({ idx, fi, codes });
         // رمز بلا وسم ActualText داخل حاوية ReversedChars: حرف له تعيين مباشر في ToUnicode
         if (!marks.some((m) => m.rev) || marks.some((m) => m.text !== undefined)) break;
         const prev = stmts[idx - 1];
@@ -199,6 +268,16 @@ function compact(text, st) {
   return `${st.args.map((a) => rnd(a.v, d)).join(' ')} ${st.op}`;
 }
 
+// يبدّل رموز الحروف داخل سلسلة Tj السداسية (رمزان لكل حرف)
+function replaceCodes(st, map) {
+  const hx = st.args.find((a) => a.k === 'hex');
+  if (!hx || st.args.length !== 1 || st.op !== 'Tj') return null;
+  const h = hx.raw.slice(1, -1).replace(/\s+/g, '');
+  let out = '';
+  for (let i = 0; i + 4 <= h.length; i += 4) { const c = parseInt(h.slice(i, i + 4), 16); out += hex4(map.has(c) ? map.get(c) : c); }
+  return `<${out}> Tj`;
+}
+
 const pageStream = (doc, page) => {
   const c = page.node.Contents();
   const streams = c instanceof PDFArray ? c.asArray().map((r) => doc.context.lookup(r)) : [c];
@@ -241,7 +320,7 @@ function cullOutside(stmts, pageH, a, b) {
   return drop;
 }
 
-function build(text, stmts, blocks, keep, cull) {
+function build(text, stmts, blocks, keep, cull, repl) {
   const { drop, before, after } = mergeSpans(stmts, blocks);
   const blockAt = new Map(blocks.map((b) => [b.from, b]));
   const parts = [];
@@ -251,7 +330,7 @@ function build(text, stmts, blocks, keep, cull) {
     if (gone) { for (let k = b.from; k <= b.to; k++) if (KEEP_IN_DROPPED.has(stmts[k].op)) parts.push(text.slice(stmts[k].s, stmts[k].e)); i = b.to; continue; }
     if (cull && cull.has(i)) continue;
     if (before.has(i)) parts.push(before.get(i));
-    if (!drop.has(i)) parts.push(compact(text, stmts[i]));
+    if (!drop.has(i)) parts.push(repl && repl.has(i) ? replaceCodes(stmts[i], repl.get(i)) : compact(text, stmts[i]));
     if (after.has(i)) parts.push(after.get(i));
   }
   return parts.join('\n');
@@ -266,8 +345,9 @@ export async function fixPdf(bytes) {
     if (!stmts) continue;
     todo.push({ page, text, stmts, blocks: analyse(stmts, page.getHeight(), fontInfos(doc, page, shared)) });
   }
-  patchToUnicode(doc, shared);
-  for (const t of todo) setContent(doc, t.page, build(t.text, t.stmts, t.blocks, null));
+  for (const t of todo) t.repl = new Map();
+  remapFonts(doc, shared, todo.map((t) => ({ blocks: t.blocks, repl: t.repl })));
+  for (const t of todo) setContent(doc, t.page, build(t.text, t.stmts, t.blocks, null, null, t.repl));
   return doc.save();
 }
 
@@ -280,14 +360,15 @@ export async function splitPdf(bytes, ranges) {
   if (!stmts) return null;
   const shared = new Map();
   const blocks = analyse(stmts, base.getHeight(), fontInfos(doc, base, shared));
-  patchToUnicode(doc, shared);
+  const pb = { blocks, repl: new Map() };
+  remapFonts(doc, shared, [pb]);
   const pages = ranges.map((_, i) => {
     if (i === 0) return base;
     const np = doc.addPage([base.getWidth(), base.getHeight()]);
     np.node.set(PDFName.Resources, base.node.get(PDFName.Resources));
     return np;
   });
-  ranges.forEach(([a, b], i) => setContent(doc, pages[i], build(text, stmts, blocks, (blk) => blk.baseY === null || (blk.baseY >= a - 0.01 && blk.baseY < b - 0.01), cullOutside(stmts, base.getHeight(), a, b))));
+  ranges.forEach(([a, b], i) => setContent(doc, pages[i], build(text, stmts, blocks, (blk) => blk.baseY === null || (blk.baseY >= a - 0.01 && blk.baseY < b - 0.01), cullOutside(stmts, base.getHeight(), a, b), pb.repl)));
   return doc.save();
 }
 

@@ -79,6 +79,7 @@ async function settle(page) {
 
 // إصلاح النص العربي ليُنسخ ويُبحث فيه؛ إن تعذّر يبقى الملف كما ولّده المتصفح
 async function safe(fn, bytes, ...rest) {
+  if (process.env.PDF_NOFIX) return bytes;
   try { return (await fn(bytes, ...rest)) || bytes; } catch (e) { console.warn(`[pdf] تعذّر إصلاح نص الملف: ${e.message}`); return bytes; }
 }
 
@@ -107,7 +108,7 @@ const port = server.address().port;
 let browser;
 try {
   browser = await chromium.launch({ executablePath: exe, args: ['--no-sandbox', '--font-render-hinting=none'] });
-  for (const job of (process.env.PDF_SKIP_JOBS ? [] : JOBS)) {
+  for (const job of (process.env.PDF_SKIP_JOBS ? [] : JOBS.filter((j) => !process.env.PDF_ONLY_JOB || j.page === process.env.PDF_ONLY_JOB))) {
     if (!fs.existsSync(path.join(dist, job.page.slice(1) + '.html'))) { console.warn(`[pdf] dist${job.page}.html غير موجود`); continue; }
     const out = path.join(dist, job.file);
     const isCv = /profile/.test(job.page), BUDGET = isCv ? CV_BUDGET : PF_BUDGET;
@@ -128,7 +129,7 @@ try {
     if (fs.statSync(out).size > BUDGET) console.warn(`[pdf] تحذير: ${job.file} ما زال فوق السقف (${(fs.statSync(out).size / 1048576).toFixed(2)} MB)`);
   }
   // أجزاء السيرة (الغلاف، كل قسم، الخاتمة) تُدمج في متصفح الزائر لتصدير النسخة المخصّصة بمقاس A4 مباشرة
-  if (fs.existsSync(path.join(dist, 'profile.html'))) {
+  if (!process.env.PDF_SKIP_PARTS && fs.existsSync(path.join(dist, 'profile.html'))) {
     TIERS = CV_TIERS;
     const BUDGET = CV_BUDGET;
     for (tier = Number(process.env.PDF_TIER) || 0; ; tier++) {
