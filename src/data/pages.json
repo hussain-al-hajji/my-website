@@ -78,7 +78,6 @@
     "pdf": [
       "career",
       "achievements",
-      "credentials",
       "bootcamps",
       "learning",
       "leadership",
@@ -187,7 +186,8 @@
       {
         "id": "credentials",
         "title": "الاعتمادات",
-        "titleEn": "Certifications & Licenses"
+        "titleEn": "Certifications & Licenses",
+        "hidden": true
       },
       {
         "id": "committees",
