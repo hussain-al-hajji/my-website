@@ -85,7 +85,8 @@
       "committees",
       "education",
       "projects",
-      "volunteer"
+      "volunteer",
+      "smw8ca16v"
     ],
     "en": {
       "title": "Biography & Achievements",
@@ -118,38 +119,38 @@
       {
         "id": "intro",
         "title": "نبذة",
-        "block": "intro",
-        "titleEn": "About"
+        "titleEn": "About",
+        "block": "intro"
       },
       {
         "id": "skills",
         "title": "المهارات",
-        "style": "chips",
-        "titleEn": "Skills"
+        "titleEn": "Skills",
+        "style": "chips"
       },
       {
         "id": "expertise",
         "title": "مجالات الخبرة",
-        "style": "chips",
-        "titleEn": "Areas of Expertise"
+        "titleEn": "Areas of Expertise",
+        "style": "chips"
       },
       {
         "id": "values",
         "title": "القيم",
-        "style": "chips",
-        "titleEn": "Values"
+        "titleEn": "Values",
+        "style": "chips"
       },
       {
         "id": "tracks",
         "title": "مسارات العمل",
-        "block": "tracks",
-        "titleEn": "Work Tracks"
+        "titleEn": "Work Tracks",
+        "block": "tracks"
       },
       {
         "id": "education",
         "title": "التعليم والدرجات الأكاديمية",
-        "hidden": true,
-        "titleEn": "Education & Academic Degrees"
+        "titleEn": "Education & Academic Degrees",
+        "hidden": true
       },
       {
         "id": "leadership",
@@ -169,14 +170,14 @@
       {
         "id": "learning",
         "title": "الدورات التدريبية",
-        "style": "table",
-        "titleEn": "Training Courses"
+        "titleEn": "Training Courses",
+        "style": "table"
       },
       {
         "id": "projects",
         "title": "مشاركات ومشاريع تدريب مميزة",
-        "style": "table",
-        "titleEn": "Selected Training Engagements & Projects"
+        "titleEn": "Selected Training Engagements & Projects",
+        "style": "table"
       },
       {
         "id": "achievements",
@@ -191,8 +192,8 @@
       {
         "id": "committees",
         "title": "اللجان والعضويات",
-        "style": "table",
-        "titleEn": "Committees & Memberships"
+        "titleEn": "Committees & Memberships",
+        "style": "table"
       },
       {
         "id": "sdgs",
@@ -212,8 +213,13 @@
       {
         "id": "mentoring",
         "title": "الإرشاد والمسرّعات",
-        "hidden": true,
-        "titleEn": "Mentoring & Accelerators"
+        "titleEn": "Mentoring & Accelerators",
+        "hidden": true
+      },
+      {
+        "id": "smw8ca16v",
+        "title": "شهادات احترافية واعتمادات",
+        "titleEn": "Professional Certifications and Accreditations"
       }
     ],
     "partners": [

@@ -258,21 +258,21 @@
   },
   {
     "id": "b008",
-    "section": "credentials",
-    "title": "CCSP",
-    "subtitle": "مرشد مهني معتمد، NCDA",
+    "section": "smw8ca16v",
+    "title": "مرشد مهني معتمد (CCSP)",
+    "subtitle": "الجمعية الوطنية الأمريكية للتطوير المهني NCDA",
     "logo": "/img/uploads/ncc-ccsp-notm-mvnnoz21.webp",
     "period": "",
     "desc": "",
     "link": "https://www.ncda.org/aws/NCDA/pt/sp/credentialing_ccsp",
     "en": {
-      "title": "CCSP",
-      "subtitle": "Certified Career Services Provider, NCDA"
+      "title": "Certified Career Services Provider CCSP",
+      "subtitle": "National Career Development Association, NCDA"
     }
   },
   {
     "id": "b009",
-    "section": "credentials",
+    "section": "smw8ca16v",
     "title": "PMD Pro",
     "subtitle": "إدارة المشاريع التنموية، pm4ngos",
     "logo": "/img/uploads/2-mvnnq4x4.webp",
@@ -287,7 +287,7 @@
   },
   {
     "id": "b010",
-    "section": "credentials",
+    "section": "smw8ca16v",
     "title": "CYBP",
     "subtitle": "محترف ريادة أعمال الشباب، Ibta",
     "logo": "/img/uploads/ibta-logo-mvnns73o.webp",
@@ -301,7 +301,7 @@
   },
   {
     "id": "b011",
-    "section": "credentials",
+    "section": "smw8ca16v",
     "title": "مدرب معتمد من قوقل للتعليم",
     "subtitle": "Google for Education",
     "logo": "/img/partners/l19.webp",
@@ -316,7 +316,7 @@
   },
   {
     "id": "b012",
-    "section": "credentials",
+    "section": "smw8ca16v",
     "title": "مسؤول إنفاذ الملكية الفكرية المعتمد",
     "subtitle": "الهيئة السعودية للملكية الفكرية",
     "logo": "/img/uploads/screenshot-2026-10-25-at-1-03--mvnnu25w.webp",
@@ -330,7 +330,7 @@
   },
   {
     "id": "b013",
-    "section": "credentials",
+    "section": "smw8ca16v",
     "title": "ترخيص الاستشارات الإدارية واستشارات ريادة الأعمال",
     "subtitle": "وزارة الموارد البشرية والتنمية الاجتماعية",
     "logo": "/img/partners/l16.webp",
@@ -942,7 +942,7 @@
   },
   {
     "id": "b055",
-    "section": "bootcamps",
+    "section": "smw8ca16v",
     "title": "منهجية ACIP في اتخاذ القرار للشباب",
     "subtitle": "مجموعة بناء",
     "logo": "/img/bio/benaa.webp",
@@ -994,7 +994,7 @@
   },
   {
     "id": "b058",
-    "section": "bootcamps",
+    "section": "smw8ca16v",
     "title": "تدريب المدربين TOT",
     "subtitle": "منشآت",
     "logo": "/img/partners/l04.webp",
@@ -1164,7 +1164,7 @@
   },
   {
     "id": "b085",
-    "section": "learning",
+    "section": "smw8ca16v",
     "title": "برنامج قوقل في إدارة المشاريع الاحترافية",
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/gcc-badge-pgm-1000x1000-mvp0jumz.webp",
@@ -1184,7 +1184,7 @@
   },
   {
     "id": "b086",
-    "section": "learning",
+    "section": "smw8ca16v",
     "title": "برنامج مهارات التسويق الرقمي من قوقل",
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/image-mvp0l8q1.webp",
@@ -1203,7 +1203,7 @@
   },
   {
     "id": "b087",
-    "section": "learning",
+    "section": "smw8ca16v",
     "title": "برنامج قوقل للمعلم المعتمد (المستوى 1 والمستوى 2)",
     "subtitle": "دورات من قوقل",
     "logo": "/img/uploads/images-1-mvp0mdv3.webp",
@@ -1221,7 +1221,7 @@
   },
   {
     "id": "b088",
-    "section": "learning",
+    "section": "smw8ca16v",
     "title": "برنامج قوقل للمدرب المعتمد",
     "subtitle": "دورات من قوقل",
     "logo": "/img/partners/l19.webp",
@@ -1539,7 +1539,7 @@
   },
   {
     "id": "b131",
-    "section": "learning",
+    "section": "smw8ca16v",
     "title": "مدير سعادة معتمد",
     "subtitle": "مدرسة السعادة للأعمال (Happiness Business School)",
     "logo": "/img/bio/happiness.webp",
