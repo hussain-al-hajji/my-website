@@ -36,11 +36,11 @@ export function archivedRecords() {
     }));
 }
 
-/** عناصر البكرة: آخر ستة منجزة وكل القادم. */
-export function wheelItems(pastKeep = 6) {
+/** عناصر البكرة: كل البرامج (المنجزة والقادمة) بترتيبها الزمني؛ pastKeep لتحديد عدد المنجزة إن لزم. */
+export function wheelItems(pastKeep = Infinity) {
   const today = todayISO();
   const all = calendarItems();
-  const past = all.filter((x) => isEnded(x, today)).slice(-pastKeep);
+  const past = all.filter((x) => isEnded(x, today)).slice(Number.isFinite(pastKeep) ? -pastKeep : 0);
   return [...past, ...all.filter((x) => !isEnded(x, today))];
 }
 

@@ -453,6 +453,23 @@ if (whView) {
       render();
     };
   }
+  // تنتقل البكرة تلقائياً إلى البرنامج التالي بعد أن تبقى 7 ثوانٍ عند البرنامج الحالي (سواء بدأ بنفسه أو اختاره الزائر بسحب أو بالضغط على يوم)،
+  // وعند آخر برنامج تعود إلى أقرب برنامج قادم. تتوقف حين لا يكون القسم ظاهراً، ويُعاد عدّ الثواني السبع بعد كل لمسة أو ضغطة من الزائر، وتُستثنى من يفضّل تقليل الحركة
+  const HOLD = 7000;
+  let changedAt = performance.now(), touchedAt = 0, shown = true;
+  const wheelBox = $('#calendar');
+  const prevFocus = onFocus;
+  onFocus = (i) => { changedAt = performance.now(); prevFocus(i); };
+  ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => wheelBox.addEventListener(ev, () => { touchedAt = performance.now(); }, { passive: true }));
+  new IntersectionObserver(([en]) => { shown = en.isIntersecting; if (shown) { changedAt = performance.now(); } }, { threshold: 0.35 }).observe(wheelBox);
+  if (!reduce && rows.length > 1) {
+    setInterval(() => {
+      const now = performance.now();
+      if (!shown || document.hidden || now - changedAt < HOLD || now - touchedAt < HOLD) return;
+      go(cur >= rows.length - 1 ? focusIndex() : cur + 1);
+      changedAt = now;                                    // لا نكرّر الأمر قبل أن تصل الحركة وتُسجَّل
+    }, 500);
+  }
   addEventListener('resize', measure);
   measure(); requestAnimationFrame(measure);
 }
