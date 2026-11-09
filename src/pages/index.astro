@@ -16,7 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import pagesData from '../data/pages.json';
 import bioData from '../data/bio.json';
-import { site, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
+import { site, GNAV, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
 
 const st = stats();
 const marquee = partners.filter((p) => p.marquee);
@@ -27,6 +27,8 @@ const ringPosters = await Promise.all([...posters].sort((a, b) => b.year - a.yea
   try { const m = await sharp(path.join('public', p.image)).metadata(); r = m.width / m.height; } catch { /* تبقى مربعة */ }
   return { ...p, r: Math.round(r * 1000) / 1000 };
 }));
+// بكرة صفحات الموقع في الرئيسية: عناوين القائمة نفسها (بلا ملفات PDF التي تُنزَّل)
+const wheelPages = GNAV.flatMap((g) => (g.children ? g.children.filter((c) => !c.download && c.href) : g.href ? [g] : []));
 const xpItems = site.experience.items;
 const xpSplit = Math.ceil(xpItems.length / 2);
 const xpA = xpItems.slice(0, xpSplit), xpB = xpItems.slice(xpSplit);
@@ -136,6 +138,11 @@ const jsonld = [
       <p class="for-line" id="forLine" hidden></p>
       <div class="ctas hero-cta" data-in style="--d:3"><a class="pill" href={href('/hussain-al-hajji-portfolio.pdf')} download><svg class="pill-dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>حمّل البورتفليو</a><a class="more" href={href('/featured')}>مشاريع تدريب مميزة</a></div>
     </div></div>
+    <nav class="nwheel" id="nwheel" aria-label="صفحات الموقع">
+      <div class="nwheel-ring">
+        {wheelPages.map((p) => <a class="nwheel-it" href={href(p.href)} rel={/^https?:/.test(p.href) ? 'noopener' : undefined}>{p.label}</a>)}
+      </div>
+    </nav>
   </div>
   <figure id="heroFig">
     <div class="win">
@@ -469,5 +476,6 @@ const jsonld = [
 <script type="application/json" id="homeData" set:html={JSON.stringify(homeData)}></script>
 <script>import '../scripts/home.js';</script>
 <script>import '../scripts/poster-ring.js';</script>
+<script>import '../scripts/nav-wheel.js';</script>
 <script>import '../scripts/wow.js';</script>
 </Base>
