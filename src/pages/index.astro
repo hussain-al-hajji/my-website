@@ -223,7 +223,16 @@ const jsonld = [
 <section class="sec alt cal" id="calendar" aria-labelledby="cal-h">
   <div class="wide sec-head"><h2 id="cal-h" data-in>روزنامة المدرب.</h2><a class="more" href={href('/training-programs')}>سجل الأثر</a></div>
   <div class="wide">
-    <p class="lede cal-lede" data-in>برامجي وفعالياتي بتتابعها الزمني. اسحب لأعلى أو لأسفل لتتنقل بينها.</p>
+    <p class="lede cal-lede" data-in>برامجي وفعالياتي بتتابعها الزمني. اضغط على يوم عليه نجمة لتبرز برنامجه، أو اسحب البكرة لأعلى وأسفل لتتنقل بينها.</p>
+    <div class="cal-box" id="calBox" aria-label="التقويم الميلادي">
+      <div class="cal-head">
+        <button class="cal-nav" type="button" id="calPrev" aria-label="الشهر السابق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <h3 class="cal-title" id="calTitle" aria-live="polite"></h3>
+        <button class="cal-nav" type="button" id="calNext" aria-label="الشهر التالي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+      </div>
+      <div class="cal-week" aria-hidden="true">{['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'].map((d) => <span>{d}</span>)}</div>
+      <div class="cal-grid" id="calGrid" role="grid" aria-labelledby="calTitle"></div>
+    </div>
     <div class="wheel" id="wheel">
       <div class="wh-band" aria-hidden="true"></div>
       <div class="wh-view" id="whView" tabindex="0" role="list" aria-label="روزنامة المدرب">

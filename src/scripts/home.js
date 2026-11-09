@@ -386,7 +386,7 @@ if (whView) {
     const st = r.dataset.to < today ? 'past' : r.dataset.from <= today ? 'now' : 'next';
     r.dataset.state = st; $('.wh-state', r).textContent = LBL[st];
   });
-  let rh = rows[0].offsetHeight, cur = -1, raf = 0;
+  let rh = rows[0].offsetHeight, cur = -1, raf = 0, onFocus = () => {};
   const paint = () => {
     raf = 0;
     const c = whView.scrollTop + whView.clientHeight / 2;
@@ -401,6 +401,7 @@ if (whView) {
       rows.forEach((r, i) => { r.classList.toggle('is-focus', i === best); r.querySelector('.wh-like').tabIndex = i === best ? 0 : -1; });
       count.textContent = `برنامج ${best + 1} من ${rows.length}`;
       up.disabled = best === 0; down.disabled = best === rows.length - 1;
+      onFocus(best);
     }
   };
   const go = (i, smooth = true) => whView.scrollTo({ top: Math.max(0, Math.min(rows.length - 1, i)) * rh, behavior: smooth && !reduce ? 'smooth' : 'auto' });
@@ -412,6 +413,46 @@ if (whView) {
   whView.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') { e.preventDefault(); go(cur - 1); } else if (e.key === 'ArrowDown') { e.preventDefault(); go(cur + 1); }
   });
+  // التقويم الميلادي: نجمة على كل يوم فيه برنامج، والضغط عليه يُبرز برنامجه في البكرة؛ وتنقّل البكرة يحرّك التقويم إلى شهر البرنامج
+  const calGrid = $('#calGrid');
+  if (calGrid) {
+    const T = $('#calTitle'), P = $('#calPrev'), N = $('#calNext');
+    const items = rows.map((r, i) => ({ i, from: r.dataset.from, to: r.dataset.to }));
+    const pd = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+    const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const byDay = new Map();                              // اليوم إلى فهرس أول برنامج يقع فيه
+    items.forEach((x) => { for (let d = pd(x.from), n = 0; iso(d) <= x.to && n < 370; d.setDate(d.getDate() + 1), n++) { const k = iso(d); if (!byDay.has(k)) byDay.set(k, x.i); } });
+    const fmt = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { month: 'long', year: 'numeric' });
+    const full = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const STAR = '<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>';
+    let view = null, sel = null;                         // الشهر المعروض (أول يومه)، والبرنامج المختار
+    const today = iso(new Date());
+    const render = () => {
+      const y = view.getFullYear(), m = view.getMonth(), first = new Date(y, m, 1), days = new Date(y, m + 1, 0).getDate();
+      T.textContent = fmt.format(first);
+      let html = '';
+      for (let k = 0; k < first.getDay(); k++) html += '<span class="cal-d blank" aria-hidden="true"></span>';
+      for (let d = 1; d <= days; d++) {
+        const key = iso(new Date(y, m, d)), idx = byDay.get(key);
+        const cls = ['cal-d', idx !== undefined ? 'has' : '', key === today ? 'today' : '', sel !== null && idx !== undefined && items[sel].from <= key && key <= items[sel].to ? 'sel' : ''].filter(Boolean).join(' ');
+        html += idx !== undefined
+          ? `<button type="button" class="${cls}" data-i="${idx}" aria-label="${full.format(new Date(y, m, d))}، فيه برنامج"><span>${d}</span>${STAR}</button>`
+          : `<span class="${cls}" role="gridcell"><span>${d}</span></span>`;
+      }
+      calGrid.innerHTML = html;
+    };
+    const showMonth = (dt) => { view = new Date(dt.getFullYear(), dt.getMonth(), 1); render(); };
+    P.addEventListener('click', () => showMonth(new Date(view.getFullYear(), view.getMonth() - 1, 1)));
+    N.addEventListener('click', () => showMonth(new Date(view.getFullYear(), view.getMonth() + 1, 1)));
+    calGrid.addEventListener('click', (e) => { const b = e.target.closest('.cal-d.has'); if (b) go(Number(b.dataset.i)); });
+    onFocus = (i) => {
+      sel = i;
+      const x = items[i], a = pd(x.from), b = pd(x.to);
+      const inView = view && ((a.getFullYear() === view.getFullYear() && a.getMonth() === view.getMonth()) || (b.getFullYear() === view.getFullYear() && b.getMonth() === view.getMonth()));
+      if (!inView) view = new Date(a.getFullYear(), a.getMonth(), 1);
+      render();
+    };
+  }
   addEventListener('resize', measure);
   measure(); requestAnimationFrame(measure);
 }
