@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import bio from '../data/bio.json';
 import pages from '../data/pages.json';
-import { href, site, detailsHtml, getGroups } from '../lib/site.js';
+import { href, site, detailsHtml, getGroups, getKits } from '../lib/site.js';
 import { fillTokens } from '../lib/faq.js';
 
 const p = pages.bio;
@@ -11,6 +11,14 @@ const by = (s) => bio.filter((x) => x.section === s);
 // الأقسام بترتيبها وأسمائها من لوحة التحكم؛ الكتلتان «نبذة» و«مسارات العمل» تُرتَّبان معها، والأقسام الفارغة أو المخفية لا تظهر
 const shown = getGroups('bio', bio).filter((g) => !g.hidden && (g.block || by(g.id).length));
 const firstFold = shown.findIndex((g) => g.block !== 'intro');
+// السبورة وفقاعات المهارات في آخر الصفحة (كانتا في الرئيسية): لا تدخلان في ملفات السيرة المستخرجة لأنها تُبنى من أقسام السيرة وحدها
+const pillars = (pages.methodology?.pillars || []).slice(0, 5);
+const bubbles = bio.filter((x) => ['expertise', 'skills'].includes(x.section)).map((x) => x.title);
+const extraData = {
+  bubbles,
+  collabUrl: href('/collaborate'),
+  kits: getKits().map((k) => ({ short: k.short, headline: k.headline, points: k.axes.slice(0, 3).map((a) => a.split(':')[0].trim()), page: href('/collaborate') + '#' + k.id })),
+};
 const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.block).slice(0, 4).map((g) => ({ label: g.title, href: '#' + g.id }))];
 ---
 <Base title={p.title} description={p.lead} active="bio" local={local}>
@@ -116,6 +124,40 @@ const local = [{ label: 'عنّي', href: '#top' }, ...shown.filter((g) => !g.bl
     </section>
     );
   })}
+  {pillars.length > 0 && (
+<section class="sec board" id="methodology-board" aria-labelledby="bd-h">
+  <div class="wide">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="chalk" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></svg>
+    <div class="bd-frame">
+      <h2 id="bd-h" class="chalk"><span>منهجي في التدريب</span></h2>
+      <svg class="chalk-line" viewBox="0 0 300 18" aria-hidden="true"><path d="M3 10C40 3 70 15 110 8S190 4 230 10S280 11 297 6" pathLength="1"/></svg>
+      <ol class="bd-steps">
+        {pillars.map((pl, i) => (
+          <li class="bd-step">
+            <span class="bd-n"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 6C60 4 76 20 74 42S58 76 36 74S4 58 7 36S22 8 44 7" pathLength="1"/></svg><b>{i + 1}</b></span>
+            <h3 class="chalk">{pl.title}</h3>
+            <p>{pl.text}</p>
+            {i < pillars.length - 1 && <svg class="bd-arrow" viewBox="0 0 120 40" aria-hidden="true"><path d="M112 22C84 8 52 32 14 18" pathLength="1"/><path d="M26 6L12 18L28 30" pathLength="1"/></svg>}
+          </li>
+        ))}
+      </ol>
+      <a class="chalk-link" href={href('/methodology')}>اقرأ منهجي كاملاً</a>
+    </div>
+  </div>
+</section>
+  )}
+  {bubbles.length > 3 && (
+<section class="sec bubsec" id="expertise-bubbles" aria-labelledby="bb-h">
+  <div class="wide">
+    <div class="sec-head"><h2 id="bb-h" data-in>مجالات<br>خبرتي.</h2></div>
+    <p class="net-note">اسحب الكرات وارمِها، واضغط على أي مجال لترى الحقائب المرتبطة به.</p>
+    <div class="bub-field" id="bubField"></div>
+    <div class="bub-panel" id="bubPanel" aria-live="polite"></div>
+  </div>
+</section>
+  )}
+  <script type="application/json" id="bioExtraData" set:html={JSON.stringify(extraData)}></script>
   <script>import '../scripts/more.js';
-import '../scripts/fold.js';</script>
+import '../scripts/fold.js';
+import '../scripts/bio-extras.js';</script>
 </Base>

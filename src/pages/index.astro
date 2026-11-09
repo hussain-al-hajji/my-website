@@ -14,8 +14,6 @@ import posters from '../data/posters.json';
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
-import pagesData from '../data/pages.json';
-import bioData from '../data/bio.json';
 import { site, GNAV, href, abs, getNews, getKits, logForClient, stats, dateAr, norm, records, AUDIENCES, TIMES, GOALS, contactLinks } from '../lib/site.js';
 
 const st = stats();
@@ -48,10 +46,6 @@ const kits = getKits();
 const voices = testimonials.filter((t) => t.kind === 'recommendation' && t.featured && (t.quote || t.full));
 const awardFacts = award.facts.filter((f) => ['40', '13', '4'].includes(f.value));
 
-// منهجي على السبورة
-const pillars = (pagesData.methodology?.pillars || []).slice(0, 5);
-// فقاعات المهارات: مجالات الخبرة والمهارات من السيرة
-const bubbles = bioData.filter((x) => ['expertise', 'skills'].includes(x.section)).map((x) => x.title);
 // شبكة الشراكات: أكثر الجهات حضوراً في سجل الأثر مع برامجها
 const netAll = partners.filter((p) => p.logo).map((p) => {
   const nm = norm(p.name).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -82,7 +76,6 @@ const homeData = {
   labels: { aud: AUDIENCES, goal: GOALS, time: TIMES },
   campaign: site.campaign || {},
   net: netAll,
-  bubbles,
   logo: href('/brand/logo-full-black.svg'),
   portrait: href('/img/brand/portrait-composite-560.webp'),
   cities: CITIES,
@@ -353,40 +346,6 @@ const jsonld = [
     </div>
   </div>
 </section>
-
-{pillars.length > 0 && (
-<section class="sec board" id="board" aria-labelledby="bd-h">
-  <div class="wide">
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="chalk" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></svg>
-    <div class="bd-frame">
-      <h2 id="bd-h" class="chalk"><span>منهجي في التدريب</span></h2>
-      <svg class="chalk-line" viewBox="0 0 300 18" aria-hidden="true"><path d="M3 10C40 3 70 15 110 8S190 4 230 10S280 11 297 6" pathLength="1"/></svg>
-      <ol class="bd-steps">
-        {pillars.map((pl, i) => (
-          <li class="bd-step">
-            <span class="bd-n"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 6C60 4 76 20 74 42S58 76 36 74S4 58 7 36S22 8 44 7" pathLength="1"/></svg><b>{i + 1}</b></span>
-            <h3 class="chalk">{pl.title}</h3>
-            <p>{pl.text}</p>
-            {i < pillars.length - 1 && <svg class="bd-arrow" viewBox="0 0 120 40" aria-hidden="true"><path d="M112 22C84 8 52 32 14 18" pathLength="1"/><path d="M26 6L12 18L28 30" pathLength="1"/></svg>}
-          </li>
-        ))}
-      </ol>
-      <a class="chalk-link" href={href('/methodology')}>اقرأ منهجي كاملاً</a>
-    </div>
-  </div>
-</section>
-)}
-
-{bubbles.length > 3 && (
-<section class="sec bubsec" id="skills" aria-labelledby="bb-h">
-  <div class="wide">
-    <div class="sec-head"><h2 id="bb-h" data-in>مجالات<br>خبرتي.</h2></div>
-    <p class="net-note">اسحب الكرات وارمِها، واضغط على أي مجال لترى الحقائب المرتبطة به.</p>
-    <div class="bub-field" id="bubField"></div>
-    <div class="bub-panel" id="bubPanel" aria-live="polite"></div>
-  </div>
-</section>
-)}
 
 <section class="sec dark feature" aria-labelledby="aw">
   <div class="wide">
