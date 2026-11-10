@@ -193,33 +193,6 @@ const jsonld = [
   </div>
 </section>
 
-<section class="sec pring-sec" aria-label="إعلانات البرامج">
-  <div class="pring" id="pring" dir="ltr" aria-label="إعلانات البرامج: اسحب للتحريك">
-    <div class="pring-ring">
-      {ringPosters.map((p) => (
-        <button class="pring-it" type="button" style={`--ar:${p.r}`} data-lightbox data-group="home-posters" data-full={href(p.image)} data-cap={p.caption || `إعلان برنامج ${p.year}`}>
-          <img src={href(p.image)} alt={p.caption || `إعلان برنامج ${p.year}`} loading="lazy" decoding="async" draggable="false">
-        </button>
-      ))}
-    </div>
-  </div>
-  <div class="wide pring-more"><a class="more" href={href('/gallery#posters')}>جميع إعلانات البرامج والدورات</a></div>
-</section>
-
-<section class="sec" aria-labelledby="hl">
-  <div class="wide sec-head"><h2 id="hl" data-in>الأبرز.</h2><a class="more" href={href('/featured')}>مشاريع ومشاركات مميزة</a></div>
-  <div class="gallery" id="gal">
-    {highlights.map((h) => (
-      <a class="slide" href={href(h.link)}>
-        <img src={href(h.image)} alt="" loading="lazy" style={`object-position:${h.position}`}>
-        <p>{h.title}.<span>{h.caption}</span></p>
-      </a>
-    ))}
-  </div>
-  <div class="paddles"><button type="button" id="prev" aria-label="السابق">›</button><button type="button" id="next" aria-label="التالي">‹</button></div>
-</section>
-
-{wheel.length > 0 && (
 <section class="sec alt cal" id="calendar" aria-labelledby="cal-h">
   <div class="wide sec-head"><h2 id="cal-h" data-in>روزنامة المدرب.</h2><a class="more" href={href('/training-programs')}>سجل الأثر</a></div>
   <div class="wide">
@@ -260,6 +233,35 @@ const jsonld = [
     <p class="wh-count" id="whCount" aria-live="polite"></p>
   </div>
 </section>
+
+<section class="sec pring-sec" aria-label="إعلانات البرامج">
+  <div class="pring" id="pring" dir="ltr" aria-label="إعلانات البرامج: اسحب للتحريك">
+    <div class="pring-ring">
+      {ringPosters.map((p) => (
+        <button class="pring-it" type="button" style={`--ar:${p.r}`} data-lightbox data-group="home-posters" data-full={href(p.image)} data-cap={p.caption || `إعلان برنامج ${p.year}`}>
+          <img src={href(p.image)} alt={p.caption || `إعلان برنامج ${p.year}`} loading="lazy" decoding="async" draggable="false">
+        </button>
+      ))}
+    </div>
+  </div>
+  <div class="wide pring-more"><a class="more" href={href('/gallery#posters')}>جميع إعلانات البرامج والدورات</a></div>
+</section>
+
+<section class="sec" aria-labelledby="hl">
+  <div class="wide sec-head"><h2 id="hl" data-in>الأبرز.</h2><a class="more" href={href('/featured')}>مشاريع ومشاركات مميزة</a></div>
+  <div class="gallery" id="gal">
+    {highlights.map((h) => (
+      <a class="slide" href={href(h.link)}>
+        <img src={href(h.image)} alt="" loading="lazy" style={`object-position:${h.position}`}>
+        <p>{h.title}.<span>{h.caption}</span></p>
+      </a>
+    ))}
+  </div>
+  <div class="paddles"><button type="button" id="prev" aria-label="السابق">›</button><button type="button" id="next" aria-label="التالي">‹</button></div>
+</section>
+
+{wheel.length > 0 && (
+
 )}
 
 <section class="sec dark nums" aria-labelledby="nm">
