@@ -417,11 +417,15 @@ if (whView) {
   const calGrid = $('#calGrid');
   if (calGrid) {
     const T = $('#calTitle'), P = $('#calPrev'), N = $('#calNext');
-    const items = rows.map((r, i) => ({ i, from: r.dataset.from, to: r.dataset.to }));
+    const items = rows.map((r, i) => ({ i, from: r.dataset.from, to: r.dataset.to, days: r.dataset.days ? r.dataset.days.split(',') : null }));
     const pd = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
     const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const byDay = new Map();                              // اليوم إلى فهرس أول برنامج يقع فيه
-    items.forEach((x) => { for (let d = pd(x.from), n = 0; iso(d) <= x.to && n < 370; d.setDate(d.getDate() + 1), n++) { const k = iso(d); if (!byDay.has(k)) byDay.set(k, x.i); } });
+    items.forEach((x) => {
+      if (x.days) { x.set = new Set(x.days); x.days.forEach((k) => { if (!byDay.has(k)) byDay.set(k, x.i); }); return; }   // برنامج متكرر: أيامه المحددة فقط
+      x.set = new Set();
+      for (let d = pd(x.from), n = 0; iso(d) <= x.to && n < 370; d.setDate(d.getDate() + 1), n++) { const k = iso(d); x.set.add(k); if (!byDay.has(k)) byDay.set(k, x.i); }
+    });
     const fmt = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { month: 'long', year: 'numeric' });
     const full = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     const STAR = '<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>';
@@ -434,7 +438,7 @@ if (whView) {
       for (let k = 0; k < first.getDay(); k++) html += '<span class="cal-d blank" aria-hidden="true"></span>';
       for (let d = 1; d <= days; d++) {
         const key = iso(new Date(y, m, d)), idx = byDay.get(key);
-        const cls = ['cal-d', idx !== undefined ? 'has' : '', key === today ? 'today' : '', sel !== null && idx !== undefined && items[sel].from <= key && key <= items[sel].to ? 'sel' : ''].filter(Boolean).join(' ');
+        const cls = ['cal-d', idx !== undefined ? 'has' : '', key === today ? 'today' : '', sel !== null && items[sel].set.has(key) ? 'sel' : ''].filter(Boolean).join(' ');
         html += idx !== undefined
           ? `<button type="button" class="${cls}" data-i="${idx}" aria-label="${full.format(new Date(y, m, d))}، فيه برنامج"><span>${d}</span>${STAR}</button>`
           : `<span class="${cls}" role="gridcell"><span>${d}</span></span>`;
@@ -447,9 +451,9 @@ if (whView) {
     calGrid.addEventListener('click', (e) => { const b = e.target.closest('.cal-d.has'); if (b) go(Number(b.dataset.i)); });
     onFocus = (i) => {
       sel = i;
-      const x = items[i], a = pd(x.from), b = pd(x.to);
-      const inView = view && ((a.getFullYear() === view.getFullYear() && a.getMonth() === view.getMonth()) || (b.getFullYear() === view.getFullYear() && b.getMonth() === view.getMonth()));
-      if (!inView) view = new Date(a.getFullYear(), a.getMonth(), 1);
+      const x = items[i], all = [...x.set].sort();
+      const inView = view && all.some((k) => { const d = pd(k); return d.getFullYear() === view.getFullYear() && d.getMonth() === view.getMonth(); });
+      if (!inView) { const a = pd(all.find((k) => k >= today) || all[0]); view = new Date(a.getFullYear(), a.getMonth(), 1); }
       render();
     };
   }
