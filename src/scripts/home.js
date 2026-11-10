@@ -428,7 +428,7 @@ if (whView) {
     });
     const fmt = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { month: 'long', year: 'numeric' });
     const full = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    const TAGS = ['تدريب', 'استشارات', 'تدريس', 'استضافة'];
+    const TAGS = ['تدريب', 'استشارات', 'تدريس', 'استضافة', 'إرشاد'];
     const star = (t) => `<svg class="star" data-tag="${t}" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>`;
     let view = null, sel = null;                         // الشهر المعروض (أول يومه)، والبرنامج المختار
     const today = iso(new Date());
