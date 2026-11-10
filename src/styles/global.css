@@ -800,6 +800,10 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .wh-row.is-focus{cursor:default}
 .wh-date{display:grid;gap:1px;align-content:center;padding-inline-end:16px}
 .wh-date b{font-size:clamp(1.02rem,.9rem + .5vw,1.3rem);line-height:1.25;font-weight:700}
+.wh-tag{justify-self:start;font-style:normal;font-size:var(--t-fine);font-weight:700;line-height:1.4;padding:2px 12px;border-radius:980px;margin-bottom:6px;background:#f6ead2;color:#835410}
+.wh-tag[data-tag="استشارات"]{background:#dcecf7;color:#1d5a85}
+.wh-tag[data-tag="تدريس"]{background:#dff0e5;color:#1c6b43}
+.wh-tag[data-tag="استضافة"]{background:#f0e1f2;color:#7a3a86}
 .wh-date span{color:var(--ink-2);font-size:var(--t-small)}
 .wh-state{font-style:normal;font-size:var(--t-fine);font-weight:600;margin-top:5px;color:var(--action)}
 .wh-row[data-state="past"] .wh-state{color:var(--ink-2)}

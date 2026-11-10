@@ -216,7 +216,7 @@ const jsonld = [
             const meta = [x.kind, x.duration, x.location].filter((t, i, a) => t && a.findIndex((u) => plain(u) === plain(t)) === i).join(' · ');
             return (
               <li class="wh-row" role="listitem" data-from={x.from} data-to={x.to} data-state={stateOf(x)}>
-                <div class="wh-date"><b>{r.line}</b><span>{r.year}</span><i class="wh-state">{STATE[stateOf(x)]}</i></div>
+                <div class="wh-date">{x.tag && <em class="wh-tag" data-tag={x.tag}>{x.tag}</em>}<b>{r.line}</b><span>{r.year}</span><i class="wh-state">{STATE[stateOf(x)]}</i></div>
                 <div class="wh-main">
                   <h3>{x.title}</h3>
                   {x.org && <p class="wh-sub wh-org">بالتعاون مع {x.org}</p>}

@@ -57,11 +57,12 @@ export const SECTIONS = [
   {
     id: 'calendar', label: 'روزنامة المدرب', file: 'calendar', kind: 'list', group: 'المحتوى',
     help: 'تظهر في الصفحة الرئيسية كبكرة زمنية. البرنامج الذي ينتهي تاريخه ينتقل تلقائياً إلى سجل الأثر عند أول بناء للموقع (يومياً)، فلا تُضفه هناك يدوياً. يمكنك إضافة برامج سابقة أيضاً.',
-    title: (x) => x.title, meta: (x) => [x.from, x.to && x.to !== x.from ? '← ' + x.to : '', (x.weekdays || []).length ? 'متكرر' : '', x.org].filter(Boolean).join(' · '),
+    title: (x) => x.title, meta: (x) => [x.tag, x.from, x.to && x.to !== x.from ? '← ' + x.to : '', (x.weekdays || []).length ? 'متكرر' : '', x.org].filter(Boolean).join(' · '),
     sort: (a, b) => String(b.from || '').localeCompare(String(a.from || '')),
-    blank: () => ({ id: uid('cal'), title: '', from: '', to: '', weekdays: [], org: '', duration: '', location: '', details: '', role: 'مدرب', topic: 'التجارة الإلكترونية', kind: 'حضوري' }),
+    blank: () => ({ id: uid('cal'), title: '', tag: 'تدريب', from: '', to: '', weekdays: [], org: '', duration: '', location: '', details: '', role: 'مدرب', topic: 'التجارة الإلكترونية', kind: 'حضوري' }),
     fields: [
       { k: 'title', label: 'عنوان البرنامج أو المبادرة', type: 'text', ...req },
+      { k: 'tag', label: 'نوع المشاركة (شارة فوق التاريخ)', type: 'select', options: ['تدريب', 'استشارات', 'تدريس', 'استضافة'], help: 'كلمة واحدة تظهر شارةً ملوّنة فوق التاريخ في بكرة الروزنامة.' },
       { k: 'from', label: 'من تاريخ', type: 'date', ...req },
       { k: 'to', label: 'إلى تاريخ', type: 'date', help: 'اتركه فارغاً إن كان يوماً واحداً. عند مضيّ هذا التاريخ يُنقل البرنامج إلى سجل الأثر.' },
       { k: 'weekdays', label: 'برنامج متكرر: أيام الأسبوع', type: 'multi', options: [['0', 'الأحد'], ['1', 'الاثنين'], ['2', 'الثلاثاء'], ['3', 'الأربعاء'], ['4', 'الخميس'], ['5', 'الجمعة'], ['6', 'السبت']], help: 'للالتزام المتكرر مثل محاضرة كل أحد في فصل دراسي: اختر الأحد، وفي «من تاريخ» أول أحد وفي «إلى تاريخ» آخر أحد. يظهر في التقويم كل أحد في هذا النطاق، ويُحتسب في سجل الأثر مشاركة واحدة. اتركه فارغاً للبرنامج المتصل.' },
