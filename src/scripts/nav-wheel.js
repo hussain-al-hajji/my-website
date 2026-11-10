@@ -5,7 +5,7 @@ if (box) {
   const ring = box.querySelector('.nwheel-ring');
   const items = [...ring.children];
   const N = items.length, STEP = 360 / N;
-  const ROW = 36;                                   // ارتفاع العنوان (بكسل)
+  const ROW = 44;                                   // ارتفاع العنوان (بكسل)
   const R = ROW / 2 / Math.tan((STEP / 2) * Math.PI / 180) * 1.05;   // نصف قطر الأسطوانة بحيث تتجاور العناوين
   const AUTO = 9;                                   // سرعة الدوران التلقائي (درجة/ثانية)
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -65,6 +65,16 @@ if (box) {
   box.addEventListener('pointermove', move);
   box.addEventListener('pointerup', up);
   box.addEventListener('pointercancel', up);
+  // لوحة اللمس في الحاسوب (سحب إصبعين) وعجلة الفأرة: تحرّك البكرة للأعلى والأسفل ثم تستقر على أقرب عنوان
+  let wheelT = 0;
+  box.addEventListener('wheel', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    snapTo = null; vel = 0;
+    rot += dy * PX * 0.9;
+    idleAt = performance.now() + 2500;
+    clearTimeout(wheelT); wheelT = setTimeout(() => { snapTo = Math.round(rot / STEP) * STEP; }, 140);
+  }, { passive: false });
   box.addEventListener('mouseenter', () => { idleAt = Infinity; });
   box.addEventListener('mouseleave', () => { idleAt = performance.now() + 800; });
   // النقر بعد سحب لا يفتح الصفحة
