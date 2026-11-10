@@ -417,7 +417,7 @@ if (whView) {
   const calGrid = $('#calGrid');
   if (calGrid) {
     const T = $('#calTitle'), P = $('#calPrev'), N = $('#calNext');
-    const items = rows.map((r, i) => ({ i, from: r.dataset.from, to: r.dataset.to, days: r.dataset.days ? r.dataset.days.split(',') : null }));
+    const items = rows.map((r, i) => ({ i, tag: r.dataset.tag || '', from: r.dataset.from, to: r.dataset.to, days: r.dataset.days ? r.dataset.days.split(',') : null }));
     const pd = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
     const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const byDay = new Map();                              // اليوم إلى فهرس أول برنامج يقع فيه
@@ -428,7 +428,8 @@ if (whView) {
     });
     const fmt = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { month: 'long', year: 'numeric' });
     const full = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    const STAR = '<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>';
+    const TAGS = ['تدريب', 'استشارات', 'تدريس', 'استضافة'];
+    const star = (t) => `<svg class="star" data-tag="${t}" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>`;
     let view = null, sel = null;                         // الشهر المعروض (أول يومه)، والبرنامج المختار
     const today = iso(new Date());
     const render = () => {
@@ -440,7 +441,7 @@ if (whView) {
         const key = iso(new Date(y, m, d)), list = byDay.get(key), idx = list ? list[0] : undefined;
         const cls = ['cal-d', idx !== undefined ? 'has' : '', key === today ? 'today' : '', sel !== null && items[sel].set.has(key) ? 'sel' : ''].filter(Boolean).join(' ');
         html += idx !== undefined
-          ? `<button type="button" class="${cls}" data-d="${key}" aria-label="${full.format(new Date(y, m, d))}، ${list.length > 1 ? 'فيه ' + list.length + ' برامج' : 'فيه برنامج'}"><span>${d}</span>${STAR}</button>`
+          ? `<button type="button" class="${cls}" data-d="${key}" aria-label="${full.format(new Date(y, m, d))}، ${list.length > 1 ? 'فيه ' + list.length + ' برامج' : 'فيه برنامج'}"><span>${d}</span><span class="stars">${[...new Set(list.map((j) => items[j].tag))].sort((a, b) => TAGS.indexOf(a) - TAGS.indexOf(b)).map(star).join('')}</span></button>`
           : `<span class="${cls}" role="gridcell"><span>${d}</span></span>`;
       }
       calGrid.innerHTML = html;

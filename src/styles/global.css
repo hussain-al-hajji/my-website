@@ -800,10 +800,11 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .wh-row.is-focus{cursor:default}
 .wh-date{display:grid;gap:1px;align-content:center;padding-inline-end:16px}
 .wh-date b{font-size:clamp(1.02rem,.9rem + .5vw,1.3rem);line-height:1.25;font-weight:700}
-.wh-tag{justify-self:start;font-style:normal;font-size:var(--t-fine);font-weight:700;line-height:1.4;padding:2px 12px;border-radius:980px;margin-bottom:6px;background:#f6ead2;color:#835410}
-.wh-tag[data-tag="استشارات"]{background:#dcecf7;color:#1d5a85}
-.wh-tag[data-tag="تدريس"]{background:#dff0e5;color:#1c6b43}
-.wh-tag[data-tag="استضافة"]{background:#f0e1f2;color:#7a3a86}
+.cal{--tg:#835410;--tg-1:#835410;--tg-2:#1d5a85;--tg-3:#1c6b43;--tg-4:#7a3a86}
+.wh-tag{justify-self:start;font-style:normal;font-size:var(--t-fine);font-weight:700;line-height:1.4;padding:2px 12px;border-radius:980px;margin-bottom:6px;background:var(--tg-1);color:#fff}
+.wh-tag[data-tag="استشارات"]{background:var(--tg-2)}
+.wh-tag[data-tag="تدريس"]{background:var(--tg-3)}
+.wh-tag[data-tag="استضافة"]{background:var(--tg-4)}
 .wh-date span{color:var(--ink-2);font-size:var(--t-small)}
 .wh-state{font-style:normal;font-size:var(--t-fine);font-weight:600;margin-top:5px;color:var(--action)}
 .wh-row[data-state="past"] .wh-state{color:var(--ink-2)}
@@ -1338,8 +1339,11 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .cal-d.today{box-shadow:inset 0 0 0 1.5px var(--ink-2)}
 .cal-d.has{background:#fbf4e7;box-shadow:inset 0 0 0 1px #e1d3b3;cursor:pointer;font-weight:700;transition:transform .2s var(--ease),background-color .2s}
 .cal-d.has:hover{transform:translateY(-2px);background:#f6e9cd}
-.cal-d.has .star{position:absolute;top:5px;inset-inline-end:6px;width:13px;height:13px;fill:var(--action)}
-.cal-d.sel{background:var(--action);color:#fff;box-shadow:none}
-.cal-d.sel .star{fill:#f3d795}
+.cal-d .stars{position:absolute;top:4px;inset-inline-end:5px;display:flex;gap:1px;direction:ltr}
+.cal-d.has .star{width:13px;height:13px;fill:var(--tg-1)}
+.cal-d.has .star[data-tag="استشارات"]{fill:var(--tg-2)}
+.cal-d.has .star[data-tag="تدريس"]{fill:var(--tg-3)}
+.cal-d.has .star[data-tag="استضافة"]{fill:var(--tg-4)}
+.cal-d.sel{background:#fff;box-shadow:inset 0 0 0 2px var(--ink)}
 .cal-d.has:focus-visible{outline:2px solid var(--action);outline-offset:2px}
-@media (max-width:560px){.cal-box{padding:12px 10px 14px;border-radius:18px}.cal-d{height:42px;font-size:.88rem;border-radius:10px}.cal-d.has .star{width:11px;height:11px;top:3px;inset-inline-end:4px}.cal-week span{font-size:.68rem}}
+@media (max-width:560px){.cal-box{padding:12px 10px 14px;border-radius:18px}.cal-d{height:42px;font-size:.88rem;border-radius:10px}.cal-d .stars{top:3px;inset-inline-end:3px}.cal-d.has .star{width:11px;height:11px}.cal-week span{font-size:.68rem}}
