@@ -1322,9 +1322,9 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 @media (prefers-reduced-motion:reduce){.nwheel-ring{will-change:auto}}
 
 /* التقويم الميلادي في روزنامة المدرب: نجمة على يوم البرنامج */
-.cal-box{max-width:860px;margin:0 auto 26px;background:#fff;border:1px solid var(--hair);border-radius:22px;padding:16px 18px 18px;box-shadow:0 10px 34px rgba(0,0,0,.05)}
+.cal-box{direction:ltr;max-width:860px;margin:0 auto 26px;background:#fff;border:1px solid var(--hair);border-radius:22px;padding:16px 18px 18px;box-shadow:0 10px 34px rgba(0,0,0,.05)}
 .cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-.cal-title{font-size:1.15rem;font-weight:700;margin:0}
+.cal-title{font-size:1.15rem;font-weight:700;margin:0;direction:rtl}
 .cal-nav{width:36px;height:36px;border-radius:50%;border:1px solid var(--hair);background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:background-color .2s,border-color .2s}
 .cal-nav:hover{background:var(--bg-alt);border-color:var(--ink-2)}
 .cal-nav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
