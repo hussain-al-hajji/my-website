@@ -212,13 +212,15 @@ const jsonld = [
         <ol class="wh-list">
           {wheel.map((x) => {
             const r = rangeAr(x.from, x.to);
-            const sub = [x.org && 'بالتعاون مع ' + x.org, x.duration, x.location].filter(Boolean).join(' · ');
+            const plain = (t) => String(t || '').replace(/[\u064B-\u065F]/g, '').trim();
+            const meta = [x.kind, x.duration, x.location].filter((t, i, a) => t && a.findIndex((u) => plain(u) === plain(t)) === i).join(' · ');
             return (
               <li class="wh-row" role="listitem" data-from={x.from} data-to={x.to} data-state={stateOf(x)}>
                 <div class="wh-date"><b>{r.line}</b><span>{r.year}</span><i class="wh-state">{STATE[stateOf(x)]}</i></div>
                 <div class="wh-main">
                   <h3>{x.title}</h3>
-                  {sub && <p class="wh-sub">{sub}</p>}
+                  {x.org && <p class="wh-sub wh-org">بالتعاون مع {x.org}</p>}
+                  {meta && <p class="wh-sub wh-meta">{meta}</p>}
                   {x.details && <p class="wh-det">{x.details}</p>}
                   <a class="more wh-like" href={href('/contact') + '?like=' + encodeURIComponent(x.title)} tabindex="-1">اطلب برنامجاً مشابهاً</a>
                 </div>
