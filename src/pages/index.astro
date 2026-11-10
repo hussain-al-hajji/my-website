@@ -193,6 +193,7 @@ const jsonld = [
   </div>
 </section>
 
+{wheel.length > 0 && (
 <section class="sec alt cal" id="calendar" aria-labelledby="cal-h">
   <div class="wide sec-head"><h2 id="cal-h" data-in>روزنامة المدرب.</h2><a class="more" href={href('/training-programs')}>سجل الأثر</a></div>
   <div class="wide">
@@ -233,6 +234,7 @@ const jsonld = [
     <p class="wh-count" id="whCount" aria-live="polite"></p>
   </div>
 </section>
+)}
 
 <section class="sec pring-sec" aria-label="إعلانات البرامج">
   <div class="pring" id="pring" dir="ltr" aria-label="إعلانات البرامج: اسحب للتحريك">
@@ -259,10 +261,6 @@ const jsonld = [
   </div>
   <div class="paddles"><button type="button" id="prev" aria-label="السابق">›</button><button type="button" id="next" aria-label="التالي">‹</button></div>
 </section>
-
-{wheel.length > 0 && (
-
-)}
 
 <section class="sec dark nums" aria-labelledby="nm">
   <div class="measure">
