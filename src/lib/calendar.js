@@ -7,27 +7,22 @@ export const todayISO = () => new Date().toLocaleDateString('en-CA', { timeZone:
 export const WEEKDAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 const iso = (d) => d.toISOString().slice(0, 10);
-const days = (x) => (Array.isArray(x) ? x : String(x || '').split(/[\n,]/)).map((t) => String(t).trim()).filter((t) => ISO.test(t));
 
-/** هل البرنامج متكرر أو متفرق الأيام؟ (أيام أسبوع مختارة و/أو أيام يدوية) */
+/** هل البرنامج متكرر؟ (اختيار أيام أسبوع) */
 export const weekdaysOf = (x) => [...new Set((x.weekdays || []).map(Number).filter((n) => n >= 0 && n <= 6))].sort();
-export const isRecurring = (x) => weekdaysOf(x).length > 0 || days(x.dates).length > 0;
+export const isRecurring = (x) => weekdaysOf(x).length > 0;
 
 /**
- * الأيام التي يُنفَّذ فيها البرنامج: بلا تكرار هي كل أيام النطاق من/إلى؛ ومع التكرار هي أيام الأسبوع المختارة داخل النطاق
- * مطروحاً منها الأيام المستثناة، مضافاً إليها الأيام اليدوية. والبرنامج كله يُحتسب مشاركة واحدة في سجل الأثر.
+ * الأيام التي يُنفَّذ فيها البرنامج: بلا تكرار هي كل أيام النطاق من/إلى؛ ومع التكرار هي أيام الأسبوع المختارة داخل النطاق. والبرنامج كله يُحتسب مشاركة واحدة في سجل الأثر.
  */
 export function occurrences(x) {
   if (!ISO.test(x.from || '')) return [];
   const to = ISO.test(x.to || '') ? x.to : x.from;
-  const wd = weekdaysOf(x), extra = days(x.dates), skip = new Set(days(x.except));
+  const wd = weekdaysOf(x);
   const out = new Set();
-  if (!isRecurring(x) || wd.length) {
-    for (let d = new Date(x.from + 'T12:00:00Z'), n = 0; iso(d) <= to && n < 800; d.setUTCDate(d.getUTCDate() + 1), n++) {
-      if ((!wd.length || wd.includes(d.getUTCDay())) && !skip.has(iso(d))) out.add(iso(d));
-    }
+  for (let d = new Date(x.from + 'T12:00:00Z'), n = 0; iso(d) <= to && n < 800; d.setUTCDate(d.getUTCDate() + 1), n++) {
+    if (!wd.length || wd.includes(d.getUTCDay())) out.add(iso(d));
   }
-  extra.forEach((d) => out.add(d));
   return [...out].sort();
 }
 
@@ -72,7 +67,10 @@ export function archivedRecords() {
 /** عناصر البكرة: كل البرامج (المنجزة والقادمة) بترتيبها الزمني؛ pastKeep لتحديد عدد المنجزة إن لزم. */
 export function wheelItems(pastKeep = Infinity) {
   const today = todayISO();
-  const all = calendarItems();
+  // البرنامج المتكرر يظهر في البكرة والتقويم صفاً لكل يوم من أيامه، مرتّباً بين البرامج بتاريخه (وهو في سجل الأثر مشاركة واحدة)
+  const all = calendarItems()
+    .flatMap((x) => (x.occ ? x.occ.map((d) => ({ ...x, id: `${x.id}@${d}`, from: d, to: d, occ: undefined })) : [x]))
+    .sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
   const past = all.filter((x) => isEnded(x, today)).slice(Number.isFinite(pastKeep) ? -pastKeep : 0);
   return [...past, ...all.filter((x) => !isEnded(x, today))];
 }

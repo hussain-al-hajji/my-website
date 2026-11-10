@@ -422,9 +422,9 @@ if (whView) {
     const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const byDay = new Map();                              // اليوم إلى فهرس أول برنامج يقع فيه
     items.forEach((x) => {
-      if (x.days) { x.set = new Set(x.days); x.days.forEach((k) => { if (!byDay.has(k)) byDay.set(k, x.i); }); return; }   // برنامج متكرر: أيامه المحددة فقط
+      if (x.days) { x.set = new Set(x.days); x.days.forEach((k) => { (byDay.get(k) || byDay.set(k, []).get(k)).push(x.i); }); return; }
       x.set = new Set();
-      for (let d = pd(x.from), n = 0; iso(d) <= x.to && n < 370; d.setDate(d.getDate() + 1), n++) { const k = iso(d); x.set.add(k); if (!byDay.has(k)) byDay.set(k, x.i); }
+      for (let d = pd(x.from), n = 0; iso(d) <= x.to && n < 370; d.setDate(d.getDate() + 1), n++) { const k = iso(d); x.set.add(k); (byDay.get(k) || byDay.set(k, []).get(k)).push(x.i); }
     });
     const fmt = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { month: 'long', year: 'numeric' });
     const full = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -437,10 +437,10 @@ if (whView) {
       let html = '';
       for (let k = 0; k < first.getDay(); k++) html += '<span class="cal-d blank" aria-hidden="true"></span>';
       for (let d = 1; d <= days; d++) {
-        const key = iso(new Date(y, m, d)), idx = byDay.get(key);
+        const key = iso(new Date(y, m, d)), list = byDay.get(key), idx = list ? list[0] : undefined;
         const cls = ['cal-d', idx !== undefined ? 'has' : '', key === today ? 'today' : '', sel !== null && items[sel].set.has(key) ? 'sel' : ''].filter(Boolean).join(' ');
         html += idx !== undefined
-          ? `<button type="button" class="${cls}" data-i="${idx}" aria-label="${full.format(new Date(y, m, d))}، فيه برنامج"><span>${d}</span>${STAR}</button>`
+          ? `<button type="button" class="${cls}" data-d="${key}" aria-label="${full.format(new Date(y, m, d))}، ${list.length > 1 ? 'فيه ' + list.length + ' برامج' : 'فيه برنامج'}"><span>${d}</span>${STAR}</button>`
           : `<span class="${cls}" role="gridcell"><span>${d}</span></span>`;
       }
       calGrid.innerHTML = html;
@@ -448,7 +448,12 @@ if (whView) {
     const showMonth = (dt) => { view = new Date(dt.getFullYear(), dt.getMonth(), 1); render(); };
     P.addEventListener('click', () => showMonth(new Date(view.getFullYear(), view.getMonth() - 1, 1)));
     N.addEventListener('click', () => showMonth(new Date(view.getFullYear(), view.getMonth() + 1, 1)));
-    calGrid.addEventListener('click', (e) => { const b = e.target.closest('.cal-d.has'); if (b) go(Number(b.dataset.i)); });
+    // الضغط على يوم فيه أكثر من برنامج يبرز الأول، والضغط ثانية على اليوم نفسه ينتقل إلى الذي بعده
+    calGrid.addEventListener('click', (e) => {
+      const b = e.target.closest('.cal-d.has'); if (!b) return;
+      const list = byDay.get(b.dataset.d), at = list.indexOf(cur);
+      go(list[at < 0 ? 0 : (at + 1) % list.length]);
+    });
     onFocus = (i) => {
       sel = i;
       const x = items[i], all = [...x.set].sort();

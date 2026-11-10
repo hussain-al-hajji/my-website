@@ -6,7 +6,7 @@ import highlights from '../data/highlights.json';
 import award from '../data/award.json';
 import testimonials from '../data/testimonials.json';
 import partners from '../data/partners.json';
-import { wheelItems, rangeAr, recurAr, isRecurring, stateOf, eventSchemas } from '../lib/calendar.js';
+import { wheelItems, rangeAr, stateOf, eventSchemas } from '../lib/calendar.js';
 import projects from '../data/projects.json';
 import media from '../data/media.json';
 import ring from '../data/ring.json';
@@ -211,10 +211,10 @@ const jsonld = [
       <div class="wh-view" id="whView" tabindex="0" role="list" aria-label="روزنامة المدرب">
         <ol class="wh-list">
           {wheel.map((x) => {
-            const r = isRecurring(x) ? recurAr(x) : rangeAr(x.from, x.to);
-            const sub = [x.time, x.org && 'بالتعاون مع ' + x.org, x.duration, x.location].filter(Boolean).join(' · ');
+            const r = rangeAr(x.from, x.to);
+            const sub = [x.org && 'بالتعاون مع ' + x.org, x.duration, x.location].filter(Boolean).join(' · ');
             return (
-              <li class="wh-row" role="listitem" data-from={x.from} data-to={x.to} data-days={x.occ ? x.occ.join(',') : undefined} data-state={stateOf(x)}>
+              <li class="wh-row" role="listitem" data-from={x.from} data-to={x.to} data-state={stateOf(x)}>
                 <div class="wh-date"><b>{r.line}</b><span>{r.year}</span><i class="wh-state">{STATE[stateOf(x)]}</i></div>
                 <div class="wh-main">
                   <h3>{x.title}</h3>
