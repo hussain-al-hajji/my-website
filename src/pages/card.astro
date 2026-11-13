@@ -12,7 +12,7 @@ const ico = {
   tel: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/>',
   web: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
-  pf: '<path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/>',
+  pf: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   in: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
 };
 const svg = (k) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ico[k]}</svg>`;
@@ -40,7 +40,7 @@ const acts = [
         ))}
       </ul>
 
-      <a class="pill card-pf" href={href('/hussain-al-hajji-portfolio.pdf')} download set:html={svg('pf') + '<span>حمّل البورتفوليو</span>'}></a>
+      <a class="pill card-pf" href={href('/work-file')} set:html={svg('pf') + '<span>عرض البورتفوليو</span>'}></a>
 
       <ul class="card-links">
         <li><a href={href('/bio')}>السيرة والإنجازات</a></li>

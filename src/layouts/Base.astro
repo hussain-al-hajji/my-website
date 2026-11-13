@@ -149,7 +149,7 @@ const crumbs = breadcrumbSchema(cleanPath, title);
   {!bare && (<footer class="foot">
     <div class="wide">
       <div class="foot-brand"><img src={href('/brand/logo-full-light.svg')} alt="حسين الحاجي، أمكّن الشباب" width="320" height="118" loading="lazy">
-        <a class="pill foot-pf" href={href('/hussain-al-hajji-portfolio.pdf')} download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>حمّل البورتفليو</a></div>
+        <a class="pill foot-pf" href={href('/work-file')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>عرض البورتفوليو</a></div>
       <div class="dir">
         {FOOT_DIR.map((g) => (
           <div><h3>{g.h}</h3><ul>{g.l.map(([t, u]) => <li><a href={href(u)}>{t}</a></li>)}</ul></div>
