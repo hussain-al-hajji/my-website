@@ -31,7 +31,7 @@
 .pp-cover{padding:0;display:block}
 .pp-cover .pp-galaxy{position:absolute;width:190mm;height:190mm;left:-18mm;top:10mm}
 .pp-cover-photo{position:absolute;left:38mm;bottom:0;height:178mm;width:auto;filter:drop-shadow(0 0 24px rgba(226,178,87,.25))}
-.pp-cover-txt{position:absolute;right:20mm;top:40mm;width:118mm;display:grid;gap:6mm;justify-items:start}
+.pp-cover-txt{position:absolute;right:20mm;top:40mm;width:118mm;display:grid;gap:6mm;justify-items:center;text-align:center}
 .pp-cover-txt h1 img{width:118mm;height:auto}
 .pp-cover-role{font-size:13.5pt;color:#d8d6cf;line-height:1.7}
 .pp-cover-years{display:flex;align-items:center;gap:4mm;font-size:15pt;color:var(--gold)}
