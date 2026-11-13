@@ -17,12 +17,11 @@ const ico = {
 };
 const svg = (k) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ico[k]}</svg>`;
 const acts = [
+  { k: 'in', t: 'لينكدإن', u: c.linkedin, ext: true },
   { k: 'wa', t: 'واتساب', u: l.wa, ext: true },
   { k: 'tel', t: 'اتصال', u: l.tel },
   { k: 'mail', t: 'البريد', u: l.mail },
-  { k: 'in', t: 'لينكدإن', u: c.linkedin, ext: true },
   { k: 'web', t: 'موقعي الإلكتروني', u: href('/') },
-  { k: 'pf', t: 'حمّل البورتفوليو', u: href('/hussain-al-hajji-portfolio.pdf'), dl: true },
 ];
 ---
 <Base title="بطاقتي" description="بطاقتي الرقمية: احفظ جهة اتصالي، أو تواصل معي مباشرة، أو حمّل ملفي التعريفي." bare>
@@ -37,13 +36,18 @@ const acts = [
 
       <ul class="card-acts">
         {acts.map((a) => (
-          <li><a href={a.u} rel={a.ext ? 'noopener' : undefined} download={a.dl ? '' : undefined} set:html={svg(a.k) + '<span>' + a.t + '</span>'}></a></li>
+          <li><a href={a.u} rel={a.ext ? 'noopener' : undefined} aria-label={a.t} title={a.t} set:html={svg(a.k)}></a></li>
         ))}
       </ul>
 
+      <a class="pill card-pf" href={href('/hussain-al-hajji-portfolio.pdf')} download set:html={svg('pf') + '<span>حمّل البورتفوليو</span>'}></a>
+
       <ul class="card-links">
         <li><a href={href('/bio')}>السيرة والإنجازات</a></li>
-        <li class="card-pair"><a href="https://academy.hussain-al-hajji.com/" rel="noopener">الأكاديمية</a><span aria-hidden="true">|</span><a href={c.podcast} rel="noopener">بودكاستي</a></li>
+        <li aria-hidden="true">|</li>
+        <li><a href="https://academy.hussain-al-hajji.com/" rel="noopener">الأكاديمية</a></li>
+        <li aria-hidden="true">|</li>
+        <li><a href={c.podcast} rel="noopener">بودكاستي</a></li>
       </ul>
 
       <figure class="card-qr">

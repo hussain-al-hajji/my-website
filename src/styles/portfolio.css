@@ -91,7 +91,7 @@
 .pp-facts b{font-size:22pt;color:var(--gold);line-height:1.1}
 .pp-facts span{font-size:9.5pt;color:#a3a29b}
 .pp-award .pp-foot{inset-inline:16mm 144mm}
-.pp-story{font-size:10.4pt;line-height:1.75;color:#b9b7b0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;overflow:hidden}
+.pp-story{font-size:10.4pt;line-height:1.75;color:#b9b7b0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
 
 /* المشاركات المميزة */
 .pp-feat{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:4mm 10mm;flex:1;min-height:0;margin-bottom:6mm}
@@ -111,13 +111,13 @@
 .pp-kits .hl{font-size:10pt;color:#6b6a64;line-height:1.45;margin-top:.5mm;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 
 /* الشركاء */
-.pp-logos{list-style:none;display:grid;grid-template-columns:repeat(10,1fr);gap:3mm;align-content:start}
-.pp-logos li{height:15mm;background:#fff;border-radius:2.5mm;display:grid;place-items:center;padding:1.8mm;box-shadow:0 0 0 1px #e8e4db}
-.pp-logos img{max-width:100%;max-height:11.4mm;width:auto;height:auto;object-fit:contain}
-.pp-media{margin-top:auto;margin-bottom:6mm;border-top:1px solid #e2ded5;padding-top:3mm}
-.pp-mlogos{list-style:none;display:grid;grid-template-columns:repeat(8,1fr);gap:2.5mm}
-.pp-mlogos li{height:13mm;background:#fff;border-radius:2.5mm;display:grid;place-items:center;padding:1.6mm 2.4mm;box-shadow:0 0 0 1px #e8e4db}
-.pp-mlogos img{max-width:100%;max-height:9.6mm;width:auto;height:auto;object-fit:contain}
+.pp-logos{list-style:none;display:grid;grid-template-columns:repeat(10,1fr);gap:2.4mm;align-content:start}
+.pp-logos li{height:13.4mm;background:#fff;border-radius:2.5mm;display:grid;place-items:center;padding:1.8mm;box-shadow:0 0 0 1px #e8e4db}
+.pp-logos img{max-width:100%;max-height:10mm;width:auto;height:auto;object-fit:contain}
+.pp-media{margin-top:auto;margin-bottom:5mm;border-top:1px solid #e2ded5;padding-top:3mm}
+.pp-mlogos{list-style:none;display:grid;grid-template-columns:repeat(8,1fr);gap:2mm}
+.pp-mlogos li{height:12mm;background:#fff;border-radius:2.5mm;display:grid;place-items:center;padding:1.6mm 2.4mm;box-shadow:0 0 0 1px #e8e4db}
+.pp-mlogos img{max-width:100%;max-height:8.8mm;width:auto;height:auto;object-fit:contain}
 
 /* آراء */
 .pp-voices{display:grid;grid-template-columns:repeat(6,1fr);gap:7mm 9mm;align-items:start;margin-top:2mm}
@@ -153,15 +153,15 @@
 @media screen and (max-width:1160px){
   .pp-doc{zoom:.6}
 }
-.pp-group{position:absolute;right:16mm;bottom:19mm;width:136mm;display:grid;gap:1.6mm}
-.pp-group img{width:100%;height:50mm;object-fit:cover;object-position:50% 92%;border-radius:3mm}
+.pp-group{position:absolute;right:16mm;bottom:16mm;width:136mm;display:grid;gap:1.6mm}
+.pp-group img{width:100%;height:46mm;object-fit:cover;object-position:50% 92%;border-radius:3mm}
 .pp-group figcaption{font-size:9pt;color:#a3a29b}
 .pp-sub{font-size:13pt;font-weight:800;margin-bottom:3mm;color:var(--ink)}
 
 /* أدوار التعاون في صفحة «من أنا» */
 .pp-roles{margin-top:auto;margin-bottom:5mm}
 .pp-roles ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2.6mm}
-.pp-roles li{position:relative;display:flex;align-items:center;gap:2.6mm;min-height:13mm;padding:2mm 3mm;border-radius:3mm;background:#fff;box-shadow:0 0 0 1px #e6e1d6;overflow:hidden}
+.pp-roles li{position:relative;display:flex;align-items:center;gap:2.6mm;min-height:13mm;padding:2mm 3mm;padding-inline-end:6.5mm;border-radius:3mm;background:#fff;box-shadow:0 0 0 1px #e6e1d6;overflow:hidden}
 .pp-roles li::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:1.2mm;background:linear-gradient(var(--gold),var(--gold-d))}
 .pp-roles .ic{flex:none;width:8.5mm;height:8.5mm;border-radius:50%;display:grid;place-items:center;background:#1b1b1a}
 .pp-roles .ic svg{width:5mm;height:5mm;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -242,7 +242,7 @@
 .pp-doc[dir=ltr] .pp-me .pp-just{font-size:9.3pt;line-height:1.55}
 .pp-doc[dir=ltr] .pp-roles b{font-size:9pt}
 .pp-doc[dir=ltr] .pp-award-txt .pp-lead{font-size:11.5pt;line-height:1.5}
-.pp-doc[dir=ltr] .pp-story{font-size:9pt;line-height:1.55;-webkit-line-clamp:6}
+.pp-doc[dir=ltr] .pp-story{font-size:9pt;line-height:1.55;-webkit-line-clamp:5}
 .pp-doc[dir=ltr] .pp-voices p{font-size:8.6pt;line-height:1.55}
 .pp-doc[dir=ltr] .pp-method .bd-step p{font-size:8.5pt;line-height:1.5}
 .pp-doc[dir=ltr] .pp-method .bd-step h3{font-size:11.5pt}

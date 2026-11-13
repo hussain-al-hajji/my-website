@@ -1,0 +1,293 @@
+---
+// ملف أعمال: نسخة الويب من البورتفوليو. تقرأ من مصادر الملف نفسها (src/data عبر lib/portfolio-data.js)،
+// فتتحدّث مع كل بناء جديد، ولا تحتوي رقماً مكتوباً داخل الصفحة.
+import Base from '../layouts/Base.astro';
+import '../styles/workfile.css';
+import { site, href } from '../lib/site.js';
+import { portfolioData, roleIcon } from '../lib/portfolio-data.js';
+import geo from '../assets/gulf-geo.html?raw';
+
+const d = portfolioData('ar');
+const { tx, sName, sRole, sFocus, aw, featTitle, y0, y1, kits, n, bioP, intro, remoteN, inN, logos, voices, outlets, galaxy, perYear, COLS, DOT, colW, yearsSvgW, yearsSvgH, topics, otherSamples, remoteDeg, pillars, impactMap, topCities, awardImg, awardGroup, roles, projects, featured, records, honors, pages } = d;
+const stats = [
+  [n(site.stats.programs) + '+', 'برنامج وفعالية'],
+  [n(site.stats.partners) + '+', 'جهة شريكة'],
+  [n(site.stats.beneficiaries) + '+', 'مستفيد'],
+  [n(kits.length), 'حقيبة تدريبية'],
+];
+const featGroups = [];
+featured.forEach((f) => {
+  let g = featGroups.find((x) => x.id === f.group);
+  if (!g) featGroups.push((g = { id: f.group, title: featTitle[f.group] || f.group, items: [] }));
+  g.items.push(f);
+});
+const local = [
+  { label: 'من أنا', href: '#about' },
+  ...(impactMap.total ? [{ label: 'خريطة الأثر', href: '#map' }] : []),
+  { label: 'الأثر في أرقام', href: '#impact' },
+  ...(pillars.length ? [{ label: 'منهجي', href: '#method' }] : []),
+  { label: 'مشاريعي', href: '#projects' },
+  { label: 'رواد الشباب العربي', href: '#award' },
+  { label: 'مشاركات مميزة', href: '#featured' },
+  { label: 'الحقائب', href: '#kits' },
+  { label: 'الشركاء', href: '#partners' },
+  ...(voices.length ? [{ label: 'قالوا عني', href: '#voices' }] : []),
+];
+const pdf = href('/hussain-al-hajji-portfolio.pdf');
+---
+<Base title="ملف أعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}: الأثر والمشاريع والحقائب والشركاء، بالأرقام والصور، مع تحميل الملف بصيغة PDF.`} active="bio" local={local}>
+  <main class="wf" id="main">
+
+    <!-- الغلاف -->
+    <header class="wf-hero">
+      <svg class="wf-galaxy" viewBox="0 0 400 400" aria-hidden="true">
+        {galaxy.map((g) => <circle cx={g.x.toFixed(1)} cy={g.y.toFixed(1)} r={g.s} fill="#e2b257" opacity={g.o.toFixed(2)} />)}
+      </svg>
+      <div class="wide wf-hero-in">
+        <div class="wf-hero-txt">
+          <p class="wf-kicker">ملف الأعمال · Portfolio</p>
+          <h1><img src={href('/brand/logo-full-white.svg')} alt={site.name + '، ' + site.tagline} width="2600" height="961"></h1>
+          <p class="wf-role">{sRole}</p>
+          {sFocus && <p class="wf-focus">{sFocus}</p>}
+          <p class="wf-years"><b>{y0}</b><i></i><b>{y1}</b></p>
+          <p class="wf-cta"><a class="pill" href={pdf} download>حمّل ملف الأعمال (PDF)</a><a class="more" href={href('/contact')}>تواصل معي</a></p>
+        </div>
+        <img class="wf-hero-photo" src={href('/img/brand/portrait-photo-840.webp')} alt="" width="560" height="694" fetchpriority="high">
+      </div>
+      <ul class="wide wf-stats">
+        {stats.map(([v, l]) => <li><b>{v}</b><span>{l}</span></li>)}
+      </ul>
+    </header>
+
+    <!-- من أنا -->
+    <section class="sec tight wf-paper" id="about">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">01</span><h2>من أنا</h2></header>
+        <div class="wf-me">
+          <div class="wf-me-txt">
+            <p class="wf-lead">{bioP.lead}</p>
+            {intro.slice(0, 2).map((t) => <p class="wf-just">{t}</p>)}
+            <a class="more" href={href('/bio')}>السيرة والإنجازات كاملة</a>
+          </div>
+          <figure class="wf-me-fig"><img src={href('/img/brand/portrait-composite-840.webp')} alt="رسم بالرصاص لي" width="560" height="694" loading="lazy"></figure>
+        </div>
+        {roles.length > 0 && (
+          <div class="wf-roles">
+            <h3 class="wf-sub">أدوار يمكننا التعاون فيها</h3>
+            <ul>{roles.map((r, i) => <li><span class="ic" set:html={roleIcon(r)}></span><b>{r}</b></li>)}</ul>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- خريطة الأثر -->
+    {impactMap.total > 0 && (
+      <section class="sec tight dark wf-dark" id="map">
+        <div class="wide">
+          <header class="wf-head"><span class="wf-num">02</span><h2>خريطة الأثر</h2></header>
+          <div class="wf-map">
+            <svg class="map in" viewBox="0 0 1000 600" role="img" aria-label="خريطة المدن التي قُدّمت فيها البرامج">
+              <g class="geo" aria-hidden="true" set:html={geo}></g>
+              <g>{impactMap.placed.filter((c) => c.arc).map((c) => <path class="arc" d={c.arc} />)}</g>
+              <g>{impactMap.placed.map((c) => (
+                <g class="c">
+                  <circle class="halo" cx={c.x} cy={c.y} r={c.rad * 2} />
+                  <circle class={'city' + (c.isHome ? ' home' : '')} cx={c.x} cy={c.y} r={c.rad} />
+                  {c.label && <text x={c.label.x} y={c.label.y} text-anchor={c.label.anchor} direction="rtl">{c.name}</text>}
+                  {c.label && <text class="sm" x={c.label.x} y={c.label.y + 18} text-anchor={c.label.anchor} direction="rtl">{c.n} مشاركة</text>}
+                </g>
+              ))}</g>
+            </svg>
+            <aside class="wf-map-side">
+              <p class="wf-bignum"><b>{impactMap.total}</b><span>{impactMap.label}</span></p>
+              <p class="wf-cap">أكثر المواقع مشاركة</p>
+              <ol class="wf-top">{topCities.map((c) => <li><span>{c.name}</span><b>{c.n}</b></li>)}</ol>
+              <p class="wf-home"><i></i>الأحساء، منطلق الرحلة، ومنها تمتد الأقواس إلى كل موقع.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- الأثر في أرقام -->
+    <section class="sec tight dark wf-dark wf-impact" id="impact">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">03</span><h2>الأثر في أرقام</h2></header>
+        <div class="wf-impact-grid">
+          <div class="wf-years-box">
+            <p class="wf-cap">{n(records.length)} برنامجاً موثّقاً، سنة بعد سنة (كل نقطة برنامج)</p>
+            <p class="wf-hint">اسحب الرسم جانبياً لرؤية بقية السنوات</p>
+            <div class="wf-years-scroll" tabindex="0">
+              <svg viewBox={`0 0 ${yearsSvgW} ${yearsSvgH}`} role="img" aria-label="عدد البرامج في كل سنة">
+                {perYear.map((p, i) => {
+                  const cx = yearsSvgW - colW * (i + 0.5);
+                  return (<g>
+                    {Array.from({ length: p.c }, (_, k) => <circle cx={cx + ((k % COLS) - (COLS - 1) / 2) * DOT} cy={yearsSvgH - 40 - Math.floor(k / COLS) * DOT} r="3.3" fill="#e2b257" />)}
+                    <text x={cx} y={yearsSvgH - 20} text-anchor="middle" class="yl">{p.y}</text>
+                    <text x={cx} y={yearsSvgH - 4} text-anchor="middle" class="yc">{p.c}</text>
+                  </g>);
+                })}
+              </svg>
+            </div>
+          </div>
+          <div class="wf-side">
+            <div class="wf-split">
+              <div class="wf-donut" style={`--d:${remoteDeg.toFixed(1)}deg`}><span><b>{n(records.length)}</b>برنامجاً</span></div>
+              <ul>
+                <li><i class="a"></i><b>{n(inN)}</b> حضورياً</li>
+                <li><i class="b"></i><b>{n(remoteN)}</b> عن بُعد</li>
+              </ul>
+            </div>
+            <p class="wf-cap">أكثر المواضيع</p>
+            <ul class="wf-topics">
+              {topics.map(([t, c]) => <li><span>{t}</span><b>{c}</b><i style={`--w:${(c / topics[0][1] * 100).toFixed(1)}%`}></i></li>)}
+            </ul>
+            {otherSamples.length > 0 && (
+              <ul class="wf-samples" aria-label="نماذج من مواضيع أخرى">
+                {otherSamples.map((s) => <li>{s}</li>)}
+              </ul>
+            )}
+            <a class="more" href={href('/training-programs')}>سجل الأثر كاملاً</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- منهجي في التدريب -->
+    {pillars.length > 0 && (
+      <section class="sec tight wf-paper" id="method">
+        <div class="wide">
+          <header class="wf-head"><span class="wf-num">04</span><h2>منهجي في التدريب</h2></header>
+          <ol class="wf-pillars">
+            {pillars.map((pl, i) => (
+              <li><span class="n">{i + 1}</span><h3>{pl.title}</h3><p>{pl.text}</p></li>
+            ))}
+          </ol>
+          <p class="wf-more"><a class="more" href={href('/methodology')}>اقرأ منهجي كاملاً</a></p>
+        </div>
+      </section>
+    )}
+
+    <!-- مشاريع أسستها -->
+    <section class="sec tight wf-alt" id="projects">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">05</span><h2>مشاريع أسستها</h2></header>
+        <div class="wf-projects">
+          {projects.map((p) => (
+            <article>
+              <span class="pic">{p.image ? <img src={href(p.image)} alt={p.name} loading="lazy"> : <i></i>}</span>
+              <div>
+                <h3>{p.name}{p.nameEn && <small dir="ltr">{p.nameEn}</small>}</h3>
+                {p.status && <p class="tag">{p.status}</p>}
+                <p class="wf-just">{p.desc}</p>
+                {p.link && <a class="more" href={p.link} rel="noopener">زيارة المشروع</a>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- رواد الشباب العربي -->
+    <section class="sec tight dark wf-dark wf-award" id="award">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">06</span><h2>{aw('title')}</h2></header>
+        <div class="wf-award-grid">
+          <div class="wf-award-txt">
+            <p class="wf-kicker">{aw('edition')} · {aw('dates')}</p>
+            <p class="wf-lead">{aw('lead')}</p>
+            {aw('story')?.[0] && <p class="wf-just wf-story">{aw('story')[0]}</p>}
+            <ul class="wf-facts">{(aw('facts') || []).slice(0, 4).map((f) => <li><b>{f.value}</b><span>{f.label}</span></li>)}</ul>
+            <p class="wf-fine">{aw('sponsor')}</p>
+            <a class="more" href={href('/arab-youth-pioneers')}>تفاصيل الجائزة</a>
+          </div>
+          <div class="wf-award-pics">
+            <img src={href(awardImg)} alt="لحظة التكريم" loading="lazy">
+            {awardGroup && <figure><img src={href(awardGroup.image)} alt="" loading="lazy"><figcaption>{awardGroup.caption}</figcaption></figure>}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- مشاركات مميزة -->
+    <section class="sec tight wf-paper" id="featured">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">07</span><h2>مشاريع ومشاركات مميزة</h2></header>
+        {featGroups.map((g) => (
+          <div class="wf-fgroup">
+            <h3 class="wf-sub">{g.title}</h3>
+            <div class="wf-feat">
+              {g.items.map((f) => (
+                <article>
+                  <span class="lg">{f.logo && <img src={href(f.logo)} alt="" loading="lazy">}</span>
+                  <div><h4>{tx(f, 'title')}</h4>{tx(f, 'orgs') && <p class="org">{tx(f, 'orgs')}</p>}</div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p class="wf-more"><a class="more" href={href('/featured')}>كل المشاركات</a></p>
+      </div>
+    </section>
+
+    <!-- الحقائب -->
+    <section class="sec tight wf-alt" id="kits">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">08</span><h2>حقائب تدريبية جاهزة للتخصيص</h2></header>
+        <div class="wf-kits">
+          {kits.map((k) => (
+            <a class="wf-kit" href={href('/collaborate') + '#' + k.id}>
+              <img src={href(k.image)} alt="" loading="lazy">
+              <h3>{tx(k, 'short') || k.title}</h3>
+              <p class="dur">{tx(k, 'duration')}</p>
+              {tx(k, 'headline') && <p class="hl">{tx(k, 'headline')}</p>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- الشركاء والإعلام -->
+    <section class="sec tight wf-paper" id="partners">
+      <div class="wide">
+        <header class="wf-head"><span class="wf-num">09</span><h2>جهات صنعتُ معها الأثر</h2></header>
+        <ul class="wf-logos">{logos.slice(0, 60).map((p) => <li><img src={href(p.logo)} alt={p.name} loading="lazy"></li>)}</ul>
+        {outlets.length > 0 && (
+          <div class="wf-media">
+            <h3 class="wf-sub">استضافات في الصحافة والإعلام</h3>
+            <ul class="wf-logos wf-mlogos">{outlets.map((o) => <li><img src={href(o.logo)} alt={o.name} loading="lazy"></li>)}</ul>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- قالوا -->
+    {voices.length > 0 && (
+      <section class="sec tight dark wf-dark" id="voices">
+        <div class="wide">
+          <header class="wf-head"><span class="wf-num">10</span><h2>قالوا عن العمل معي</h2></header>
+          <div class="wf-voices">
+            {voices.map((t) => (
+              <blockquote><p class="wf-just">{t.text}</p>{(t.name || t.role) && <footer>{t.name && <b>{t.name}</b>}{t.role && <span>{t.role}</span>}</footer>}</blockquote>
+            ))}
+          </div>
+          <p class="wf-honors">و{n(honors.length)} شهادة شكر وتقدير من الجهات التي عملتُ معها. <a class="more" href={href('/honor')}>شهادات التقدير</a></p>
+        </div>
+      </section>
+    )}
+
+    <!-- الختام -->
+    <section class="sec tight dark wf-dark wf-end">
+      <div class="measure">
+        <h2>لنصنع الأثر معاً.</h2>
+        <p class="wf-lead">أصمّم البرامج وأقدّمها حضورياً وعن بُعد، وأخصّص كل حقيبة لجهتكم وجمهوركم.</p>
+        <p class="wf-cta"><a class="pill" href={pdf} download>حمّل ملف الأعمال (PDF)</a><a class="more" href={href('/contact')}>اطلب برنامجاً</a></p>
+        <ul class="wf-contact">
+          <li><span>البريد</span><b dir="ltr">{site.contact.email}</b></li>
+          <li><span>الجوال وواتساب</span><b dir="ltr">{site.contact.phone}</b></li>
+          <li><span>لينكدإن</span><b dir="ltr">linkedin.com/in/hussain-al-hajji</b></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</Base>

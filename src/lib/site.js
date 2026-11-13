@@ -156,12 +156,13 @@ export const GNAV = [
   // مركز المستندات: ملفان يُولَّدان مع كل نشر (السيرة الذاتية من صفحة «عني»، وملف الأعمال) وبطاقة اتصال تُحفظ في جهات الاتصال
   { label: 'مركز المستندات', key: 'docs', children: [
     { label: 'السيرة الذاتية PDF', href: '/hussain-al-hajji-profile.pdf', download: true },
+    { label: 'ملف أعمال (صفحة)', href: '/work-file' },
     { label: 'ملف الأعمال PDF', href: '/hussain-al-hajji-portfolio.pdf', download: true },
     { label: 'بطاقتي الرقمية', href: '/card', icon: 'contact' },
   ] },
 ];
 export const FOOT_DIR = [
-  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery'], ['بطاقتي الرقمية', '/card']] },
+  { h: 'استكشف', l: [['السيرة', '/bio'], ['سجل الأثر', '/training-programs'], ['الجوائز والتكريم', '/honor'], ['رواد الشباب العربي', '/arab-youth-pioneers'], ['مشاريع ومشاركات مميزة', '/featured'], ['المعرض', '/gallery'], ['ملف أعمال', '/work-file'], ['بطاقتي الرقمية', '/card']] },
   { h: 'للجهات', l: [['الحقائب التدريبية', '/collaborate'], ['اطلب برنامجاً', '/contact'], ['ابنِ عرضك', '/proposal'], ['أسئلة شائعة', '/faq'], ['الشركاء', '/partnerships'], ['منهجي في التدريب', '/methodology'], ['مبادرات مبتكرة', '/my-projects']] },
   { h: 'المحتوى', l: [['محتوى مضيء', '/blog'], ['محتوى مرئي', '/recorded-courses'], ['اسأل حسين', '/faq#ask'], ['مكتبة الأوامر', '/prompts'], ['الإعلام', '/media'], ['آراء المتدربين', '/feedback'], ['الأخبار', '/news']] },
 ];

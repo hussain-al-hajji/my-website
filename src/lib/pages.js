@@ -21,6 +21,7 @@ export const STATIC_PAGES = [
   { path: '/methodology', title: 'منهجي في التدريب' },
   { path: '/faq', title: 'أسئلة شائعة' },
   { path: '/card', title: 'بطاقتي الرقمية' },
+  { path: '/work-file', title: 'ملف أعمال' },
   { path: '/proposal', title: 'ابنِ عرضك' },
   { path: '/prompts', title: 'مكتبة الأوامر' },
 ];

@@ -688,12 +688,16 @@ html{scroll-padding-top:calc(var(--gnav-h) + 64px)}
 .card-role{font-size:var(--t-lead);font-weight:600;color:var(--ink);margin-top:10px}
 .card-tag{color:var(--action);font-weight:700;font-size:var(--t-body)}
 .card-save{margin-top:18px;gap:10px;width:100%;max-width:340px}
-.card-save svg,.card-acts svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.card-acts{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:340px;margin-top:12px}
-.card-acts a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:14px;border:1.5px solid var(--hair);color:var(--ink);font-size:var(--t-small);font-weight:500;transition:border-color .2s,background-color .2s}
+.card-save svg,.card-acts svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.card-acts{list-style:none;display:flex;justify-content:center;gap:10px;width:100%;max-width:340px;margin-top:14px}
+.card-acts li{flex:1 1 0;min-width:0}
+.card-acts a{display:grid;place-items:center;height:52px;border-radius:16px;border:1.5px solid var(--hair);color:var(--ink);transition:border-color .2s,background-color .2s}
 .card-acts a:hover{border-color:#b9b8b1;background:#fafaf8}
-.card-links{list-style:none;display:grid;gap:2px;width:100%;max-width:340px;margin-top:14px;border-top:1px solid var(--hair);padding-top:10px}
-.card-links a{display:block;padding:11px 4px;color:var(--action);font-size:var(--t-small);font-weight:500}
+.card-pf{margin-top:14px;gap:10px;width:100%;max-width:340px;background:#1b1b1a;color:#fff}
+.card-pf:hover{background:#000}
+.card-pf svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.card-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 8px;width:100%;max-width:340px;margin-top:14px;color:var(--hair)}
+.card-links a{display:block;padding:11px 2px;color:var(--action);font-size:var(--t-small);font-weight:500;white-space:nowrap}
 .card-qr{margin-top:12px;display:grid;justify-items:center;gap:10px}
 .card-qr .qr{width:200px;height:200px;border:1px solid var(--hair);border-radius:16px;padding:6px;background:#fff}
 .card-qr .qr svg{display:block;width:100%;height:100%}
@@ -1246,9 +1250,6 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 .cv-box h2:focus{outline:0}
 .cv-act .pill.ghost{background:#fff;color:var(--action);border:1.5px solid var(--action)}
 .cv-act .pill:disabled{opacity:.6;cursor:progress}
-.card-links .card-pair{display:flex;align-items:center;justify-content:center;gap:6px}
-.card-links .card-pair a{flex:1;text-align:center}
-.card-links .card-pair span{color:var(--hair);font-weight:300}
 /* نبذة الصفحة الرئيسية داخل منصّة الحلقة: قابلة للتحديد والنسخ (السحب للدوران يقتصر على الحلقة نفسها) */
 .ringstage .sub,.ringstage .for-line{-webkit-user-select:text;user-select:text;cursor:text}
 .card-focus{font-size:var(--t-small);font-weight:600;color:var(--action);margin-top:4px}
