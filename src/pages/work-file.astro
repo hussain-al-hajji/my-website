@@ -3,7 +3,7 @@
 // فتتحدّث مع كل بناء جديد، ولا تحتوي رقماً مكتوباً داخل الصفحة.
 import Base from '../layouts/Base.astro';
 import '../styles/workfile.css';
-import { site, href } from '../lib/site.js';
+import { site, href, GNAV } from '../lib/site.js';
 import { portfolioData, roleIcon } from '../lib/portfolio-data.js';
 import geo from '../assets/gulf-geo.html?raw';
 
@@ -34,6 +34,8 @@ const local = [
   ...(voices.length ? [{ label: 'قالوا عني', href: '#voices' }] : []),
 ];
 const pdf = href('/hussain-al-hajji-portfolio.pdf');
+// بكرة صفحات الموقع نفسها في الرئيسية
+const wheelPages = GNAV.flatMap((g) => (g.children ? g.children.filter((c) => !c.download && c.href) : g.href ? [g] : []));
 ---
 <Base title="ملف أعمال" description={`ملف أعمالي ومشاريعي منذ ${y0}: الأثر والمشاريع والحقائب والشركاء، بالأرقام والصور، مع تحميل الملف بصيغة PDF.`} active="bio" local={local}>
   <main class="wf" id="main">
@@ -70,6 +72,14 @@ const pdf = href('/hussain-al-hajji-portfolio.pdf');
             <a class="more" href={href('/bio')}>السيرة والإنجازات كاملة</a>
           </div>
           <figure class="wf-me-fig"><img src={href('/img/brand/portrait-composite-840.webp')} alt="رسم بالرصاص لي" width="560" height="694" loading="lazy"></figure>
+        </div>
+        <div class="wf-nav">
+          <p class="wf-cap-d">تصفّح صفحات الموقع: اسحب البكرة أو اضغط على العنوان</p>
+          <nav class="nwheel" id="nwheel" aria-label="صفحات الموقع">
+            <div class="nwheel-ring">
+              {wheelPages.map((p) => <a class="nwheel-it" href={href(p.href)} rel={/^https?:/.test(p.href) ? 'noopener' : undefined}>{p.label}</a>)}
+            </div>
+          </nav>
         </div>
         {roles.length > 0 && (
           <div class="wf-roles">
@@ -291,3 +301,4 @@ const pdf = href('/hussain-al-hajji-portfolio.pdf');
     </section>
   </main>
 </Base>
+<script>import '../scripts/nav-wheel.js';</script>

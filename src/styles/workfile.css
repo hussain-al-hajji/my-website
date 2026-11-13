@@ -198,3 +198,9 @@
   .wf-logos{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 }
 .wf-impact-grid > *,.wf-map > *,.wf-me > *,.wf-award-grid > *,.wf-projects article > *{min-width:0}
+
+/* بكرة صفحات الموقع تحت «من أنا» */
+.wf-nav{position:relative;margin-top:44px;display:grid;justify-items:center;gap:6px}
+.wf-cap-d{font-size:var(--t-small);color:#6b6a64}
+.wf-nav .nwheel{position:relative;inset:auto;bottom:auto;margin:0 auto}
+.wf-nav .nwheel::before{background:#fff}
