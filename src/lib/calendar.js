@@ -51,6 +51,8 @@ export function archivedRecords() {
     .map((x) => ({
       id: 'cal-' + x.id,
       year: Number(x.to.slice(0, 4)),
+      endsOn: x.to,
+      date: ((r) => `${r.line} ${r.year}`)(rangeAr(x.from, x.to)),               // تاريخ التنفيذ يظهر في سجل الأثر مع البرنامج المرحَّل
       title: x.title,
       role: x.role || 'مدرب',
       duration: x.duration || '',

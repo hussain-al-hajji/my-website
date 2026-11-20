@@ -4,7 +4,8 @@ import PageHead from '../components/PageHead.astro';
 import { records, href, stats, site, norm } from '../lib/site.js';
 
 const st = stats();
-const list = [...records].sort((a, b) => b.year - a.year || String(b.id).localeCompare(String(a.id)));
+// داخل السنة الواحدة: البرامج المرحَّلة من الروزنامة أولاً بحسب تاريخ انتهائها (الأحدث فالأقدم)، ثم بقية القيود
+const list = [...records].sort((a, b) => b.year - a.year || (b.endsOn ? 1 : 0) - (a.endsOn ? 1 : 0) || String(b.endsOn || '').localeCompare(String(a.endsOn || '')) || String(b.id).localeCompare(String(a.id)));
 const topics = [...new Set(records.map((r) => r.topic))];
 // السنوات الأولى القليلة تُجمع في خانة واحدة
 const EARLY = 2019;
@@ -41,6 +42,7 @@ const years = [...new Set(st.years.map(yearKey))].reverse();
             <span class="y">{r.year}</span>
             <div>
               <b>{r.title}</b>
+              {r.date && <span class="sub">{r.date}</span>}
               <span class="sub">{[r.role, r.org].filter(Boolean).join(' · ')}</span>
               <span class="sub">{[r.location, r.duration].filter(Boolean).join(' · ')}</span>
             </div>
