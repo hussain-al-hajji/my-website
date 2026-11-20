@@ -32,9 +32,10 @@ const AI_TOOLS = [
   { k: 'chatgpt', n: 'ChatGPT', base: 'https://chatgpt.com/?hints=search&q=', svg: '<circle cx="16.6" cy="12" r="4.4"/><circle cx="14.3" cy="16" r="4.4"/><circle cx="9.7" cy="16" r="4.4"/><circle cx="7.4" cy="12" r="4.4"/><circle cx="9.7" cy="8" r="4.4"/><circle cx="14.3" cy="8" r="4.4"/>' },
   { k: 'claude', n: 'Claude', base: 'https://claude.ai/new?q=', svg: '<path d="M12 2.8v18.4M3.6 7.4l16.8 9.2M3.6 16.6l16.8-9.2M2.8 12h18.4M6 4.5l12 15M18 4.5 6 19.5"/>' },
   { k: 'perplexity', n: 'Perplexity', base: 'https://www.perplexity.ai/search?q=', svg: '<path d="M12 2.6v18.8M6 6.4l6 5.6 6-5.6M6 17.6l6-5.6 6 5.6M4.4 8.6v6.8M19.6 8.6v6.8"/>' },
+  { k: 'gemini', n: 'Gemini', base: 'https://gemini.google.com/app', copy: true, svg: '<path d="M12 2.8c.7 5.2 4 8.5 9.2 9.2-5.2.7-8.5 4-9.2 9.2-.7-5.2-4-8.5-9.2-9.2 5.2-.7 8.5-4 9.2-9.2z"/>' },
   { k: 'grok', n: 'Grok', base: 'https://grok.com/?q=', svg: '<circle cx="12" cy="12" r="8.4"/><path d="m6.2 18.4 11.6-12.8"/>' },
 ];
-const askUrl = (base, q) => base + encodeURIComponent(q);
+const askUrl = (t, q) => (t.copy ? t.base : t.base + encodeURIComponent(q));
 const wheelPages = GNAV.flatMap((g) => (g.children ? g.children.filter((c) => !c.download && c.href) : g.href ? [g] : []));
 const xpItems = site.experience.items;
 const xpSplit = Math.ceil(xpItems.length / 2);
@@ -454,11 +455,11 @@ const jsonld = [
       <blockquote class="ask-text" id="askText" data-in style="--d:2">{askQs[0].prompt}</blockquote>
       <ul class="ask-tools" data-in style="--d:3">
         {AI_TOOLS.map((t) => (
-          <li><a href={askUrl(t.base, askQs[0].prompt)} data-base={t.base} target="_blank" rel="noopener" aria-label={`اسأل ${t.n}`}>
+          <li><a href={askUrl(t, askQs[0].prompt)} data-base={t.base} data-ask-copy={t.copy ? '' : undefined} target="_blank" rel="noopener" aria-label={t.copy ? `اسأل ${t.n}: يُنسخ السؤال تلقائياً لتلصقه` : `اسأل ${t.n}`}>
             <svg viewBox="0 0 24 24" aria-hidden="true" set:html={t.svg}></svg><span>{t.n}</span></a></li>
         ))}
       </ul>
-      <p class="ask-copy"><button class="more" type="button" id="askCopy">انسخ السؤال</button></p>
+      <p class="ask-note" id="askNote" aria-live="polite">Gemini لا يقبل السؤال في الرابط، فيُنسخ السؤال تلقائياً عند الضغط على أيقونته، والصقه في المحادثة.</p>
     </div>
   </section>
 )}

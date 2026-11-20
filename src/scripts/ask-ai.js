@@ -1,23 +1,21 @@
-// قسم «اسأل الذكاء الاصطناعي»: اختيار سؤال يغيّر النص المعروض وروابط الأدوات، ويمكن نسخ السؤال لأي أداة أخرى
+// قسم «اسأل الذكاء الاصطناعي»: اختيار سؤال يغيّر النص المعروض وروابط الأدوات.
+// الأدوات التي لا تقبل السؤال في الرابط (Gemini) يُنسخ السؤال إلى الحافظة عند الضغط على أيقونتها ليُلصق في المحادثة
 const box = document.getElementById('ask');
 if (box) {
   const chips = [...box.querySelectorAll('.ask-qs .fchip')];
   const text = document.getElementById('askText');
+  const note = document.getElementById('askNote');
   const links = [...box.querySelectorAll('.ask-tools a')];
-  const copy = document.getElementById('askCopy');
+  const base = note.textContent;
   let cur = chips[0]?.dataset.prompt || '';
   const pick = (chip) => {
     chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
     cur = chip.dataset.prompt; text.textContent = cur;
-    links.forEach((a) => { a.href = a.dataset.base + encodeURIComponent(cur); });
+    links.forEach((a) => { if (!a.hasAttribute('data-ask-copy')) a.href = a.dataset.base + encodeURIComponent(cur); });
   };
   chips.forEach((c) => c.addEventListener('click', () => pick(c)));
-  copy?.addEventListener('click', async () => {
-    const done = (t) => { copy.textContent = t; setTimeout(() => { copy.textContent = 'انسخ السؤال'; }, 2200); };
-    try { await navigator.clipboard.writeText(cur); done('نُسخ السؤال'); }
-    catch {
-      const r = document.createRange(); r.selectNodeContents(text); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-      done('حدّد النص وانسخه');
-    }
-  });
+  links.filter((a) => a.hasAttribute('data-ask-copy')).forEach((a) => a.addEventListener('click', () => {
+    const say = (t) => { note.textContent = t; note.classList.add('on'); setTimeout(() => { note.textContent = base; note.classList.remove('on'); }, 6000); };
+    navigator.clipboard?.writeText(cur).then(() => say('نُسخ السؤال، الصقه في محادثة Gemini.'), () => say('تعذّر النسخ تلقائياً، حدّد نص السؤال وانسخه ثم الصقه في Gemini.'));
+  }));
 }
