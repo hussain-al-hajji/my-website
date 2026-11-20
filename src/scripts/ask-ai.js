@@ -3,14 +3,13 @@
 const box = document.getElementById('ask');
 if (box) {
   const chips = [...box.querySelectorAll('.ask-qs .fchip')];
-  const text = document.getElementById('askText');
   const note = document.getElementById('askNote');
   const links = [...box.querySelectorAll('.ask-tools a')];
   const base = note.textContent;
   let cur = chips[0]?.dataset.prompt || '';
   const pick = (chip) => {
     chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
-    cur = chip.dataset.prompt; text.textContent = cur;
+    cur = chip.dataset.prompt;
     links.forEach((a) => { if (!a.hasAttribute('data-ask-copy')) a.href = a.dataset.base + encodeURIComponent(cur); });
   };
   chips.forEach((c) => c.addEventListener('click', () => pick(c)));

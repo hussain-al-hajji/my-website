@@ -452,7 +452,6 @@ const jsonld = [
       <div class="ask-qs" role="group" aria-label="اختر سؤالاً" data-in style="--d:2">
         {askQs.map((q, i) => <button class="fchip" type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-prompt={q.prompt}>{q.label}</button>)}
       </div>
-      <blockquote class="ask-text" id="askText" data-in style="--d:2">{askQs[0].prompt}</blockquote>
       <ul class="ask-tools" data-in style="--d:3">
         {AI_TOOLS.map((t) => (
           <li><a href={askUrl(t, askQs[0].prompt)} data-base={t.base} data-ask-copy={t.copy ? '' : undefined} target="_blank" rel="noopener" aria-label={t.copy ? `اسأل ${t.n}: يُنسخ السؤال تلقائياً لتلصقه` : `اسأل ${t.n}`}>
