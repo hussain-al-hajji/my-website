@@ -1353,14 +1353,17 @@ h2.h2::after,.sec-head h2::after{content:"";display:block;width:clamp(96px,13vw,
 
 /* ---------- اسأل الذكاء الاصطناعي عني (الرئيسية) ---------- */
 .ask h2{font-size:var(--t-h1);line-height:1.1}
-.ask .ask-lead{font-size:var(--t-lead);color:var(--on-dark-2);margin:16px auto 0;max-width:40ch;line-height:1.5}
-.ask-qs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:34px}
-.ask-qs .fchip{background:transparent;color:var(--on-dark);border:1px solid var(--hair-dark)}
-.ask-qs .fchip[aria-pressed="true"]{background:var(--action-on-dark);color:var(--dark);border-color:var(--action-on-dark)}
 .ask-tools{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:34px}
 .ask-tools a{display:grid;justify-items:center;gap:8px;width:92px;padding:16px 8px 12px;border-radius:20px;border:1px solid var(--hair-dark);color:var(--on-dark);font-size:var(--t-small);transition:transform .25s var(--ease),border-color .25s,background-color .25s}
 .ask-tools a:hover{transform:translateY(-3px);border-color:var(--action-on-dark);background:#151513}
 .ask-tools svg{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.ask-note{margin:22px auto 0;max-width:46ch;font-size:var(--t-small);color:var(--on-dark-2);line-height:1.7;transition:color .25s}
-.ask-note.on{color:var(--action-on-dark)}
 @media (max-width:560px){.ask-tools{gap:8px}.ask-tools a{width:62px;padding:12px 4px 9px;border-radius:16px;font-size:.68rem}.ask-tools svg{width:30px;height:30px}}
+
+/* في البطاقة الرقمية: عنوان صغير وأيقونات على خلفية فاتحة */
+.card-ask{width:100%;max-width:340px;margin-top:16px;display:grid;justify-items:center}
+.card-ask h2{font-size:1rem;font-weight:700;line-height:1.4}
+.card-ask .ask-tools{gap:8px;margin-top:12px;flex-wrap:nowrap;width:100%}
+.card-ask .ask-tools li{flex:1 1 0;min-width:0}
+.card-ask .ask-tools a{width:auto;color:var(--ink);border-color:var(--hair);padding:12px 2px 9px;border-radius:16px;font-size:.68rem}
+.card-ask .ask-tools a:hover{border-color:#b9b8b1;background:#fafaf8}
+.card-ask .ask-tools svg{width:28px;height:28px}

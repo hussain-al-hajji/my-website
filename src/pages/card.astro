@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import AskAi from '../components/AskAi.astro';
 import QRCode from 'qrcode';
 import { site, href, abs, contactLinks } from '../lib/site.js';
 
@@ -49,6 +50,8 @@ const acts = [
         <li aria-hidden="true">|</li>
         <li><a href={c.podcast} rel="noopener">بودكاستي</a></li>
       </ul>
+
+      <section class="card-ask" aria-labelledby="ask-h"><AskAi tag="h2" /></section>
 
       <figure class="card-qr">
         <div class="qr" role="img" aria-label="رمز QR لفتح بطاقتي" set:html={qr}></div>

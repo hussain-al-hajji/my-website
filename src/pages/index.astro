@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import AskAi from '../components/AskAi.astro';
 import geo from '../assets/gulf-geo.html?raw';
 import { CITIES } from '../lib/impactmap.js';
 import highlights from '../data/highlights.json';
@@ -26,16 +27,6 @@ const ringPosters = await Promise.all([...posters].sort((a, b) => b.year - a.yea
   return { ...p, r: Math.round(r * 1000) / 1000 };
 }));
 // بكرة صفحات الموقع في الرئيسية: عناوين القائمة نفسها (بلا ملفات PDF التي تُنزَّل)
-// قسم «اسأل الذكاء الاصطناعي»: كل أيقونة رابط إلى أداة ويُضاف السؤال المختار إلى الرابط (يُحدَّث بالنقر في scripts/ask-ai.js)
-const askQs = (site.askAi?.questions || []).filter((q) => q.on !== false && q.prompt);
-const AI_TOOLS = [
-  { k: 'chatgpt', n: 'ChatGPT', base: 'https://chatgpt.com/?hints=search&q=', svg: '<circle cx="16.6" cy="12" r="4.4"/><circle cx="14.3" cy="16" r="4.4"/><circle cx="9.7" cy="16" r="4.4"/><circle cx="7.4" cy="12" r="4.4"/><circle cx="9.7" cy="8" r="4.4"/><circle cx="14.3" cy="8" r="4.4"/>' },
-  { k: 'claude', n: 'Claude', base: 'https://claude.ai/new?q=', svg: '<path d="M12 2.8v18.4M3.6 7.4l16.8 9.2M3.6 16.6l16.8-9.2M2.8 12h18.4M6 4.5l12 15M18 4.5 6 19.5"/>' },
-  { k: 'perplexity', n: 'Perplexity', base: 'https://www.perplexity.ai/search?q=', svg: '<path d="M12 2.6v18.8M6 6.4l6 5.6 6-5.6M6 17.6l6-5.6 6 5.6M4.4 8.6v6.8M19.6 8.6v6.8"/>' },
-  { k: 'gemini', n: 'Gemini', base: 'https://gemini.google.com/app', copy: true, svg: '<path d="M12 2.8c.7 5.2 4 8.5 9.2 9.2-5.2.7-8.5 4-9.2 9.2-.7-5.2-4-8.5-9.2-9.2 5.2-.7 8.5-4 9.2-9.2z"/>' },
-  { k: 'grok', n: 'Grok', base: 'https://grok.com/?q=', svg: '<circle cx="12" cy="12" r="8.4"/><path d="m6.2 18.4 11.6-12.8"/>' },
-];
-const askUrl = (t, q) => (t.copy ? t.base : t.base + encodeURIComponent(q));
 const wheelPages = GNAV.flatMap((g) => (g.children ? g.children.filter((c) => !c.download && c.href) : g.href ? [g] : []));
 const xpItems = site.experience.items;
 const xpSplit = Math.ceil(xpItems.length / 2);
@@ -444,22 +435,9 @@ const jsonld = [
   </section>
 )}
 
-{askQs.length > 0 && (
-  <section class="sec dark ask center" id="ask" aria-labelledby="ask-h">
-    <div class="measure">
-      <h2 id="ask-h" data-in>{site.askAi.title || 'اسأل الذكاء الاصطناعي عني'}</h2>
-      {site.askAi.lead && <p class="ask-lead" data-in style="--d:1">{site.askAi.lead}</p>}
-      <div class="ask-qs" role="group" aria-label="اختر سؤالاً" data-in style="--d:2">
-        {askQs.map((q, i) => <button class="fchip" type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-prompt={q.prompt}>{q.label}</button>)}
-      </div>
-      <ul class="ask-tools" data-in style="--d:3">
-        {AI_TOOLS.map((t) => (
-          <li><a href={askUrl(t, askQs[0].prompt)} data-base={t.base} data-ask-copy={t.copy ? '' : undefined} target="_blank" rel="noopener" aria-label={t.copy ? `اسأل ${t.n}: يُنسخ السؤال تلقائياً لتلصقه` : `اسأل ${t.n}`}>
-            <svg viewBox="0 0 24 24" aria-hidden="true" set:html={t.svg}></svg><span>{t.n}</span></a></li>
-        ))}
-      </ul>
-      <p class="ask-note" id="askNote" aria-live="polite">Gemini لا يقبل السؤال في الرابط، فيُنسخ السؤال تلقائياً عند الضغط على أيقونته، والصقه في المحادثة.</p>
-    </div>
+{site.askAi?.questions?.some((x) => x.on !== false && x.prompt) && (
+  <section class="sec dark ask center" aria-labelledby="ask-h">
+    <div class="measure"><AskAi /></div>
   </section>
 )}
 
@@ -475,6 +453,5 @@ const jsonld = [
 <script>import '../scripts/home.js';</script>
 <script>import '../scripts/poster-ring.js';</script>
 <script>import '../scripts/nav-wheel.js';</script>
-<script>import '../scripts/ask-ai.js';</script>
 <script>import '../scripts/wow.js';</script>
 </Base>
